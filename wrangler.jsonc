@@ -8,5 +8,11 @@
 	},
 	"build": {
 		"command": "bun run build"
-	}
+	},
+	"routes": [
+		{
+			"pattern": "divkix.me",
+			"custom_domain": true
+		}
+	]
 }
