@@ -6,11 +6,11 @@
 		CardHeader,
 		CardTitle,
 		DynamicRoles,
-		ModeToggle
+		ModeToggle,
+		SimpleIcon
 	} from '$lib/components/ui/index.js';
+	import { siGithub, siX, siInstagram, siTelegram } from 'simple-icons';
 	import {
-		Github,
-		Twitter,
 		Linkedin,
 		Mail,
 		ExternalLink,
@@ -19,9 +19,7 @@
 		GraduationCap,
 		Briefcase,
 		Code,
-		Globe as Web,
-		Instagram,
-		MessageCircle
+		Globe as Web
 	} from 'lucide-svelte';
 
 	const skills = [
@@ -126,7 +124,7 @@
 					rel="noopener noreferrer"
 					class="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-input bg-background px-8 text-sm font-medium whitespace-nowrap ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
 				>
-					<Github class="h-4 w-4" />
+					<SimpleIcon icon={siGithub} class="h-4 w-4" />
 					GitHub
 				</a>
 			</div>
@@ -136,14 +134,14 @@
 					size="icon"
 					onclick={() => window.open('https://twitter.com/divkix', '_blank')}
 				>
-					<Twitter class="h-5 w-5" />
+					<SimpleIcon icon={siX} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
 					onclick={() => window.open('https://instagram.com/_divkix', '_blank')}
 				>
-					<Instagram class="h-5 w-5" />
+					<SimpleIcon icon={siInstagram} />
 				</Button>
 				<Button
 					variant="ghost"
@@ -157,7 +155,7 @@
 					size="icon"
 					onclick={() => window.open('https://t.me/divkix', '_blank')}
 				>
-					<MessageCircle class="h-5 w-5" />
+					<SimpleIcon icon={siTelegram} />
 				</Button>
 			</div>
 		</div>
@@ -434,21 +432,21 @@
 					size="icon"
 					onclick={() => window.open('https://twitter.com/divkix', '_blank')}
 				>
-					<Twitter class="h-5 w-5" />
+					<SimpleIcon icon={siX} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
 					onclick={() => window.open('https://instagram.com/_divkix', '_blank')}
 				>
-					<Instagram class="h-5 w-5" />
+					<SimpleIcon icon={siInstagram} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
 					onclick={() => window.open('https://github.com/divkix', '_blank')}
 				>
-					<Github class="h-5 w-5" />
+					<SimpleIcon icon={siGithub} />
 				</Button>
 				<Button
 					variant="ghost"
@@ -462,7 +460,7 @@
 					size="icon"
 					onclick={() => window.open('https://t.me/divkix', '_blank')}
 				>
-					<MessageCircle class="h-5 w-5" />
+					<SimpleIcon icon={siTelegram} />
 				</Button>
 			</div>
 			<div class="text-sm text-muted-foreground">
