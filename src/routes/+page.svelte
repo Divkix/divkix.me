@@ -5,6 +5,7 @@
 		CardContent,
 		CardHeader,
 		CardTitle,
+		DynamicRoles,
 		ModeToggle
 	} from '$lib/components/ui/index.js';
 	import {
@@ -125,9 +126,7 @@
 			</div>
 			<h2 class="mb-6 text-4xl font-bold md:text-6xl">Divanshu Chauhan</h2>
 			<p class="mb-8 text-xl text-muted-foreground md:text-2xl">
-				I'm <span class="font-semibold text-primary"
-					>Entrepreneur, Designer, Developer, Gamer, Trader, Photographer</span
-				>
+				<DynamicRoles />
 			</p>
 			<div class="mb-8 flex flex-wrap justify-center gap-4">
 				<a
