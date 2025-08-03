@@ -288,7 +288,7 @@
 				development.
 			</p>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-				{#each facts as fact}
+				{#each facts as fact (fact.label)}
 					<Card class="text-center">
 						<CardContent class="pt-6">
 							<div class="mb-4 text-4xl">{fact.icon}</div>
@@ -309,7 +309,7 @@
 				I've have some skills, here is how much I can do.
 			</p>
 			<div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
-				{#each skills as skill}
+				{#each skills as skill (skill.name)}
 					<div class="space-y-2">
 						<div class="flex items-center justify-between">
 							<span class="font-medium">{skill.name}</span>
@@ -370,13 +370,13 @@
 						</CardHeader>
 						<CardContent>
 							<div class="space-y-6">
-								{#each experience as exp}
+								{#each experience as exp (exp.title)}
 									<div>
 										<h4 class="font-semibold text-primary">{exp.title}</h4>
 										<p class="text-sm text-muted-foreground">{exp.period}</p>
 										<p class="mb-2 text-sm font-medium">{exp.company}</p>
 										<ul class="space-y-1 text-sm text-muted-foreground">
-											{#each exp.description as item}
+											{#each exp.description as item (item)}
 												<li class="flex items-start gap-2">
 													<span class="mt-1 text-primary">•</span>
 													{item}
@@ -398,7 +398,7 @@
 		<div class="container mx-auto px-4">
 			<h3 class="mb-12 text-center text-3xl font-bold">Contributions and Projects</h3>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-				{#each projects as project}
+				{#each projects as project (project.title)}
 					<Card class="group transition-all duration-300 hover:shadow-lg">
 						<CardHeader>
 							<div
