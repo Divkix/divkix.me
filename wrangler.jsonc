@@ -6,10 +6,6 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "divkix-me",
 	"compatibility_date": "2025-08-03",
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "build/"
-	},
 	"observability": {
 		"enabled": true
 	},
