@@ -1,0 +1,11 @@
+{
+	"name": "divkix-me",
+	"compatibility_date": "2025-07-03",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./.svelte-kit/output/client"
+	},
+	"build": {
+		"command": "bun run build"
+	}
+}

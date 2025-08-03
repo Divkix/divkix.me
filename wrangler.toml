@@ -1,7 +1,0 @@
-name = "divkix-me"
-compatibility_date = "2025-07-03"
-
-compatibility_flags = ["nodejs_compat"]
-
-[build]
-command = "bun run build"
