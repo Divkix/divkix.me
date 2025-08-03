@@ -19,7 +19,7 @@
 		GraduationCap,
 		Briefcase,
 		Code,
-		Download,
+		Globe as Web,
 		Instagram,
 		MessageCircle
 	} from 'lucide-svelte';
@@ -27,13 +27,11 @@
 	const skills = [
 		{ name: 'Python', level: 100 },
 		{ name: 'HTML', level: 100 },
-		{ name: 'Go', level: 75 },
-		{ name: 'CSS', level: 70 },
-		{ name: 'Java', level: 60 },
-		{ name: 'Rust', level: 55 },
-		{ name: 'C/C++', level: 45 },
-		{ name: 'WordPress/CMS', level: 90 },
-		{ name: 'Guitar', level: 65 },
+		{ name: 'Go', level: 95 },
+		{ name: 'Java', level: 75 },
+		{ name: 'Rust', level: 65 },
+		{ name: 'C/C++', level: 55 },
+		{ name: 'JavaScript/TypeScript', level: 90 },
 		{ name: 'Party', level: 100 }
 	];
 
@@ -46,17 +44,10 @@
 			icon: Code
 		},
 		{
-			title: 'Warp',
-			description:
-				'A lightweight but super fast download manager made using Go with tons of features.',
-			link: 'https://github.com/warpdl',
-			icon: Download
-		},
-		{
-			title: 'Srink',
-			description: 'A simple and fast URL shortener made using Go. Open-Source and free to use.',
-			link: 'https://srink.co',
-			icon: ExternalLink
+			title: 'ASU Capstone',
+			description: 'A web platform for managing and showcasing capstone projects at ASU.',
+			link: 'https://asucapstone.com',
+			icon: Web
 		}
 	];
 
@@ -95,7 +86,7 @@
 	<title>Divanshu Chauhan - Divkix</title>
 	<meta
 		name="description"
-		content="Divanshu Chauhan Official Website - Entrepreneur, Designer, Developer, Gamer, Trader, Photographer"
+		content="Divanshu Chauhan Official Website - Entrepreneur, Designer, Developer, Trader"
 	/>
 	<meta
 		name="keywords"
@@ -130,15 +121,6 @@
 			</p>
 			<div class="mb-8 flex flex-wrap justify-center gap-4">
 				<a
-					href="https://twitter.com/divkix"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium whitespace-nowrap text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-				>
-					<Twitter class="h-4 w-4" />
-					Twitter
-				</a>
-				<a
 					href="https://github.com/divkix"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -166,13 +148,6 @@
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://github.com/divkix', '_blank')}
-				>
-					<Github class="h-5 w-5" />
-				</Button>
-				<Button
-					variant="ghost"
-					size="icon"
 					onclick={() => window.open('https://www.linkedin.com/in/divkix', '_blank')}
 				>
 					<Linkedin class="h-5 w-5" />
@@ -194,12 +169,11 @@
 			<h3 class="mb-12 text-center text-3xl font-bold">About</h3>
 			<div class="mx-auto max-w-4xl">
 				<p class="mb-8 text-center text-lg text-muted-foreground">
-					As a sophomore studying at ASU Tempe, I am a multi-talented individual with a passion for
-					soccer and coding. In addition to my academic pursuits, I enjoy playing guitar,
-					skateboarding, singing, and socializing with friends. My diverse interests reflect my
+					As a Grad student studying at ASU Tempe, I am an individual with a passion for business
+					and coding. In addition to my academic pursuits, I enjoy working on side projects,
+					trekking, playing soccer, and socializing with people. My diverse interests reflect my
 					outgoing personality and my desire to experience all that life has to offer. I am always
-					seeking out new challenges and opportunities to expand my skillset and knowledge, and I am
-					committed to achieving success in all aspects of my life.
+					seeking out new challenges and opportunities to expand my skillset and knowledge.
 				</p>
 
 				<div class="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -207,12 +181,12 @@
 						<CardHeader>
 							<CardTitle class="flex items-center gap-2">
 								<GraduationCap class="h-5 w-5" />
-								Designer & Developer
+								Developer
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<p class="mb-4 text-muted-foreground">
-								A proficient programmer with a passion for design and a love for coding.
+								A proficient programmer with a passion for coding and a love for business.
 							</p>
 							<div class="space-y-2 text-sm">
 								<div class="flex items-center gap-2">
@@ -247,7 +221,7 @@
 									<strong>Age:</strong> 22
 								</div>
 								<div class="flex items-center gap-2">
-									<strong>Degree:</strong> Undergrad CS
+									<strong>Degree:</strong> MS Computer Science
 								</div>
 								<div class="flex items-center gap-2">
 									<Mail class="h-4 w-4 text-primary" />
@@ -265,12 +239,11 @@
 				</div>
 
 				<p class="text-center text-muted-foreground">
-					As a passionate programmer who started coding in high school, I have since devoted myself
-					to continually learning and seeking out new challenges. I am highly motivated to improve
-					my skills and knowledge, and am always on the lookout for opportunities to collaborate
-					with others and contribute to exciting projects. With my enthusiasm for programming and my
-					dedication to personal growth, I am confident that I can make valuable contributions to
-					any team or project.
+					As someone who started coding in high school, I have since devoted myself to continually
+					learning new technologies. I am highly motivated to improve my skills and knowledge, and
+					am always on the lookout for opportunities to collaborate with others and contribute to
+					exciting projects. With my enthusiasm and my dedication to personal growth, I am confident
+					that I can make valuable contributions to any team or project.
 				</p>
 			</div>
 		</div>
@@ -283,9 +256,6 @@
 			<p class="mx-auto mb-12 max-w-3xl text-center text-muted-foreground">
 				The products I have developed have been used by over 1 million users, demonstrating my
 				ability to create impactful solutions that meet the needs of a large and diverse audience.
-				Through my dedication to developing high-quality products and my passion for innovation, I
-				have achieved a track record of success that speaks to my expertise in the field of product
-				development.
 			</p>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 				{#each facts as fact (fact.label)}
@@ -339,8 +309,10 @@
 					<CardContent>
 						<h4 class="mb-2 text-lg font-semibold">Divanshu Chauhan</h4>
 						<p class="text-muted-foreground italic">
-							Innovative and deadline-driven Developer with 2+ years of experience designing and
-							developing user-centered products from initial concept to final, polished deliverable.
+							Innovative student with a passion for coding and business, currently pursuing a
+							Master's degree in Computer Science at ASU Tempe. Experienced in leading teams and
+							developing AI-based solutions. Eager to contribute to impactful projects and
+							collaborate with like-minded individuals.
 						</p>
 					</CardContent>
 				</Card>
@@ -353,11 +325,27 @@
 						<CardContent>
 							<div class="space-y-4">
 								<div>
-									<h4 class="font-semibold text-primary">Bachelor Computer Science</h4>
-									<p class="text-sm text-muted-foreground">2021 - 2025</p>
+									<h4 class="font-semibold text-primary">Masters of Science in Computer Science</h4>
+									<p class="text-sm text-muted-foreground">2025 - 2026</p>
 									<p class="text-sm font-medium">Arizona State University, Tempe, AZ</p>
 									<p class="text-sm text-muted-foreground">
-										I'm still pursuing my undergraduate degree from ASU.
+										In process of completing a Master's degree in Computer Science with a focus on
+										Artificial Intelligence, Machine Learning and Data Science.
+									</p>
+								</div>
+							</div>
+						</CardContent>
+						<CardContent>
+							<div class="space-y-4">
+								<div>
+									<h4 class="font-semibold text-primary">
+										Bachelor of Science in Computer Science
+									</h4>
+									<p class="text-sm text-muted-foreground">Jan 2022 - May 2025</p>
+									<p class="text-sm font-medium">Arizona State University, Tempe, AZ</p>
+									<p class="text-sm text-muted-foreground">
+										Completed coursework in data structures, algorithms, and software engineering
+										with Magna Cum Laude honors.
 									</p>
 								</div>
 							</div>
@@ -439,7 +427,7 @@
 	<footer class="border-t bg-background py-12">
 		<div class="container mx-auto px-4 text-center">
 			<h3 class="mb-2 text-2xl font-bold">Divanshu Chauhan</h3>
-			<p class="mb-6 text-muted-foreground">Keen Entrepreneur, programmer and gamer!</p>
+			<p class="mb-6 text-muted-foreground">Keen Entrepreneur and Developer!</p>
 			<div class="mb-6 flex justify-center gap-4">
 				<Button
 					variant="ghost"
