@@ -8,7 +8,7 @@
 		DynamicRoles,
 		ModeToggle,
 		SimpleIcon
-	} from '$lib/components/ui/index.js';
+	} from '$lib/components/ui';
 	import { siGithub, siX, siInstagram, siTelegram } from 'simple-icons';
 	import {
 		Linkedin,
