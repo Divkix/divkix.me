@@ -10,6 +10,7 @@
 - `bun lint` - Run prettier check and eslint
 - `bun format` - Format code with prettier
 - No test framework configured
+- Deployed using Cloudflare Workers (Static)
 
 ## Code Style Guidelines
 
