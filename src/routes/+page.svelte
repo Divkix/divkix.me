@@ -37,7 +37,7 @@
 		{
 			title: 'Divide Projects',
 			description:
-				'An Non-Profit Organization in Telegram for making Automation Bots and other Open-Source Projects.',
+				'A Non-Profit Organization in Telegram for making Automation Bots and other Open-Source Projects.',
 			link: 'https://divideprojects.t.me',
 			icon: Code
 		},
@@ -49,10 +49,21 @@
 		}
 	];
 
+	// Calculate age based on birth date
+	const birthDate = new Date('2003-01-09');
+	const today = new Date();
+	const age =
+		today.getFullYear() -
+		birthDate.getFullYear() -
+		(today.getMonth() < birthDate.getMonth() ||
+		(today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+			? 1
+			: 0);
+
 	const facts = [
 		{ label: 'Happy Users', value: '100K+', icon: '😊' },
 		{ label: 'Projects', value: '12', icon: '📁' },
-		{ label: 'Hours Of Support', value: '56', icon: '🎧' }
+		{ label: 'Open Source Contributions', value: '50+', icon: '🔧' }
 	];
 
 	const experience = [
@@ -216,7 +227,8 @@
 						<CardContent>
 							<div class="space-y-2 text-sm">
 								<div class="flex items-center gap-2">
-									<strong>Age:</strong> 22
+									<strong>Age:</strong>
+									{age}
 								</div>
 								<div class="flex items-center gap-2">
 									<strong>Degree:</strong> MS Computer Science
