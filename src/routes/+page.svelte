@@ -44,7 +44,7 @@
 		{
 			title: 'ASU Capstone',
 			description: 'A web platform for managing and showcasing capstone projects at ASU.',
-			link: 'https://asucapstone.com',
+			link: 'https://betasubmission.asucapstone.com/about',
 			icon: Web
 		}
 	];
