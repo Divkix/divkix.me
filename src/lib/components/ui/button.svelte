@@ -37,6 +37,7 @@
 		class?: string;
 		children?: Snippet;
 		onclick?: () => void;
+		'aria-label'?: string;
 	};
 
 	let {

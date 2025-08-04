@@ -54,16 +54,24 @@
 		}
 	];
 
-	// Calculate age based on birth date
+	function calculateAge(birthDate: Date): number {
+		const today = new Date();
+		return (
+			today.getFullYear() -
+			birthDate.getFullYear() -
+			(today.getMonth() < birthDate.getMonth() ||
+			(today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+				? 1
+				: 0)
+		);
+	}
+
+	function openExternalLink(url: string): void {
+		window.open(url, '_blank');
+	}
+
 	const birthDate = new Date('2003-01-09');
-	const today = new Date();
-	const age =
-		today.getFullYear() -
-		birthDate.getFullYear() -
-		(today.getMonth() < birthDate.getMonth() ||
-		(today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
-			? 1
-			: 0);
+	const age = calculateAge(birthDate);
 
 	const facts = [
 		{ label: 'Happy Users', value: '100K+', icon: '😊' },
@@ -148,28 +156,32 @@
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://twitter.com/divkix', '_blank')}
+					onclick={() => openExternalLink('https://twitter.com/divkix')}
+					aria-label="Visit Divkix on X (Twitter)"
 				>
 					<SimpleIcon icon={siX} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://instagram.com/_divkix', '_blank')}
+					onclick={() => openExternalLink('https://instagram.com/_divkix')}
+					aria-label="Visit Divkix on Instagram"
 				>
 					<SimpleIcon icon={siInstagram} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://www.linkedin.com/in/divkix', '_blank')}
+					onclick={() => openExternalLink('https://www.linkedin.com/in/divkix')}
+					aria-label="Visit Divkix on LinkedIn"
 				>
 					<Linkedin class="h-5 w-5" />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://t.me/divkix', '_blank')}
+					onclick={() => openExternalLink('https://t.me/divkix')}
+					aria-label="Visit Divkix on Telegram"
 				>
 					<SimpleIcon icon={siTelegram} />
 				</Button>
@@ -205,7 +217,7 @@
 							<div class="space-y-2 text-sm">
 								<div class="flex items-center gap-2">
 									<Calendar class="h-4 w-4 text-primary" />
-									<strong>Birthday:</strong> January 9, 2003
+									<strong>Birthday:</strong> <time datetime="2003-01-09">January 9, 2003</time>
 								</div>
 								<div class="flex items-center gap-2">
 									<ExternalLink class="h-4 w-4 text-primary" />
@@ -338,25 +350,27 @@
 							<CardTitle>Education</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div class="space-y-4">
+							<div class="space-y-6">
 								<div>
 									<h4 class="font-semibold text-primary">Masters of Science in Computer Science</h4>
-									<p class="text-sm text-muted-foreground">August 2025 - May 2026</p>
+									<p class="text-sm text-muted-foreground">
+										<time datetime="2025-08">August 2025</time> -
+										<time datetime="2026-05">May 2026</time>
+									</p>
 									<p class="text-sm font-medium">Arizona State University, Tempe, AZ</p>
 									<p class="text-sm text-muted-foreground">
 										In process of completing a Master's degree in Computer Science with a focus on
 										Artificial Intelligence, Machine Learning and Data Science.
 									</p>
 								</div>
-							</div>
-						</CardContent>
-						<CardContent>
-							<div class="space-y-4">
 								<div>
 									<h4 class="font-semibold text-primary">
 										Bachelor of Science in Computer Science
 									</h4>
-									<p class="text-sm text-muted-foreground">Jan 2022 - May 2025</p>
+									<p class="text-sm text-muted-foreground">
+										<time datetime="2022-01">Jan 2022</time> -
+										<time datetime="2025-05">May 2025</time>
+									</p>
 									<p class="text-sm font-medium">Arizona State University, Tempe, AZ</p>
 									<p class="text-sm text-muted-foreground">
 										Completed coursework in data structures, algorithms, and software engineering
@@ -376,7 +390,9 @@
 								{#each experience as exp (exp.title)}
 									<div>
 										<h4 class="font-semibold text-primary">{exp.title}</h4>
-										<p class="text-sm text-muted-foreground">{exp.period}</p>
+										<p class="text-sm text-muted-foreground">
+											<time datetime={exp.period}>{exp.period}</time>
+										</p>
 										<p class="mb-2 text-sm font-medium">{exp.company}</p>
 										<ul class="space-y-1 text-sm text-muted-foreground">
 											{#each exp.description as item (item)}
@@ -426,7 +442,7 @@
 								variant="outline"
 								size="sm"
 								class="gap-2"
-								onclick={() => window.open(project.link, '_blank')}
+								onclick={() => openExternalLink(project.link)}
 							>
 								<ExternalLink class="h-4 w-4" />
 								View Project
@@ -447,35 +463,40 @@
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://twitter.com/divkix', '_blank')}
+					onclick={() => openExternalLink('https://twitter.com/divkix')}
+					aria-label="Visit Divkix on X (Twitter)"
 				>
 					<SimpleIcon icon={siX} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://instagram.com/_divkix', '_blank')}
+					onclick={() => openExternalLink('https://instagram.com/_divkix')}
+					aria-label="Visit Divkix on Instagram"
 				>
 					<SimpleIcon icon={siInstagram} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://github.com/divkix', '_blank')}
+					onclick={() => openExternalLink('https://github.com/divkix')}
+					aria-label="Visit Divkix on GitHub"
 				>
 					<SimpleIcon icon={siGithub} />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://www.linkedin.com/in/divkix', '_blank')}
+					onclick={() => openExternalLink('https://www.linkedin.com/in/divkix')}
+					aria-label="Visit Divkix on LinkedIn"
 				>
 					<Linkedin class="h-5 w-5" />
 				</Button>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => window.open('https://t.me/divkix', '_blank')}
+					onclick={() => openExternalLink('https://t.me/divkix')}
+					aria-label="Visit Divkix on Telegram"
 				>
 					<SimpleIcon icon={siTelegram} />
 				</Button>
