@@ -19,7 +19,8 @@
 		GraduationCap,
 		Briefcase,
 		Code,
-		Globe as Web
+		Globe as Web,
+		WrenchIcon
 	} from 'lucide-svelte';
 
 	const skills = [
@@ -29,16 +30,14 @@
 		{ name: 'Java', level: 75 },
 		{ name: 'Rust', level: 65 },
 		{ name: 'C/C++', level: 55 },
-		{ name: 'JavaScript/TypeScript', level: 90 },
-		{ name: 'Party', level: 100 }
+		{ name: 'JavaScript/TypeScript', level: 90 }
 	];
 
 	const projects = [
 		{
 			title: 'Divide Projects',
-			description:
-				'A Non-Profit Organization in Telegram for making Automation Bots and other Open-Source Projects.',
-			link: 'https://divideprojects.t.me',
+			description: 'A Non-Profit Organization on GitHub for making Telegram Automation Bots',
+			link: 'https://github.com/divideprojects',
 			icon: Code
 		},
 		{
@@ -46,6 +45,12 @@
 			description: 'A web platform for managing and showcasing capstone projects at ASU.',
 			link: 'https://betasubmission.asucapstone.com/about',
 			icon: Web
+		},
+		{
+			title: 'WarpDL',
+			description: 'A powerful and versatile cross-platform download manager.',
+			link: 'https://github.com/warpdl/warpdl',
+			icon: WrenchIcon
 		}
 	];
 
@@ -62,7 +67,7 @@
 
 	const facts = [
 		{ label: 'Happy Users', value: '100K+', icon: '😊' },
-		{ label: 'Projects', value: '12', icon: '📁' },
+		{ label: 'Projects', value: '30+', icon: '📁' },
 		{ label: 'Open Source Contributions', value: '50+', icon: '🔧' }
 	];
 
@@ -119,7 +124,7 @@
 		<div class="relative z-10 container mx-auto px-4">
 			<div class="mb-8">
 				<img
-					src="/assets/img/profile-img.webp"
+					src="/assets/img/profile-img.png"
 					alt="Divanshu Chauhan"
 					class="mx-auto mb-6 h-32 w-32 rounded-full border-4 border-primary/20"
 				/>
@@ -286,7 +291,7 @@
 		<div class="container mx-auto px-4">
 			<h3 class="mb-6 text-center text-3xl font-bold">Skills</h3>
 			<p class="mb-12 text-center text-muted-foreground">
-				I've have some skills, here is how much I can do.
+				I have some skills, here is how much I can do.
 			</p>
 			<div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
 				{#each skills as skill (skill.name)}
@@ -336,7 +341,7 @@
 							<div class="space-y-4">
 								<div>
 									<h4 class="font-semibold text-primary">Masters of Science in Computer Science</h4>
-									<p class="text-sm text-muted-foreground">2025 - 2026</p>
+									<p class="text-sm text-muted-foreground">August 2025 - May 2026</p>
 									<p class="text-sm font-medium">Arizona State University, Tempe, AZ</p>
 									<p class="text-sm text-muted-foreground">
 										In process of completing a Master's degree in Computer Science with a focus on
