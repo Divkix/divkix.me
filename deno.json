@@ -1,0 +1,59 @@
+{
+	"tasks": {
+		"dev": "deno run -A npm:vite dev",
+		"build": "deno run -A npm:vite build",
+		"preview": "deno run -A npm:vite preview",
+		"check": "deno run -A npm:svelte-kit sync && deno run -A npm:svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "deno run -A npm:svelte-kit sync && deno run -A npm:svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "deno lint && deno fmt --check",
+		"format": "deno fmt",
+		"deploy": "deno run -A npm:wrangler deploy",
+		"cf:dev": "deno run -A npm:wrangler dev"
+	},
+	"compilerOptions": {
+		"lib": ["deno.window", "dom", "dom.iterable", "dom.asynciterable"],
+		"jsx": "react-jsx",
+		"jsxImportSource": "npm:svelte@^5.0.0"
+	},
+	"imports": {
+		"$lib/": "./src/lib/",
+		"@sveltejs/": "npm:@sveltejs/",
+		"svelte": "npm:svelte@^5.0.0",
+		"svelte/": "npm:svelte@^5.0.0/",
+		"vite": "npm:vite@^7.0.4",
+		"tailwindcss": "npm:tailwindcss@^4.0.0",
+		"@tailwindcss/": "npm:@tailwindcss/",
+		"lucide-svelte": "npm:lucide-svelte@^0.536.0",
+		"@lucide/svelte": "npm:@lucide/svelte@^0.536.0",
+		"bits-ui": "npm:bits-ui@^2.9.1",
+		"clsx": "npm:clsx@^2.1.1",
+		"mode-watcher": "npm:mode-watcher@^1.1.0",
+		"simple-icons": "npm:simple-icons@^15.9.0",
+		"tailwind-merge": "npm:tailwind-merge@^3.3.1",
+		"tailwind-variants": "npm:tailwind-variants@^2.1.0",
+		"tw-animate-css": "npm:tw-animate-css@^1.3.6",
+		"esm-env": "npm:esm-env@^1.0.0",
+		"devalue": "npm:devalue@^5.0.0",
+		"cookie": "npm:cookie@^0.6.0",
+		"set-cookie-parser": "npm:set-cookie-parser@^2.6.0"
+	},
+	"nodeModulesDir": "auto",
+	"lock": false,
+	"lint": {
+		"include": ["src/", "*.js", "*.ts"],
+		"exclude": ["node_modules/", "build/", ".svelte-kit/"],
+		"rules": {
+			"tags": ["recommended"],
+			"include": ["ban-untagged-todo"],
+			"exclude": ["no-unused-vars", "no-explicit-any"]
+		}
+	},
+	"fmt": {
+		"useTabs": true,
+		"lineWidth": 100,
+		"singleQuote": true,
+		"semiColons": true,
+		"include": ["src/", "*.js", "*.ts", "*.json", "*.md"],
+		"exclude": ["node_modules/", "build/", ".svelte-kit/"]
+	}
+}

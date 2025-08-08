@@ -169,7 +169,8 @@ bun run build
 - **[GitHub Pages](https://pages.github.com/)**
 - **[Cloudflare Pages](https://pages.cloudflare.com/)**
 
-For specific deployment instructions, see the [SvelteKit deployment docs](https://kit.svelte.dev/docs/adapters).
+For specific deployment instructions, see the
+[SvelteKit deployment docs](https://kit.svelte.dev/docs/adapters).
 
 ## 📊 Performance
 
