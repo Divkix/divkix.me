@@ -12,7 +12,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "build": {
-    "command": "bun run build"
+    "command": "deno task build"
   },
   "assets": {
     "directory": "./build"
