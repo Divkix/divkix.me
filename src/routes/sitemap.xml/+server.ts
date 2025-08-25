@@ -1,52 +1,45 @@
+import * as sitemap from 'super-sitemap';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const prerender = true;
 
+interface BlogPostMetadata {
+	title?: string;
+	description?: string;
+	date?: string;
+	tags?: string[];
+	published?: boolean;
+}
+
+async function getBlogSlugs(): Promise<string[]> {
+	const postModules = import.meta.glob('/src/lib/posts/*.md', { eager: true });
+	const slugs: string[] = [];
+
+	for (const [path, module] of Object.entries(postModules)) {
+		const slug = path.split('/').pop()?.replace('.md', '') || '';
+		const post = module as { metadata?: BlogPostMetadata };
+		
+		// Only include published posts (default to true if not specified)
+		if (post.metadata?.published !== false) {
+			slugs.push(slug);
+		}
+	}
+
+	return slugs;
+}
+
 export const GET: RequestHandler = async () => {
-	const origin = 'https://divkix.me';
-	
-	// Hardcoded blog slugs based on existing files
-	const blogSlugs = [
-		'advanced-telegram-bot-patterns-go-divkix-guide',
-		'asu-student-to-open-source-leader-journey', 
-		'cross-platform-download-manager-warpdl-architecture',
-		'million-user-telegram-bot-go-alita-robot',
-		'teaching-tech-at-scale-asu-ugta-experience'
-	];
+	const blogSlugs = await getBlogSlugs();
 
-	// Static pages
-	const staticPages = [
-		'',
-		'/blog'
-	];
-
-	// Generate XML
-	const urls = [
-		...staticPages.map(page => ({
-			loc: `${origin}${page}`,
-			changefreq: 'weekly',
-			priority: page === '' ? '1.0' : '0.8'
-		})),
-		...blogSlugs.map(slug => ({
-			loc: `${origin}/blog/${slug}`,
-			changefreq: 'weekly',
-			priority: '0.7'
-		}))
-	];
-
-	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => `	<url>
-		<loc>${url.loc}</loc>
-		<changefreq>${url.changefreq}</changefreq>
-		<priority>${url.priority}</priority>
-	</url>`).join('\n')}
-</urlset>`;
-
-	return new Response(sitemap, {
+	return await sitemap.response({
+		origin: 'https://divkix.me',
+		paramValues: {
+			'/blog/[slug]': blogSlugs
+		},
+		defaultChangefreq: 'weekly',
+		defaultPriority: 0.7,
 		headers: {
-			'Content-Type': 'application/xml',
-			'Cache-Control': 'max-age=3600'
+			'cache-control': 'max-age=3600'
 		}
 	});
 };
