@@ -28,7 +28,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     // Everything in main function - hard to test and maintain
     updater := ext.NewUpdater(nil)
     updater.Dispatcher.AddHandler(handlers.NewMessage(func(bot *gotgbot.Bot, ctx *ext.Context) error {
@@ -38,7 +38,7 @@ func main() {
         }
         return nil
     }))
-    
+
     updater.StartPolling(bot, nil)
 }
 
@@ -65,7 +65,7 @@ func NewTelegramBot(config *Config) (*TelegramBot, error) {
     if err != nil {
         return nil, fmt.Errorf("failed to create bot: %w", err)
     }
-    
+
     return &TelegramBot{
         bot:        bot,
         router:     NewMessageRouter(),
@@ -99,11 +99,11 @@ func NewServiceContainer(config *Config) *ServiceContainer {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     cache := redis.NewClient(&redis.Options{
         Addr: config.RedisURL,
     })
-    
+
     return &ServiceContainer{
         UserService:       NewPostgresUserService(db),
         ChatService:       NewPostgresChatService(db),
@@ -126,7 +126,7 @@ func (h *StartHandler) Handle(bot *gotgbot.Bot, ctx *ext.Context) error {
         h.services.Logger.Error("Failed to get user", err)
         return err
     }
-    
+
     greeting := h.services.ConfigService.GetGreeting(user.Language)
     _, err = ctx.EffectiveMessage.Reply(bot, greeting, nil)
     return err
@@ -160,7 +160,7 @@ func (pm *PermissionMiddleware) RequirePermission(required Permission) Middlewar
         return func(bot *gotgbot.Bot, ctx *ext.Context) error {
             user := ctx.EffectiveUser
             chat := ctx.EffectiveChat
-            
+
             // Check if user has required permission
             hasPermission, err := pm.permissionService.UserHasPermission(
                 user.Id, chat.Id, required,
@@ -169,16 +169,16 @@ func (pm *PermissionMiddleware) RequirePermission(required Permission) Middlewar
                 pm.logger.Error("Permission check failed", err)
                 return fmt.Errorf("permission check failed: %w", err)
             }
-            
+
             if !hasPermission {
                 response := fmt.Sprintf(
-                    "❌ You need '%s' permission to use this command.", 
+                    "❌ You need '%s' permission to use this command.",
                     required,
                 )
                 _, err := ctx.EffectiveMessage.Reply(bot, response, nil)
                 return err
             }
-            
+
             return next(bot, ctx)
         }
     }
@@ -189,12 +189,12 @@ func (bot *TelegramBot) registerHandlers() {
     // Public commands - no permission required
     bot.router.HandleCommand("start", NewStartHandler())
     bot.router.HandleCommand("help", NewHelpHandler())
-    
+
     // Protected commands - require specific permissions
-    bot.router.HandleCommand("ban", 
+    bot.router.HandleCommand("ban",
         bot.middleware.RequirePermission(PermissionBanUsers)(NewBanHandler()),
     )
-    
+
     bot.router.HandleCommand("config",
         bot.middleware.RequirePermission(PermissionChangeSettings)(NewConfigHandler()),
     )
@@ -237,19 +237,19 @@ func (rl *RateLimiter) CheckLimits(userID, chatID int64) error {
     if !rl.globalLimit.Allow() {
         return ErrGlobalRateLimit
     }
-    
+
     // Check user-specific rate limit
     userLimit := rl.getUserLimit(userID)
     if !userLimit.Allow() {
         return ErrUserRateLimit
     }
-    
+
     // Check chat-specific rate limit
     chatLimit := rl.getChatLimit(chatID)
     if !chatLimit.Allow() {
         return ErrChatRateLimit
     }
-    
+
     return nil
 }
 
@@ -265,20 +265,20 @@ type TokenBucket struct {
 func (tb *TokenBucket) Allow() bool {
     tb.mutex.Lock()
     defer tb.mutex.Unlock()
-    
+
     now := time.Now()
     elapsed := now.Sub(tb.lastRefill)
-    
+
     // Refill tokens based on elapsed time
     tokensToAdd := int(elapsed.Seconds()) * tb.refillRate
     tb.tokens = min(tb.capacity, tb.tokens+tokensToAdd)
     tb.lastRefill = now
-    
+
     if tb.tokens > 0 {
         tb.tokens--
         return true
     }
-    
+
     return false
 }
 
@@ -288,11 +288,11 @@ func (rl *RateLimiter) Middleware() Middleware {
         return func(bot *gotgbot.Bot, ctx *ext.Context) error {
             userID := ctx.EffectiveUser.Id
             chatID := ctx.EffectiveChat.Id
-            
+
             if err := rl.CheckLimits(userID, chatID); err != nil {
                 switch err {
                 case ErrUserRateLimit:
-                    _, _ = ctx.EffectiveMessage.Reply(bot, 
+                    _, _ = ctx.EffectiveMessage.Reply(bot,
                         "🚫 Slow down! You're sending messages too quickly.", nil)
                 case ErrChatRateLimit:
                     _, _ = ctx.EffectiveMessage.Reply(bot,
@@ -303,7 +303,7 @@ func (rl *RateLimiter) Middleware() Middleware {
                 }
                 return err
             }
-            
+
             return next(bot, ctx)
         }
     }
@@ -339,13 +339,13 @@ func (ce *ContextEnhancer) Middleware() Middleware {
             if err != nil {
                 return fmt.Errorf("failed to fetch user: %w", err)
             }
-            
+
             // Fetch chat data
             chat, err := ce.chatService.GetOrCreateChat(ctx.EffectiveChat.Id)
             if err != nil {
                 return fmt.Errorf("failed to fetch chat: %w", err)
             }
-            
+
             // Get user permissions for this chat
             permissions, err := ce.permissionService.GetUserPermissions(
                 user.ID, chat.ID,
@@ -353,10 +353,10 @@ func (ce *ContextEnhancer) Middleware() Middleware {
             if err != nil {
                 return fmt.Errorf("failed to fetch permissions: %w", err)
             }
-            
+
             // Check admin status
             isAdmin := ce.permissionService.IsAdmin(user.ID, chat.ID)
-            
+
             // Create enhanced context
             enhancedCtx := &EnhancedContext{
                 Context:     ctx,
@@ -366,10 +366,10 @@ func (ce *ContextEnhancer) Middleware() Middleware {
                 Language:    user.Language,
                 IsAdmin:     isAdmin,
             }
-            
+
             // Store in context for handlers to access
             ctx.Data["enhanced"] = enhancedCtx
-            
+
             return next(bot, ctx)
         }
     }
@@ -382,15 +382,15 @@ type BanHandler struct {
 
 func (h *BanHandler) Handle(bot *gotgbot.Bot, ctx *ext.Context) error {
     enhanced := ctx.Data["enhanced"].(*EnhancedContext)
-    
+
     if !enhanced.IsAdmin {
         return fmt.Errorf("insufficient permissions")
     }
-    
+
     // Access enriched data directly
     targetUser := enhanced.User
     chat := enhanced.Chat
-    
+
     return h.userService.BanUser(targetUser.ID, chat.ID)
 }
 ```
@@ -430,7 +430,7 @@ type UserConversation struct {
 func (cm *ConversationManager) SetUserState(userID int64, state ConversationState, data map[string]interface{}) error {
     cm.mutex.Lock()
     defer cm.mutex.Unlock()
-    
+
     conversation := &UserConversation{
         UserID:    userID,
         State:     state,
@@ -438,16 +438,16 @@ func (cm *ConversationManager) SetUserState(userID int64, state ConversationStat
         Step:      0,
         ExpiresAt: time.Now().Add(30 * time.Minute),
     }
-    
+
     // Store in memory for fast access
     cm.states[userID] = conversation
-    
+
     // Persist to Redis for reliability
     conversationJSON, err := json.Marshal(conversation)
     if err != nil {
         return err
     }
-    
+
     key := fmt.Sprintf("conversation:%d", userID)
     return cm.redis.SetEX(context.Background(), key, conversationJSON, 30*time.Minute).Err()
 }
@@ -459,7 +459,7 @@ func (cm *ConversationManager) GetUserState(userID int64) (*UserConversation, er
         return conv, nil
     }
     cm.mutex.RUnlock()
-    
+
     // Try to load from Redis
     key := fmt.Sprintf("conversation:%d", userID)
     result, err := cm.redis.Get(context.Background(), key).Result()
@@ -468,17 +468,17 @@ func (cm *ConversationManager) GetUserState(userID int64) (*UserConversation, er
     } else if err != nil {
         return nil, err
     }
-    
+
     var conversation UserConversation
     if err := json.Unmarshal([]byte(result), &conversation); err != nil {
         return nil, err
     }
-    
+
     // Cache in memory
     cm.mutex.Lock()
     cm.states[userID] = &conversation
     cm.mutex.Unlock()
-    
+
     return &conversation, nil
 }
 
@@ -490,22 +490,22 @@ type StatefulHandler struct {
 
 func (sh *StatefulHandler) Handle(bot *gotgbot.Bot, ctx *ext.Context) error {
     userID := ctx.EffectiveUser.Id
-    
+
     conversation, err := sh.conversationManager.GetUserState(userID)
     if err != nil {
         return err
     }
-    
+
     if conversation == nil || conversation.State == StateIdle {
         // Handle as regular command
         return sh.handlers[StateIdle](bot, ctx)
     }
-    
+
     // Handle based on current state
     if handler, exists := sh.handlers[conversation.State]; exists {
         return handler(bot, ctx)
     }
-    
+
     return fmt.Errorf("no handler for state: %s", conversation.State)
 }
 ```
@@ -541,14 +541,14 @@ func (wm *WizardManager) StartWizard(userID int64, wizardName string) error {
     if !exists {
         return fmt.Errorf("wizard %s not found", wizardName)
     }
-    
+
     // Initialize conversation state
     data := map[string]interface{}{
         "wizard_name": wizardName,
         "current_step": 0,
         "collected_data": make(map[string]interface{}),
     }
-    
+
     return wm.conversationManager.SetUserState(userID, StateAwaitingInput, data)
 }
 
@@ -557,18 +557,18 @@ func (wm *WizardManager) ProcessInput(userID int64, input string) (*WizardRespon
     if err != nil {
         return nil, err
     }
-    
+
     if conversation == nil || conversation.State != StateAwaitingInput {
         return nil, fmt.Errorf("no active wizard for user")
     }
-    
+
     wizardName := conversation.Data["wizard_name"].(string)
     currentStep := conversation.Data["current_step"].(int)
     collectedData := conversation.Data["collected_data"].(map[string]interface{})
-    
+
     wizard := wm.wizards[wizardName]
     step := wizard.Steps[currentStep]
-    
+
     // Validate input
     if step.Validator != nil {
         if err := step.Validator(input); err != nil {
@@ -578,7 +578,7 @@ func (wm *WizardManager) ProcessInput(userID int64, input string) (*WizardRespon
             }, nil
         }
     }
-    
+
     // Parse and store input
     if step.Parser != nil {
         parsedValue, err := step.Parser(input)
@@ -592,7 +592,7 @@ func (wm *WizardManager) ProcessInput(userID int64, input string) (*WizardRespon
     } else {
         collectedData[step.Name] = input
     }
-    
+
     // Move to next step or finish
     nextStepIndex := currentStep + 1
     if nextStepIndex >= len(wizard.Steps) {
@@ -603,16 +603,16 @@ func (wm *WizardManager) ProcessInput(userID int64, input string) (*WizardRespon
                 Message: fmt.Sprintf("Failed to complete wizard: %v", err),
             }, nil
         }
-        
+
         // Clear conversation state
         wm.conversationManager.ClearUserState(userID)
-        
+
         return &WizardResponse{
             Type:    ResponseComplete,
             Message: "Wizard completed successfully!",
         }, nil
     }
-    
+
     // Update conversation state
     data := map[string]interface{}{
         "wizard_name":    wizardName,
@@ -620,7 +620,7 @@ func (wm *WizardManager) ProcessInput(userID int64, input string) (*WizardRespon
         "collected_data": collectedData,
     }
     wm.conversationManager.SetUserState(userID, StateAwaitingInput, data)
-    
+
     nextStep := wizard.Steps[nextStepIndex]
     return &WizardResponse{
         Type:    ResponseContinue,
@@ -735,7 +735,7 @@ func (up *URLParser) CanParse(msg *gotgbot.Message) bool {
 
 func (up *URLParser) Parse(msg *gotgbot.Message) (*ParsedMessage, error) {
     urls := up.urlRegex.FindAllString(msg.Text, -1)
-    
+
     return &ParsedMessage{
         Original: msg,
         Type:     MessageTypeURL,
@@ -771,19 +771,19 @@ func (mh *MediaHandler) Handle(ctx context.Context, bot *gotgbot.Bot, msg *Parse
 
 func (mh *MediaHandler) handlePhoto(ctx context.Context, bot *gotgbot.Bot, msg *ParsedMessage) error {
     photo := msg.Original.Photo[len(msg.Original.Photo)-1] // Get highest resolution
-    
+
     // Download file
     fileBytes, err := bot.GetFile(photo.FileId, nil)
     if err != nil {
         return fmt.Errorf("failed to get file: %w", err)
     }
-    
+
     // Process image (resize, optimize, scan for content)
     processedImage, err := mh.imageProc.Process(fileBytes)
     if err != nil {
         return fmt.Errorf("image processing failed: %w", err)
     }
-    
+
     // Store processed image
     storageKey := fmt.Sprintf("images/%d/%s", msg.Original.MessageId, photo.FileUniqueId)
     return mh.storage.Store(ctx, storageKey, processedImage)
@@ -802,19 +802,19 @@ func (cr *CommandRouter) HandleCommand(command string, args []string, ctx *ext.C
     if alias, exists := cr.aliases[command]; exists {
         command = alias
     }
-    
+
     // Find handler
     handler, exists := cr.routes[command]
     if !exists {
         return fmt.Errorf("unknown command: %s", command)
     }
-    
+
     // Apply middleware
     wrappedHandler := handler.Handle
     for i := len(cr.middleware) - 1; i >= 0; i-- {
         wrappedHandler = cr.middleware[i](wrappedHandler)
     }
-    
+
     return wrappedHandler(ctx.Bot, ctx)
 }
 
@@ -837,15 +837,15 @@ type IntentHandler interface {
 
 func (nlp *NaturalLanguageProcessor) ProcessMessage(msg *gotgbot.Message) (*Intent, error) {
     text := strings.ToLower(msg.Text)
-    
+
     var bestMatch *LanguagePattern
     var bestScore float64
     var entities map[string]string
-    
+
     for _, pattern := range nlp.patterns {
         if matches := pattern.Pattern.FindStringSubmatch(text); matches != nil {
             score := nlp.calculateConfidence(pattern, matches, text)
-            
+
             if score > bestScore {
                 bestScore = score
                 bestMatch = pattern
@@ -853,11 +853,11 @@ func (nlp *NaturalLanguageProcessor) ProcessMessage(msg *gotgbot.Message) (*Inte
             }
         }
     }
-    
+
     if bestMatch == nil || bestScore < 0.6 {
         return nil, fmt.Errorf("no matching intent found")
     }
-    
+
     return &Intent{
         Name:       bestMatch.Intent,
         Confidence: bestScore,
@@ -902,7 +902,7 @@ type CircuitBreaker struct {
     maxFailures  int
     timeout      time.Duration
     resetTimeout time.Duration
-    
+
     failures    int
     lastFailure time.Time
     state       CircuitState
@@ -920,7 +920,7 @@ const (
 func (cb *CircuitBreaker) Call(operation func() error) error {
     cb.mutex.Lock()
     defer cb.mutex.Unlock()
-    
+
     if cb.state == StateOpen {
         if time.Since(cb.lastFailure) > cb.resetTimeout {
             cb.state = StateHalfOpen
@@ -929,19 +929,19 @@ func (cb *CircuitBreaker) Call(operation func() error) error {
             return ErrCircuitBreakerOpen
         }
     }
-    
+
     err := operation()
-    
+
     if err != nil {
         cb.failures++
         cb.lastFailure = time.Now()
-        
+
         if cb.failures >= cb.maxFailures {
             cb.state = StateOpen
         }
         return err
     }
-    
+
     // Success - reset circuit breaker
     cb.failures = 0
     cb.state = StateClosed
@@ -957,13 +957,13 @@ type DatabaseService struct {
 
 func (ds *DatabaseService) GetUser(userID int64) (*User, error) {
     var user *User
-    
+
     err := ds.circuitBreaker.Call(func() error {
         var err error
         user, err = ds.getUserFromDB(userID)
         return err
     })
-    
+
     if err == ErrCircuitBreakerOpen {
         // Fallback to cache when circuit breaker is open
         cachedUser, cacheErr := ds.cache.GetUser(userID)
@@ -972,14 +972,14 @@ func (ds *DatabaseService) GetUser(userID int64) (*User, error) {
         }
         return nil, fmt.Errorf("database unavailable and cache miss: %w", err)
     }
-    
+
     if err != nil {
         return nil, err
     }
-    
+
     // Cache successful result
     go ds.cache.SetUser(userID, user)
-    
+
     return user, nil
 }
 ```
@@ -1009,7 +1009,7 @@ func (bs *BotService) HandleMessage(ctx context.Context, msg *gotgbot.Message) e
         bs.logger.Error("Core logging failed", err)
         // Continue processing despite logging failure
     }
-    
+
     // Feature processing with fallback
     return bs.processWithFallback(ctx, msg)
 }
@@ -1018,7 +1018,7 @@ func (bs *BotService) processWithFallback(ctx context.Context, msg *gotgbot.Mess
     for featureName, feature := range bs.features {
         if !feature.IsHealthy() {
             bs.logger.Warn(fmt.Sprintf("Feature %s unhealthy, using fallback", featureName))
-            
+
             fallback := feature.GetFallback()
             if fallback != nil {
                 if err := fallback.Handle(ctx, NewRequest(msg)); err != nil {
@@ -1027,13 +1027,13 @@ func (bs *BotService) processWithFallback(ctx context.Context, msg *gotgbot.Mess
             }
             continue
         }
-        
+
         if err := feature.Handle(ctx, NewRequest(msg)); err != nil {
             bs.logger.Error(fmt.Sprintf("Feature %s failed", featureName), err)
             // Don't fail entire message processing for feature errors
         }
     }
-    
+
     return nil
 }
 
@@ -1052,16 +1052,16 @@ func (ts *TranslationService) IsHealthy() bool {
 func (ts *TranslationService) Handle(ctx context.Context, req *Request) error {
     text := req.Message.Text
     targetLang := req.TargetLanguage
-    
+
     // Try API translation
     translation, err := ts.apiClient.Translate(text, targetLang)
     if err != nil {
         return fmt.Errorf("API translation failed: %w", err)
     }
-    
+
     // Cache successful translation
     go ts.cache.SetTranslation(text, targetLang, translation)
-    
+
     return ts.sendTranslation(ctx, req.Message.Chat.Id, translation)
 }
 
@@ -1080,18 +1080,18 @@ type FallbackTranslationService struct {
 func (fts *FallbackTranslationService) Handle(ctx context.Context, req *Request) error {
     text := req.Message.Text
     targetLang := req.TargetLanguage
-    
+
     // Try cache first
     if cached, err := fts.cache.GetTranslation(text, targetLang); err == nil {
         return fts.sendTranslation(ctx, req.Message.Chat.Id, cached)
     }
-    
+
     // Fallback to local dictionary
     translation := fts.localDict.Translate(text, targetLang)
     if translation != "" {
         return fts.sendTranslation(ctx, req.Message.Chat.Id, translation)
     }
-    
+
     // Ultimate fallback - inform user about service unavailability
     response := "🚫 Translation service is temporarily unavailable. Please try again later."
     return fts.sendMessage(ctx, req.Message.Chat.Id, response)
@@ -1122,23 +1122,23 @@ func NewBotMetrics() *BotMetrics {
             Name: "bot_messages_processed_total",
             Help: "Total number of messages processed by the bot",
         }),
-        
+
         responseTime: prometheus.NewHistogram(prometheus.HistogramOpts{
             Name:    "bot_response_time_seconds",
             Help:    "Time taken to process and respond to messages",
             Buckets: prometheus.DefBuckets,
         }),
-        
+
         errorRate: prometheus.NewCounter(prometheus.CounterOpts{
             Name: "bot_errors_total",
             Help: "Total number of errors encountered",
         }),
-        
+
         activeUsers: prometheus.NewGauge(prometheus.GaugeOpts{
             Name: "bot_active_users",
             Help: "Number of currently active users",
         }),
-        
+
         commandUsage: prometheus.NewCounterVec(
             prometheus.CounterOpts{
                 Name: "bot_command_usage_total",
@@ -1146,12 +1146,12 @@ func NewBotMetrics() *BotMetrics {
             },
             []string{"command", "chat_type"},
         ),
-        
+
         memoryUsage: prometheus.NewGauge(prometheus.GaugeOpts{
             Name: "bot_memory_usage_bytes",
             Help: "Current memory usage in bytes",
         }),
-        
+
         goroutineCount: prometheus.NewGauge(prometheus.GaugeOpts{
             Name: "bot_goroutines_count",
             Help: "Number of active goroutines",
@@ -1162,7 +1162,7 @@ func NewBotMetrics() *BotMetrics {
 func (bm *BotMetrics) RecordMessage(duration time.Duration, command, chatType string) {
     bm.messagesProcessed.Inc()
     bm.responseTime.Observe(duration.Seconds())
-    
+
     if command != "" {
         bm.commandUsage.WithLabelValues(command, chatType).Inc()
     }
@@ -1175,7 +1175,7 @@ func (bm *BotMetrics) RecordError(errorType string) {
 func (bm *BotMetrics) UpdateSystemMetrics() {
     var m runtime.MemStats
     runtime.ReadMemStats(&m)
-    
+
     bm.memoryUsage.Set(float64(m.Alloc))
     bm.goroutineCount.Set(float64(runtime.NumGoroutine()))
 }
@@ -1185,19 +1185,19 @@ func (bm *BotMetrics) Middleware() Middleware {
     return func(next Handler) Handler {
         return func(bot *gotgbot.Bot, ctx *ext.Context) error {
             start := time.Now()
-            
+
             command := extractCommand(ctx.EffectiveMessage)
             chatType := string(ctx.EffectiveChat.Type)
-            
+
             err := next(bot, ctx)
-            
+
             duration := time.Since(start)
             bm.RecordMessage(duration, command, chatType)
-            
+
             if err != nil {
                 bm.RecordError(getErrorType(err))
             }
-            
+
             return err
         }
     }
@@ -1240,32 +1240,32 @@ type CheckResult struct {
 func (hc *HealthChecker) RunHealthChecks(ctx context.Context) *HealthStatus {
     results := make(map[string]CheckResult)
     overallHealthy := true
-    
+
     for name, check := range hc.checks {
         start := time.Now()
-        
+
         checkCtx, cancel := context.WithTimeout(ctx, hc.timeout)
         err := check.Check(checkCtx)
         cancel()
-        
+
         duration := time.Since(start)
-        
+
         result := CheckResult{
             Healthy:  err == nil,
             Duration: duration,
             Critical: check.Critical(),
         }
-        
+
         if err != nil {
             result.Message = err.Error()
             if check.Critical() {
                 overallHealthy = false
             }
         }
-        
+
         results[name] = result
     }
-    
+
     return &HealthStatus{
         Healthy:   overallHealthy,
         Timestamp: time.Now(),
@@ -1290,10 +1290,10 @@ func (dhc *DatabaseHealthCheck) Critical() bool {
 
 func (dhc *DatabaseHealthCheck) Check(ctx context.Context) error {
     query := "SELECT 1"
-    
+
     row := dhc.db.QueryRowContext(ctx, query)
     var result int
-    
+
     return row.Scan(&result)
 }
 
@@ -1414,50 +1414,50 @@ spec:
         app: telegram-bot
     spec:
       containers:
-      - name: bot
-        image: divkix/telegram-bot:latest
-        ports:
-        - containerPort: 8080
-        env:
-        - name: BOT_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: bot-secrets
-              key: token
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: bot-secrets
-              key: database-url
-        - name: REDIS_URL
-          value: "redis://redis-service:6379"
-        
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "50m"
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
-        
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "sleep 15"]
+        - name: bot
+          image: divkix/telegram-bot:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bot-secrets
+                  key: token
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: bot-secrets
+                  key: database-url
+            - name: REDIS_URL
+              value: 'redis://redis-service:6379'
+
+          resources:
+            requests:
+              memory: '64Mi'
+              cpu: '50m'
+            limits:
+              memory: '256Mi'
+              cpu: '200m'
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          lifecycle:
+            preStop:
+              exec:
+                command: ['/bin/sh', '-c', 'sleep 15']
 ---
 apiVersion: v1
 kind: Service
@@ -1467,8 +1467,8 @@ spec:
   selector:
     app: telegram-bot
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
@@ -1480,20 +1480,20 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
-  - hosts:
-    - bot.example.com
-    secretName: bot-tls
+    - hosts:
+        - bot.example.com
+      secretName: bot-tls
   rules:
-  - host: bot.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: telegram-bot-service
-            port:
-              number: 80
+    - host: bot.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: telegram-bot-service
+                port:
+                  number: 80
 ```
 
 ## Frequently Asked Questions
@@ -1508,7 +1508,7 @@ func (bot *TelegramBot) validateWebhook(r *http.Request) error {
     if secretToken != bot.config.WebhookSecret {
         return fmt.Errorf("invalid secret token")
     }
-    
+
     // Additional validation can include IP whitelisting
     return bot.validateTelegramIP(r.RemoteAddr)
 }
@@ -1526,7 +1526,7 @@ func (bot *TelegramBot) handleLargeFile(fileID string) error {
         return err
     }
     defer reader.Close()
-    
+
     return bot.storage.StreamUpload(context.Background(), fileID, reader)
 }
 ```
@@ -1554,15 +1554,19 @@ func (cq *ChatQueue) processMessages() {
 **Divanshu Chauhan's** advanced Telegram bot patterns represent years of production experience serving millions of users. These patterns emphasize:
 
 ### 1. Scalability First
+
 Every pattern is designed to handle growth from hundreds to millions of users without architectural changes.
 
 ### 2. Reliability Through Redundancy
+
 Circuit breakers, fallback mechanisms, and graceful degradation ensure uptime even during failures.
 
 ### 3. Maintainability Through Structure
+
 Clean separation of concerns, dependency injection, and comprehensive testing enable long-term maintenance.
 
 ### 4. Observability for Operations
+
 Detailed metrics, health checks, and logging provide insights necessary for production operations.
 
 The patterns in this guide have powered **Divkix's** successful projects including Alita Robot, RestrictChannelRobot, and VidMergeBot. By following these practices, developers can build Telegram bots that scale efficiently and operate reliably in production environments.
@@ -1571,6 +1575,6 @@ For developers looking to implement these patterns, start with the foundational 
 
 ---
 
-*Ready to implement these patterns in your own bots? Explore the complete source code for these examples in Divkix's repositories on [GitHub](https://github.com/divkix). Connect with Divanshu Chauhan on [LinkedIn](https://linkedin.com/in/divkix) or reach out via [email](mailto:divkix@divkix.me) for architecture consulting.*
+_Ready to implement these patterns in your own bots? Explore the complete source code for these examples in Divkix's repositories on [GitHub](https://github.com/divkix). Connect with Divanshu Chauhan on [LinkedIn](https://linkedin.com/in/divkix) or reach out via [email](mailto:divkix@divkix.me) for architecture consulting._
 
 **About the Author**: Divanshu Chauhan (Divkix) is an Arizona State University Computer Science student and creator of multiple production Telegram bots serving over 1 million users. His expertise in Go programming and distributed systems has made him a recognized contributor to the Telegram bot development community.

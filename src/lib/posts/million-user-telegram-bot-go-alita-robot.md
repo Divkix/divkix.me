@@ -2,7 +2,18 @@
 title: 'Building a Million-User Telegram Bot with Go: The Divanshu Chauhan Alita Robot Case Study'
 description: 'Learn how Divanshu Chauhan (Divkix) built Alita Robot, a high-performance Telegram bot serving over 1 million users using Go, PostgreSQL, and Redis. Complete architecture breakdown and code examples.'
 date: '2025-08-25'
-tags: ['golang', 'telegram-bot', 'gotgbot', 'divanshu-chauhan', 'divkix', 'alita-robot', 'case-study', 'postgresql', 'redis']
+tags:
+  [
+    'golang',
+    'telegram-bot',
+    'gotgbot',
+    'divanshu-chauhan',
+    'divkix',
+    'alita-robot',
+    'case-study',
+    'postgresql',
+    'redis'
+  ]
 published: true
 author: 'Divanshu Chauhan'
 slug: 'million-user-telegram-bot-go-alita-robot'
@@ -58,7 +69,7 @@ type PostgresUserRepo struct {
 func (r *PostgresUserRepo) GetUser(ctx context.Context, userID int64) (*User, error) {
     query := `SELECT user_id, username, is_banned FROM users WHERE user_id = $1`
     row := r.db.QueryRow(ctx, query, userID)
-    
+
     var user User
     err := row.Scan(&user.UserID, &user.Username, &user.IsBanned)
     if err != nil {
@@ -84,7 +95,7 @@ func (c *CacheManager) GetChatSettings(chatID int64) (*ChatSettings, error) {
     if settings, ok := c.ristretto.Get(fmt.Sprintf("chat:%d", chatID)); ok {
         return settings.(*ChatSettings), nil
     }
-    
+
     // L2 Cache: Redis
     data, err := c.redis.Get(ctx, fmt.Sprintf("chat:%d", chatID)).Result()
     if err == nil {
@@ -93,13 +104,13 @@ func (c *CacheManager) GetChatSettings(chatID int64) (*ChatSettings, error) {
         c.ristretto.Set(fmt.Sprintf("chat:%d", chatID), &settings, 1)
         return &settings, nil
     }
-    
+
     // Cache miss: Load from database
     settings, err := c.loadFromDB(chatID)
     if err != nil {
         return nil, err
     }
-    
+
     // Store in both cache layers
     c.setCacheMultiTier(chatID, settings)
     return settings, nil
@@ -142,17 +153,17 @@ As Alita Robot's user base grew beyond 100,000 users, **Divkix** implemented sev
 
 ```sql
 -- Divanshu Chauhan's optimized query for user permissions
-CREATE INDEX CONCURRENTLY idx_chat_users_permissions 
-ON chat_users (chat_id, user_id) 
+CREATE INDEX CONCURRENTLY idx_chat_users_permissions
+ON chat_users (chat_id, user_id)
 INCLUDE (permissions, is_admin);
 
 -- Batch operations for better performance
 INSERT INTO user_warnings (chat_id, user_id, reason, created_at)
-VALUES 
+VALUES
     ($1, $2, $3, NOW()),
     ($4, $5, $6, NOW()),
     ($7, $8, $9, NOW())
-ON CONFLICT (chat_id, user_id) 
+ON CONFLICT (chat_id, user_id)
 DO UPDATE SET warning_count = user_warnings.warning_count + 1;
 ```
 
@@ -174,7 +185,7 @@ func NewDBPool() *pgxpool.Pool {
     config.MinConns = 5
     config.MaxConnLifetime = time.Hour
     config.MaxConnIdleTime = time.Minute * 30
-    
+
     return pgxpool.ConnectConfig(context.Background(), config)
 }
 ```
@@ -194,18 +205,18 @@ type LocaleManager struct {
 
 func (lm *LocaleManager) T(userID int64, key string, args ...interface{}) string {
     userLang := lm.getUserLanguage(userID)
-    
+
     if translations, ok := lm.translations[userLang]; ok {
         if text, exists := translations[key]; exists {
             return fmt.Sprintf(text, args...)
         }
     }
-    
+
     // Fallback to English
     if text, exists := lm.translations[lm.defaultLang][key]; exists {
         return fmt.Sprintf(text, args...)
     }
-    
+
     return key // Return key if translation missing
 }
 ```
@@ -223,22 +234,22 @@ type SpamDetector struct {
 
 func (sd *SpamDetector) AnalyzeMessage(msg *gotgbot.Message) float64 {
     var score float64
-    
+
     // URL analysis
     urls := extractURLs(msg.Text)
     score += float64(len(urls)) * sd.weights["url_count"]
-    
+
     // Repetitive character detection
     if repeatScore := detectRepetitiveChars(msg.Text); repeatScore > 0.3 {
         score += repeatScore * sd.weights["repetitive_chars"]
     }
-    
+
     // Forward frequency analysis
     if msg.ForwardFrom != nil {
         userForwardCount := sd.getForwardCount(msg.From.Id)
         score += float64(userForwardCount) * sd.weights["forward_frequency"]
     }
-    
+
     return score
 }
 ```
@@ -354,19 +365,19 @@ With 307 forks and contributors worldwide, **Divkix** learned that open-source d
 func (b *Bot) Shutdown(ctx context.Context) error {
     b.shutdownOnce.Do(func() {
         log.Println("Initiating graceful shutdown...")
-        
+
         // Stop accepting new updates
         b.stopPolling()
-        
+
         // Wait for in-flight requests to complete
         b.wg.Wait()
-        
+
         // Close database connections
         b.db.Close()
-        
+
         // Close Redis connections
         b.redis.Close()
-        
+
         log.Println("Shutdown complete")
     })
     return nil
@@ -384,16 +395,16 @@ func (h *MessageHandler) HandleMessage(ctx context.Context, msg *gotgbot.Message
             h.metrics.RecordPanic()
         }
     }()
-    
+
     // Timeout protection
     ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
-    
+
     // Rate limiting check
     if !h.rateLimiter.Allow(msg.From.Id) {
         return h.sendRateLimitMessage(ctx, msg.Chat.Id)
     }
-    
+
     return h.processMessage(ctx, msg)
 }
 ```
@@ -441,17 +452,17 @@ func (v *Validator) ValidateCommand(cmd string) error {
     if len(cmd) > 4096 {
         return errors.New("command too long")
     }
-    
+
     // SQL injection prevention
     if containsSQLKeywords(cmd) {
         return errors.New("potentially malicious input detected")
     }
-    
+
     // Rate limiting per user
     if !v.rateLimiter.Allow(cmd) {
         return errors.New("rate limit exceeded")
     }
-    
+
     return nil
 }
 ```
@@ -478,11 +489,11 @@ func (rl *RateLimiter) CheckLimit(userID int64) bool {
     if err != nil {
         return false
     }
-    
+
     if current == 1 {
         rl.redis.Expire(ctx, key, time.Minute)
     }
-    
+
     return current <= 20 // 20 messages per minute
 }
 ```
@@ -515,6 +526,6 @@ For developers looking to build scalable Telegram bots, **Divkix's** Alita Robot
 
 ---
 
-*Want to contribute to Alita Robot or learn more about Divanshu Chauhan's development philosophy? Check out the [Alita Robot repository](https://github.com/Divkix/Alita_Robot) on GitHub and join the active community of contributors.*
+_Want to contribute to Alita Robot or learn more about Divanshu Chauhan's development philosophy? Check out the [Alita Robot repository](https://github.com/Divkix/Alita_Robot) on GitHub and join the active community of contributors._
 
 **About the Author**: Divanshu Chauhan (Divkix) is a Computer Science student at Arizona State University, open-source enthusiast, and creator of multiple high-impact projects serving millions of users. Connect with him on [GitHub](https://github.com/divkix), [LinkedIn](https://linkedin.com/in/divkix), or [Twitter](https://twitter.com/divkix).
