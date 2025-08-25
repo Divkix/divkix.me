@@ -6,15 +6,15 @@ export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	server: {
 		fs: {
-			allow: ['..'],
-		},
+			allow: ['..']
+		}
 	},
 	resolve: {
 		alias: {
-			'$lib': '/src/lib',
-		},
+			$lib: '/src/lib'
+		}
 	},
 	optimizeDeps: {
-		exclude: ['@sveltejs/kit', 'svelte'],
-	},
+		exclude: ['@sveltejs/kit', 'svelte']
+	}
 });

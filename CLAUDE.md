@@ -21,7 +21,7 @@ bun run preview      # Preview production build locally
 
 # Code Quality
 bun run check        # TypeScript type checking
-bun run check:watch  # Type checking in watch mode  
+bun run check:watch  # Type checking in watch mode
 bun run lint         # Run Prettier check + ESLint
 bun run format       # Format code with Prettier
 

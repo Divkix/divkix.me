@@ -6,3 +6,4 @@ export { default as CardContent } from './card-content.svelte';
 export { default as DynamicRoles } from './dynamic-roles.svelte';
 export { default as ModeToggle } from './mode-toggle.svelte';
 export { default as SimpleIcon } from './simple-icon.svelte';
+export { default as Header } from '../Header.svelte';
