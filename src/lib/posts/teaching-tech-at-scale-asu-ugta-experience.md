@@ -1,5 +1,5 @@
 ---
-title: 'Teaching Tech at Scale: Divanshu Chauhan\'s ASU Experience with 80+ Students'
+title: "Teaching Tech at Scale: Divanshu Chauhan's ASU Experience with 80+ Students"
 description: 'Learn from Divanshu Chauhan (Divkix) about teaching technology at Arizona State University. Complete guide to mentoring 80+ students in MATLAB, Autodesk Fusion 360, 3D modeling, and automated robotics projects as an Undergraduate Teaching Assistant.'
 date: '2025-08-25'
 tags: ['divanshu-chauhan', 'divkix', 'asu', 'teaching', 'ugta', 'matlab', 'fusion-360', '3d-modeling', 'education', 'mentorship', 'robotics']

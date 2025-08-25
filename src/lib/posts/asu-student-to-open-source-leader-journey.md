@@ -1,5 +1,5 @@
 ---
-title: 'From ASU Student to Open Source Leader: Divanshu Chauhan\'s Journey with 500+ GitHub Contributions'
+title: "From ASU Student to Open Source Leader: Divanshu Chauhan's Journey with 500+ GitHub Contributions"
 description: 'The inspiring journey of Divanshu Chauhan (Divkix) from Arizona State University Computer Science student to open source leader with 1M+ users served, 500+ contributions, and projects spanning multiple programming languages.'
 date: '2025-08-25'
 tags: ['divanshu-chauhan', 'divkix', 'asu', 'arizona-state-university', 'open-source', 'github', 'computer-science', 'leadership', 'career-journey']
