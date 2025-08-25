@@ -20,7 +20,8 @@
 		Briefcase,
 		Code,
 		Globe as Web,
-		WrenchIcon
+		WrenchIcon,
+		Bot
 	} from 'lucide-svelte';
 
 	const skills = [
@@ -35,10 +36,10 @@
 
 	const projects = [
 		{
-			title: 'Divide Projects',
-			description: 'A Non-Profit Organization on GitHub for making Telegram Automation Bots',
-			link: 'https://github.com/divideprojects',
-			icon: Code
+			title: 'Alita Robot',
+			description: 'Telegram Group management bot serving 1M+ users, built with Go and Gotgbot',
+			link: 'https://github.com/Divkix/Alita_Robot',
+			icon: Bot
 		},
 		{
 			title: 'ASU Capstone',
