@@ -6,6 +6,7 @@
 
 :root {
 	--radius: 0.625rem;
+	/* Default Platinum theme - light mode */
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
 	--card: oklch(1 0 0);
@@ -40,6 +41,7 @@
 }
 
 .dark {
+	/* Default Platinum theme - dark mode */
 	--background: oklch(0.145 0 0);
 	--foreground: oklch(0.985 0 0);
 	--card: oklch(0.205 0 0);
@@ -72,6 +74,9 @@
 	--sidebar-border: oklch(1 0 0 / 10%);
 	--sidebar-ring: oklch(0.439 0 0);
 }
+
+/* Theme-specific overrides are handled by JavaScript in theme.ts */
+/* The CSS variables above serve as fallbacks */
 
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
@@ -118,5 +123,34 @@
 
 	body {
 		@apply bg-background text-foreground;
+	}
+}
+
+/* View Transitions API styles */
+@layer base {
+	/* Ensure smooth transitions for theme changes */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+		mix-blend-mode: normal;
+	}
+
+	/* Prevent default cross-fade animation */
+	::view-transition-old(root) {
+		z-index: 1;
+	}
+
+	::view-transition-new(root) {
+		z-index: 2;
+	}
+
+	/* Optimize rendering performance */
+	html {
+		view-transition-name: root;
+	}
+
+	/* Ensure content doesn't shift during transition */
+	html::view-transition-group(root) {
+		animation-duration: 0s;
 	}
 }

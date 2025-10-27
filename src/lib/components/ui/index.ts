@@ -7,3 +7,5 @@ export { default as DynamicRoles } from './dynamic-roles.svelte';
 export { default as ModeToggle } from './mode-toggle.svelte';
 export { default as SimpleIcon } from './simple-icon.svelte';
 export { default as Header } from '../Header.svelte';
+export { default as ThemeSelector } from '../theme-selector.svelte';
+export { default as ExpandableSection } from '../expandable-section.svelte';

@@ -8,6 +8,22 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	// View Transitions API type declarations
+	interface Document {
+		startViewTransition(callback: () => void | Promise<void>): ViewTransition;
+	}
+
+	interface ViewTransition {
+		readonly updateCallbackDone: Promise<void>;
+		readonly ready: Promise<void>;
+		readonly finished: Promise<void>;
+		skipTransition(): void;
+	}
+
+	interface CSSStyleDeclaration {
+		viewTransitionName: string;
+	}
 }
 
 export {};

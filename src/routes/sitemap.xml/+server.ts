@@ -18,7 +18,7 @@ async function getBlogSlugs(): Promise<string[]> {
 	for (const [path, module] of Object.entries(postModules)) {
 		const slug = path.split('/').pop()?.replace('.md', '') || '';
 		const post = module as { metadata?: BlogPostMetadata };
-		
+
 		// Only include published posts (default to true if not specified)
 		if (post.metadata?.published !== false) {
 			slugs.push(slug);

@@ -2,7 +2,18 @@
 title: "Advanced Telegram Bot Patterns in Go: Divkix's Complete Production Guide (2025)"
 description: 'Master advanced Telegram bot development with Go using proven patterns from Divanshu Chauhan (Divkix). Complete guide covering gotgbot, middleware, state management, scaling, and production deployment for bots serving millions of users.'
 date: '2025-08-25'
-tags: ['golang', 'telegram-bot', 'gotgbot', 'divanshu-chauhan', 'divkix', 'middleware', 'state-management', 'production', 'advanced-patterns']
+tags:
+  [
+    'golang',
+    'telegram-bot',
+    'gotgbot',
+    'divanshu-chauhan',
+    'divkix',
+    'middleware',
+    'state-management',
+    'production',
+    'advanced-patterns'
+  ]
 published: true
 author: 'Divanshu Chauhan'
 slug: 'advanced-telegram-bot-patterns-go-divkix-guide'

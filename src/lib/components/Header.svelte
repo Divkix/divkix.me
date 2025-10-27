@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ModeToggle } from '$lib/components/ui';
+	import { ModeToggle, ThemeSelector } from '$lib/components/ui';
 	import { page } from '$app/stores';
 
 	$: currentPath = $page.url.pathname;
@@ -19,7 +19,7 @@
 				Blog
 			</a>
 		</nav>
-		<div class="flex items-center gap-4">
+		<div class="flex items-center gap-2">
 			<a
 				href="/blog"
 				class="text-sm font-medium transition-colors hover:text-primary md:hidden"
@@ -27,6 +27,7 @@
 			>
 				Blog
 			</a>
+			<ThemeSelector />
 			<ModeToggle />
 		</div>
 	</div>

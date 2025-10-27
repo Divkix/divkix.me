@@ -1,16 +1,26 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	const roles = ['Entrepreneur', 'Designer', 'Developer', 'Gamer', 'Trader', 'Photographer'];
+	interface Props {
+		roles: string[];
+		prefix?: string;
+		typeSpeed?: number;
+		deleteSpeed?: number;
+		pauseTime?: number;
+	}
 
-	let currentRoleIndex = 0;
-	let displayText = '';
-	let isTyping = true;
-	let charIndex = 0;
+	const {
+		roles,
+		prefix = "I'm",
+		typeSpeed = 100,
+		deleteSpeed = 50,
+		pauseTime = 2000
+	}: Props = $props();
 
-	const typeSpeed = 100;
-	const deleteSpeed = 50;
-	const pauseTime = 2000;
+	let currentRoleIndex = $state(0);
+	let displayText = $state('');
+	let isTyping = $state(true);
+	let charIndex = $state(0);
 
 	function typeWriter() {
 		const currentRole = roles[currentRoleIndex];
@@ -45,7 +55,8 @@
 </script>
 
 <span class="inline-block">
-	I'm <span class="typewriter-text font-semibold text-primary"
+	{prefix}
+	<span class="typewriter-text font-semibold text-primary"
 		>{displayText}<span class="cursor">|</span></span
 	>
 </span>

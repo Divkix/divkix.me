@@ -36,7 +36,7 @@
 		size?: Size;
 		class?: string;
 		children?: Snippet;
-		onclick?: () => void;
+		onclick?: ((event: MouseEvent) => void) | (() => void);
 		'aria-label'?: string;
 	};
 

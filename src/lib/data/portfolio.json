@@ -1,0 +1,220 @@
+{
+	"personalInfo": {
+		"name": "Divanshu Chauhan",
+		"title": "Divkix",
+		"tagline": "Keen Entrepreneur and Developer!",
+		"email": "divkix@divkix.me",
+		"website": "https://divkix.me",
+		"location": {
+			"city": "Tempe",
+			"state": "Arizona",
+			"country": "USA"
+		},
+		"birthday": "2003-01-09",
+		"profileImage": "/assets/img/profile-img.png",
+		"degree": "MS Computer Science",
+		"freelanceStatus": "Available"
+	},
+	"metaTags": {
+		"title": "Divanshu Chauhan - Divkix",
+		"description": "Divanshu Chauhan Official Website - Entrepreneur, Designer, Developer, Trader",
+		"keywords": [
+			"divkix",
+			"divanshu chauhan",
+			"divanshu divkix",
+			"divanshu div",
+			"chauhan",
+			"divanshu"
+		]
+	},
+	"dynamicRoles": {
+		"roles": ["Entrepreneur", "Designer", "Developer", "Gamer", "Trader", "Photographer"],
+		"prefix": "I'm",
+		"typeSpeed": 100,
+		"deleteSpeed": 50,
+		"pauseTime": 2000
+	},
+	"socialLinks": [
+		{
+			"platform": "GitHub",
+			"url": "https://github.com/divkix",
+			"icon": "siGithub",
+			"ariaLabel": "Visit Divkix on GitHub",
+			"isPrimary": true
+		},
+		{
+			"platform": "Twitter",
+			"url": "https://twitter.com/divkix",
+			"icon": "siX",
+			"ariaLabel": "Visit Divkix on X (Twitter)"
+		},
+		{
+			"platform": "Instagram",
+			"url": "https://instagram.com/_divkix",
+			"icon": "siInstagram",
+			"ariaLabel": "Visit Divkix on Instagram"
+		},
+		{
+			"platform": "LinkedIn",
+			"url": "https://www.linkedin.com/in/divkix",
+			"icon": "Linkedin",
+			"ariaLabel": "Visit Divkix on LinkedIn"
+		},
+		{
+			"platform": "Telegram",
+			"url": "https://t.me/divkix",
+			"icon": "siTelegram",
+			"ariaLabel": "Visit Divkix on Telegram"
+		}
+	],
+	"about": {
+		"heading": "About",
+		"paragraphs": [
+			"As a Grad student studying at ASU Tempe, I am an individual with a passion for business and coding. In addition to my academic pursuits, I enjoy working on side projects, trekking, playing soccer, and socializing with people. My diverse interests reflect my outgoing personality and my desire to experience all that life has to offer. I am always seeking out new challenges and opportunities to expand my skillset and knowledge.",
+			"As someone who started coding in high school, I have since devoted myself to continually learning new technologies. I am highly motivated to improve my skills and knowledge, and am always on the lookout for opportunities to collaborate with others and contribute to exciting projects. With my enthusiasm and my dedication to personal growth, I am confident that I can make valuable contributions to any team or project."
+		],
+		"developerCard": {
+			"title": "Developer",
+			"description": "A proficient programmer with a passion for coding and a love for business."
+		},
+		"professionalCard": {
+			"title": "Professional Info"
+		}
+	},
+	"facts": {
+		"heading": "Facts",
+		"description": "The products I have developed have been used by over 1 million users, demonstrating my ability to create impactful solutions that meet the needs of a large and diverse audience."
+	},
+	"factsData": [
+		{
+			"label": "Happy Users",
+			"value": "100K+",
+			"icon": "😊"
+		},
+		{
+			"label": "Projects",
+			"value": "30+",
+			"icon": "📁"
+		},
+		{
+			"label": "Open Source Contributions",
+			"value": "50+",
+			"icon": "🔧"
+		}
+	],
+	"skills": {
+		"heading": "Skills",
+		"description": "I have some skills, here is how much I can do."
+	},
+	"skillsData": [
+		{
+			"name": "Python",
+			"level": 100
+		},
+		{
+			"name": "HTML",
+			"level": 100
+		},
+		{
+			"name": "Go",
+			"level": 95
+		},
+		{
+			"name": "Java",
+			"level": 75
+		},
+		{
+			"name": "Rust",
+			"level": 65
+		},
+		{
+			"name": "C/C++",
+			"level": 55
+		},
+		{
+			"name": "JavaScript/TypeScript",
+			"level": 90
+		}
+	],
+	"experience": {
+		"heading": "Experience",
+		"summary": {
+			"name": "Divanshu Chauhan",
+			"description": "Innovative student with a passion for coding and business, currently pursuing a Master's degree in Computer Science at ASU Tempe. Experienced in leading teams and developing AI-based solutions. Eager to contribute to impactful projects and collaborate with like-minded individuals."
+		},
+		"educationTitle": "Education",
+		"professionalTitle": "Professional Experience"
+	},
+	"experienceData": [
+		{
+			"title": "Team Leader - Internship with IBM and UC Berkeley",
+			"period": "2021",
+			"company": "UC Berkeley",
+			"location": "Berkeley, California",
+			"description": [
+				"Lead in the design, development, and implementation of the graphic, layout, and production communication materials",
+				"Delegate tasks to the 2 members of the team and provide counsel on all aspects of the project",
+				"Supervise the assessment of all materials in order to ensure quality and accuracy of the final product",
+				"Oversee the efficient use of production project budgets ranging from $2,000 - $25,000"
+			]
+		},
+		{
+			"title": "Team Leader - GPCSSI 2021",
+			"period": "2021",
+			"company": "Gurgaon Police",
+			"location": "Gurgaon, Haryana, India",
+			"description": [
+				"Developed an AI based system to detect certain kind of weapons",
+				"Managed up to 3 projects or tasks at a given time while under pressure",
+				"Recommended and consulted with clients on the most appropriate approach to utilise the AI model and use most out of it"
+			]
+		}
+	],
+	"educationData": [
+		{
+			"degree": "Masters of Science in Computer Science",
+			"startDate": "2025-08",
+			"endDate": "2026-05",
+			"institution": "Arizona State University",
+			"location": "Tempe, AZ",
+			"description": "In process of completing a Master's degree in Computer Science with a focus on Artificial Intelligence, Machine Learning and Data Science."
+		},
+		{
+			"degree": "Bachelor of Science in Computer Science",
+			"startDate": "2022-01",
+			"endDate": "2025-05",
+			"institution": "Arizona State University",
+			"location": "Tempe, AZ",
+			"description": "Completed coursework in data structures, algorithms, and software engineering with Magna Cum Laude honors."
+		}
+	],
+	"projects": {
+		"heading": "Contributions and Projects"
+	},
+	"projectsData": [
+		{
+			"title": "Alita Robot",
+			"description": "Telegram Group management bot serving 1M+ users, built with Go and Gotgbot",
+			"link": "https://github.com/Divkix/Alita_Robot",
+			"icon": "Bot"
+		},
+		{
+			"title": "ASU Capstone",
+			"description": "A web platform for managing and showcasing capstone projects at ASU.",
+			"link": "https://betasubmission.asucapstone.com/about",
+			"icon": "Web"
+		},
+		{
+			"title": "WarpDL",
+			"description": "A powerful and versatile cross-platform download manager.",
+			"link": "https://github.com/warpdl/warpdl",
+			"icon": "WrenchIcon"
+		}
+	],
+	"footer": {
+		"name": "Divanshu Chauhan",
+		"tagline": "Keen Entrepreneur and Developer!",
+		"copyright": "Copyright Divkix. All Rights Reserved",
+		"builtWith": "Built with ❤️ using Svelte 5 and shadcn-svelte"
+	}
+}
