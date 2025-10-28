@@ -11,13 +11,13 @@ import { ExternalLink } from "lucide-react"
 
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p) => p.tags))
-)
+) as string[]
 
 export function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   const filteredProjects = selectedTag
-    ? siteConfig.projects.filter((p) => p.tags.includes(selectedTag))
+    ? siteConfig.projects.filter((p) => (p.tags as readonly string[]).includes(selectedTag))
     : siteConfig.projects
 
   return (
