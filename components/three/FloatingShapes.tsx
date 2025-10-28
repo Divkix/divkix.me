@@ -17,18 +17,18 @@ function FloatingShape({
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!meshRef.current) return;
 
     const time = state.clock.getElapsedTime() * speed;
 
-    // Floating animation
-    meshRef.current.position.y = position[1] + Math.sin(time) * 0.5;
+    // Floating animation - REDUCED amplitude and frequency
+    meshRef.current.position.y = position[1] + Math.sin(time * 0.3) * 0.15;
 
-    // Rotation
-    meshRef.current.rotation.x = time * 0.3;
-    meshRef.current.rotation.y = time * 0.2;
-    meshRef.current.rotation.z = time * 0.1;
+    // Rotation - DRASTICALLY slowed down with damping
+    meshRef.current.rotation.x += delta * 0.05 * speed;
+    meshRef.current.rotation.y += delta * 0.03 * speed;
+    meshRef.current.rotation.z += delta * 0.02 * speed;
   });
 
   const renderGeometry = () => {
@@ -65,25 +65,25 @@ export function FloatingShapes() {
       position: [-3, 2, -2] as [number, number, number],
       geometry: "box" as const,
       color: "#3b82f6",
-      speed: 0.8,
+      speed: 0.5,
     },
     {
       position: [3, -1, -3] as [number, number, number],
       geometry: "sphere" as const,
       color: "#8b5cf6",
-      speed: 1.2,
+      speed: 0.7,
     },
     {
       position: [2, 3, -1] as [number, number, number],
       geometry: "torus" as const,
       color: "#ec4899",
-      speed: 1,
+      speed: 0.6,
     },
     {
       position: [-2, -2, -2] as [number, number, number],
       geometry: "octahedron" as const,
       color: "#06b6d4",
-      speed: 0.9,
+      speed: 0.55,
     },
   ];
 

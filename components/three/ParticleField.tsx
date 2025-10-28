@@ -8,7 +8,7 @@ interface ParticleFieldProps {
   count?: number;
 }
 
-export function ParticleField({ count = 1000 }: ParticleFieldProps) {
+export function ParticleField({ count = 500 }: ParticleFieldProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -46,12 +46,12 @@ export function ParticleField({ count = 1000 }: ParticleFieldProps) {
     for (let i = 0; i < count; i++) {
       const particle = particles[i];
 
-      // Base position with wave motion
-      const waveX = Math.sin(time * 0.5 + particle.x) * 0.1;
-      const waveY = Math.cos(time * 0.5 + particle.y) * 0.1;
+      // Base position with wave motion - REDUCED frequency and amplitude
+      const waveX = Math.sin(time * 0.2 + particle.x) * 0.05;
+      const waveY = Math.cos(time * 0.2 + particle.y) * 0.05;
 
-      // Mouse interaction
-      const mouseInfluence = 0.5;
+      // Mouse interaction - REDUCED influence
+      const mouseInfluence = 0.15;
       const mouseX = mouseRef.current.x * mouseInfluence;
       const mouseY = mouseRef.current.y * mouseInfluence;
 
@@ -61,9 +61,9 @@ export function ParticleField({ count = 1000 }: ParticleFieldProps) {
         particle.z
       );
 
-      // Slow rotation
-      dummy.rotation.x = time * 0.2 + particle.x;
-      dummy.rotation.y = time * 0.2 + particle.y;
+      // Slow rotation - REDUCED speed
+      dummy.rotation.x = time * 0.05 + particle.x;
+      dummy.rotation.y = time * 0.05 + particle.y;
 
       // Use persistent scale instead of random
       dummy.scale.set(particle.scale, particle.scale, particle.scale);

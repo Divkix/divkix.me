@@ -8,21 +8,21 @@ export function AnimatedSphere() {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!meshRef.current || !materialRef.current) return;
 
     const time = state.clock.getElapsedTime();
 
-    // Rotation
-    meshRef.current.rotation.x = time * 0.2;
-    meshRef.current.rotation.y = time * 0.3;
+    // Rotation - DRASTICALLY slowed down
+    meshRef.current.rotation.x += delta * 0.04;
+    meshRef.current.rotation.y += delta * 0.06;
 
-    // Pulsating scale
-    const scale = 1 + Math.sin(time * 2) * 0.1;
+    // Pulsating scale - MUCH slower and subtler
+    const scale = 1 + Math.sin(time * 0.4) * 0.03;
     meshRef.current.scale.set(scale, scale, scale);
 
-    // Color morphing
-    const hue = (time * 0.1) % 1;
+    // Color morphing - SLOWED DOWN significantly
+    const hue = (time * 0.02) % 1;
     const color = new THREE.Color().setHSL(hue, 0.7, 0.5);
     materialRef.current.color = color;
     materialRef.current.emissive = color;
