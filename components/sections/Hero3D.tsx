@@ -1,11 +1,37 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { GradientText } from "@/components/shared/GradientText"
 import { siteConfig } from "@/content/site.config"
 import { slideUp, staggerContainer, staggerItem } from "@/lib/animations"
 import Link from "next/link"
+
+// Dynamically import 3D components (only on client, not SSR)
+const Scene = dynamic(() => import("@/components/three/Scene").then(mod => ({ default: mod.Scene })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-foreground/30">Loading 3D Scene...</div>
+    </div>
+  ),
+})
+
+const TorusKnotWithShader = dynamic(
+  () => import("@/components/three/TorusKnotWithShader").then(mod => ({ default: mod.TorusKnotWithShader })),
+  { ssr: false }
+)
+
+const ParticleSystem = dynamic(
+  () => import("@/components/three/ParticleSystem").then(mod => ({ default: mod.ParticleSystem })),
+  { ssr: false }
+)
+
+const Lights = dynamic(
+  () => import("@/components/three/Lights").then(mod => ({ default: mod.Lights })),
+  { ssr: false }
+)
 
 export function Hero3D() {
   return (
@@ -38,17 +64,18 @@ export function Hero3D() {
             </Button>
             <Button asChild variant="outline" size="lg">
               <a href="/resume.pdf" download>
-                Download Resume
+                Download Résumé
               </a>
             </Button>
           </motion.div>
         </motion.div>
 
-        <div className="relative h-[400px] lg:h-[600px] flex items-center justify-center">
-          {/* 3D Scene will be added here */}
-          <div className="text-foreground/30 text-center">
-            <p>3D Scene Loading...</p>
-          </div>
+        <div className="relative h-[400px] lg:h-[600px]">
+          <Scene>
+            <Lights />
+            <TorusKnotWithShader />
+            <ParticleSystem />
+          </Scene>
         </div>
       </div>
     </section>
