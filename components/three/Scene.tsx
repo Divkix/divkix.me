@@ -9,9 +9,19 @@ interface SceneProps {
 
 export function Scene({ children }: SceneProps) {
   const [mounted, setMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     setMounted(true)
+
+    const handleVisibilityChange = () => {
+      setIsVisible(!document.hidden)
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
   }, [])
 
   if (!mounted) {
@@ -27,6 +37,7 @@ export function Scene({ children }: SceneProps) {
       dpr={[1, 1.5]}
       camera={{ position: [0, 0, 5], fov: 50 }}
       className="w-full h-full"
+      frameloop={isVisible ? "always" : "never"}
     >
       <Suspense fallback={null}>
         {children}

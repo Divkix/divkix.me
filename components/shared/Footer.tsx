@@ -15,6 +15,7 @@ export function Footer() {
                 key={social.label}
                 href={social.href}
                 className="text-sm text-foreground/60 hover:text-foreground transition-colors"
+                aria-label={`Contact via ${social.label}`}
               >
                 {social.label}
               </Link>
