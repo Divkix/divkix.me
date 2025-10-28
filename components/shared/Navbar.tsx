@@ -6,6 +6,15 @@ import { motion } from "framer-motion"
 import { ThemeToggle } from "./ThemeToggle"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
+import { MenuIcon } from "lucide-react"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -17,6 +26,7 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname()
   const [activeSection, setActiveSection] = useState<string>("")
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     // Only run on homepage
@@ -51,6 +61,9 @@ export function Navbar() {
   }, [pathname])
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Close mobile menu when a link is clicked
+    setIsOpen(false)
+
     if (href.startsWith("/#") && pathname === "/") {
       e.preventDefault()
       const id = href.replace("/#", "")
@@ -92,7 +105,8 @@ export function Navbar() {
             Divkix
           </Link>
 
-          <div className="flex items-center gap-6">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => {
               const isActive = getIsActive(item.href)
               return (
@@ -119,6 +133,43 @@ export function Navbar() {
               )
             })}
             <ThemeToggle />
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden items-center gap-4">
+            <ThemeToggle />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Open menu">
+                  <MenuIcon className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="text-left">Navigation</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-4 mt-8">
+                  {navItems.map((item) => {
+                    const isActive = getIsActive(item.href)
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => handleAnchorClick(e, item.href)}
+                        className={cn(
+                          "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
+                          isActive
+                            ? "text-foreground bg-primary/10"
+                            : "text-foreground/60 hover:text-foreground hover:bg-primary/5"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    )
+                  })}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </nav>

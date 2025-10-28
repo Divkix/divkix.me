@@ -1,51 +1,25 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { GradientText } from "@/components/shared/GradientText"
 import { SocialIcons } from "@/components/shared/SocialIcons"
 import { siteConfig } from "@/content/site.config"
-import { slideUp, staggerContainer, staggerItem } from "@/lib/animations"
-
-// Dynamically import 3D components (only on client, not SSR)
-const Scene = dynamic(() => import("@/components/three/Scene").then(mod => ({ default: mod.Scene })), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="text-foreground/30">Loading 3D Scene...</div>
-    </div>
-  ),
-})
-
-const TorusKnotWithShader = dynamic(
-  () => import("@/components/three/TorusKnotWithShader").then(mod => ({ default: mod.TorusKnotWithShader })),
-  { ssr: false }
-)
-
-const ParticleSystem = dynamic(
-  () => import("@/components/three/ParticleSystem").then(mod => ({ default: mod.ParticleSystem })),
-  { ssr: false }
-)
-
-const Lights = dynamic(
-  () => import("@/components/three/Lights").then(mod => ({ default: mod.Lights })),
-  { ssr: false }
-)
+import { staggerContainer, staggerItem } from "@/lib/animations"
 
 export function Hero3D() {
   return (
     <section className="container mx-auto px-4 py-20 lg:py-32">
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="show"
-          className="space-y-6"
+          className="space-y-6 w-full"
         >
           <motion.h1
             variants={staggerItem}
-            className="text-5xl lg:text-7xl font-display font-bold tracking-tight"
+            className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight"
           >
             {siteConfig.name.split(" ")[0]}{" "}
             <GradientText>{siteConfig.name.split(" ")[1]}</GradientText>
@@ -53,16 +27,16 @@ export function Hero3D() {
 
           <motion.p
             variants={staggerItem}
-            className="text-xl text-foreground/70"
+            className="text-xl lg:text-2xl text-foreground/70 max-w-2xl mx-auto"
           >
             {siteConfig.tagline}
           </motion.p>
 
-          <motion.div variants={staggerItem}>
+          <motion.div variants={staggerItem} className="flex justify-center">
             <SocialIcons />
           </motion.div>
 
-          <motion.div variants={staggerItem} className="flex gap-4">
+          <motion.div variants={staggerItem} className="flex flex-wrap gap-4 justify-center">
             <Button asChild size="lg">
               <a href="#projects">View Projects</a>
             </Button>
@@ -73,14 +47,6 @@ export function Hero3D() {
             </Button>
           </motion.div>
         </motion.div>
-
-        <div className="relative h-[400px] lg:h-[600px]">
-          <Scene>
-            <Lights />
-            <TorusKnotWithShader />
-            <ParticleSystem />
-          </Scene>
-        </div>
       </div>
     </section>
   )
