@@ -7,9 +7,9 @@ export const siteConfig = {
   about: "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
 
   facts: {
-    impact: "Products used by 1M+ users",
-    projects: "30+ projects",
-    oss: "50+ open source contributions",
+    impact: "1000000+",
+    projects: "30+",
+    oss: "50+",
   },
 
   skills: [
@@ -68,7 +68,15 @@ export const siteConfig = {
       desc: "Platform for managing and showcasing ASU capstone projects.",
       tags: ["TypeScript", "Web"],
       links: [
-        { label: "Live", href: "https://betasubmission.asucapstone.com" },
+        { label: "Live", href: "https://asucapstone.com" },
+      ],
+    },
+    {
+      name: "PickMyClass",
+      desc: "ASU class enrollment monitoring system. Tracks seat availability and sends instant notifications.",
+      tags: ["TypeScript", "Next.js", "Web"],
+      links: [
+        { label: "Live", href: "https://pickmyclass.app" }
       ],
     },
     {
@@ -79,7 +87,12 @@ export const siteConfig = {
     },
   ],
 
-  socials: [{ label: "Email", href: "mailto:divkix@divkix.me" }],
+  socials: [
+    { label: "GitHub", href: "https://github.com/divkix" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/divkix/" },
+    { label: "Instagram", href: "https://instagram.com/_divkix" },
+    { label: "Email", href: "mailto:divkix@divkix.me" },
+  ],
 } as const
 
 export type SiteConfig = typeof siteConfig
