@@ -1,0 +1,82 @@
+---
+title: "PickMyClass: Never Miss Your Dream Class Again"
+date: "2025-10-28"
+excerpt: "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+---
+
+## The Story Behind the Build
+
+Picture this: It's 3 AM. You're refreshing the ASU class search page for the hundredth time. That coding class you need to graduate? Still full. The professor everyone raves about? Still listed as "Staff."
+
+Sound familiar? It happened to me during my sophomore year.
+
+I needed CSE 310 with Professor Martinez. The class was full. I set phone alarms every hour. I checked between classes. I even woke up in the middle of the night to refresh the page. When a seat finally opened at 2:47 AM on a Tuesday, I was asleep. Someone else got it.
+
+That's when I remembered pickaclass.app—a tool that watched classes for you. It sent emails when seats opened up. Perfect solution, right? Except it shut down in 2023.
+
+So I built my own.
+
+## What PickMyClass Does
+
+PickMyClass is a notification system for university students. Enter your section number, and the app does the watching for you.
+
+The system checks every 30 minutes for two things:
+
+- **Open seats** – Get notified the moment a full class has availability
+- **Instructor updates** – Know when "Staff" changes to an actual professor name
+
+No more constant refreshing. No more missed opportunities. Just an email when something changes.
+
+## The Technical Challenge
+
+Building this wasn't straightforward. ASU's class search loads data with JavaScript. Their API returns 401 errors without browser context. Simple HTTP requests don't work.
+
+The solution? A Puppeteer-based scraper running on Oracle Cloud. It uses a real Chrome browser to fetch class data. Cloudflare Workers handle the automation. Supabase manages authentication and real-time updates.
+
+The architecture scales to 10,000+ users:
+
+- Cloudflare Queues process hundreds of sections simultaneously
+- Database optimizations reduce queries by 2,500x
+- Batch email API sends notifications 10x faster
+- Circuit breaker patterns prevent scraper failures
+
+All for about $34/month at 10,000 users—that's $0.0034 per student.
+
+## Built With Modern Web Tech
+
+The stack includes:
+
+- Next.js 15 for the frontend
+- Cloudflare Workers for edge computing
+- Supabase for authentication and real-time features
+- PostgreSQL with row-level security
+- Puppeteer for web scraping
+- Resend for transactional emails
+
+The dashboard updates live. Add a class watch, and it appears instantly. When the cron job detects changes, your browser sees them without refreshing.
+
+## Why It Matters
+
+Getting into the right class can change your college experience. The right professor makes difficult subjects click. Required courses at convenient times let you work or do internships. Popular electives fill up in minutes.
+
+Students shouldn't lose opportunities because they were in class or asleep. Technology should work for us, not against us.
+
+PickMyClass levels the playing field. Whether you're a morning person or a night owl, you get the same chance at that open seat.
+
+## What I Learned
+
+This project taught me how to:
+
+- Build fault-tolerant systems at scale
+- Work with headless browsers and anti-bot measures
+- Design database schemas with security policies
+- Implement edge caching for performance
+- Handle webhook integrations for email delivery
+
+But the biggest lesson? Solve problems you actually have. The best projects come from real frustrations. When you've experienced the problem firsthand, you know exactly what the solution needs to do.
+
+## Looking Forward
+
+PickMyClass is live and watching classes right now. The system currently supports ASU, but the architecture works for any school with a web-based class search.
+
+Need to track a class at your university? The notification system is designed to be adaptable to different institutions with similar class registration challenges.
