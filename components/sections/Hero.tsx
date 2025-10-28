@@ -1,215 +1,203 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 import { Scene } from "@/components/three/Scene";
 import { ParticleField } from "@/components/three/ParticleField";
-import { FloatingShapes } from "@/components/three/FloatingShapes";
-import { Button } from "@/components/ui/button";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
-import { fadeInUp, fadeIn } from "@/lib/animations";
-import { cn } from "@/lib/utils";
 
-const socialIcons = {
-  github: Github,
-  linkedin: Linkedin,
-  twitter: Twitter,
-  email: Mail,
-};
+const roles = [
+  "Full-Stack Developer",
+  "AI/ML Engineer",
+  "Open Source Contributor",
+  "Graduate Student @ ASU",
+];
 
 export function Hero() {
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayedText, setDisplayedText] = React.useState("");
+  const [roleIndex, setRoleIndex] = React.useState(0);
 
-  // Typing animation effect
-  useEffect(() => {
-    const currentRole = PERSONAL_INFO.roles[currentRoleIndex];
-    const typingSpeed = isDeleting ? 50 : 100;
+  React.useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    const currentRole = roles[roleIndex];
 
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayedText.length < currentRole.length) {
-          setDisplayedText(currentRole.slice(0, displayedText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (displayedText.length > 0) {
-          setDisplayedText(currentRole.slice(0, displayedText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentRoleIndex(
-            (prevIndex) => (prevIndex + 1) % PERSONAL_INFO.roles.length
-          );
-        }
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, currentRoleIndex]);
-
-  const handleScroll = () => {
-    const aboutSection = document.querySelector("#about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
+    if (displayedText.length < currentRole.length) {
+      timeout = setTimeout(() => {
+        setDisplayedText(currentRole.slice(0, displayedText.length + 1));
+      }, 100);
+    } else {
+      timeout = setTimeout(() => {
+        setDisplayedText("");
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }, 2000);
     }
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, roleIndex]);
+
+  const handleScroll = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
-    >
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* 3D Background */}
       <div className="absolute inset-0 z-0">
         <Scene className="w-full h-full">
-          <ParticleField count={1000} />
-          <FloatingShapes />
+          <ParticleField count={500} />
         </Scene>
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background z-0" />
+      {/* Morphing background blobs */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-3xl animate-morph" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-pink-500/20 blur-3xl animate-morph" style={{ animationDelay: "2s" }} />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
-        <div className="flex flex-col items-center justify-center text-center space-y-8">
-          {/* Greeting */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeIn}
-            className="text-muted-foreground text-lg sm:text-xl"
-          >
-            Hi, my name is
-          </motion.div>
-
-          {/* Name */}
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight"
-          >
-            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-              {PERSONAL_INFO.name}
-            </span>
-          </motion.h1>
-
-          {/* Typing Role */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.2 }}
-            className="h-16 flex items-center justify-center"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-muted-foreground">
-              {displayedText}
-              <span className="animate-pulse">|</span>
-            </h2>
-          </motion.div>
-
-          {/* Bio */}
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.4 }}
-            className="max-w-2xl text-lg sm:text-xl text-muted-foreground"
-          >
-            {PERSONAL_INFO.bio}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 pt-4"
-          >
-            <Button
-              size="lg"
-              onClick={() => {
-                const projectsSection = document.querySelector("#projects");
-                if (projectsSection) {
-                  projectsSection.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="text-lg px-8 py-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transition-opacity"
-            >
-              View My Work
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => {
-                const contactSection = document.querySelector("#contact");
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="text-lg px-8 py-6"
-            >
-              Get In Touch
-            </Button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.8 }}
-            className="flex gap-4 pt-4"
-          >
-            {Object.entries(SOCIAL_LINKS).map(([key, url]) => {
-              const Icon = socialIcons[key as keyof typeof socialIcons] || Mail;
-              return (
-                <motion.a
-                  key={key}
-                  href={url}
-                  target={key === "email" ? "_self" : "_blank"}
-                  rel={key === "email" ? undefined : "noopener noreferrer"}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={cn(
-                    "p-3 rounded-full border border-border",
-                    "bg-background/50 backdrop-blur-sm",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "transition-colors"
-                  )}
-                  aria-label={key}
-                >
-                  <Icon className="h-6 w-6" />
-                </motion.a>
-              );
-            })}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-      >
-        <motion.button
-          onClick={handleScroll}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Scroll to about section"
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Diagonal massive name */}
+        <motion.div
+          className="absolute top-[-10vh] left-[-5%] sm:left-[5%]"
+          initial={{ opacity: 0, x: -100, rotate: 0 }}
+          animate={{ opacity: 1, x: 0, rotate: -8 }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <span className="text-sm font-medium">Scroll Down</span>
-          <ArrowDown className="h-5 w-5" />
-        </motion.button>
-      </motion.div>
+          <h1 className="text-[12vw] sm:text-[15vw] font-black leading-[0.9] tracking-tighter">
+            <span className="block bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-stroke-2">
+              {PERSONAL_INFO.name.split(" ")[0]}
+            </span>
+            <span className="block text-foreground/5 ml-[10vw] text-outline">
+              {PERSONAL_INFO.name.split(" ")[1]}
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Animated role text - circular motion */}
+        <motion.div
+          className="absolute top-[35%] sm:top-[45%] right-[5%] sm:right-[10%] text-xl sm:text-2xl font-medium text-foreground"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <span className="inline-block px-6 py-3 bg-background/80 backdrop-blur-sm rounded-full border border-purple-500/30">
+            {displayedText}
+            <span className="animate-pulse">|</span>
+          </span>
+        </motion.div>
+
+        {/* Bio text */}
+        <motion.p
+          className="absolute bottom-[35%] left-[5%] max-w-md text-lg text-muted-foreground"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          Building scalable applications and AI-powered solutions. MS Computer Science student specializing in ML/AI at ASU.
+        </motion.p>
+
+        {/* Blob buttons */}
+        <motion.div
+          className="absolute bottom-[20%] left-[5%] flex flex-wrap gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+        >
+          <motion.button
+            onClick={() => handleScroll("projects")}
+            className="relative px-8 py-4 text-lg font-semibold text-white overflow-hidden button-liquid blob-1"
+            style={{
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            }}
+            whileHover={{
+              scale: 1.05,
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            View My Work
+          </motion.button>
+
+          <motion.button
+            onClick={() => handleScroll("contact")}
+            className="relative px-8 py-4 text-lg font-semibold text-foreground border-2 border-purple-500 overflow-hidden button-liquid blob-2"
+            style={{
+              background: "rgba(255, 255, 255, 0.05)",
+              backdropFilter: "blur(10px)",
+            }}
+            whileHover={{
+              scale: 1.05,
+              background: "rgba(139, 92, 246, 0.2)",
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            Get In Touch
+          </motion.button>
+        </motion.div>
+
+        {/* Social links - floating */}
+        <motion.div
+          className="absolute bottom-[10%] right-[5%] flex gap-4"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+        >
+          <motion.a
+            href={SOCIAL_LINKS.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-purple-500/30 flex items-center justify-center hover:border-purple-500"
+            whileHover={{ scale: 1.2, rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Github className="h-5 w-5" />
+          </motion.a>
+          <motion.a
+            href={SOCIAL_LINKS.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-purple-500/30 flex items-center justify-center hover:border-purple-500"
+            whileHover={{ scale: 1.2, rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Linkedin className="h-5 w-5" />
+          </motion.a>
+          <motion.a
+            href={SOCIAL_LINKS.email}
+            className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-purple-500/30 flex items-center justify-center hover:border-purple-500"
+            whileHover={{ scale: 1.2, rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Mail className="h-5 w-5" />
+          </motion.a>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <button
+            onClick={() => handleScroll("about")}
+            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span className="text-sm">Scroll to explore</span>
+            <ChevronDown className="h-6 w-6" />
+          </button>
+        </motion.div>
+      </div>
     </section>
   );
 }
