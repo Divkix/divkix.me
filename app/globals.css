@@ -151,3 +151,22 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* Theme Transition Overlay */
+@keyframes theme-transition-expand {
+  from {
+    clip-path: circle(0px at var(--transition-x) var(--transition-y));
+  }
+  to {
+    clip-path: circle(150vmax at var(--transition-x) var(--transition-y));
+  }
+}
+
+.theme-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: hsl(var(--background));
+  animation: theme-transition-expand 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

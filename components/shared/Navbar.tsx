@@ -27,8 +27,19 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+  const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    const event = new CustomEvent('theme-transition', {
+      detail: { x, y }
+    });
+    window.dispatchEvent(event);
+
+    setTimeout(() => {
+      setTheme(theme === "dark" ? "light" : "dark");
+    }, 50);
   };
 
   const handleNavClick = (href: string) => {
