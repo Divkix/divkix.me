@@ -1,7 +1,14 @@
 {
   "name": "portfolio",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Modern portfolio site with Next.js 15, TypeScript, and React Three Fiber",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/divkix/portfolio.git"
+  },
+  "author": "Divanshu Chauhan <divkix@divkix.me>",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
