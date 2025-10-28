@@ -12,14 +12,15 @@ export function ParticleField({ count = 1000 }: ParticleFieldProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
-  // Generate random particle positions
+  // Generate random particle positions with persistent scale
   const particles = useMemo(() => {
     const temp = [];
     for (let i = 0; i < count; i++) {
       const x = (Math.random() - 0.5) * 20;
       const y = (Math.random() - 0.5) * 20;
       const z = (Math.random() - 0.5) * 20;
-      temp.push({ x, y, z });
+      const scale = 0.05 + Math.random() * 0.05; // Calculate once
+      temp.push({ x, y, z, scale }); // Add scale to particle
     }
     return temp;
   }, [count]);
@@ -64,9 +65,8 @@ export function ParticleField({ count = 1000 }: ParticleFieldProps) {
       dummy.rotation.x = time * 0.2 + particle.x;
       dummy.rotation.y = time * 0.2 + particle.y;
 
-      // Random scale for depth
-      const scale = 0.05 + Math.random() * 0.05;
-      dummy.scale.set(scale, scale, scale);
+      // Use persistent scale instead of random
+      dummy.scale.set(particle.scale, particle.scale, particle.scale);
 
       dummy.updateMatrix();
       meshRef.current.setMatrixAt(i, dummy.matrix);
