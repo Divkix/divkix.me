@@ -30,15 +30,15 @@ export function AnimatedSphere() {
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]}>
-      <icosahedronGeometry args={[2, 4]} />
+      <icosahedronGeometry args={[2, 2]} />
       <meshStandardMaterial
         ref={materialRef}
         color="#8b5cf6"
         emissive="#8b5cf6"
-        emissiveIntensity={0.5}
+        emissiveIntensity={0.2}
         wireframe
         transparent
-        opacity={0.6}
+        opacity={0.3}
       />
     </mesh>
   );

@@ -18,7 +18,7 @@ import { FadeIn } from "@/components/animations/FadeIn";
 import { SlideIn } from "@/components/animations/SlideIn";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
 import { staggerItem } from "@/lib/animations";
-import { skills, skillCategories, getSkillsByCategory } from "@/lib/data/skills";
+import { getSkillsByCategory } from "@/lib/data/skills";
 import type { Skill } from "@/lib/data/skills";
 
 function SkillCard({ skill }: { skill: Skill }) {
@@ -27,13 +27,13 @@ function SkillCard({ skill }: { skill: Skill }) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Card className="group hover:bg-accent/50 transition-colors cursor-pointer">
+            <Card className="group hover:bg-accent/50 transition-colors cursor-pointer bg-background/80 backdrop-blur-sm border-border/50">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-sm sm:text-base">
+                  <h4 className="font-semibold text-sm sm:text-base drop-shadow-sm">
                     {skill.name}
                   </h4>
-                  <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors drop-shadow-sm">
                     {skill.level}%
                   </span>
                 </div>
@@ -66,14 +66,17 @@ export function Skills() {
   return (
     <SectionContainer id="skills" className="relative bg-background overflow-hidden">
       {/* 3D Background */}
-      <div className="absolute inset-0 z-0 opacity-30">
+      <div className="absolute inset-0 z-0 opacity-10">
         <Scene className="w-full h-full">
           <AnimatedSphere />
         </Scene>
       </div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background z-0" />
+
+      {/* Additional backdrop blur layer for text area */}
+      <div className="absolute inset-0 z-0 backdrop-blur-[2px]" />
 
       {/* Content */}
       <div className="relative z-10 space-y-12">
