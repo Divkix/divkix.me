@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,9 +9,19 @@ import { siteConfig } from "@/content/site.config"
 import { staggerContainer, staggerItem } from "@/lib/animations"
 import { ExternalLink } from "lucide-react"
 
+const allTags = Array.from(
+  new Set(siteConfig.projects.flatMap((p) => p.tags))
+)
+
 export function Projects() {
+  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+
+  const filteredProjects = selectedTag
+    ? siteConfig.projects.filter((p) => p.tags.includes(selectedTag))
+    : siteConfig.projects
+
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section id="projects" className="container mx-auto px-4 py-20">
       <motion.div
         variants={staggerContainer}
         initial="hidden"
@@ -19,14 +30,35 @@ export function Projects() {
         className="space-y-12"
       >
         <motion.div variants={staggerItem} className="text-center space-y-4">
-          <h2 className="text-4xl font-display font-bold">Featured Projects</h2>
+          <h2 className="text-4xl font-display font-bold">Projects</h2>
           <p className="text-foreground/60 max-w-2xl mx-auto">
-            A selection of projects I've built, from Telegram bots to web platforms.
+            A selection of projects I've built across different technologies.
           </p>
         </motion.div>
 
+        {/* Filter chips */}
+        <motion.div variants={staggerItem} className="flex flex-wrap justify-center gap-2">
+          <Button
+            variant={selectedTag === null ? "default" : "outline"}
+            onClick={() => setSelectedTag(null)}
+            size="sm"
+          >
+            All
+          </Button>
+          {allTags.map((tag) => (
+            <Button
+              key={tag}
+              variant={selectedTag === tag ? "default" : "outline"}
+              onClick={() => setSelectedTag(tag)}
+              size="sm"
+            >
+              {tag}
+            </Button>
+          ))}
+        </motion.div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {siteConfig.projects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <motion.div key={project.name} variants={staggerItem}>
               <Card className="h-full glass-surface hover:border-primary/50 transition-colors">
                 <CardHeader>
@@ -56,6 +88,12 @@ export function Projects() {
             </motion.div>
           ))}
         </div>
+
+        {filteredProjects.length === 0 && (
+          <p className="text-center text-foreground/60">
+            No projects found with this tag.
+          </p>
+        )}
       </motion.div>
     </section>
   )

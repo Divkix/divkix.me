@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { GradientText } from "@/components/shared/GradientText"
 import { siteConfig } from "@/content/site.config"
 import { slideUp, staggerContainer, staggerItem } from "@/lib/animations"
-import Link from "next/link"
 
 // Dynamically import 3D components (only on client, not SSR)
 const Scene = dynamic(() => import("@/components/three/Scene").then(mod => ({ default: mod.Scene })), {
@@ -60,7 +59,7 @@ export function Hero3D() {
 
           <motion.div variants={staggerItem} className="flex gap-4">
             <Button asChild size="lg">
-              <Link href="/projects">View Projects</Link>
+              <a href="#projects">View Projects</a>
             </Button>
             <Button asChild variant="outline" size="lg">
               <a href="/resume.pdf" download>

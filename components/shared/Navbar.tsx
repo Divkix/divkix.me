@@ -8,13 +8,24 @@ import { cn } from "@/lib/utils"
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
+  { label: "Projects", href: "/#projects" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "/#contact" },
 ]
 
 export function Navbar() {
   const pathname = usePathname()
+
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      e.preventDefault()
+      const id = href.replace("/#", "")
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+  }
 
   return (
     <>
@@ -32,11 +43,12 @@ export function Navbar() {
 
           <div className="flex items-center gap-6">
             {navItems.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = pathname === item.href || (item.href.startsWith("/#") && pathname === "/")
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={(e) => handleAnchorClick(e, item.href)}
                   className={cn(
                     "relative px-3 py-2 text-sm font-medium transition-colors",
                     isActive
@@ -45,7 +57,7 @@ export function Navbar() {
                   )}
                 >
                   {item.label}
-                  {isActive && (
+                  {isActive && pathname === "/" && (
                     <motion.div
                       layoutId="navbar-indicator"
                       className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"

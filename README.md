@@ -6,6 +6,7 @@ A modern, production-ready portfolio site built with Next.js 15, TypeScript, Rea
 
 - **Modern Design**: Clean aesthetic with subtle glass surfaces and gradients
 - **3D Hero Scene**: Interactive TorusKnot with custom shader and particle system
+- **Single-Page Experience**: Homepage with smooth scrolling sections for projects and contact
 - **Blog System**: MDX-powered blog with syntax highlighting and reading time
 - **Responsive**: Mobile-first design that works on all devices
 - **Accessible**: WCAG AA compliant with keyboard navigation and screen reader support
@@ -63,15 +64,11 @@ npm run dev
 ├── app/                      # Next.js App Router
 │   ├── (site)/              # Main site route group
 │   │   ├── layout.tsx       # Site layout
-│   │   └── page.tsx         # Homepage
+│   │   └── page.tsx         # Homepage with all sections
 │   ├── blog/                # Blog pages
 │   │   ├── [slug]/          # Dynamic blog post pages
 │   │   │   └── page.tsx
 │   │   └── page.tsx         # Blog listing
-│   ├── projects/            # Projects page
-│   │   └── page.tsx
-│   ├── contact/             # Contact page
-│   │   └── page.tsx
 │   ├── api/                 # API routes
 │   │   └── contact/         # Contact form endpoint
 │   │       └── route.ts
@@ -79,20 +76,24 @@ npm run dev
 │   └── globals.css          # Global styles
 ├── components/              # React components
 │   ├── sections/            # Page sections
-│   │   ├── hero.tsx
-│   │   ├── about.tsx
-│   │   ├── skills.tsx
-│   │   ├── projects.tsx
-│   │   └── contact.tsx
+│   │   ├── Hero3D.tsx       # Hero section with 3D scene
+│   │   ├── About.tsx        # About section
+│   │   ├── Skills.tsx       # Skills section
+│   │   ├── Projects.tsx     # Projects section with filtering
+│   │   └── Contact.tsx      # Contact form section
 │   ├── three/               # 3D components
-│   │   └── hero-scene.tsx
+│   │   ├── Scene.tsx
+│   │   ├── TorusKnotWithShader.tsx
+│   │   ├── ParticleSystem.tsx
+│   │   └── Lights.tsx
 │   ├── shared/              # Shared components
-│   │   ├── header.tsx
-│   │   └── footer.tsx
+│   │   ├── Navbar.tsx       # Navigation with smooth scroll
+│   │   ├── Footer.tsx
+│   │   └── GradientText.tsx
 │   ├── ui/                  # shadcn/ui components
 │   ├── mdx/                 # MDX components
 │   └── providers/           # Context providers
-│       └── theme-provider.tsx
+│       └── ThemeProvider.tsx
 ├── content/                 # Content files
 │   ├── blog/                # MDX blog posts
 │   │   ├── hello-world.mdx
@@ -199,6 +200,19 @@ projects: [
 ],
 ```
 
+## Navigation
+
+The site uses a single-page layout with smooth scrolling to sections:
+
+- **Home**: Main hero section with 3D animation
+- **About**: About me section
+- **Skills**: Skills and technologies
+- **Projects**: Filterable project gallery on the homepage (accessible via `/#projects`)
+- **Contact**: Contact form on the homepage (accessible via `/#contact`)
+- **Blog**: Separate blog listing page with MDX posts
+
+Navigation links automatically scroll to sections when on the homepage, or navigate to the homepage and scroll when on other pages.
+
 ## Scripts
 
 - `bun run dev` - Start development server
@@ -234,6 +248,7 @@ The site follows WCAG AA guidelines and includes:
 - High contrast text ratios
 - Semantic HTML structure
 - Alt text for images
+- Skip to main content link
 
 ## Type Safety
 
@@ -283,10 +298,11 @@ Ensure your platform supports:
 2. Import it in `/app/(site)/page.tsx`
 3. Add necessary types in the component
 4. Update `/content/site.config.ts` if needed
+5. Add navigation link with anchor in `/components/shared/Navbar.tsx` if needed
 
 ### Modifying 3D Scene
 
-The hero 3D scene is in `/components/three/hero-scene.tsx`. Modify the TorusKnot parameters, shader code, or particle system to customize the visual:
+The hero 3D scene components are in `/components/three/`. Modify the TorusKnot parameters, shader code, or particle system to customize the visual:
 
 ```typescript
 <mesh rotation={[0.5, 0.5, 0]}>
