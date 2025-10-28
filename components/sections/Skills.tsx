@@ -2,50 +2,47 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Scene } from "@/components/three/Scene";
 import { AnimatedSphere } from "@/components/three/AnimatedSphere";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { FadeIn } from "@/components/animations/FadeIn";
-import { SlideIn } from "@/components/animations/SlideIn";
-import { StaggerContainer } from "@/components/animations/StaggerContainer";
-import { staggerItem } from "@/lib/animations";
 import { getSkillsByCategory } from "@/lib/data/skills";
 import type { Skill } from "@/lib/data/skills";
 
-function SkillCard({ skill }: { skill: Skill }) {
+function SkillBubble({ skill, index }: { skill: Skill; index: number }) {
+  // Create varied bubble sizes and positions
+  const sizes = ["w-32 h-32", "w-36 h-36", "w-40 h-40", "w-28 h-28"];
+  const size = sizes[index % sizes.length];
+
   return (
-    <motion.div variants={staggerItem}>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Card className="group hover:bg-accent/50 transition-colors cursor-pointer bg-background/80 backdrop-blur-sm border-border/50">
-              <CardContent className="p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-sm sm:text-base drop-shadow-sm">
-                    {skill.name}
-                  </h4>
-                  <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors drop-shadow-sm">
-                    {skill.level}%
-                  </span>
-                </div>
-                <Progress value={skill.level} className="h-2" />
-              </CardContent>
-            </Card>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Proficiency: {skill.level}%</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <motion.div
+      className={`${size} rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center cursor-pointer`}
+      initial={{ opacity: 0, scale: 0 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05, duration: 0.5 }}
+      animate={{
+        y: [0, -15, 0],
+      }}
+      whileHover={{
+        scale: 1.2,
+        boxShadow: "0 0 30px rgba(139, 92, 246, 0.5)",
+      }}
+      {...({
+        transition: {
+          y: {
+            duration: 2 + (index % 3),
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
+          scale: { duration: 0.3 },
+        },
+      } as any)}
+    >
+      <div className="text-center px-3">
+        <div className="text-sm font-bold mb-1">{skill.name}</div>
+        <div className="text-xs text-purple-400">{skill.level}%</div>
+      </div>
     </motion.div>
   );
 }
@@ -63,6 +60,8 @@ export function Skills() {
     { value: "cloud", label: "Cloud & DevOps" },
   ];
 
+  const currentSkills = getSkillsByCategory(activeTab);
+
   return (
     <SectionContainer id="skills" className="relative bg-background overflow-hidden">
       {/* 3D Background */}
@@ -74,9 +73,6 @@ export function Skills() {
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background z-0" />
-
-      {/* Additional backdrop blur layer for text area */}
-      <div className="absolute inset-0 z-0 backdrop-blur-[2px]" />
 
       {/* Content */}
       <div className="relative z-10 space-y-12">
@@ -90,64 +86,82 @@ export function Skills() {
           </p>
         </FadeIn>
 
-        {/* Skills Tabs */}
-        <SlideIn direction="up">
-          <Tabs
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as Skill["category"])}
-            className="w-full"
-          >
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-8 h-auto gap-2 bg-transparent">
-              {categories.map((category) => (
-                <TabsTrigger
-                  key={category.value}
-                  value={category.value}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:via-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white py-3 text-sm sm:text-base"
-                >
-                  {category.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+        {/* Category Tabs - Organic blob buttons */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          {categories.map((category, index) => (
+            <motion.button
+              key={category.value}
+              onClick={() => setActiveTab(category.value)}
+              className={`px-6 py-3 font-semibold relative overflow-hidden ${
+                activeTab === category.value
+                  ? "blob-1 text-white"
+                  : "blob-2 text-foreground border-2 border-purple-500/30"
+              }`}
+              style={{
+                background: activeTab === category.value
+                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  : "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(10px)",
+              }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              {category.label}
+            </motion.button>
+          ))}
+        </motion.div>
 
-            {categories.map((category) => (
-              <TabsContent
-                key={category.value}
-                value={category.value}
-                className="mt-0"
-              >
-                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {getSkillsByCategory(category.value).map((skill) => (
-                    <SkillCard key={skill.name} skill={skill} />
-                  ))}
-                </StaggerContainer>
-              </TabsContent>
+        {/* Skills displayed as floating bubbles in asymmetric layout */}
+        <div className="relative min-h-[500px]">
+          <div className="flex flex-wrap justify-center gap-6 p-8">
+            {currentSkills.map((skill, index) => (
+              <SkillBubble key={skill.name} skill={skill} index={index} />
             ))}
-          </Tabs>
-        </SlideIn>
-
-        {/* Summary Stats */}
-        <FadeIn delay={0.4}>
-          <div className="mt-12 p-6 glass rounded-xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-bold gradient-text">8+</div>
-                <div className="text-sm text-muted-foreground">Languages</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold gradient-text">10+</div>
-                <div className="text-sm text-muted-foreground">Frameworks</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold gradient-text">15+</div>
-                <div className="text-sm text-muted-foreground">Tools</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold gradient-text">8+</div>
-                <div className="text-sm text-muted-foreground">Cloud Platforms</div>
-              </div>
-            </div>
           </div>
-        </FadeIn>
+        </div>
+
+        {/* Summary Stats - Tilted cards */}
+        <div className="mt-12 flex flex-wrap justify-center gap-6">
+          {[
+            { value: "8+", label: "Languages" },
+            { value: "10+", label: "Frameworks" },
+            { value: "15+", label: "Tools" },
+            { value: "8+", label: "Cloud Platforms" },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              className="w-40 p-6 glass-strong"
+              style={{
+                borderRadius: "20px",
+                transform: `rotate(${index % 2 === 0 ? -3 : 3}deg)`,
+              }}
+              initial={{ opacity: 0, y: 50, rotate: 0 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                rotate: index % 2 === 0 ? -3 : 3,
+              }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{
+                rotate: 0,
+                scale: 1.1,
+              }}
+            >
+              <div className="text-4xl font-bold gradient-text mb-2 text-center">
+                {stat.value}
+              </div>
+              <div className="text-sm text-muted-foreground text-center">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </SectionContainer>
   );
