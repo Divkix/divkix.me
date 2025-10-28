@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { ThemeToggle } from "./ThemeToggle"
 import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -15,6 +16,39 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname()
+  const [activeSection, setActiveSection] = useState<string>("")
+
+  useEffect(() => {
+    // Only run on homepage
+    if (pathname !== "/") return
+
+    const handleScroll = () => {
+      const sections = ["projects", "contact"]
+      const scrollPosition = window.scrollY + 100 // Offset for navbar height
+
+      // Check if at the top
+      if (scrollPosition < 300) {
+        setActiveSection("")
+        return
+      }
+
+      // Find which section is currently in view
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            return
+          }
+        }
+      }
+    }
+
+    handleScroll() // Check initial position
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [pathname])
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("/#") && pathname === "/") {
@@ -30,13 +64,17 @@ export function Navbar() {
   const getIsActive = (href: string) => {
     // For homepage link
     if (href === "/") {
-      return pathname === "/"
+      return pathname === "/" && !activeSection
     }
     // For blog
     if (href === "/blog") {
       return pathname.startsWith("/blog")
     }
-    // For anchor links, never show as active (user must scroll to see)
+    // For anchor links, check if we're on homepage and if this section is active
+    if (href.startsWith("/#")) {
+      const section = href.replace("/#", "")
+      return pathname === "/" && activeSection === section
+    }
     return false
   }
 
