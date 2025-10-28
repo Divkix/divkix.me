@@ -11,12 +11,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "prebuild": "node scripts/generate-posts-metadata.js",
+    "build": "bun run prebuild && next build",
     "start": "next start",
     "lint": "eslint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "preview": "bun run prebuild && opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "bun run prebuild && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "bun run prebuild && opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
