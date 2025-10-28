@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { GradientText } from "@/components/shared/GradientText"
+import { SocialIcons } from "@/components/shared/SocialIcons"
 import { siteConfig } from "@/content/site.config"
 import { slideUp, staggerContainer, staggerItem } from "@/lib/animations"
 
@@ -56,6 +57,10 @@ export function Hero3D() {
           >
             {siteConfig.tagline}
           </motion.p>
+
+          <motion.div variants={staggerItem}>
+            <SocialIcons />
+          </motion.div>
 
           <motion.div variants={staggerItem} className="flex gap-4">
             <Button asChild size="lg">

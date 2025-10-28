@@ -1,5 +1,5 @@
 import { siteConfig } from "@/content/site.config"
-import Link from "next/link"
+import { SocialIcons } from "./SocialIcons"
 
 export function Footer() {
   return (
@@ -9,18 +9,7 @@ export function Footer() {
           <p className="text-sm text-foreground/60">
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            {siteConfig.socials.map((social) => (
-              <Link
-                key={social.label}
-                href={social.href}
-                className="text-sm text-foreground/60 hover:text-foreground transition-colors"
-                aria-label={`Contact via ${social.label}`}
-              >
-                {social.label}
-              </Link>
-            ))}
-          </div>
+          <SocialIcons size="sm" />
         </div>
       </div>
     </footer>
