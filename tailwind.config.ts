@@ -56,6 +56,13 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        'brutal': '8px 8px 0 rgba(0, 0, 0, 0.2)',
+        'brutal-lg': '12px 12px 0 rgba(0, 0, 0, 0.3)',
+        'brutal-purple': '8px 8px 0 rgba(139, 92, 246, 0.4)',
+        'glow': '0 0 20px rgba(139, 92, 246, 0.5)',
+        'glow-lg': '0 0 40px rgba(139, 92, 246, 0.6)',
+      },
       keyframes: {
         "accordion-down": {
           from: {
