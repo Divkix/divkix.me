@@ -24,90 +24,139 @@ export const siteConfig = {
 
   experience: [
     {
-      title: "Instructional Aide — Arizona State University",
-      year: "Aug 2025 – Present",
-      highlights: [
-        "Supported CSE110 classes, enhancing learning for 456 students",
-        "Collaborated with five professors on instructional materials",
-        "Provided one-on-one assistance for complex programming concepts",
+      company: "Arizona State University",
+      location: "Tempe, Arizona, USA",
+      duration: "Aug 2023 – Present",
+      positions: [
+        {
+          title: "Instructional Aide",
+          year: "Aug 2025 – Present",
+          highlights: [
+            "Supported CSE110 classes, enhancing learning for 456 students",
+            "Collaborated with five professors on instructional materials",
+            "Provided one-on-one assistance for complex programming concepts",
+          ],
+        },
+        {
+          title: "Engineering Tutor",
+          year: "May 2024 – Present",
+          highlights: [
+            "Tutoring 8 CSE courses including Data Structures, OS, and Software Engineering",
+            "Supporting students in mastering computer science fundamentals",
+          ],
+        },
+        {
+          title: "Undergraduate Teaching Assistant",
+          year: "Jan 2024 – May 2024",
+          highlights: [
+            "UGTA for CSE205 (OOP & Data Structures) and CSE240 (Programming Languages)",
+            "Fostered positive learning environment and supported 100+ students",
+            "Managed grading, attendance, and lab sessions",
+          ],
+        },
+        {
+          title: "Undergraduate Teaching Assistant",
+          year: "Aug 2023 – Dec 2023",
+          highlights: [
+            "Mentored 80+ students in FSE100 (Introduction to Engineering)",
+            "Taught Autodesk Fusion 360, MATLAB, and Lego Mindstorms",
+            "Guided students through 3D modeling and automated car projects",
+          ],
+        },
       ],
     },
     {
-      title: "Engineering Tutor — Arizona State University",
-      year: "May 2024 – Present",
-      highlights: [
-        "Tutoring 8 CSE courses including Data Structures, OS, and Software Engineering",
-        "Supporting students in mastering computer science fundamentals",
+      company: "The Software Developers Association at ASU",
+      location: "Tempe, Arizona, USA",
+      duration: "Apr 2024 – May 2025",
+      positions: [
+        {
+          title: "Ambassador",
+          year: "Apr 2024 – May 2025",
+          highlights: [
+            "Collaborated with marketing, industry, and development teams",
+            "Coordinated events to boost member engagement and industry relations",
+          ],
+        },
       ],
     },
     {
-      title: "Undergraduate Teaching Assistant — Arizona State University",
-      year: "Jan 2024 – May 2024",
-      highlights: [
-        "UGTA for CSE205 (OOP & Data Structures) and CSE240 (Programming Languages)",
-        "Fostered positive learning environment and supported 100+ students",
-        "Managed grading, attendance, and lab sessions",
+      company: "Xrossways INC.",
+      location: "Gurugram, Haryana, India",
+      duration: "May 2022 – Aug 2022",
+      positions: [
+        {
+          title: "Finance and Technology Intern",
+          year: "May 2022 – Aug 2022",
+          highlights: [
+            "Conducted financial analysis leading to increased revenue",
+            "Developed company website and automated key processes",
+            "Contributed to three solar rooftop projects",
+          ],
+        },
       ],
     },
     {
-      title: "Undergraduate Teaching Assistant — Arizona State University",
-      year: "Aug 2023 – Dec 2023",
-      highlights: [
-        "Mentored 80+ students in FSE100 (Introduction to Engineering)",
-        "Taught Autodesk Fusion 360, MATLAB, and Lego Mindstorms",
-        "Guided students through 3D modeling and automated car projects",
+      company: "UC Berkeley (The Purpose Academy)",
+      location: "Berkeley, California, USA (Remote)",
+      duration: "Jan 2021 – May 2021",
+      positions: [
+        {
+          title: "Student Intern",
+          year: "Jan 2021 – May 2021",
+          highlights: [
+            "Led design and implementation of graphic and communication materials",
+            "Managed team of 2 and supervised quality assessment",
+          ],
+        },
       ],
     },
     {
-      title: "Ambassador — The Software Developers Association at ASU",
-      year: "Apr 2024 – May 2025",
-      highlights: [
-        "Collaborated with marketing, industry, and development teams",
-        "Coordinated events to boost member engagement and industry relations",
+      company: "IBM",
+      location: "Bengaluru, Karnataka, India (Remote)",
+      duration: "Dec 2020",
+      positions: [
+        {
+          title: "Team Leader — EdTech Youth Challenge",
+          year: "Dec 2020",
+          highlights: [
+            "Led team of 5 students in AI exploration program",
+            "Developed dental anomaly detection app using YOLO, React, and Python",
+          ],
+        },
       ],
     },
     {
-      title: "Finance and Technology Intern — Xrossways INC.",
-      year: "May 2022 – Aug 2022",
-      highlights: [
-        "Conducted financial analysis leading to increased revenue",
-        "Developed company website and automated key processes",
-        "Contributed to three solar rooftop projects",
+      company: "Haryana Police",
+      location: "Gurugram, Haryana, India",
+      duration: "Jun 2020 – Jul 2020",
+      positions: [
+        {
+          title: "Student Intern",
+          year: "Jun 2020 – Jul 2020",
+          highlights: [
+            "Developed AI model for weapon detection using Computer Vision",
+            "Enhanced public safety measures through AI technology",
+          ],
+        },
       ],
     },
     {
-      title: "Student Intern — UC Berkeley (The Purpose Academy)",
-      year: "Jan 2021 – May 2021",
-      highlights: [
-        "Led design and implementation of graphic and communication materials",
-        "Managed team of 2 and supervised quality assessment",
+      company: "CBSE x IBM",
+      location: "Gurugram, Haryana, India",
+      duration: "Sep 2019 – Jul 2020",
+      positions: [
+        {
+          title: "Student Intern",
+          year: "Sep 2019 – Jul 2020",
+          highlights: [
+            "Collaborated on AI curriculum project for health tech",
+            "Created accessible healthcare solutions for visually impaired individuals",
+          ],
+        },
       ],
     },
-    {
-      title: "Team Leader — IBM EdTech Youth Challenge",
-      year: "Dec 2020",
-      highlights: [
-        "Led team of 5 students in AI exploration program",
-        "Developed dental anomaly detection app using YOLO, React, and Python",
-      ],
-    },
-    {
-      title: "Student Intern — Haryana Police (Gurgaon)",
-      year: "Jun 2020 – Jul 2020",
-      highlights: [
-        "Developed AI model for weapon detection using Computer Vision",
-        "Enhanced public safety measures through AI technology",
-      ],
-    },
-    {
-      title: "Student Intern — CBSE x IBM",
-      year: "Sep 2019 – Jul 2020",
-      highlights: [
-        "Collaborated on AI curriculum project for health tech",
-        "Created accessible healthcare solutions for visually impaired individuals",
-      ],
-    },
-  ],
+  ] as const,
 
   education: [
     {
