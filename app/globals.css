@@ -111,7 +111,7 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% auto;
-  animation: gradient 8s ease infinite;
+  animation: gradient 12s ease infinite;
 }
 
 /* Enhanced text shadows for readability */
@@ -138,4 +138,16 @@ html {
 /* Disable transitions on theme change */
 .no-transition * {
   transition: none !important;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

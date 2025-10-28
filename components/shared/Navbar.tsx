@@ -44,7 +44,7 @@ export function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
@@ -62,8 +62,8 @@ export function Navbar() {
                 handleNavClick("#home");
               }}
               className="text-xl font-bold"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.4 } }}
+              whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
             >
               <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 DC
@@ -81,8 +81,8 @@ export function Navbar() {
                     handleNavClick(link.href);
                   }}
                   className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-accent"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.4 } }}
+                  whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
                 >
                   {link.name}
                 </motion.a>
@@ -131,7 +131,7 @@ export function Navbar() {
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-background/95 backdrop-blur-lg border-l border-border md:hidden"
           >
             <div className="flex flex-col h-full pt-20 px-6">
@@ -146,7 +146,7 @@ export function Navbar() {
                     }}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    transition={{ duration: 0.5, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                     className="px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-accent"
                   >
                     {link.name}
