@@ -173,34 +173,75 @@ export const siteConfig = {
 
   projects: [
     {
-      name: "Alita Robot",
-      desc: "Telegram group management bot serving 1M+ users. Built in Go with gotgbot.",
-      tags: ["Go", "Telegram", "Bot"],
-      links: [
-        { label: "GitHub", href: "https://github.com/search?q=Alita+Robot" },
-      ],
-    },
-    {
       name: "ASU Capstone",
-      desc: "Platform for managing and showcasing ASU capstone projects.",
-      tags: ["TypeScript", "Web"],
+      desc: "Full-stack platform for managing and showcasing Arizona State University capstone projects.",
+      tags: ["Next.js", "TypeScript", "Python", "Go"],
+      period: "Aug 2024 – Present",
       links: [
         { label: "Live", href: "https://asucapstone.com" },
       ],
     },
     {
       name: "PickMyClass",
-      desc: "ASU class enrollment monitoring system. Tracks seat availability and sends instant notifications.",
-      tags: ["TypeScript", "Next.js", "Web"],
+      desc: "ASU class enrollment monitoring system. Tracks seat availability and sends instant notifications to students.",
+      tags: ["Next.js", "TypeScript"],
+      period: "2024",
       links: [
         { label: "Live", href: "https://pickmyclass.app" }
       ],
     },
     {
+      name: "Alita Robot",
+      desc: "Advanced Telegram group management bot with 1M+ users. High-performance automation using Go and Gotgbot framework.",
+      tags: ["Go", "MongoDB", "Telegram"],
+      period: "Feb 2020 – Jul 2023",
+      links: [
+        { label: "GitHub", href: "https://github.com/search?q=Alita+Robot" },
+      ],
+    },
+    {
       name: "WarpDL",
-      desc: "Cross-platform download manager.",
-      tags: ["Tools", "Open Source"],
-      links: [{ label: "GitHub", href: "https://github.com/search?q=WarpDL" }],
+      desc: "Ultra-speedy cross-platform download manager expertly crafted using Go for optimal performance.",
+      tags: ["Go", "MongoDB"],
+      period: "May 2023 – Present",
+      links: [
+        { label: "GitHub", href: "https://github.com/search?q=WarpDL" }
+      ],
+    },
+    {
+      name: "Srink Co.",
+      desc: "Quick, straightforward, and dependable URL shortening service.",
+      tags: ["Go", "MongoDB"],
+      period: "May 2023 – Sep 2023",
+      links: [],
+    },
+    {
+      name: "ProxyGrab",
+      desc: "Software to scrape proxies for web scraping and testing using aiohttp and API integrations.",
+      tags: ["Python"],
+      period: "Aug 2020 – May 2023",
+      links: [],
+    },
+    {
+      name: "Project Spyn",
+      desc: "LEGO EV3 autonomous vehicle for FSE100. Completed ahead of schedule with 100%+ grade navigating obstacles.",
+      tags: ["Robotics", "LEGO Mindstorms"],
+      period: "Jan 2022 – Apr 2022",
+      links: [],
+    },
+    {
+      name: "I-Helmet",
+      desc: "Smart helmet for visually impaired using computer vision to interpret surroundings and provide auditory feedback.",
+      tags: ["Python", "Computer Vision"],
+      period: "Dec 2020",
+      links: [],
+    },
+    {
+      name: "NodeMCU WiFi Smart Car",
+      desc: "Remotely controlled smart car with live camera feed. Android app in Dart controls C++ programmed NodeMCU.",
+      tags: ["C++", "Dart", "IoT"],
+      period: "Oct 2019 – Dec 2020",
+      links: [],
     },
   ],
 
