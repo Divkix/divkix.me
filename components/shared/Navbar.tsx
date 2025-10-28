@@ -27,6 +27,19 @@ export function Navbar() {
     }
   }
 
+  const getIsActive = (href: string) => {
+    // For homepage link
+    if (href === "/") {
+      return pathname === "/"
+    }
+    // For blog
+    if (href === "/blog") {
+      return pathname.startsWith("/blog")
+    }
+    // For anchor links, never show as active (user must scroll to see)
+    return false
+  }
+
   return (
     <>
       <a
@@ -43,7 +56,7 @@ export function Navbar() {
 
           <div className="flex items-center gap-6">
             {navItems.map((item) => {
-              const isActive = pathname === item.href || (item.href.startsWith("/#") && pathname === "/")
+              const isActive = getIsActive(item.href)
               return (
                 <Link
                   key={item.href}
@@ -57,7 +70,7 @@ export function Navbar() {
                   )}
                 >
                   {item.label}
-                  {isActive && pathname === "/" && (
+                  {isActive && (
                     <motion.div
                       layoutId="navbar-indicator"
                       className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"

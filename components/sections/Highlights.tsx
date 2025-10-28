@@ -7,8 +7,8 @@ import { staggerContainer, staggerItem } from "@/lib/animations"
 import { useEffect, useRef, useState } from "react"
 
 const highlights = [
-  { label: "Users Impact", value: siteConfig.facts.impact },
-  { label: "Projects Built", value: siteConfig.facts.projects },
+  { label: "Users", value: siteConfig.facts.impact },
+  { label: "Projects", value: siteConfig.facts.projects },
   { label: "OSS Contributions", value: siteConfig.facts.oss },
 ]
 
@@ -16,7 +16,11 @@ function CountUp({ value }: { value: string }) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
-  const targetNumber = parseInt(value.replace(/\D/g, ""))
+
+  // Extract number and suffix
+  const match = value.match(/^(\d+)(\+|M\+|K\+)?$/)
+  const targetNumber = match ? parseInt(match[1]) : 0
+  const suffix = match ? (match[2] || "") : value
 
   useEffect(() => {
     if (isInView && targetNumber) {
@@ -40,7 +44,7 @@ function CountUp({ value }: { value: string }) {
 
   return (
     <div ref={ref}>
-      {targetNumber ? `${count.toLocaleString()}${value.replace(/[\d,]/g, "")}` : value}
+      {targetNumber ? `${count.toLocaleString()}${suffix}` : value}
     </div>
   )
 }
