@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, Users, GitBranch, Award } from "lucide-react";
+import { GraduationCap, Users, GitBranch, Award, type LucideIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { FadeIn } from "@/components/animations/FadeIn";
@@ -13,7 +13,7 @@ import { PERSONAL_INFO } from "@/lib/constants";
 import { calculateAge } from "@/lib/utils";
 
 interface StatCardProps {
-  icon: React.ElementType;
+  icon: LucideIcon;
   value: string;
   label: string;
   delay?: number;
