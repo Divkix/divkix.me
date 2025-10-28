@@ -7,7 +7,7 @@ export const siteConfig = {
   about: "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
 
   facts: {
-    impact: "1000000+",
+    impact: "250000+",
     projects: "30+",
     oss: "50+",
   },
@@ -196,7 +196,7 @@ export const siteConfig = {
       tags: ["Go", "MongoDB", "Telegram"],
       period: "Feb 2020 – Jul 2023",
       links: [
-        { label: "GitHub", href: "https://github.com/search?q=Alita+Robot" },
+        { label: "GitHub", href: "https://github.com/Divkix/Alita_Robot" },
       ],
     },
     {
@@ -205,7 +205,7 @@ export const siteConfig = {
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Present",
       links: [
-        { label: "GitHub", href: "https://github.com/search?q=WarpDL" }
+        { label: "GitHub", href: "https://github.com/warpdl/warpdl" }
       ],
     },
     {
@@ -213,35 +213,45 @@ export const siteConfig = {
       desc: "Quick, straightforward, and dependable URL shortening service.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Sep 2023",
-      links: [],
+      links: [
+        { label: "GitHub", href: "https://github.com/srinkco/srink" }
+      ],
     },
     {
       name: "ProxyGrab",
       desc: "Software to scrape proxies for web scraping and testing using aiohttp and API integrations.",
       tags: ["Python"],
       period: "Aug 2020 – May 2023",
-      links: [],
+      links: [
+        { label: "GitHub", href: "https://github.com/Divkix/ProxyGrab" }
+      ],
     },
     {
       name: "Project Spyn",
       desc: "LEGO EV3 autonomous vehicle for FSE100. Completed ahead of schedule with 100%+ grade navigating obstacles.",
       tags: ["Robotics", "LEGO Mindstorms"],
       period: "Jan 2022 – Apr 2022",
-      links: [],
+      links: [
+        { label: "GitHub", href: "https://github.com/Divkix/ProjectSpyn" }
+      ],
     },
     {
       name: "I-Helmet",
       desc: "Smart helmet for visually impaired using computer vision to interpret surroundings and provide auditory feedback.",
       tags: ["Python", "Computer Vision"],
       period: "Dec 2020",
-      links: [],
+      links: [
+        { label: "GitHub", href: "https://github.com/Divkix/I-Helmet" }
+      ],
     },
     {
       name: "NodeMCU WiFi Smart Car",
       desc: "Remotely controlled smart car with live camera feed. Android app in Dart controls C++ programmed NodeMCU.",
       tags: ["C++", "Dart", "IoT"],
       period: "Oct 2019 – Dec 2020",
-      links: [],
+      links: [
+        { label: "GitHub", href: "https://github.com/Divkix/WifiCar" }
+      ],
     },
   ],
 
