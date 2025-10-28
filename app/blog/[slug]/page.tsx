@@ -7,6 +7,10 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+// Force static rendering to prevent hydration issues in Cloudflare Workers
+export const dynamic = 'force-static'
+export const revalidate = false
+
 export async function generateStaticParams() {
   const posts = getAllPosts()
   return posts.map((post) => ({

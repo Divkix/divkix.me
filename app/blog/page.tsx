@@ -10,6 +10,10 @@ export const metadata = generateSEO({
   description: "Thoughts on software development, technology, and building products.",
 })
 
+// Force static rendering to prevent hydration issues in Cloudflare Workers
+export const dynamic = 'force-static'
+export const revalidate = false
+
 export default function BlogPage() {
   const posts = getAllPosts()
 
