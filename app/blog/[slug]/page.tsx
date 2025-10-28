@@ -1,7 +1,7 @@
 import { getAllPosts, getPostBySlug } from "@/lib/content"
 import { Badge } from "@/components/ui/badge"
 import { formatDate } from "@/lib/utils"
-import { generateSEO } from "@/lib/seo"
+import { generateBlogPostSEO } from "@/lib/seo"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
@@ -22,10 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {}
   }
 
-  return generateSEO({
-    title: post.title,
-    description: post.excerpt,
-  })
+  return generateBlogPostSEO(post.title, post.excerpt, post.slug, post.date)
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
