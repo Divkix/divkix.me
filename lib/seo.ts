@@ -16,7 +16,7 @@ export function generateSEO(overrides?: Metadata): Metadata {
       "software engineer",
       "portfolio",
       "full stack",
-      ...siteConfig.skills,
+      ...siteConfig.skills.map(skill => skill.name),
     ],
     authors: [{ name: siteConfig.name, url: `mailto:${siteConfig.email}` }],
     creator: siteConfig.name,

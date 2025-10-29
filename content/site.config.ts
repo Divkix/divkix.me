@@ -13,14 +13,22 @@ export const siteConfig = {
   },
 
   skills: [
-    "Python",
-    "JavaScript/TypeScript",
-    "Go",
-    "Java",
-    "Rust",
-    "C/C++",
-    "HTML/CSS",
-  ],
+    { name: "Python", category: "Languages", proficiency: 95 },
+    { name: "JavaScript", category: "Languages", proficiency: 90 },
+    { name: "TypeScript", category: "Languages", proficiency: 90 },
+    { name: "Go", category: "Languages", proficiency: 85 },
+    { name: "Java", category: "Languages", proficiency: 80 },
+    { name: "Rust", category: "Languages", proficiency: 70 },
+    { name: "C/C++", category: "Languages", proficiency: 75 },
+    { name: "React", category: "Frameworks", proficiency: 90 },
+    { name: "Next.js", category: "Frameworks", proficiency: 88 },
+    { name: "Node.js", category: "Frameworks", proficiency: 85 },
+    { name: "MongoDB", category: "Databases", proficiency: 82 },
+    { name: "PostgreSQL", category: "Databases", proficiency: 78 },
+    { name: "Git", category: "Tools", proficiency: 92 },
+    { name: "Docker", category: "Tools", proficiency: 80 },
+    { name: "AWS", category: "Tools", proficiency: 75 },
+  ] as const,
 
   experience: [
     {
@@ -180,6 +188,10 @@ export const siteConfig = {
       links: [
         { label: "Live", href: "https://asucapstone.com" },
       ],
+      images: [
+        { src: "/projects/asu-capstone/screenshot1.png", alt: "ASU Capstone Dashboard", width: 1920, height: 1080 },
+        { src: "/projects/asu-capstone/screenshot2.png", alt: "Project Details View", width: 1920, height: 1080 },
+      ],
     },
     {
       name: "PickMyClass",
@@ -188,6 +200,9 @@ export const siteConfig = {
       period: "2024",
       links: [
         { label: "Live", href: "https://pickmyclass.app" }
+      ],
+      images: [
+        { src: "/projects/pickmyclass/screenshot1.png", alt: "PickMyClass Dashboard", width: 1920, height: 1080 },
       ],
     },
     {
@@ -198,6 +213,9 @@ export const siteConfig = {
       links: [
         { label: "GitHub", href: "https://github.com/Divkix/Alita_Robot" },
       ],
+      images: [
+        { src: "/projects/alita-robot/screenshot1.png", alt: "Alita Robot Interface", width: 1920, height: 1080 },
+      ],
     },
     {
       name: "WarpDL",
@@ -207,6 +225,9 @@ export const siteConfig = {
       links: [
         { label: "GitHub", href: "https://github.com/warpdl/warpdl" }
       ],
+      images: [
+        { src: "/projects/warpdl/screenshot1.png", alt: "WarpDL Interface", width: 1920, height: 1080 },
+      ],
     },
     {
       name: "Srink Co.",
@@ -215,6 +236,9 @@ export const siteConfig = {
       period: "May 2023 – Sep 2023",
       links: [
         { label: "GitHub", href: "https://github.com/srinkco/srink" }
+      ],
+      images: [
+        { src: "/projects/srink/screenshot1.png", alt: "Srink Dashboard", width: 1920, height: 1080 },
       ],
     },
     {
