@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { TiltCard } from "@/components/ui/tilt-card"
 import { siteConfig } from "@/content/site.config"
 import { staggerContainer, staggerItem } from "@/lib/animations"
 import { ExternalLink } from "lucide-react"
@@ -60,40 +61,42 @@ export function Projects() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <motion.div key={project.name} variants={staggerItem}>
-              <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
-                <CardHeader>
-                  <div className="flex justify-between items-start gap-2">
-                    <CardTitle>{project.name}</CardTitle>
-                    {"period" in project && project.period && (
-                      <span className="text-xs text-foreground/60 shrink-0">
-                        {project.period}
-                      </span>
-                    )}
-                  </div>
-                  <CardDescription>{project.desc}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 mt-auto">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  {project.links.length > 0 && (
-                    <div className="flex gap-2">
-                      {project.links.map((link) => (
-                        <Button key={link.label} variant="outline" size="sm" asChild>
-                          <a href={link.href} target="_blank" rel="noopener noreferrer">
-                            {link.label}
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
+              <TiltCard>
+                <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
+                  <CardHeader>
+                    <div className="flex justify-between items-start gap-2">
+                      <CardTitle>{project.name}</CardTitle>
+                      {"period" in project && project.period && (
+                        <span className="text-xs text-foreground/60 shrink-0">
+                          {project.period}
+                        </span>
+                      )}
+                    </div>
+                    <CardDescription>{project.desc}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4 mt-auto">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
                       ))}
                     </div>
-                  )}
-                </CardContent>
-              </Card>
+                    {project.links.length > 0 && (
+                      <div className="flex gap-2">
+                        {project.links.map((link) => (
+                          <Button key={link.label} variant="outline" size="sm" asChild>
+                            <a href={link.href} target="_blank" rel="noopener noreferrer">
+                              {link.label}
+                              <ExternalLink className="ml-2 h-4 w-4" />
+                            </a>
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TiltCard>
             </motion.div>
           ))}
         </div>

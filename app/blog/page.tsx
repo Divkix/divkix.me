@@ -1,6 +1,7 @@
 import { getAllPosts } from "@/lib/content"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { TiltCard } from "@/components/ui/tilt-card"
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import { generateSEO } from "@/lib/seo"
@@ -33,24 +34,26 @@ export default function BlogPage() {
           <div className="space-y-6">
             {posts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="block">
-                <Card className="glass-surface hover:border-primary/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex items-center justify-between gap-4 mb-2">
-                      <Badge variant="secondary">{post.readingTime}</Badge>
-                      <span className="text-sm text-foreground/60">
-                        {formatDate(post.date)}
-                      </span>
-                    </div>
-                    <CardTitle className="text-2xl hover:text-primary transition-colors">
-                      {post.title}
-                    </CardTitle>
-                    {post.excerpt && (
-                      <CardDescription className="text-base">
-                        {post.excerpt}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                </Card>
+                <TiltCard maxTilt={8}>
+                  <Card className="glass-surface hover:border-primary/50 transition-colors">
+                    <CardHeader>
+                      <div className="flex items-center justify-between gap-4 mb-2">
+                        <Badge variant="secondary">{post.readingTime}</Badge>
+                        <span className="text-sm text-foreground/60">
+                          {formatDate(post.date)}
+                        </span>
+                      </div>
+                      <CardTitle className="text-2xl hover:text-primary transition-colors">
+                        {post.title}
+                      </CardTitle>
+                      {post.excerpt && (
+                        <CardDescription className="text-base">
+                          {post.excerpt}
+                        </CardDescription>
+                      )}
+                    </CardHeader>
+                  </Card>
+                </TiltCard>
               </Link>
             ))}
           </div>
