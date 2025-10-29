@@ -168,6 +168,23 @@
     border-color: var(--color-border);
     box-shadow: var(--shadow-sm);
   }
+
+  /* Ripple effect for buttons */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple 600ms ease-out;
+    pointer-events: none;
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -178,5 +195,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Disable ripple animation */
+  .ripple {
+    animation: none;
+    display: none;
   }
 }
