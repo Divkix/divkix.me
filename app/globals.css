@@ -96,7 +96,7 @@
   --accent: oklch(0.76 0.20 310);
   --accent-foreground: oklch(0.145 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 25%);
+  --border: oklch(1 0 0 / 40%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -112,8 +112,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.05), 0 0 8px 0 rgb(255 255 255 / 0.03);
-  --shadow: 0 1px 3px 0 rgb(255 255 255 / 0.1), 0 1px 2px -1px rgb(255 255 255 / 0.08);
+  --shadow-sm: 0 2px 4px 0 rgb(255 255 255 / 0.08), 0 0 12px 0 rgb(255 255 255 / 0.05);
+  --shadow: 0 2px 6px 0 rgb(255 255 255 / 0.12), 0 1px 3px -1px rgb(255 255 255 / 0.1);
 }
 
 @layer base {
@@ -165,7 +165,8 @@
   .glass-surface {
     background: oklch(var(--background) / 0.6);
     backdrop-filter: blur(12px);
-    border: 1px solid oklch(var(--border) / 0.3);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-sm);
   }
 }
 
