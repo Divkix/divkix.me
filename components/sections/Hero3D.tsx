@@ -40,11 +40,6 @@ export function Hero3D() {
             <Button asChild size="lg">
               <a href="#projects">View Projects</a>
             </Button>
-            <Button asChild variant="outline" size="lg">
-              <a href="/resume.pdf" download>
-                Download Résumé
-              </a>
-            </Button>
           </motion.div>
         </motion.div>
       </div>
