@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { BlogArticleWrapper } from "./blog-article-wrapper"
 
 // Force static rendering to prevent hydration issues in Cloudflare Workers
 export const dynamic = 'force-static'
@@ -40,6 +41,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Dynamically import the MDX file
   const MDXContent = (await import(`@/content/blog/${slug}.mdx`)).default
 
+  // Extract numeric reading time from string (e.g., "5 min read" -> 5)
+  const readingTimeMinutes = typeof post.readingTime === 'string'
+    ? parseInt(post.readingTime.match(/\d+/)?.[0] || '0', 10)
+    : post.readingTime
+
   return (
     <article className="container mx-auto px-4 py-20">
       <div className="max-w-3xl mx-auto space-y-8">
@@ -59,9 +65,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </header>
 
-        <div className="prose prose-slate dark:prose-invert max-w-none">
-          <MDXContent />
-        </div>
+        <BlogArticleWrapper readingTimeMinutes={readingTimeMinutes}>
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            <MDXContent />
+          </div>
+        </BlogArticleWrapper>
       </div>
     </article>
   )
