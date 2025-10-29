@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
-import "yet-another-react-lightbox/styles.css"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { ToastProvider } from "@/components/providers/ToastProvider"
 import { generateSEO } from "@/lib/seo"

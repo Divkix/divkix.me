@@ -188,10 +188,6 @@ export const siteConfig = {
       links: [
         { label: "Live", href: "https://asucapstone.com" },
       ],
-      images: [
-        { src: "/projects/asu-capstone/screenshot1.png", alt: "ASU Capstone Dashboard", width: 1920, height: 1080 },
-        { src: "/projects/asu-capstone/screenshot2.png", alt: "Project Details View", width: 1920, height: 1080 },
-      ],
     },
     {
       name: "PickMyClass",
@@ -200,9 +196,6 @@ export const siteConfig = {
       period: "2024",
       links: [
         { label: "Live", href: "https://pickmyclass.app" }
-      ],
-      images: [
-        { src: "/projects/pickmyclass/screenshot1.png", alt: "PickMyClass Dashboard", width: 1920, height: 1080 },
       ],
     },
     {
@@ -213,9 +206,6 @@ export const siteConfig = {
       links: [
         { label: "GitHub", href: "https://github.com/Divkix/Alita_Robot" },
       ],
-      images: [
-        { src: "/projects/alita-robot/screenshot1.png", alt: "Alita Robot Interface", width: 1920, height: 1080 },
-      ],
     },
     {
       name: "WarpDL",
@@ -225,9 +215,6 @@ export const siteConfig = {
       links: [
         { label: "GitHub", href: "https://github.com/warpdl/warpdl" }
       ],
-      images: [
-        { src: "/projects/warpdl/screenshot1.png", alt: "WarpDL Interface", width: 1920, height: 1080 },
-      ],
     },
     {
       name: "Srink Co.",
@@ -236,9 +223,6 @@ export const siteConfig = {
       period: "May 2023 – Sep 2023",
       links: [
         { label: "GitHub", href: "https://github.com/srinkco/srink" }
-      ],
-      images: [
-        { src: "/projects/srink/screenshot1.png", alt: "Srink Dashboard", width: 1920, height: 1080 },
       ],
     },
     {

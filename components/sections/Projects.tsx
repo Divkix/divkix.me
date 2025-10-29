@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { TiltCard } from "@/components/ui/tilt-card"
 import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
-import { ProjectGallery } from "./projects/ProjectGallery"
 import { siteConfig } from "@/content/site.config"
 import { staggerContainer, staggerItem } from "@/lib/animations"
 import { ExternalLink } from "lucide-react"
@@ -78,11 +77,6 @@ export function Projects() {
                       <CardDescription>{project.desc}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4 mt-auto">
-                      {/* Project Gallery */}
-                      {"images" in project && project.images && project.images.length > 0 && (
-                        <ProjectGallery images={project.images} projectName={project.name} />
-                      )}
-
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
                           <Badge key={tag} variant="secondary">
