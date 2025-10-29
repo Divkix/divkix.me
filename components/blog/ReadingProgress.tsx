@@ -33,6 +33,9 @@ export function ReadingProgress({
   // Transform to percentage
   const percentComplete = useTransform(smoothProgress, [0, 1], [0, 100])
 
+  // Transform for stroke dash offset (must be called at top level)
+  const strokeDashOffset = useTransform(percentComplete, [0, 100], [100, 0])
+
   // Calculate time remaining
   const [timeRemaining, setTimeRemaining] = useState<number>(readingTime)
   const [percent, setPercent] = useState<number>(0)
@@ -97,11 +100,7 @@ export function ReadingProgress({
                 r="16"
                 strokeDasharray="100"
                 style={{
-                  strokeDashoffset: useTransform(
-                    percentComplete,
-                    [0, 100],
-                    [100, 0]
-                  ),
+                  strokeDashoffset,
                 }}
                 strokeLinecap="round"
               />
