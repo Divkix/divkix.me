@@ -32,7 +32,7 @@ export default function BlogPage() {
         ) : (
           <div className="space-y-6">
             {posts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`}>
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="block">
                 <Card className="glass-surface hover:border-primary/50 transition-colors">
                   <CardHeader>
                     <div className="flex items-center justify-between gap-4 mb-2">
