@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper"
+import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
 import { GradientText } from "@/components/shared/GradientText"
 import { SocialIcons } from "@/components/shared/SocialIcons"
 import { siteConfig } from "@/content/site.config"
@@ -10,7 +11,13 @@ import { staggerContainer, staggerItem } from "@/lib/animations"
 
 export function Hero3D() {
   return (
-    <section className="container mx-auto px-4 py-20 lg:py-32">
+    <section className="container mx-auto px-4 py-20 lg:py-32 relative overflow-hidden">
+      {/* Parallax background elements */}
+      <ParallaxWrapper speed={0.3} className="absolute inset-0 -z-10">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      </ParallaxWrapper>
+
       <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
         <motion.div
           variants={staggerContainer}

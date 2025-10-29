@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { TiltCard } from "@/components/ui/tilt-card"
+import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
+import { ProjectGallery } from "./projects/ProjectGallery"
 import { siteConfig } from "@/content/site.config"
 import { staggerContainer, staggerItem } from "@/lib/animations"
 import { ExternalLink } from "lucide-react"
@@ -59,44 +61,51 @@ export function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project, index) => (
             <motion.div key={project.name} variants={staggerItem}>
-              <TiltCard>
-                <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
-                  <CardHeader>
-                    <div className="flex justify-between items-start gap-2">
-                      <CardTitle>{project.name}</CardTitle>
-                      {"period" in project && project.period && (
-                        <span className="text-xs text-foreground/60 shrink-0">
-                          {project.period}
-                        </span>
+              <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
+                <TiltCard>
+                  <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
+                    <CardHeader>
+                      <div className="flex justify-between items-start gap-2">
+                        <CardTitle>{project.name}</CardTitle>
+                        {"period" in project && project.period && (
+                          <span className="text-xs text-foreground/60 shrink-0">
+                            {project.period}
+                          </span>
+                        )}
+                      </div>
+                      <CardDescription>{project.desc}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4 mt-auto">
+                      {/* Project Gallery */}
+                      {"images" in project && project.images && project.images.length > 0 && (
+                        <ProjectGallery images={project.images} projectName={project.name} />
                       )}
-                    </div>
-                    <CardDescription>{project.desc}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4 mt-auto">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    {project.links.length > 0 && (
-                      <div className="flex gap-2">
-                        {project.links.map((link) => (
-                          <Button key={link.label} variant="outline" size="sm" asChild>
-                            <a href={link.href} target="_blank" rel="noopener noreferrer">
-                              {link.label}
-                              <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                          </Button>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary">
+                            {tag}
+                          </Badge>
                         ))}
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </TiltCard>
+                      {project.links.length > 0 && (
+                        <div className="flex gap-2">
+                          {project.links.map((link) => (
+                            <Button key={link.label} variant="outline" size="sm" asChild>
+                              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                                {link.label}
+                                <ExternalLink className="ml-2 h-4 w-4" />
+                              </a>
+                            </Button>
+                          ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </TiltCard>
+              </ParallaxWrapper>
             </motion.div>
           ))}
         </div>
