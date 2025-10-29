@@ -100,7 +100,7 @@ export function ReadingProgress({
                 r="16"
                 strokeDasharray="100"
                 style={{
-                  strokeDashoffset,
+                  strokeDashoffset: strokeDashOffset,
                 }}
                 strokeLinecap="round"
               />
