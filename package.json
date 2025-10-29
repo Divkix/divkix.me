@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "node scripts/generate-posts-metadata.js",
-    "build": "bun run prebuild && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "preview": "bun run prebuild && opennextjs-cloudflare build && opennextjs-cloudflare preview",
