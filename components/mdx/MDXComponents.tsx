@@ -1,6 +1,27 @@
 import { ComponentPropsWithoutRef } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { CopyButton } from "@/components/blog/CopyButton"
+
+/**
+ * Extract text content from children prop, handling nested structures
+ */
+function extractCodeContent(children: React.ReactNode): string {
+  if (typeof children === "string") {
+    return children
+  }
+
+  if (Array.isArray(children)) {
+    return children.map(extractCodeContent).join("")
+  }
+
+  if (children && typeof children === "object" && "props" in children) {
+    const childWithProps = children as { props: { children?: React.ReactNode } }
+    return extractCodeContent(childWithProps.props.children)
+  }
+
+  return ""
+}
 
 const components = {
   h1: ({ className, ...props }: ComponentPropsWithoutRef<"h1">) => (
@@ -34,12 +55,21 @@ const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: ComponentPropsWithoutRef<"pre">) => (
-    <pre
-      className={cn("bg-muted p-4 rounded-lg overflow-x-auto mb-4", className)}
-      {...props}
-    />
-  ),
+  pre: ({ className, children, ...props }: ComponentPropsWithoutRef<"pre">) => {
+    const codeContent = extractCodeContent(children)
+
+    return (
+      <div className="relative group">
+        <pre
+          className={cn("bg-muted p-4 rounded-lg overflow-x-auto mb-4", className)}
+          {...props}
+        >
+          {children}
+        </pre>
+        <CopyButton code={codeContent} />
+      </div>
+    )
+  },
   blockquote: ({ className, ...props }: ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
       className={cn("border-l-4 border-primary pl-4 italic my-4", className)}
