@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper"
 import { GradientText } from "@/components/shared/GradientText"
 import { SocialIcons } from "@/components/shared/SocialIcons"
 import { siteConfig } from "@/content/site.config"
@@ -37,9 +38,11 @@ export function Hero3D() {
           </motion.div>
 
           <motion.div variants={staggerItem} className="flex flex-wrap gap-4 justify-center">
-            <Button asChild size="lg">
-              <a href="#projects">View Projects</a>
-            </Button>
+            <MagneticWrapper strength={0.2}>
+              <Button asChild size="lg">
+                <a href="#projects">View Projects</a>
+              </Button>
+            </MagneticWrapper>
           </motion.div>
         </motion.div>
       </div>
