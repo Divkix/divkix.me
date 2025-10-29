@@ -4,6 +4,7 @@ import { Projects } from "@/components/sections/Projects"
 import { Experience } from "@/components/sections/Experience"
 import { Skills } from "@/components/sections/Skills"
 import { Contact } from "@/components/sections/Contact"
+import { InteractiveGradient } from "@/components/ui/interactive-gradient"
 import { siteConfig } from "@/content/site.config"
 
 export default function HomePage() {
@@ -29,6 +30,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <InteractiveGradient />
       <Hero3D />
       <Highlights />
       <Projects />
