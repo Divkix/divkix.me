@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/shared/Navbar"
 import { Footer } from "@/components/shared/Footer"
+import { ScrollProgress } from "@/components/shared/ScrollProgress"
 
 export default function SiteLayout({
   children,
@@ -8,6 +9,7 @@ export default function SiteLayout({
 }) {
   return (
     <>
+      <ScrollProgress />
       <Navbar />
       <main id="main-content" className="min-h-screen">
         {children}
