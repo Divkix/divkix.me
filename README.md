@@ -1,17 +1,18 @@
 # Divkix Portfolio
 
-A modern, production-ready portfolio site built with Next.js 15, TypeScript, React Three Fiber, and Tailwind CSS. Features a clean design with 3D graphics, smooth animations, and a full blog system.
+A modern, production-ready portfolio site built with Next.js 15, TypeScript, and Tailwind CSS. Deployed on Cloudflare Workers with edge-optimized architecture, featuring Framer Motion animations, an MDX-powered blog, and a comprehensive single-page experience.
 
 ## Features
 
-- **Modern Design**: Clean aesthetic with subtle glass surfaces and gradients
-- **3D Hero Scene**: Interactive TorusKnot with custom shader and particle system
-- **Single-Page Experience**: Homepage with smooth scrolling sections for projects and contact
-- **Blog System**: MDX-powered blog with syntax highlighting and reading time
+- **Modern Design**: Clean aesthetic with glass surfaces and gradient text effects
+- **Hero Section**: Animated hero with Framer Motion stagger effects and social icons
+- **Highlights Dashboard**: Animated count-up statistics (users, projects, OSS contributions)
+- **Single-Page Experience**: Homepage with smooth scrolling sections (Hero, Highlights, Projects, Experience, Skills, Contact)
+- **Blog System**: MDX-powered blog with pre-generated metadata for edge deployment
 - **Responsive**: Mobile-first design that works on all devices
 - **Accessible**: WCAG AA compliant with keyboard navigation and screen reader support
-- **Fast**: Optimized performance with dynamic imports and code splitting
-- **SEO Optimized**: Meta tags, structured data, and semantic HTML
+- **Fast**: Optimized for Cloudflare Workers with edge runtime
+- **SEO Optimized**: Meta tags, JSON-LD structured data, and semantic HTML
 - **Type-Safe**: 100% TypeScript with strict mode enabled
 
 ## Tech Stack
@@ -20,11 +21,11 @@ A modern, production-ready portfolio site built with Next.js 15, TypeScript, Rea
 - **Language**: TypeScript 5 with strict mode
 - **Styling**: Tailwind CSS v4 with custom design system
 - **UI Components**: shadcn/ui (Radix UI primitives)
-- **3D Graphics**: React Three Fiber + Three.js + Drei
-- **Animations**: Framer Motion
+- **Animations**: Framer Motion with stagger effects and count-up animations
 - **Forms**: React Hook Form + Zod validation
-- **Content**: MDX with gray-matter and reading-time
+- **Content**: MDX with gray-matter and build-time metadata generation
 - **Icons**: Lucide React
+- **Deployment**: Cloudflare Workers via @opennextjs/cloudflare
 - **Package Manager**: Bun
 
 ## Getting Started
@@ -64,51 +65,58 @@ npm run dev
 ├── app/                      # Next.js App Router
 │   ├── (site)/              # Main site route group
 │   │   ├── layout.tsx       # Site layout
-│   │   └── page.tsx         # Homepage with all sections
+│   │   └── page.tsx         # Homepage (Hero, Highlights, Projects, Experience, Skills, Contact)
 │   ├── blog/                # Blog pages
 │   │   ├── [slug]/          # Dynamic blog post pages
-│   │   │   └── page.tsx
-│   │   └── page.tsx         # Blog listing
+│   │   │   └── page.tsx     # Loads MDX dynamically
+│   │   ├── layout.tsx       # Blog layout
+│   │   └── page.tsx         # Blog listing (reads posts.json)
 │   ├── api/                 # API routes
 │   │   └── contact/         # Contact form endpoint
 │   │       └── route.ts
-│   ├── layout.tsx           # Root layout
-│   └── globals.css          # Global styles
+│   ├── rss.xml/             # RSS feed generation
+│   │   └── route.ts
+│   ├── layout.tsx           # Root layout with providers
+│   └── globals.css          # Global styles with OKLCH colors
 ├── components/              # React components
 │   ├── sections/            # Page sections
-│   │   ├── Hero3D.tsx       # Hero section with 3D scene
-│   │   ├── About.tsx        # About section
-│   │   ├── Skills.tsx       # Skills section
+│   │   ├── Hero3D.tsx       # Hero with animated text and social icons
+│   │   ├── Highlights.tsx   # Animated statistics dashboard
 │   │   ├── Projects.tsx     # Projects section with filtering
-│   │   └── Contact.tsx      # Contact form section
-│   ├── three/               # 3D components
-│   │   ├── Scene.tsx
-│   │   ├── TorusKnotWithShader.tsx
-│   │   ├── ParticleSystem.tsx
-│   │   └── Lights.tsx
+│   │   ├── Experience.tsx   # Work experience timeline
+│   │   ├── Skills.tsx       # Skills grid
+│   │   └── Contact.tsx      # Contact form
 │   ├── shared/              # Shared components
 │   │   ├── Navbar.tsx       # Navigation with smooth scroll
-│   │   ├── Footer.tsx
-│   │   └── GradientText.tsx
-│   ├── ui/                  # shadcn/ui components
+│   │   ├── Footer.tsx       # Site footer
+│   │   ├── GradientText.tsx # Gradient text wrapper
+│   │   ├── SocialIcons.tsx  # Social media icons
+│   │   └── ThemeToggle.tsx  # Dark/light mode toggle
+│   ├── ui/                  # shadcn/ui components (Button, Card, Input, etc.)
 │   ├── mdx/                 # MDX components
 │   └── providers/           # Context providers
 │       └── ThemeProvider.tsx
 ├── content/                 # Content files
-│   ├── blog/                # MDX blog posts
-│   │   ├── hello-world.mdx
-│   │   └── building-with-nextjs.mdx
-│   └── site.config.ts       # Site configuration
+│   ├── blog/                # MDX blog posts + generated metadata
+│   │   ├── *.mdx            # Blog post files
+│   │   └── posts.json       # Generated at build time
+│   └── site.config.ts       # Site configuration (all content)
 ├── lib/                     # Utilities
-│   ├── utils.ts             # Helper functions
+│   ├── utils.ts             # Helper functions (cn, etc.)
 │   ├── animations.ts        # Framer Motion variants
-│   ├── content.ts           # MDX utilities
-│   └── seo.ts               # SEO utilities
+│   ├── content.ts           # Blog post utilities (reads posts.json)
+│   └── seo.ts               # SEO metadata utilities
+├── scripts/                 # Build scripts
+│   ├── generate-posts-metadata.js  # Generates posts.json from MDX
+│   └── generate-favicons.ts        # Favicon generation
 ├── public/                  # Static assets
-│   └── *.svg                # SVG icons
-├── next.config.ts           # Next.js configuration
+│   ├── *.svg                # Icons and logos
+│   └── resume.pdf           # Downloadable resume
+├── next.config.ts           # Next.js configuration with MDX
 ├── tailwind.config.ts       # Tailwind configuration
-└── tsconfig.json            # TypeScript configuration
+├── tsconfig.json            # TypeScript configuration
+├── wrangler.jsonc           # Cloudflare Workers configuration
+└── open-next.config.ts      # OpenNext configuration
 ```
 
 ## Configuration
@@ -204,11 +212,12 @@ projects: [
 
 The site uses a single-page layout with smooth scrolling to sections:
 
-- **Home**: Main hero section with 3D animation
-- **About**: About me section
-- **Skills**: Skills and technologies
-- **Projects**: Filterable project gallery on the homepage (accessible via `/#projects`)
-- **Contact**: Contact form on the homepage (accessible via `/#contact`)
+- **Home**: Hero section with animated text and social icons
+- **Highlights**: Animated statistics dashboard (users, projects, OSS contributions)
+- **Projects**: Filterable project gallery (accessible via `/#projects`)
+- **Experience**: Work experience timeline with multiple positions
+- **Skills**: Skills grid showcasing technologies
+- **Contact**: Contact form (accessible via `/#contact`)
 - **Blog**: Separate blog listing page with MDX posts
 
 Navigation links automatically scroll to sections when on the homepage, or navigate to the homepage and scroll when on other pages.
@@ -216,20 +225,25 @@ Navigation links automatically scroll to sections when on the homepage, or navig
 ## Scripts
 
 - `bun run dev` - Start development server
-- `bun run build` - Build for production
+- `bun run build` - Build for production (includes prebuild)
+- `bun run prebuild` - Generate blog posts metadata
 - `bun run start` - Start production server
 - `bun run lint` - Run ESLint
+- `bun run preview` - Preview with OpenNext locally
+- `bun run deploy` - Deploy to Cloudflare Workers
+- `bun run cf-typegen` - Generate Cloudflare types
 
 ## Performance Optimizations
 
 The site includes several performance optimizations:
 
-- **Dynamic imports** for 3D components to reduce initial bundle size
+- **Edge deployment** on Cloudflare Workers for global low-latency
+- **Build-time generation** of blog metadata (no filesystem access at runtime)
 - **Image optimization** with AVIF/WebP formats
 - **Font optimization** with next/font
 - **Code splitting** and lazy loading
-- **Package optimization** for lucide-react, @react-three/fiber, and @react-three/drei
-- **Reduced motion support** for accessibility
+- **Package optimization** for lucide-react and framer-motion
+- **Reduced motion support** for accessibility (respects `prefers-reduced-motion`)
 
 Target Lighthouse scores:
 - **Performance**: 90+
@@ -269,26 +283,31 @@ All components, utilities, and configurations are fully typed with TypeScript.
 
 ## Deployment
 
-### Vercel (Recommended)
+### Cloudflare Workers (Configured)
 
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Deploy with default settings
-
-The site will automatically build and deploy with optimal settings for Next.js.
-
-### Other Platforms
-
-Build the project and deploy the `.next` folder:
+This project is configured for Cloudflare Workers deployment:
 
 ```bash
-bun run build
+bun run deploy
 ```
 
-Ensure your platform supports:
-- Node.js 18+
-- Server-side rendering (SSR)
-- API routes
+This will:
+1. Generate blog posts metadata
+2. Build the Next.js app with OpenNext
+3. Deploy to Cloudflare Workers
+
+### Configuration
+
+- Worker name: `divkix-me` (in `wrangler.jsonc`)
+- Compatibility flags: `nodejs_compat`, `global_fetch_strictly_public`
+- Assets served from `.open-next/assets`
+
+### Important Notes
+
+- The site is optimized for edge runtime (no filesystem access)
+- Blog posts are pre-generated at build time into `posts.json`
+- Always run `bun run prebuild` before deploying
+- Preview locally with `bun run preview` before deploying
 
 ## Customization Tips
 
@@ -300,28 +319,23 @@ Ensure your platform supports:
 4. Update `/content/site.config.ts` if needed
 5. Add navigation link with anchor in `/components/shared/Navbar.tsx` if needed
 
-### Modifying 3D Scene
+### Modifying Animations
 
-The hero 3D scene components are in `/components/three/`. Modify the TorusKnot parameters, shader code, or particle system to customize the visual:
+The hero section uses Framer Motion for smooth animations. Modify `/lib/animations.ts` to customize animation variants:
 
-```typescript
-<mesh rotation={[0.5, 0.5, 0]}>
-  <torusKnotGeometry args={[1, 0.3, 128, 32]} />
-  <meshStandardMaterial color="#6366f1" />
-</mesh>
-```
+### Customizing Highlights
 
-### Changing Animations
-
-Framer Motion variants are defined in `/lib/animations.ts`. Modify these to change animation behavior:
+Edit the statistics displayed in the Highlights section by updating `content/site.config.ts`:
 
 ```typescript
-export const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
+facts: {
+  impact: "250000+",  // Total users reached
+  projects: "30+",    // Number of projects
+  oss: "50+",         // Open source contributions
 }
 ```
+
+The Highlights component automatically animates these numbers with a count-up effect.
 
 ## Environment Variables
 
