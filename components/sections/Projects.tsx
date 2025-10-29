@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -59,50 +59,62 @@ export function Projects() {
           ))}
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
-            <motion.div key={project.name} variants={staggerItem}>
-              <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
-                <TiltCard>
-                  <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
-                    <CardHeader>
-                      <div className="flex justify-between items-start gap-2">
-                        <CardTitle>{project.name}</CardTitle>
-                        {"period" in project && project.period && (
-                          <span className="text-xs text-foreground/60 shrink-0">
-                            {project.period}
-                          </span>
-                        )}
-                      </div>
-                      <CardDescription>{project.desc}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4 mt-auto">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      {project.links.length > 0 && (
-                        <div className="flex gap-2">
-                          {project.links.map((link) => (
-                            <Button key={link.label} variant="outline" size="sm" asChild>
-                              <a href={link.href} target="_blank" rel="noopener noreferrer">
-                                {link.label}
-                                <ExternalLink className="ml-2 h-4 w-4" />
-                              </a>
-                            </Button>
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.name}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
+                  <TiltCard>
+                    <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
+                      <CardHeader>
+                        <div className="flex justify-between items-start gap-2">
+                          <CardTitle>{project.name}</CardTitle>
+                          {"period" in project && project.period && (
+                            <span className="text-xs text-foreground/60 shrink-0">
+                              {project.period}
+                            </span>
+                          )}
+                        </div>
+                        <CardDescription>{project.desc}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4 mt-auto">
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag) => (
+                            <Badge key={tag} variant="secondary">
+                              {tag}
+                            </Badge>
                           ))}
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TiltCard>
-              </ParallaxWrapper>
-            </motion.div>
-          ))}
-        </div>
+                        {project.links.length > 0 && (
+                          <div className="flex gap-2">
+                            {project.links.map((link) => (
+                              <Button key={link.label} variant="outline" size="sm" asChild>
+                                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                                  {link.label}
+                                  <ExternalLink className="ml-2 h-4 w-4" />
+                                </a>
+                              </Button>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </TiltCard>
+                </ParallaxWrapper>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {filteredProjects.length === 0 && (
           <p className="text-center text-foreground/60">
