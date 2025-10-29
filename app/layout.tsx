@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { ToastProvider } from "@/components/providers/ToastProvider"
 import { generateSEO } from "@/lib/seo"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -23,6 +24,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="aurora-background" />
           {children}
+          <ToastProvider />
         </ThemeProvider>
       </body>
     </html>

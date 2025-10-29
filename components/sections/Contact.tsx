@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { motion } from "framer-motion"
+import { toast } from "sonner"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
@@ -48,12 +50,20 @@ export function Contact() {
       if (response.ok) {
         setIsSuccess(true)
         reset()
+        toast.success("Message sent!", {
+          description: "I'll get back to you soon.",
+        })
         setTimeout(() => setIsSuccess(false), 5000)
       } else {
-        alert("Failed to send message. Please try again.")
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" })) as { message?: string }
+        toast.error("Failed to send message", {
+          description: errorData.message || "Please try again later.",
+        })
       }
     } catch (error) {
-      alert("An error occurred. Please try again.")
+      toast.error("Failed to send message", {
+        description: error instanceof Error ? error.message : "An error occurred. Please try again.",
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -130,10 +140,12 @@ export function Contact() {
                   )}
                 </div>
 
-                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
+                <MagneticWrapper strength={0.15}>
+                  <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </MagneticWrapper>
               </form>
             )}
           </Card>
