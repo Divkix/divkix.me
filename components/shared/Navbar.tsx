@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ThemeToggle } from "./ThemeToggle"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
@@ -27,6 +27,13 @@ export function Navbar() {
   const pathname = usePathname()
   const [activeSection, setActiveSection] = useState<string>("")
   const [isOpen, setIsOpen] = useState(false)
+
+  const { scrollY } = useScroll()
+
+  // Transform scroll position to blur and opacity values
+  const blur = useTransform(scrollY, [0, 100], [0, 12])
+  const opacity = useTransform(scrollY, [0, 100], [0.6, 1])
+  const scale = useTransform(scrollY, [0, 100], [1, 0.98])
 
   useEffect(() => {
     // Only run on homepage
@@ -99,7 +106,14 @@ export function Navbar() {
       >
         Skip to main content
       </a>
-      <nav className="sticky top-0 z-50 w-full glass-surface">
+      <motion.nav
+        className="sticky top-0 z-50 w-full glass-surface"
+        style={{
+          backdropFilter: blur.get() > 0 ? `blur(${blur.get()}px)` : undefined,
+          backgroundColor: `oklch(var(--background) / ${opacity.get()})`,
+          scale,
+        }}
+      >
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="text-xl font-display font-bold">
             Divkix
@@ -172,7 +186,7 @@ export function Navbar() {
             </Sheet>
           </div>
         </div>
-      </nav>
+      </motion.nav>
     </>
   )
 }
