@@ -7,7 +7,7 @@ import { SkillsVisualization } from "./skills/SkillsVisualization"
 
 export function Skills() {
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section id="skills" className="container mx-auto px-4 py-20">
       <motion.div
         variants={staggerContainer}
         initial="hidden"

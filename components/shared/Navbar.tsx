@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button"
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/#projects" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Skills", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
   { label: "Blog", href: "/blog" },
 ]
@@ -40,7 +42,7 @@ export function Navbar() {
     if (pathname !== "/") return
 
     const handleScroll = () => {
-      const sections = ["projects", "contact"]
+      const sections = ["projects", "experience", "skills", "contact"]
       const scrollPosition = window.scrollY + 100 // Offset for navbar height
 
       // Check if at the top
