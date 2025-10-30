@@ -16,11 +16,11 @@ import {
   SiDocker,
   SiAmazonwebservices,
   SiDart,
-  SiJava,
   SiHetzner,
   SiSupabase,
   SiCloudflare,
 } from "react-icons/si"
+import { DiJava } from "react-icons/di"
 import { Code } from "lucide-react"
 import type { IconType } from "react-icons"
 
@@ -32,7 +32,7 @@ const skillIconMap: Record<string, IconType> = {
   JavaScript: SiJavascript,
   TypeScript: SiTypescript,
   Go: SiGo,
-  Java: SiJava,
+  Java: DiJava,
   Rust: SiRust,
   "C/C++": SiC,
   Dart: SiDart,

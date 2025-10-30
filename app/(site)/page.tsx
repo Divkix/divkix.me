@@ -1,5 +1,6 @@
 import { Hero3D } from "@/components/sections/Hero3D"
 import { Highlights } from "@/components/sections/Highlights"
+import { ParallaxBackground } from "@/components/sections/ParallaxBackground"
 import { Projects } from "@/components/sections/Projects"
 import { Experience } from "@/components/sections/Experience"
 import { Skills } from "@/components/sections/Skills"
@@ -31,6 +32,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <InteractiveGradient />
+      <ParallaxBackground />
       <Hero3D />
       <Highlights />
       <Projects />
