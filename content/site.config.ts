@@ -20,6 +20,7 @@ export const siteConfig = {
     { name: "Java", category: "Languages", proficiency: 80 },
     { name: "Rust", category: "Languages", proficiency: 70 },
     { name: "C/C++", category: "Languages", proficiency: 75 },
+    { name: "Dart", category: "Languages", proficiency: 72 },
     { name: "React", category: "Frameworks", proficiency: 90 },
     { name: "Next.js", category: "Frameworks", proficiency: 88 },
     { name: "Node.js", category: "Frameworks", proficiency: 85 },
@@ -28,6 +29,9 @@ export const siteConfig = {
     { name: "Git", category: "Tools", proficiency: 92 },
     { name: "Docker", category: "Tools", proficiency: 80 },
     { name: "AWS", category: "Tools", proficiency: 75 },
+    { name: "Supabase", category: "Tools", proficiency: 85 },
+    { name: "Hetzner", category: "Tools", proficiency: 80 },
+    { name: "Cloudflare", category: "Tools", proficiency: 88 },
   ] as const,
 
   experience: [

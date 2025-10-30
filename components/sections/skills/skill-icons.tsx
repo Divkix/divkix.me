@@ -15,6 +15,11 @@ import {
   SiGit,
   SiDocker,
   SiAmazonwebservices,
+  SiDart,
+  SiJava,
+  SiHetzner,
+  SiSupabase,
+  SiCloudflare,
 } from "react-icons/si"
 import { Code } from "lucide-react"
 import type { IconType } from "react-icons"
@@ -27,9 +32,10 @@ const skillIconMap: Record<string, IconType> = {
   JavaScript: SiJavascript,
   TypeScript: SiTypescript,
   Go: SiGo,
-  Java: Code, // SiJava not available, fallback to Code icon
+  Java: SiJava,
   Rust: SiRust,
   "C/C++": SiC,
+  Dart: SiDart,
   React: SiReact,
   "Next.js": SiNextdotjs,
   "Node.js": SiNodedotjs,
@@ -38,6 +44,9 @@ const skillIconMap: Record<string, IconType> = {
   Git: SiGit,
   Docker: SiDocker,
   AWS: SiAmazonwebservices,
+  Supabase: SiSupabase,
+  Hetzner: SiHetzner,
+  Cloudflare: SiCloudflare,
 }
 
 /**
