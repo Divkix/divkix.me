@@ -22,16 +22,26 @@ export function useParallax(
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const prefersReducedMotion = usePrefersReducedMotion()
 
-  // Detect mobile devices
+  // Detect mobile devices with debounced resize handler
   useEffect(() => {
     const checkMobile = (): void => {
       setIsMobile(window.innerWidth < 768)
     }
 
     checkMobile()
-    window.addEventListener("resize", checkMobile)
 
-    return () => window.removeEventListener("resize", checkMobile)
+    let resizeTimeout: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(checkMobile, 150)
+    }
+
+    window.addEventListener("resize", handleResize, { passive: true })
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      clearTimeout(resizeTimeout)
+    }
   }, [])
 
   const { scrollYProgress } = useScroll({

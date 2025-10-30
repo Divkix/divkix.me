@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, RefObject } from "react"
+import { useEffect, useState, RefObject, useRef } from "react"
 import {
   useMotionValue,
   useSpring,
@@ -26,17 +26,24 @@ const springConfig: SpringOptions = {
 export function useMousePosition(ref: RefObject<HTMLElement | null>) {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
+  const rafIdRef = useRef<number | null>(null)
 
   useEffect(() => {
     const element = ref.current
     if (!element) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect()
-      const x = e.clientX - rect.left - rect.width / 2
-      const y = e.clientY - rect.top - rect.height / 2
-      mouseX.set(x)
-      mouseY.set(y)
+      // Use RAF to throttle updates to 60fps max
+      if (rafIdRef.current !== null) return
+
+      rafIdRef.current = requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect()
+        const x = e.clientX - rect.left - rect.width / 2
+        const y = e.clientY - rect.top - rect.height / 2
+        mouseX.set(x)
+        mouseY.set(y)
+        rafIdRef.current = null
+      })
     }
 
     const handleMouseLeave = () => {
@@ -44,12 +51,15 @@ export function useMousePosition(ref: RefObject<HTMLElement | null>) {
       mouseY.set(0)
     }
 
-    element.addEventListener("mousemove", handleMouseMove)
-    element.addEventListener("mouseleave", handleMouseLeave)
+    element.addEventListener("mousemove", handleMouseMove, { passive: true })
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
 
     return () => {
       element.removeEventListener("mousemove", handleMouseMove)
       element.removeEventListener("mouseleave", handleMouseLeave)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
     }
   }, [ref, mouseX, mouseY])
 
@@ -101,6 +111,7 @@ export function useMagneticEffect(
 ) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
+  const rafIdRef = useRef<number | null>(null)
 
   const springX = useSpring(x, springConfig)
   const springY = useSpring(y, springConfig)
@@ -117,15 +128,21 @@ export function useMagneticEffect(
     if (isTouchDevice) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
+      // Use RAF to throttle updates to 60fps max
+      if (rafIdRef.current !== null) return
 
-      const distanceX = (e.clientX - centerX) * strength
-      const distanceY = (e.clientY - centerY) * strength
+      rafIdRef.current = requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
 
-      x.set(distanceX)
-      y.set(distanceY)
+        const distanceX = (e.clientX - centerX) * strength
+        const distanceY = (e.clientY - centerY) * strength
+
+        x.set(distanceX)
+        y.set(distanceY)
+        rafIdRef.current = null
+      })
     }
 
     const handleMouseLeave = () => {
@@ -133,12 +150,15 @@ export function useMagneticEffect(
       y.set(0)
     }
 
-    element.addEventListener("mousemove", handleMouseMove)
-    element.addEventListener("mouseleave", handleMouseLeave)
+    element.addEventListener("mousemove", handleMouseMove, { passive: true })
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
 
     return () => {
       element.removeEventListener("mousemove", handleMouseMove)
       element.removeEventListener("mouseleave", handleMouseLeave)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
     }
   }, [ref, strength, x, y, prefersReducedMotion])
 
@@ -154,6 +174,7 @@ export function useMagneticEffect(
 export function use3DTilt(ref: RefObject<HTMLElement | null>, maxTilt: number = 15) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
+  const rafIdRef = useRef<number | null>(null)
 
   const rotateX = useSpring(
     useTransform(y, [-0.5, 0.5], [maxTilt, -maxTilt]),
@@ -176,16 +197,22 @@ export function use3DTilt(ref: RefObject<HTMLElement | null>, maxTilt: number = 
     if (isTouchDevice) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
+      // Use RAF to throttle updates to 60fps max
+      if (rafIdRef.current !== null) return
 
-      // Normalize to -0.5 to 0.5 range
-      const normalizedX = (e.clientX - centerX) / rect.width
-      const normalizedY = (e.clientY - centerY) / rect.height
+      rafIdRef.current = requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
 
-      x.set(normalizedX)
-      y.set(normalizedY)
+        // Normalize to -0.5 to 0.5 range
+        const normalizedX = (e.clientX - centerX) / rect.width
+        const normalizedY = (e.clientY - centerY) / rect.height
+
+        x.set(normalizedX)
+        y.set(normalizedY)
+        rafIdRef.current = null
+      })
     }
 
     const handleMouseLeave = () => {
@@ -193,12 +220,15 @@ export function use3DTilt(ref: RefObject<HTMLElement | null>, maxTilt: number = 
       y.set(0)
     }
 
-    element.addEventListener("mousemove", handleMouseMove)
-    element.addEventListener("mouseleave", handleMouseLeave)
+    element.addEventListener("mousemove", handleMouseMove, { passive: true })
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
 
     return () => {
       element.removeEventListener("mousemove", handleMouseMove)
       element.removeEventListener("mouseleave", handleMouseLeave)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
     }
   }, [ref, x, y, prefersReducedMotion])
 

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ThemeToggle } from "./ThemeToggle"
 import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { MenuIcon } from "lucide-react"
 import {
   Sheet,
@@ -29,6 +29,7 @@ export function Navbar() {
   const pathname = usePathname()
   const [activeSection, setActiveSection] = useState<string>("")
   const [isOpen, setIsOpen] = useState(false)
+  const rafIdRef = useRef<number | null>(null)
 
   const { scrollY } = useScroll()
 
@@ -42,31 +43,44 @@ export function Navbar() {
     if (pathname !== "/") return
 
     const handleScroll = () => {
-      const sections = ["projects", "experience", "skills", "contact"]
-      const scrollPosition = window.scrollY + 100 // Offset for navbar height
+      // Use RAF to throttle scroll handler to 60fps max
+      if (rafIdRef.current !== null) return
 
-      // Check if at the top
-      if (scrollPosition < 300) {
-        setActiveSection("")
-        return
-      }
+      rafIdRef.current = requestAnimationFrame(() => {
+        const sections = ["projects", "experience", "skills", "contact"]
+        const scrollPosition = window.scrollY + 100 // Offset for navbar height
 
-      // Find which section is currently in view
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            return
+        // Check if at the top
+        if (scrollPosition < 300) {
+          setActiveSection("")
+          rafIdRef.current = null
+          return
+        }
+
+        // Find which section is currently in view
+        for (const section of sections) {
+          const element = document.getElementById(section)
+          if (element) {
+            const { offsetTop, offsetHeight } = element
+            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+              setActiveSection(section)
+              rafIdRef.current = null
+              return
+            }
           }
         }
-      }
+        rafIdRef.current = null
+      })
     }
 
     handleScroll() // Check initial position
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
+    }
   }, [pathname])
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -136,6 +150,7 @@ export function Navbar() {
                       ? "text-foreground"
                       : "text-foreground/60 hover:text-foreground"
                   )}
+                  aria-label={`Navigate to ${item.label}`}
                 >
                   {item.label}
                   {isActive && (
@@ -164,26 +179,29 @@ export function Navbar() {
                 <SheetHeader>
                   <SheetTitle className="text-left">Navigation</SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-4 mt-8">
-                  {navItems.map((item) => {
-                    const isActive = getIsActive(item.href)
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={(e) => handleAnchorClick(e, item.href)}
-                        className={cn(
-                          "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
-                          isActive
-                            ? "text-foreground bg-primary/10"
-                            : "text-foreground/60 hover:text-foreground hover:bg-primary/5"
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                    )
-                  })}
-                </div>
+                <nav aria-label="Mobile navigation menu">
+                  <div className="flex flex-col gap-4 mt-8">
+                    {navItems.map((item) => {
+                      const isActive = getIsActive(item.href)
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={(e) => handleAnchorClick(e, item.href)}
+                          className={cn(
+                            "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
+                            isActive
+                              ? "text-foreground bg-primary/10"
+                              : "text-foreground/60 hover:text-foreground hover:bg-primary/5"
+                          )}
+                          aria-label={`Navigate to ${item.label} (mobile menu)`}
+                        >
+                          {item.label}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>

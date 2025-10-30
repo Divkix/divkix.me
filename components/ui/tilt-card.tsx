@@ -30,8 +30,11 @@ export function TiltCard({ children, className, maxTilt = 12 }: TiltCardProps) {
         rotateY,
         transformStyle: "preserve-3d",
         perspective: 1000,
+        // Force GPU compositing without will-change
+        // Framer Motion adds will-change automatically during animation
+        transform: "translate3d(0, 0, 0)",
       }}
-      className={cn("will-change-transform", className)}
+      className={cn(className)}
     >
       {children}
     </motion.div>

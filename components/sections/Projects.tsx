@@ -59,19 +59,19 @@ export function Projects() {
           ))}
         </motion.div>
 
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          layout
-        >
-          <AnimatePresence mode="popLayout">
+        {/* Projects grid - removed layout prop to reduce compositor overhead */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="wait">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.name}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{
+                  duration: 0.3,
+                  delay: index * 0.05, // Stagger effect without layout
+                }}
               >
                 <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
                   <TiltCard>
@@ -114,7 +114,7 @@ export function Projects() {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {filteredProjects.length === 0 && (
           <p className="text-center text-foreground/60">

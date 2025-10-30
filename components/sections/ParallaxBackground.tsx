@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion"
 import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations"
 
@@ -65,7 +65,9 @@ function ParallaxOrb({
         y: scrollY,
         x: mouseParallaxX,
         translateY: mouseParallaxY,
-        willChange: "transform",
+        // Force GPU compositing with translate3d instead of will-change
+        // will-change is automatically added by Framer Motion during animation
+        transform: "translate3d(0, 0, 0)",
       }}
       transition={{
         type: "spring",
@@ -83,6 +85,7 @@ export function ParallaxBackground() {
   const mouseY = useMotionValue(0)
   const prefersReducedMotion = usePrefersReducedMotion()
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const rafIdRef = useRef<number | null>(null)
 
   // Detect touch devices
   useEffect(() => {
@@ -98,25 +101,47 @@ export function ParallaxBackground() {
     }
 
     checkTouchDevice()
-    window.addEventListener("resize", checkTouchDevice)
-    return () => window.removeEventListener("resize", checkTouchDevice)
+
+    // Debounced resize handler
+    let resizeTimeout: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(checkTouchDevice, 150)
+    }
+
+    window.addEventListener("resize", handleResize, { passive: true })
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      clearTimeout(resizeTimeout)
+    }
   }, [])
 
-  // Track mouse position for desktop parallax
+  // Track mouse position for desktop parallax with RAF throttling
   useEffect(() => {
     if (typeof window === "undefined") return
     if (isTouchDevice || prefersReducedMotion) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Convert mouse position to -50 to 50 range
-      const x = (e.clientX / window.innerWidth - 0.5) * 100
-      const y = (e.clientY / window.innerHeight - 0.5) * 100
-      mouseX.set(x)
-      mouseY.set(y)
+      // Use RAF to throttle updates to 60fps max
+      if (rafIdRef.current !== null) return
+
+      rafIdRef.current = requestAnimationFrame(() => {
+        // Convert mouse position to -50 to 50 range
+        const x = (e.clientX / window.innerWidth - 0.5) * 100
+        const y = (e.clientY / window.innerHeight - 0.5) * 100
+        mouseX.set(x)
+        mouseY.set(y)
+        rafIdRef.current = null
+      })
     }
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true })
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
+    }
   }, [isTouchDevice, prefersReducedMotion, mouseX, mouseY])
 
   // Track scroll progress for scroll-based parallax
@@ -190,7 +215,7 @@ export function ParallaxBackground() {
   return (
     <div
       className="absolute top-0 left-0 w-full h-[calc(100vh+50rem)] z-0 pointer-events-none overflow-hidden"
-      aria-label="Decorative parallax background"
+      aria-hidden="true"
     >
       {/* Parallax orbs */}
       <div className="absolute inset-0">

@@ -12,6 +12,7 @@ export function InteractiveGradient() {
   const ref = useRef<HTMLDivElement>(null)
   const mouseX = useMotionValue(50)
   const mouseY = useMotionValue(50)
+  const rafIdRef = useRef<number | null>(null)
 
   const springX = useSpring(mouseX, { damping: 25, stiffness: 100 })
   const springY = useSpring(mouseY, { damping: 25, stiffness: 100 })
@@ -27,16 +28,25 @@ export function InteractiveGradient() {
     if (isTouchDevice) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100
-      const y = (e.clientY / window.innerHeight) * 100
-      mouseX.set(x)
-      mouseY.set(y)
+      // Use RAF to throttle updates to 60fps max
+      if (rafIdRef.current !== null) return
+
+      rafIdRef.current = requestAnimationFrame(() => {
+        const x = (e.clientX / window.innerWidth) * 100
+        const y = (e.clientY / window.innerHeight) * 100
+        mouseX.set(x)
+        mouseY.set(y)
+        rafIdRef.current = null
+      })
     }
 
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove, { passive: true })
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+      }
     }
   }, [mouseX, mouseY, prefersReducedMotion])
 

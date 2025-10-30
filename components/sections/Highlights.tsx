@@ -16,6 +16,8 @@ function CountUp({ value }: { value: string }) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
+  const rafIdRef = useRef<number | null>(null)
+  const startTimeRef = useRef<number | null>(null)
 
   // Extract number and suffix
   const match = value.match(/^(\d+)(\+|M\+|K\+)?$/)
@@ -24,21 +26,36 @@ function CountUp({ value }: { value: string }) {
 
   useEffect(() => {
     if (isInView && targetNumber) {
-      let start = 0
-      const duration = 2000
-      const increment = targetNumber / (duration / 16)
+      const duration = 2000 // 2 seconds
 
-      const timer = setInterval(() => {
-        start += increment
-        if (start >= targetNumber) {
-          setCount(targetNumber)
-          clearInterval(timer)
-        } else {
-          setCount(Math.floor(start))
+      const animate = (currentTime: number) => {
+        if (startTimeRef.current === null) {
+          startTimeRef.current = currentTime
         }
-      }, 16)
 
-      return () => clearInterval(timer)
+        const elapsed = currentTime - startTimeRef.current
+        const progress = Math.min(elapsed / duration, 1)
+
+        // Easing function for smoother animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+        const newCount = Math.floor(easeOutQuart * targetNumber)
+
+        setCount(newCount)
+
+        if (progress < 1) {
+          rafIdRef.current = requestAnimationFrame(animate)
+        } else {
+          setCount(targetNumber)
+        }
+      }
+
+      rafIdRef.current = requestAnimationFrame(animate)
+
+      return () => {
+        if (rafIdRef.current !== null) {
+          cancelAnimationFrame(rafIdRef.current)
+        }
+      }
     }
   }, [isInView, targetNumber])
 

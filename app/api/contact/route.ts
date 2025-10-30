@@ -12,13 +12,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const data = contactSchema.parse(body)
 
-    // Log to console (as per spec - no external service)
-    console.log("=== Contact Form Submission ===")
-    console.log("Name:", data.name)
-    console.log("Email:", data.email)
-    console.log("Message:", data.message)
-    console.log("Timestamp:", new Date().toISOString())
-    console.log("==============================")
+    // Log to console in development only
+    if (process.env.NODE_ENV === "development") {
+      console.log("=== Contact Form Submission ===")
+      console.log("Name:", data.name)
+      console.log("Email:", data.email)
+      console.log("Message:", data.message)
+      console.log("Timestamp:", new Date().toISOString())
+      console.log("==============================")
+    }
 
     return NextResponse.json(
       { success: true, message: "Message received" },

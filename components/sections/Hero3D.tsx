@@ -7,7 +7,7 @@ import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
 import { GradientText } from "@/components/shared/GradientText"
 import { SocialIcons } from "@/components/shared/SocialIcons"
 import { siteConfig } from "@/content/site.config"
-import { staggerContainer, staggerItem } from "@/lib/animations"
+import { heroStaggerContainer, heroStaggerItem, heroTitle } from "@/lib/animations"
 
 export function Hero3D() {
   return (
@@ -20,13 +20,14 @@ export function Hero3D() {
 
       <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
         <motion.div
-          variants={staggerContainer}
+          variants={heroStaggerContainer}
           initial="hidden"
           animate="show"
           className="space-y-6 w-full"
         >
+          {/* LCP-critical h1 renders immediately with minimal animation */}
           <motion.h1
-            variants={staggerItem}
+            variants={heroTitle}
             className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight"
           >
             {siteConfig.name.split(" ")[0]}{" "}
@@ -34,17 +35,17 @@ export function Hero3D() {
           </motion.h1>
 
           <motion.p
-            variants={staggerItem}
+            variants={heroStaggerItem}
             className="text-xl lg:text-2xl text-foreground/70 max-w-2xl mx-auto"
           >
             {siteConfig.tagline}
           </motion.p>
 
-          <motion.div variants={staggerItem} className="flex justify-center">
+          <motion.div variants={heroStaggerItem} className="flex justify-center">
             <SocialIcons />
           </motion.div>
 
-          <motion.div variants={staggerItem} className="flex flex-wrap gap-4 justify-center">
+          <motion.div variants={heroStaggerItem} className="flex flex-wrap gap-4 justify-center">
             <MagneticWrapper strength={0.2}>
               <Button asChild size="lg">
                 <a href="#projects">View Projects</a>
