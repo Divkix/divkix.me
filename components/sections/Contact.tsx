@@ -41,9 +41,14 @@ export function Contact() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/contact", {
+      // TODO: Replace YOUR_FORMSPREE_FORM_ID with your actual Formspree form ID
+      // Get it from https://formspree.io (free tier available)
+      const response = await fetch("https://formspree.io/f/xgvreprq", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: JSON.stringify(data),
       })
 
@@ -55,9 +60,9 @@ export function Contact() {
         })
         setTimeout(() => setIsSuccess(false), 5000)
       } else {
-        const errorData = await response.json().catch(() => ({ message: "Unknown error" })) as { message?: string }
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" })) as { message?: string; errors?: Array<{ message: string }> }
         toast.error("Failed to send message", {
-          description: errorData.message || "Please try again later.",
+          description: errorData.errors?.[0]?.message || errorData.message || "Please try again later.",
         })
       }
     } catch (error) {

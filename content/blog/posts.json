@@ -1,0 +1,43 @@
+{
+  "posts": [
+    {
+      "slug": "lm-studio-local-ai-mac",
+      "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
+      "date": "2025-10-31",
+      "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline.",
+      "tags": [
+        "AI",
+        "LM Studio",
+        "Privacy",
+        "Mac",
+        "Qwen",
+        "Local AI"
+      ],
+      "author": "Divanshu Chauhan",
+      "readingTime": 6,
+      "published": true
+    },
+    {
+      "slug": "pickmyclass-never-miss-your-dream-class",
+      "title": "PickMyClass: Never Miss Your Dream Class Again",
+      "date": "2025-10-28",
+      "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing.",
+      "tags": [],
+      "author": "Divanshu Chauhan",
+      "readingTime": 3,
+      "published": true
+    },
+    {
+      "slug": "hello-world",
+      "title": "Welcome to My Portfolio",
+      "date": "2025-10-27",
+      "excerpt": "An introduction to my new portfolio site built with Next.js, TypeScript, and React Three Fiber.",
+      "tags": [],
+      "author": "Divanshu Chauhan",
+      "readingTime": 1,
+      "published": true
+    }
+  ],
+  "generatedAt": "2025-11-11T18:59:51.421Z",
+  "totalPosts": 3
+}

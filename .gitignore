@@ -46,8 +46,3 @@ next-env.d.ts
 *.swp
 *.swo
 *~
-
-# open-next
-.open-next
-.wrangler
-content/blog/*.json
