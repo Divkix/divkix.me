@@ -38,8 +38,8 @@ export const staggerContainer: Variants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
+      staggerChildren: 0.05, // Reduced from 0.1s for faster rendering
+      delayChildren: 0,      // Removed initial delay
     },
   },
 }
@@ -69,7 +69,7 @@ export const heroStaggerContainer: Variants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.03, // Reduced from 0.1s
+      staggerChildren: 0.01, // Reduced from 0.03s for faster FCP
       delayChildren: 0,      // No initial delay
     },
   },

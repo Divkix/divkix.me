@@ -78,8 +78,14 @@ export function Highlights() {
       >
         {highlights.map((highlight) => (
           <motion.div key={highlight.label} variants={staggerItem}>
-            <Card className="p-8 text-center glass-surface">
-              <div className="text-4xl font-display font-bold mb-2">
+            <Card className="p-8 text-center glass-surface" style={{ contain: "layout" }}>
+              <div
+                className="text-4xl font-display font-bold mb-2"
+                style={{
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "8ch", // Reserve space for largest number
+                }}
+              >
                 <CountUp value={highlight.value} />
               </div>
               <div className="text-sm text-foreground/60">{highlight.label}</div>

@@ -68,6 +68,8 @@ function ParallaxOrb({
         // Force GPU compositing with translate3d instead of will-change
         // will-change is automatically added by Framer Motion during animation
         transform: "translate3d(0, 0, 0)",
+        // Contain layout to prevent layout shifts
+        contain: "layout style paint",
       }}
       transition={{
         type: "spring",
@@ -157,7 +159,7 @@ export function ParallaxBackground() {
       color: "oklch(0.7 0.15 240 / 1)",
       size: 700,
       position: { top: "-20%", left: "-10%" },
-      blur: 100,
+      blur: 70, // Reduced from 100 for better performance
       opacity: 0.15,
       scrollSpeed: 0.8,
       mouseMultiplier: 0.5,
@@ -167,8 +169,8 @@ export function ParallaxBackground() {
     {
       color: "oklch(0.65 0.2 330 / 1)",
       size: 500,
-      position: { top: "10%", right: "-5%" },
-      blur: 90,
+      position: { top: "10%", right: "0%" }, // Changed from -5% to prevent layout shift
+      blur: 63, // Reduced from 90 for better performance
       opacity: 0.2,
       scrollSpeed: 0.6,
       mouseMultiplier: 0.7,
@@ -179,7 +181,7 @@ export function ParallaxBackground() {
       color: "oklch(0.68 0.12 180 / 1)",
       size: 450,
       position: { bottom: "15%", left: "5%" },
-      blur: 80,
+      blur: 56, // Reduced from 80 for better performance
       opacity: 0.25,
       scrollSpeed: 0.4,
       mouseMultiplier: 1,
@@ -190,7 +192,7 @@ export function ParallaxBackground() {
       color: "oklch(0.72 0.18 60 / 1)",
       size: 350,
       position: { top: "5%", right: "20%" },
-      blur: 70,
+      blur: 49, // Reduced from 70 for better performance
       opacity: 0.3,
       scrollSpeed: 0.3,
       mouseMultiplier: 1.5,
@@ -201,7 +203,7 @@ export function ParallaxBackground() {
       color: "oklch(0.68 0.16 270 / 1)",
       size: 400,
       position: { bottom: "5%", right: "10%" },
-      blur: 85,
+      blur: 60, // Reduced from 85 for better performance
       opacity: 0.18,
       scrollSpeed: 0.5,
       mouseMultiplier: 0.8,
@@ -215,6 +217,7 @@ export function ParallaxBackground() {
   return (
     <div
       className="absolute top-0 left-0 w-full h-[calc(100vh+50rem)] z-0 pointer-events-none overflow-hidden"
+      style={{ contain: "layout style" }} // Prevent layout shifts
       aria-hidden="true"
     >
       {/* Parallax orbs */}
