@@ -21,7 +21,7 @@
     "dev": "next dev",
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-rss.js",
     "build": "bun run prebuild && next build",
-    "preview": "bun run build && npx serve out",
+    "preview": "bun run build && bunx serve out",
     "lint": "eslint"
   },
   "dependencies": {
