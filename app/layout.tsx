@@ -35,6 +35,11 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <script
+          defer
+          src="https://analytics.divkix.me/script.js"
+          data-website-id="833605b5-2172-4cdb-b6a0-8649afb92d2f"
+        />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
