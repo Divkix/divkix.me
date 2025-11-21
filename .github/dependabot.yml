@@ -1,0 +1,88 @@
+version: 2
+updates:
+  # npm/bun dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # Group React ecosystem updates
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      # Group Next.js ecosystem updates
+      nextjs:
+        patterns:
+          - "next*"
+          - "@next/*"
+          - "eslint-config-next"
+      # Group Radix UI updates
+      radix:
+        patterns:
+          - "@radix-ui/*"
+      # Group Three.js ecosystem
+      threejs:
+        patterns:
+          - "three*"
+          - "@react-three/*"
+      # Group Tailwind updates
+      tailwind:
+        patterns:
+          - "tailwind*"
+          - "@tailwindcss/*"
+      # Group MDX updates
+      mdx:
+        patterns:
+          - "@mdx-js/*"
+          - "remark*"
+      # Group TypeScript and linting
+      typescript-lint:
+        patterns:
+          - "typescript"
+          - "eslint*"
+          - "@rushstack/*"
+      # Group all other minor/patch updates
+      minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "react*"
+          - "@types/react*"
+          - "next*"
+          - "@next/*"
+          - "@radix-ui/*"
+          - "three*"
+          - "@react-three/*"
+          - "tailwind*"
+          - "@tailwindcss/*"
+          - "@mdx-js/*"
+          - "remark*"
+          - "typescript"
+          - "eslint*"
+    labels:
+      - "dependencies"
+      - "automated"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "dependencies"
+      - "ci"
+      - "automated"
