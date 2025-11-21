@@ -62,7 +62,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^24.10.1",
-    "@types/react": "19.2.4",
+    "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3",
     "@types/sharp": "^0.32.0",
     "eslint": "^9.39.1",
@@ -73,7 +73,7 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "@types/react": "19.2.4",
+    "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3"
   }
 }
