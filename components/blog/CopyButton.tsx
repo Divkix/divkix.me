@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 
@@ -12,11 +12,7 @@ export function CopyButton({
   code,
 }: CopyButtonProps): React.JSX.Element | null {
   const [copied, setCopied] = useState<boolean>(false);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const [isMounted, setIsMounted] = useState<boolean>(() => false);
 
   const handleCopy = async (): Promise<void> => {
     try {
@@ -33,8 +29,8 @@ export function CopyButton({
     }
   };
 
-  // Prevent hydration mismatch by not rendering until mounted
   if (!isMounted) {
+    setIsMounted(true);
     return null;
   }
 

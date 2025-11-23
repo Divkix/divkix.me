@@ -99,7 +99,7 @@ export function Contact() {
             Get in <GradientText>Touch</GradientText>
           </h2>
           <p className="text-xl text-foreground/70">
-            Have a project in mind or just want to chat? I'd love to hear from
+            Have a project in mind or just want to chat? I&apos;d love to hear from
             you.
           </p>
         </motion.div>
@@ -113,7 +113,7 @@ export function Contact() {
                   Message Sent!
                 </h3>
                 <p className="text-foreground/70">
-                  Thank you for reaching out. I'll get back to you soon.
+                  Thank you for reaching out. I&apos;ll get back to you soon.
                 </p>
               </div>
             ) : (

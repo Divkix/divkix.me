@@ -16,7 +16,7 @@ export function ReadingProgress({
   className,
 }: ReadingProgressProps): React.JSX.Element | null {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(() => false);
 
   const { scrollYProgress } = useScroll({
     target: articleRef,
@@ -41,10 +41,6 @@ export function ReadingProgress({
   const [percent, setPercent] = useState<number>(0);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (latest) => {
       const remaining = Math.max(0, readingTime * (1 - latest));
       const pct = Math.round(latest * 100);
@@ -59,8 +55,12 @@ export function ReadingProgress({
     return () => unsubscribe();
   }, [smoothProgress, readingTime]);
 
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!isMounted || !isVisible) {
+  if (!isMounted) {
+    setIsMounted(true);
+    return null;
+  }
+
+  if (!isVisible) {
     return null;
   }
 
