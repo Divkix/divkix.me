@@ -1,0 +1,11 @@
+.next/
+out/
+build/
+node_modules/
+*.lock
+bun.lock
+public/
+*.tsbuildinfo
+content/blog/posts.json
+.open-next/
+wrangler.toml

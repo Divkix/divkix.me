@@ -22,7 +22,11 @@
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-rss.js",
     "build": "bun run prebuild && next build --webpack",
     "preview": "bun run build && bunx serve out",
-    "lint": "eslint"
+    "lint": "eslint",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,json,css,md,mdx}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,json,css,md,mdx}\"",
+    "knip": "knip"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -57,6 +61,9 @@
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "knip": "^5.70.1",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.17",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5.9.3"
