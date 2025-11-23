@@ -22,7 +22,8 @@ function getAllPosts() {
   }
 
   // Get all MDX files
-  const files = fs.readdirSync(CONTENT_DIR)
+  const files = fs
+    .readdirSync(CONTENT_DIR)
     .filter((file) => file.endsWith(".mdx"));
 
   console.log(`📝 Found ${files.length} blog posts`);

@@ -1,26 +1,34 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { TiltCard } from "@/components/ui/tilt-card"
-import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
-import { siteConfig } from "@/content/site.config"
-import { staggerContainer, staggerItem } from "@/lib/animations"
-import { ExternalLink } from "lucide-react"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { TiltCard } from "@/components/ui/tilt-card";
+import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
+import { siteConfig } from "@/content/site.config";
+import { staggerContainer, staggerItem } from "@/lib/animations";
+import { ExternalLink } from "lucide-react";
 
 const allTags = Array.from(
-  new Set(siteConfig.projects.flatMap((p) => p.tags))
-) as string[]
+  new Set(siteConfig.projects.flatMap((p) => p.tags)),
+) as string[];
 
 export function Projects() {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const filteredProjects = selectedTag
-    ? siteConfig.projects.filter((p) => (p.tags as readonly string[]).includes(selectedTag))
-    : siteConfig.projects
+    ? siteConfig.projects.filter((p) =>
+        (p.tags as readonly string[]).includes(selectedTag),
+      )
+    : siteConfig.projects;
 
   return (
     <section id="projects" className="container mx-auto px-4 py-20">
@@ -39,7 +47,10 @@ export function Projects() {
         </motion.div>
 
         {/* Filter chips */}
-        <motion.div variants={staggerItem} className="flex flex-wrap justify-center gap-2">
+        <motion.div
+          variants={staggerItem}
+          className="flex flex-wrap justify-center gap-2"
+        >
           <Button
             variant={selectedTag === null ? "default" : "outline"}
             onClick={() => setSelectedTag(null)}
@@ -98,8 +109,17 @@ export function Projects() {
                         {project.links.length > 0 && (
                           <div className="flex gap-2">
                             {project.links.map((link) => (
-                              <Button key={link.label} variant="outline" size="sm" asChild>
-                                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                              <Button
+                                key={link.label}
+                                variant="outline"
+                                size="sm"
+                                asChild
+                              >
+                                <a
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
                                   {link.label}
                                   <ExternalLink className="ml-2 h-4 w-4" />
                                 </a>
@@ -123,5 +143,5 @@ export function Projects() {
         )}
       </motion.div>
     </section>
-  )
+  );
 }

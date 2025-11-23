@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { RefObject, useEffect, useState } from "react"
-import { useScroll, useTransform, MotionValue } from "framer-motion"
-import { usePrefersReducedMotion } from "./use-interactive-animations"
+import { RefObject, useEffect, useState } from "react";
+import { useScroll, useTransform, MotionValue } from "framer-motion";
+import { usePrefersReducedMotion } from "./use-interactive-animations";
 
 interface ParallaxReturn {
-  y: MotionValue<number>
-  scrollYProgress: MotionValue<number>
+  y: MotionValue<number>;
+  scrollYProgress: MotionValue<number>;
 }
 
 /**
@@ -17,51 +17,51 @@ interface ParallaxReturn {
  */
 export function useParallax(
   speed: number = 0.5,
-  ref?: RefObject<HTMLElement>
+  ref?: RefObject<HTMLElement>,
 ): ParallaxReturn {
-  const [isMobile, setIsMobile] = useState<boolean>(false)
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   // Detect mobile devices with debounced resize handler
   useEffect(() => {
     const checkMobile = (): void => {
-      setIsMobile(window.innerWidth < 768)
-    }
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    checkMobile()
+    checkMobile();
 
-    let resizeTimeout: NodeJS.Timeout
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      clearTimeout(resizeTimeout)
-      resizeTimeout = setTimeout(checkMobile, 150)
-    }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 150);
+    };
 
-    window.addEventListener("resize", handleResize, { passive: true })
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", handleResize)
-      clearTimeout(resizeTimeout)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
-  })
+  });
 
   // Calculate parallax offset
   // Multiply by viewport height and speed factor for smooth movement
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, -(speed * 200)] // Negative for upward movement
-  )
+    [0, -(speed * 200)], // Negative for upward movement
+  );
 
   // Disable parallax on mobile or if user prefers reduced motion
-  const disabledY = useTransform(() => 0)
+  const disabledY = useTransform(() => 0);
 
   return {
     y: isMobile || prefersReducedMotion ? disabledY : y,
     scrollYProgress,
-  }
+  };
 }

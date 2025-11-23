@@ -56,12 +56,14 @@ app/
 ### Content System
 
 **Blog Posts:**
+
 - MDX files in `content/blog/*.mdx` with frontmatter (title, date, excerpt, tags, author, published)
 - Build script (`scripts/generate-posts-metadata.js`) generates `content/blog/posts.json`
 - Runtime code (`lib/content.ts`) reads from JSON, never filesystem
 - Reading time calculated at build time (200 words/min)
 
 **Site Configuration:**
+
 - All site content centralized in `content/site.config.ts`
 - Includes personal info, skills, projects, experience, education, socials
 - Type-safe exports with `as const` for strict typing
@@ -101,6 +103,7 @@ Hero section uses Framer Motion with stagger effects for smooth entrance animati
 ### Adding Blog Posts
 
 1. Create `content/blog/your-post.mdx`:
+
 ```mdx
 ---
 title: "Post Title"
@@ -119,6 +122,7 @@ Content here...
 ### Modifying Site Content
 
 Edit `content/site.config.ts` to update:
+
 - Personal information
 - Skills list
 - Projects array (name, desc, tags, period, links)
@@ -149,6 +153,7 @@ This builds with OpenNext and previews in a local Worker environment.
 ## Key Components
 
 ### Homepage Sections (in order)
+
 1. **Hero3D** - Animated hero with name, tagline, social icons, and CTA buttons
 2. **Highlights** - Statistics dashboard with count-up animations (impact, projects, OSS)
 3. **Projects** - Project cards with filtering by tags
@@ -157,6 +162,7 @@ This builds with OpenNext and previews in a local Worker environment.
 6. **Contact** - Contact form with validation
 
 ### Shared Components
+
 - **Navbar** - Navigation with smooth scrolling, theme toggle, and mobile menu
 - **Footer** - Site footer with social links
 - **GradientText** - Wrapper for gradient text effects
@@ -179,6 +185,7 @@ This builds with OpenNext and previews in a local Worker environment.
 ## Deployment
 
 The project is configured for Cloudflare Workers:
+
 - Worker name: `divkix-me` (in `wrangler.jsonc`)
 - Assets directory: `.open-next/assets`
 - Compatibility flags: `nodejs_compat`, `global_fetch_strictly_public`

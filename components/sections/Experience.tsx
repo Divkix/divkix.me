@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { siteConfig } from "@/content/site.config"
-import { staggerContainer, staggerItem } from "@/lib/animations"
-import { MapPin } from "lucide-react"
-import { TimelinePath } from "./experience/TimelinePath"
-import { TimelineNode } from "./experience/TimelineNode"
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { siteConfig } from "@/content/site.config";
+import { staggerContainer, staggerItem } from "@/lib/animations";
+import { MapPin } from "lucide-react";
+import { TimelinePath } from "./experience/TimelinePath";
+import { TimelineNode } from "./experience/TimelineNode";
 
 export function Experience() {
   return (
@@ -34,7 +34,11 @@ export function Experience() {
               </div>
 
               {siteConfig.education.map((edu, index) => (
-                <motion.div key={index} variants={staggerItem} className="relative">
+                <motion.div
+                  key={index}
+                  variants={staggerItem}
+                  className="relative"
+                >
                   {/* Timeline node */}
                   <div className="absolute left-0 top-6">
                     <TimelineNode index={index} isActive={index === 0} />
@@ -45,13 +49,19 @@ export function Experience() {
                       <CardHeader>
                         <div className="flex justify-between items-start">
                           <CardTitle className="text-lg">{edu.title}</CardTitle>
-                          <span className="text-sm text-foreground/60">{edu.year}</span>
+                          <span className="text-sm text-foreground/60">
+                            {edu.year}
+                          </span>
                         </div>
                       </CardHeader>
                       {("focus" in edu || "honors" in edu) && (
                         <CardContent>
                           <p className="text-sm text-foreground/60">
-                            {"focus" in edu ? edu.focus : "honors" in edu ? edu.honors : ""}
+                            {"focus" in edu
+                              ? edu.focus
+                              : "honors" in edu
+                                ? edu.honors
+                                : ""}
                           </p>
                         </CardContent>
                       )}
@@ -73,10 +83,17 @@ export function Experience() {
               </div>
 
               {siteConfig.experience.map((company, companyIndex) => (
-                <motion.div key={companyIndex} variants={staggerItem} className="relative">
+                <motion.div
+                  key={companyIndex}
+                  variants={staggerItem}
+                  className="relative"
+                >
                   {/* Timeline node */}
                   <div className="absolute left-0 top-6">
-                    <TimelineNode index={companyIndex} isActive={companyIndex === 0} />
+                    <TimelineNode
+                      index={companyIndex}
+                      isActive={companyIndex === 0}
+                    />
                   </div>
 
                   <div className="pl-10 mb-8">
@@ -84,7 +101,9 @@ export function Experience() {
                       <CardHeader>
                         <div className="space-y-2">
                           <div className="flex justify-between items-start gap-4">
-                            <CardTitle className="text-xl">{company.company}</CardTitle>
+                            <CardTitle className="text-xl">
+                              {company.company}
+                            </CardTitle>
                             <Badge variant="secondary" className="shrink-0">
                               {company.duration}
                             </Badge>
@@ -121,7 +140,9 @@ export function Experience() {
                                 <ul className="space-y-2 text-sm text-foreground/70">
                                   {position.highlights.map((highlight, i) => (
                                     <li key={i} className="flex gap-2">
-                                      <span className="text-primary mt-1.5">•</span>
+                                      <span className="text-primary mt-1.5">
+                                        •
+                                      </span>
                                       <span>{highlight}</span>
                                     </li>
                                   ))}
@@ -140,5 +161,5 @@ export function Experience() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }

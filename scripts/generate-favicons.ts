@@ -28,16 +28,16 @@
  *   - public/site.webmanifest
  */
 
-import sharp from "sharp"
-import { writeFileSync } from "fs"
-import path from "path"
+import sharp from "sharp";
+import { writeFileSync } from "fs";
+import path from "path";
 
-const PUBLIC_DIR = path.join(process.cwd(), "public")
-const SOURCE_IMAGE = path.join(PUBLIC_DIR, "divkix-logo.png")
+const PUBLIC_DIR = path.join(process.cwd(), "public");
+const SOURCE_IMAGE = path.join(PUBLIC_DIR, "divkix-logo.png");
 
 interface FaviconConfig {
-  size: number
-  name: string
+  size: number;
+  name: string;
 }
 
 const configs: FaviconConfig[] = [
@@ -47,10 +47,10 @@ const configs: FaviconConfig[] = [
   { size: 180, name: "apple-touch-icon.png" },
   { size: 192, name: "android-chrome-192x192.png" },
   { size: 512, name: "android-chrome-512x512.png" },
-]
+];
 
 async function generateFavicons() {
-  console.log("🎨 Generating favicons from divkix-logo.png...")
+  console.log("🎨 Generating favicons from divkix-logo.png...");
 
   try {
     // Generate PNG files
@@ -61,9 +61,9 @@ async function generateFavicons() {
           background: { r: 0, g: 0, b: 0, alpha: 0 },
         })
         .png()
-        .toFile(path.join(PUBLIC_DIR, config.name))
+        .toFile(path.join(PUBLIC_DIR, config.name));
 
-      console.log(`✓ Generated ${config.name}`)
+      console.log(`✓ Generated ${config.name}`);
     }
 
     // Generate favicon.ico (using 32x32)
@@ -73,16 +73,17 @@ async function generateFavicons() {
         background: { r: 0, g: 0, b: 0, alpha: 0 },
       })
       .png()
-      .toBuffer()
+      .toBuffer();
 
-    writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer)
-    console.log("✓ Generated favicon.ico")
+    writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer);
+    console.log("✓ Generated favicon.ico");
 
     // Generate site.webmanifest
     const manifest = {
       name: "Divanshu Chauhan",
       short_name: "Divkix",
-      description: "Full-stack developer passionate about building high-quality software",
+      description:
+        "Full-stack developer passionate about building high-quality software",
       icons: [
         {
           src: "/android-chrome-192x192.png",
@@ -99,19 +100,19 @@ async function generateFavicons() {
       background_color: "#000000",
       display: "standalone",
       start_url: "/",
-    }
+    };
 
     writeFileSync(
       path.join(PUBLIC_DIR, "site.webmanifest"),
-      JSON.stringify(manifest, null, 2)
-    )
-    console.log("✓ Generated site.webmanifest")
+      JSON.stringify(manifest, null, 2),
+    );
+    console.log("✓ Generated site.webmanifest");
 
-    console.log("✨ All favicons generated successfully!")
+    console.log("✨ All favicons generated successfully!");
   } catch (error) {
-    console.error("❌ Error generating favicons:", error)
-    process.exit(1)
+    console.error("❌ Error generating favicons:", error);
+    process.exit(1);
   }
 }
 
-generateFavicons()
+generateFavicons();

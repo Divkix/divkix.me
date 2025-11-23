@@ -1,20 +1,20 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs");
+const path = require("path");
 
-const siteUrl = 'https://divkix.me'
+const siteUrl = "https://divkix.me";
 const author = {
-  name: 'Divanshu Chauhan',
-  email: 'divkix@divkix.me',
-}
+  name: "Divanshu Chauhan",
+  email: "divkix@divkix.me",
+};
 
 // Read posts metadata
-const postsPath = path.join(__dirname, '../content/blog/posts.json')
-const postsData = JSON.parse(fs.readFileSync(postsPath, 'utf-8'))
+const postsPath = path.join(__dirname, "../content/blog/posts.json");
+const postsData = JSON.parse(fs.readFileSync(postsPath, "utf-8"));
 
 // Filter published posts and sort by date (newest first)
 const publishedPosts = postsData.posts
   .filter((post) => post.published)
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 // Generate RSS XML
 const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -36,19 +36,19 @@ ${publishedPosts
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <description><![CDATA[${post.excerpt}]]></description>
       <author>${post.author?.email || author.email} (${post.author?.name || author.name})</author>
-      ${post.tags.map((tag) => `<category>${tag}</category>`).join('\n      ')}
+      ${post.tags.map((tag) => `<category>${tag}</category>`).join("\n      ")}
     </item>`,
   )
-  .join('\n')}
+  .join("\n")}
   </channel>
 </rss>
-`
+`;
 
 // Write RSS feed to public directory
-const publicDir = path.join(__dirname, '../public')
+const publicDir = path.join(__dirname, "../public");
 if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir, { recursive: true })
+  fs.mkdirSync(publicDir, { recursive: true });
 }
 
-fs.writeFileSync(path.join(publicDir, 'rss.xml'), rssXml)
-console.log('✅ RSS feed generated successfully at public/rss.xml')
+fs.writeFileSync(path.join(publicDir, "rss.xml"), rssXml);
+console.log("✅ RSS feed generated successfully at public/rss.xml");

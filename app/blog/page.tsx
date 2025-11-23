@@ -1,22 +1,29 @@
-import { getAllPosts } from "@/lib/content"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { TiltCard } from "@/components/ui/tilt-card"
-import Link from "next/link"
-import { formatDate } from "@/lib/utils"
-import { generateSEO } from "@/lib/seo"
+import { getAllPosts } from "@/lib/content";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { TiltCard } from "@/components/ui/tilt-card";
+import Link from "next/link";
+import { formatDate } from "@/lib/utils";
+import { generateSEO } from "@/lib/seo";
 
 export const metadata = generateSEO({
   title: "Blog",
-  description: "Thoughts on software development, technology, and building products.",
-})
+  description:
+    "Thoughts on software development, technology, and building products.",
+});
 
 // Force static rendering to prevent hydration issues in Cloudflare Workers
-export const dynamic = 'force-static'
-export const revalidate = false
+export const dynamic = "force-static";
+export const revalidate = false;
 
 export default function BlogPage() {
-  const posts = getAllPosts()
+  const posts = getAllPosts();
 
   return (
     <div className="container mx-auto px-4 py-20">
@@ -33,7 +40,11 @@ export default function BlogPage() {
         ) : (
           <div className="space-y-6">
             {posts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="block">
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="block"
+              >
                 <TiltCard maxTilt={8}>
                   <Card className="glass-surface hover:border-primary/50 transition-colors">
                     <CardHeader>
@@ -60,5 +71,5 @@ export default function BlogPage() {
         )}
       </div>
     </div>
-  )
+  );
 }

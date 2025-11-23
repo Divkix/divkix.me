@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useScrollProgress } from "@/lib/hooks/use-interactive-animations"
+import { motion } from "framer-motion";
+import { useScrollProgress } from "@/lib/hooks/use-interactive-animations";
 
 /**
  * Scroll progress indicator component
  * Displays a fixed bar at the top of the viewport showing scroll progress
  */
 export function ScrollProgress() {
-  const { smoothProgress } = useScrollProgress()
+  const { smoothProgress } = useScrollProgress();
 
   return (
     <motion.div
@@ -16,5 +16,5 @@ export function ScrollProgress() {
       style={{ scaleX: smoothProgress }}
       initial={{ scaleX: 0 }}
     />
-  )
+  );
 }

@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useParallax } from "@/lib/hooks/use-parallax"
-import { ReactNode, RefObject } from "react"
+import { motion } from "framer-motion";
+import { useParallax } from "@/lib/hooks/use-parallax";
+import { ReactNode, RefObject } from "react";
 
 interface ParallaxWrapperProps {
-  children: ReactNode
-  speed?: number
-  className?: string
-  targetRef?: RefObject<HTMLElement>
+  children: ReactNode;
+  speed?: number;
+  className?: string;
+  targetRef?: RefObject<HTMLElement>;
 }
 
 /**
@@ -24,11 +24,11 @@ export function ParallaxWrapper({
   className,
   targetRef,
 }: ParallaxWrapperProps): React.JSX.Element {
-  const { y } = useParallax(speed, targetRef)
+  const { y } = useParallax(speed, targetRef);
 
   return (
     <motion.div style={{ y }} className={className}>
       {children}
     </motion.div>
-  )
+  );
 }

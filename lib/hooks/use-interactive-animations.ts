@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useEffect, useState, RefObject, useRef } from "react"
+import { useEffect, useState, RefObject, useRef } from "react";
 import {
   useMotionValue,
   useSpring,
   useTransform,
   useScroll,
   SpringOptions,
-} from "framer-motion"
+} from "framer-motion";
 
 /**
  * Spring configuration for smooth, natural animations
@@ -16,7 +16,7 @@ const springConfig: SpringOptions = {
   damping: 20,
   stiffness: 300,
   mass: 0.5,
-}
+};
 
 /**
  * Hook to track mouse position relative to an element
@@ -24,46 +24,46 @@ const springConfig: SpringOptions = {
  * @returns Object containing mouseX and mouseY motion values
  */
 function useMousePosition(ref: RefObject<HTMLElement | null>) {
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const rafIdRef = useRef<number | null>(null)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rafIdRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const element = ref.current
-    if (!element) return
+    const element = ref.current;
+    if (!element) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       // Use RAF to throttle updates to 60fps max
-      if (rafIdRef.current !== null) return
+      if (rafIdRef.current !== null) return;
 
       rafIdRef.current = requestAnimationFrame(() => {
-        const rect = element.getBoundingClientRect()
-        const x = e.clientX - rect.left - rect.width / 2
-        const y = e.clientY - rect.top - rect.height / 2
-        mouseX.set(x)
-        mouseY.set(y)
-        rafIdRef.current = null
-      })
-    }
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        mouseX.set(x);
+        mouseY.set(y);
+        rafIdRef.current = null;
+      });
+    };
 
     const handleMouseLeave = () => {
-      mouseX.set(0)
-      mouseY.set(0)
-    }
+      mouseX.set(0);
+      mouseY.set(0);
+    };
 
-    element.addEventListener("mousemove", handleMouseMove, { passive: true })
-    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
+    element.addEventListener("mousemove", handleMouseMove, { passive: true });
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true });
 
     return () => {
-      element.removeEventListener("mousemove", handleMouseMove)
-      element.removeEventListener("mouseleave", handleMouseLeave)
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseleave", handleMouseLeave);
       if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
+        cancelAnimationFrame(rafIdRef.current);
       }
-    }
-  }, [ref, mouseX, mouseY])
+    };
+  }, [ref, mouseX, mouseY]);
 
-  return { mouseX, mouseY }
+  return { mouseX, mouseY };
 }
 
 /**
@@ -71,10 +71,10 @@ function useMousePosition(ref: RefObject<HTMLElement | null>) {
  * @returns Scroll progress value (0-1) and smoothed spring value
  */
 export function useScrollProgress() {
-  const { scrollYProgress } = useScroll()
-  const smoothProgress = useSpring(scrollYProgress, springConfig)
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, springConfig);
 
-  return { scrollProgress: scrollYProgress, smoothProgress }
+  return { scrollProgress: scrollYProgress, smoothProgress };
 }
 
 /**
@@ -82,21 +82,21 @@ export function useScrollProgress() {
  * @returns Boolean indicating if reduced motion is preferred
  */
 export function usePrefersReducedMotion(): boolean {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setPrefersReducedMotion(mediaQuery.matches)
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches)
-    }
+      setPrefersReducedMotion(e.matches);
+    };
 
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
-  }, [])
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
-  return prefersReducedMotion
+  return prefersReducedMotion;
 }
 
 /**
@@ -107,62 +107,63 @@ export function usePrefersReducedMotion(): boolean {
  */
 export function useMagneticEffect(
   ref: RefObject<HTMLElement | null>,
-  strength: number = 0.3
+  strength: number = 0.3,
 ) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rafIdRef = useRef<number | null>(null)
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rafIdRef = useRef<number | null>(null);
 
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
 
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    const element = ref.current
-    if (!element || prefersReducedMotion) return
+    const element = ref.current;
+    if (!element || prefersReducedMotion) return;
 
     // Check if device is touch-capable
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (isTouchDevice) return
+    if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       // Use RAF to throttle updates to 60fps max
-      if (rafIdRef.current !== null) return
+      if (rafIdRef.current !== null) return;
 
       rafIdRef.current = requestAnimationFrame(() => {
-        const rect = element.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-        const distanceX = (e.clientX - centerX) * strength
-        const distanceY = (e.clientY - centerY) * strength
+        const distanceX = (e.clientX - centerX) * strength;
+        const distanceY = (e.clientY - centerY) * strength;
 
-        x.set(distanceX)
-        y.set(distanceY)
-        rafIdRef.current = null
-      })
-    }
+        x.set(distanceX);
+        y.set(distanceY);
+        rafIdRef.current = null;
+      });
+    };
 
     const handleMouseLeave = () => {
-      x.set(0)
-      y.set(0)
-    }
+      x.set(0);
+      y.set(0);
+    };
 
-    element.addEventListener("mousemove", handleMouseMove, { passive: true })
-    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
+    element.addEventListener("mousemove", handleMouseMove, { passive: true });
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true });
 
     return () => {
-      element.removeEventListener("mousemove", handleMouseMove)
-      element.removeEventListener("mouseleave", handleMouseLeave)
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseleave", handleMouseLeave);
       if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
+        cancelAnimationFrame(rafIdRef.current);
       }
-    }
-  }, [ref, strength, x, y, prefersReducedMotion])
+    };
+  }, [ref, strength, x, y, prefersReducedMotion]);
 
-  return { x: springX, y: springY }
+  return { x: springX, y: springY };
 }
 
 /**
@@ -171,66 +172,70 @@ export function useMagneticEffect(
  * @param maxTilt - Maximum tilt angle in degrees, default 15
  * @returns Object containing rotateX, rotateY spring values and scale
  */
-export function use3DTilt(ref: RefObject<HTMLElement | null>, maxTilt: number = 15) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rafIdRef = useRef<number | null>(null)
+export function use3DTilt(
+  ref: RefObject<HTMLElement | null>,
+  maxTilt: number = 15,
+) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rafIdRef = useRef<number | null>(null);
 
   const rotateX = useSpring(
     useTransform(y, [-0.5, 0.5], [maxTilt, -maxTilt]),
-    springConfig
-  )
+    springConfig,
+  );
   const rotateY = useSpring(
     useTransform(x, [-0.5, 0.5], [-maxTilt, maxTilt]),
-    springConfig
-  )
+    springConfig,
+  );
 
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    const element = ref.current
-    if (!element || prefersReducedMotion) return
+    const element = ref.current;
+    if (!element || prefersReducedMotion) return;
 
     // Check if device is touch-capable
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (isTouchDevice) return
+    if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       // Use RAF to throttle updates to 60fps max
-      if (rafIdRef.current !== null) return
+      if (rafIdRef.current !== null) return;
 
       rafIdRef.current = requestAnimationFrame(() => {
-        const rect = element.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
         // Normalize to -0.5 to 0.5 range
-        const normalizedX = (e.clientX - centerX) / rect.width
-        const normalizedY = (e.clientY - centerY) / rect.height
+        const normalizedX = (e.clientX - centerX) / rect.width;
+        const normalizedY = (e.clientY - centerY) / rect.height;
 
-        x.set(normalizedX)
-        y.set(normalizedY)
-        rafIdRef.current = null
-      })
-    }
+        x.set(normalizedX);
+        y.set(normalizedY);
+        rafIdRef.current = null;
+      });
+    };
 
     const handleMouseLeave = () => {
-      x.set(0)
-      y.set(0)
-    }
+      x.set(0);
+      y.set(0);
+    };
 
-    element.addEventListener("mousemove", handleMouseMove, { passive: true })
-    element.addEventListener("mouseleave", handleMouseLeave, { passive: true })
+    element.addEventListener("mousemove", handleMouseMove, { passive: true });
+    element.addEventListener("mouseleave", handleMouseLeave, { passive: true });
 
     return () => {
-      element.removeEventListener("mousemove", handleMouseMove)
-      element.removeEventListener("mouseleave", handleMouseLeave)
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseleave", handleMouseLeave);
       if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
+        cancelAnimationFrame(rafIdRef.current);
       }
-    }
-  }, [ref, x, y, prefersReducedMotion])
+    };
+  }, [ref, x, y, prefersReducedMotion]);
 
-  return { rotateX, rotateY }
+  return { rotateX, rotateY };
 }

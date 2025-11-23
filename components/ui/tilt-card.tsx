@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useRef, ReactNode } from "react"
-import { motion } from "framer-motion"
-import { use3DTilt } from "@/lib/hooks/use-interactive-animations"
-import { cn } from "@/lib/utils"
+import { useRef, ReactNode } from "react";
+import { motion } from "framer-motion";
+import { use3DTilt } from "@/lib/hooks/use-interactive-animations";
+import { cn } from "@/lib/utils";
 
 interface TiltCardProps {
-  children: ReactNode
-  className?: string
-  maxTilt?: number
+  children: ReactNode;
+  className?: string;
+  maxTilt?: number;
 }
 
 /**
@@ -19,8 +19,8 @@ interface TiltCardProps {
  * @param maxTilt - Maximum tilt angle in degrees (default: 12)
  */
 export function TiltCard({ children, className, maxTilt = 12 }: TiltCardProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { rotateX, rotateY } = use3DTilt(ref, maxTilt)
+  const ref = useRef<HTMLDivElement>(null);
+  const { rotateX, rotateY } = use3DTilt(ref, maxTilt);
 
   return (
     <motion.div
@@ -38,5 +38,5 @@ export function TiltCard({ children, className, maxTilt = 12 }: TiltCardProps) {
     >
       {children}
     </motion.div>
-  )
+  );
 }

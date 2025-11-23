@@ -1,7 +1,7 @@
-import { Metadata } from "next"
-import { siteConfig } from "@/content/site.config"
+import { Metadata } from "next";
+import { siteConfig } from "@/content/site.config";
 
-const baseUrl = "https://divkix.me"
+const baseUrl = "https://divkix.me";
 
 export function generateSEO(overrides?: Metadata): Metadata {
   return {
@@ -16,7 +16,7 @@ export function generateSEO(overrides?: Metadata): Metadata {
       "software engineer",
       "portfolio",
       "full stack",
-      ...siteConfig.skills.map(skill => skill.name),
+      ...siteConfig.skills.map((skill) => skill.name),
     ],
     authors: [{ name: siteConfig.name, url: `mailto:${siteConfig.email}` }],
     creator: siteConfig.name,
@@ -74,14 +74,14 @@ export function generateSEO(overrides?: Metadata): Metadata {
     },
     manifest: `${baseUrl}/site.webmanifest`,
     ...overrides,
-  }
+  };
 }
 
 export function generateBlogPostSEO(
   title: string,
   excerpt: string,
   slug: string,
-  date: string
+  date: string,
 ): Metadata {
   return generateSEO({
     title,
@@ -99,5 +99,5 @@ export function generateBlogPostSEO(
         },
       ],
     },
-  })
+  });
 }

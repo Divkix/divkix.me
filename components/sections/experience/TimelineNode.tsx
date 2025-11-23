@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface TimelineNodeProps {
-  index: number
-  isActive?: boolean
-  className?: string
+  index: number;
+  isActive?: boolean;
+  className?: string;
 }
 
 /**
@@ -22,7 +22,7 @@ export function TimelineNode({
       className={cn(
         "relative w-4 h-4 rounded-full border-2 border-primary bg-background z-10",
         isActive && "bg-primary",
-        className
+        className,
       )}
       initial={{ scale: 0, opacity: 0 }}
       whileInView={{ scale: 1, opacity: 1 }}
@@ -49,5 +49,5 @@ export function TimelineNode({
         }}
       />
     </motion.div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-import { Navbar } from "@/components/shared/Navbar"
-import { Footer } from "@/components/shared/Footer"
+import { Navbar } from "@/components/shared/Navbar";
+import { Footer } from "@/components/shared/Footer";
 
 export default function BlogLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -14,5 +14,5 @@ export default function BlogLayout({
       </main>
       <Footer />
     </>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import { Navbar } from "@/components/shared/Navbar"
-import { Footer } from "@/components/shared/Footer"
-import { ScrollProgress } from "@/components/shared/ScrollProgress"
+import { Navbar } from "@/components/shared/Navbar";
+import { Footer } from "@/components/shared/Footer";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
 
 export default function SiteLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -16,5 +16,5 @@ export default function SiteLayout({
       </main>
       <Footer />
     </>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import type { Variants } from "framer-motion"
+import type { Variants } from "framer-motion";
 
 /**
  * Animation variants optimized for GPU compositing
@@ -12,10 +12,10 @@ const fadeIn: Variants = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 export const slideUp: Variants = {
   hidden: {
@@ -28,10 +28,10 @@ export const slideUp: Variants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -39,10 +39,10 @@ export const staggerContainer: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.05, // Reduced from 0.1s for faster rendering
-      delayChildren: 0,      // Removed initial delay
+      delayChildren: 0, // Removed initial delay
     },
   },
-}
+};
 
 export const staggerItem: Variants = {
   hidden: {
@@ -55,10 +55,10 @@ export const staggerItem: Variants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 /**
  * Optimized hero animations for LCP performance
@@ -70,10 +70,10 @@ export const heroStaggerContainer: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.01, // Reduced from 0.03s for faster FCP
-      delayChildren: 0,      // No initial delay
+      delayChildren: 0, // No initial delay
     },
   },
-}
+};
 
 export const heroStaggerItem: Variants = {
   hidden: {
@@ -85,10 +85,10 @@ export const heroStaggerItem: Variants = {
     y: 0,
     transition: {
       duration: 0.25, // Reduced from 0.5s
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 /**
  * Instant variant for LCP-critical content (h1)
@@ -104,10 +104,10 @@ export const heroTitle: Variants = {
     y: 0,
     transition: {
       duration: 0.2, // Fast fade-in only
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 /**
  * Scale animation with GPU acceleration
@@ -123,10 +123,10 @@ const scaleIn: Variants = {
     scale: 1,
     transition: {
       duration: 0.3,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 /**
  * Slide in from right
@@ -142,10 +142,10 @@ const slideInRight: Variants = {
     x: 0,
     transition: {
       duration: 0.4,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};
 
 /**
  * Slide in from left
@@ -161,7 +161,7 @@ const slideInLeft: Variants = {
     x: 0,
     transition: {
       duration: 0.4,
-      ease: "easeOut" as const
-    }
+      ease: "easeOut" as const,
+    },
   },
-}
+};

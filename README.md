@@ -38,12 +38,14 @@ A modern, production-ready portfolio site built with Next.js 15, TypeScript, and
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/divkix/portfolio.git
 cd portfolio
 ```
 
 2. Install dependencies:
+
 ```bash
 bun install
 # or
@@ -51,6 +53,7 @@ npm install
 ```
 
 3. Run the development server:
+
 ```bash
 bun run dev
 # or
@@ -140,7 +143,7 @@ export const siteConfig = {
   email: "your@email.com",
   about: "Brief description about yourself",
   // ... more config
-}
+};
 ```
 
 ### Adding Blog Posts
@@ -173,10 +176,10 @@ Colors are defined in `/app/globals.css` using CSS variables and OKLCH color spa
 
 ```css
 :root {
-  --primary: oklch(0.64 0.22 264.5);    /* Indigo */
-  --accent: oklch(0.72 0.20 310);       /* Fuchsia */
-  --background: oklch(1 0 0);           /* White */
-  --foreground: oklch(0.145 0 0);       /* Dark gray */
+  --primary: oklch(0.64 0.22 264.5); /* Indigo */
+  --accent: oklch(0.72 0.2 310); /* Fuchsia */
+  --background: oklch(1 0 0); /* White */
+  --foreground: oklch(0.145 0 0); /* Dark gray */
 }
 ```
 
@@ -246,6 +249,7 @@ The site includes several performance optimizations:
 - **Reduced motion support** for accessibility (respects `prefers-reduced-motion`)
 
 Target Lighthouse scores:
+
 - **Performance**: 90+
 - **Accessibility**: 100
 - **Best Practices**: 100
@@ -292,6 +296,7 @@ bun run deploy
 ```
 
 This will:
+
 1. Generate blog posts metadata
 2. Build the Next.js app with OpenNext
 3. Deploy to Cloudflare Workers

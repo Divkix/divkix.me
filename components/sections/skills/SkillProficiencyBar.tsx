@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useMemo } from "react"
-import { getSkillIcon } from "./skill-icons"
+import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { getSkillIcon } from "./skill-icons";
 
 interface Skill {
-  readonly name: string
-  readonly category: string
-  readonly proficiency: number
+  readonly name: string;
+  readonly category: string;
+  readonly proficiency: number;
 }
 
 interface SkillProficiencyBarProps {
-  skills: readonly Skill[]
-  category?: string
+  skills: readonly Skill[];
+  category?: string;
 }
 
 /**
@@ -26,33 +26,36 @@ export function SkillProficiencyBar({
   const groupedSkills = useMemo(() => {
     const filtered = category
       ? skills.filter((skill) => skill.category === category)
-      : skills
+      : skills;
 
     // Group by category
-    const groups = filtered.reduce((acc, skill) => {
-      if (!acc[skill.category]) {
-        acc[skill.category] = []
-      }
-      acc[skill.category].push(skill)
-      return acc
-    }, {} as Record<string, Skill[]>)
+    const groups = filtered.reduce(
+      (acc, skill) => {
+        if (!acc[skill.category]) {
+          acc[skill.category] = [];
+        }
+        acc[skill.category].push(skill);
+        return acc;
+      },
+      {} as Record<string, Skill[]>,
+    );
 
     // Sort skills within each category by proficiency
     Object.keys(groups).forEach((cat) => {
-      groups[cat].sort((a, b) => b.proficiency - a.proficiency)
-    })
+      groups[cat].sort((a, b) => b.proficiency - a.proficiency);
+    });
 
-    return groups
-  }, [skills, category])
+    return groups;
+  }, [skills, category]);
 
-  const categories = Object.keys(groupedSkills)
+  const categories = Object.keys(groupedSkills);
 
   if (categories.length === 0) {
     return (
       <div className="flex items-center justify-center h-40">
         <p className="text-foreground/60">No skills to display</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -62,7 +65,7 @@ export function SkillProficiencyBar({
           <h4 className="text-base font-semibold text-foreground/80">{cat}</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {groupedSkills[cat].map((skill, skillIndex) => {
-              const Icon = getSkillIcon(skill.name)
+              const Icon = getSkillIcon(skill.name);
 
               return (
                 <motion.div
@@ -115,11 +118,11 @@ export function SkillProficiencyBar({
                     </div>
                   </div>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }

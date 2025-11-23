@@ -1,13 +1,17 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { MagneticWrapper } from "@/components/ui/magnetic-wrapper"
-import { ParallaxWrapper } from "@/components/ui/parallax-wrapper"
-import { GradientText } from "@/components/shared/GradientText"
-import { SocialIcons } from "@/components/shared/SocialIcons"
-import { siteConfig } from "@/content/site.config"
-import { heroStaggerContainer, heroStaggerItem, heroTitle } from "@/lib/animations"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
+import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
+import { GradientText } from "@/components/shared/GradientText";
+import { SocialIcons } from "@/components/shared/SocialIcons";
+import { siteConfig } from "@/content/site.config";
+import {
+  heroStaggerContainer,
+  heroStaggerItem,
+  heroTitle,
+} from "@/lib/animations";
 
 export function Hero3D() {
   return (
@@ -41,11 +45,17 @@ export function Hero3D() {
             {siteConfig.tagline}
           </motion.p>
 
-          <motion.div variants={heroStaggerItem} className="flex justify-center">
+          <motion.div
+            variants={heroStaggerItem}
+            className="flex justify-center"
+          >
             <SocialIcons />
           </motion.div>
 
-          <motion.div variants={heroStaggerItem} className="flex flex-wrap gap-4 justify-center">
+          <motion.div
+            variants={heroStaggerItem}
+            className="flex flex-wrap gap-4 justify-center"
+          >
             <MagneticWrapper strength={0.2}>
               <Button asChild size="lg">
                 <a href="#projects">View Projects</a>
@@ -55,5 +65,5 @@ export function Hero3D() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

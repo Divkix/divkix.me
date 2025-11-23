@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { Toaster } from "sonner"
-import { useTheme } from "next-themes"
+import { Toaster } from "sonner";
+import { useTheme } from "next-themes";
 
 /**
  * Toast notification provider using Sonner
  * Automatically adapts to light/dark theme
  */
 export function ToastProvider() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   return (
     <Toaster
@@ -24,5 +24,5 @@ export function ToastProvider() {
         },
       }}
     />
-  )
+  );
 }

@@ -1,39 +1,41 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Check, Copy } from "lucide-react"
-import { toast } from "sonner"
+import { useState, useEffect } from "react";
+import { Check, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 interface CopyButtonProps {
-  code: string
+  code: string;
 }
 
-export function CopyButton({ code }: CopyButtonProps): React.JSX.Element | null {
-  const [copied, setCopied] = useState<boolean>(false)
-  const [isMounted, setIsMounted] = useState<boolean>(false)
+export function CopyButton({
+  code,
+}: CopyButtonProps): React.JSX.Element | null {
+  const [copied, setCopied] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
   const handleCopy = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(code)
-      setCopied(true)
-      toast.success("Code copied to clipboard!")
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      toast.success("Code copied to clipboard!");
 
       setTimeout(() => {
-        setCopied(false)
-      }, 2000)
+        setCopied(false);
+      }, 2000);
     } catch (error) {
-      toast.error("Failed to copy code")
-      console.error("Copy failed:", error)
+      toast.error("Failed to copy code");
+      console.error("Copy failed:", error);
     }
-  }
+  };
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!isMounted) {
-    return null
+    return null;
   }
 
   return (
@@ -49,5 +51,5 @@ export function CopyButton({ code }: CopyButtonProps): React.JSX.Element | null 
         <Copy className="h-4 w-4 text-foreground/60" />
       )}
     </button>
-  )
+  );
 }

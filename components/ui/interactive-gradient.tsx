@@ -1,57 +1,58 @@
-"use client"
+"use client";
 
-import { useRef, useEffect } from "react"
-import { motion, useMotionValue, useSpring } from "framer-motion"
-import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations"
+import { useRef, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations";
 
 /**
  * Interactive gradient mesh background that follows cursor movement
  * Automatically disables on mobile and respects reduced motion preferences
  */
 export function InteractiveGradient() {
-  const ref = useRef<HTMLDivElement>(null)
-  const mouseX = useMotionValue(50)
-  const mouseY = useMotionValue(50)
-  const rafIdRef = useRef<number | null>(null)
+  const ref = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(50);
+  const mouseY = useMotionValue(50);
+  const rafIdRef = useRef<number | null>(null);
 
-  const springX = useSpring(mouseX, { damping: 25, stiffness: 100 })
-  const springY = useSpring(mouseY, { damping: 25, stiffness: 100 })
+  const springX = useSpring(mouseX, { damping: 25, stiffness: 100 });
+  const springY = useSpring(mouseY, { damping: 25, stiffness: 100 });
 
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) return
+    if (prefersReducedMotion) return;
 
     // Check if device is touch-capable
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (isTouchDevice) return
+    if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       // Use RAF to throttle updates to 60fps max
-      if (rafIdRef.current !== null) return
+      if (rafIdRef.current !== null) return;
 
       rafIdRef.current = requestAnimationFrame(() => {
-        const x = (e.clientX / window.innerWidth) * 100
-        const y = (e.clientY / window.innerHeight) * 100
-        mouseX.set(x)
-        mouseY.set(y)
-        rafIdRef.current = null
-      })
-    }
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+        mouseX.set(x);
+        mouseY.set(y);
+        rafIdRef.current = null;
+      });
+    };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true })
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mousemove", handleMouseMove);
       if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
+        cancelAnimationFrame(rafIdRef.current);
       }
-    }
-  }, [mouseX, mouseY, prefersReducedMotion])
+    };
+  }, [mouseX, mouseY, prefersReducedMotion]);
 
   if (prefersReducedMotion) {
-    return null
+    return null;
   }
 
   return (
@@ -68,5 +69,5 @@ export function InteractiveGradient() {
       }}
       transition={{ duration: 0.3 }}
     />
-  )
+  );
 }

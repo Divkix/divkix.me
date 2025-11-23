@@ -4,7 +4,8 @@ export const siteConfig = {
   tagline: "Developer building useful tools with code and curiosity.",
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
-  about: "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
+  about:
+    "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
 
   facts: {
     impact: "250000+",
@@ -189,18 +190,14 @@ export const siteConfig = {
       desc: "Full-stack platform for managing and showcasing Arizona State University capstone projects.",
       tags: ["Next.js", "TypeScript", "Python", "Go"],
       period: "Aug 2024 – Present",
-      links: [
-        { label: "Live", href: "https://asucapstone.com" },
-      ],
+      links: [{ label: "Live", href: "https://asucapstone.com" }],
     },
     {
       name: "PickMyClass",
       desc: "ASU class enrollment monitoring system. Tracks seat availability and sends instant notifications to students.",
       tags: ["Next.js", "TypeScript"],
       period: "2024",
-      links: [
-        { label: "Live", href: "https://pickmyclass.app" }
-      ],
+      links: [{ label: "Live", href: "https://pickmyclass.app" }],
     },
     {
       name: "Alita Robot",
@@ -216,27 +213,21 @@ export const siteConfig = {
       desc: "Ultra-speedy cross-platform download manager expertly crafted using Go for optimal performance.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Present",
-      links: [
-        { label: "GitHub", href: "https://github.com/warpdl/warpdl" }
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/warpdl/warpdl" }],
     },
     {
       name: "Srink Co.",
       desc: "Quick, straightforward, and dependable URL shortening service.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Sep 2023",
-      links: [
-        { label: "GitHub", href: "https://github.com/srinkco/srink" }
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/srinkco/srink" }],
     },
     {
       name: "ProxyGrab",
       desc: "Software to scrape proxies for web scraping and testing using aiohttp and API integrations.",
       tags: ["Python"],
       period: "Aug 2020 – May 2023",
-      links: [
-        { label: "GitHub", href: "https://github.com/Divkix/ProxyGrab" }
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/Divkix/ProxyGrab" }],
     },
     {
       name: "Project Spyn",
@@ -244,7 +235,7 @@ export const siteConfig = {
       tags: ["Robotics", "LEGO Mindstorms"],
       period: "Jan 2022 – Apr 2022",
       links: [
-        { label: "GitHub", href: "https://github.com/Divkix/ProjectSpyn" }
+        { label: "GitHub", href: "https://github.com/Divkix/ProjectSpyn" },
       ],
     },
     {
@@ -252,18 +243,14 @@ export const siteConfig = {
       desc: "Smart helmet for visually impaired using computer vision to interpret surroundings and provide auditory feedback.",
       tags: ["Python", "Computer Vision"],
       period: "Dec 2020",
-      links: [
-        { label: "GitHub", href: "https://github.com/Divkix/I-Helmet" }
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/Divkix/I-Helmet" }],
     },
     {
       name: "NodeMCU WiFi Smart Car",
       desc: "Remotely controlled smart car with live camera feed. Android app in Dart controls C++ programmed NodeMCU.",
       tags: ["C++", "Dart", "IoT"],
       period: "Oct 2019 – Dec 2020",
-      links: [
-        { label: "GitHub", href: "https://github.com/Divkix/WifiCar" }
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/Divkix/WifiCar" }],
     },
   ],
 
@@ -273,6 +260,6 @@ export const siteConfig = {
     { label: "Instagram", href: "https://instagram.com/_divkix" },
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],
-} as const
+} as const;
 
-type SiteConfig = typeof siteConfig
+type SiteConfig = typeof siteConfig;

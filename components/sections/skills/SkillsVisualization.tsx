@@ -1,26 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { SkillProficiencyBar } from "./SkillProficiencyBar"
+import { useState } from "react";
+import { SkillProficiencyBar } from "./SkillProficiencyBar";
 
 interface Skill {
-  readonly name: string
-  readonly category: string
-  readonly proficiency: number
+  readonly name: string;
+  readonly category: string;
+  readonly proficiency: number;
 }
 
 interface SkillsVisualizationProps {
-  skills: readonly Skill[]
+  skills: readonly Skill[];
 }
 
 /**
  * Compact skills visualization with category filters
  */
-export function SkillsVisualization({ skills }: SkillsVisualizationProps): React.JSX.Element {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+export function SkillsVisualization({
+  skills,
+}: SkillsVisualizationProps): React.JSX.Element {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Get unique categories
-  const categories = Array.from(new Set(skills.map((s) => s.category)))
+  const categories = Array.from(new Set(skills.map((s) => s.category)));
 
   return (
     <div className="space-y-6">
@@ -53,8 +55,11 @@ export function SkillsVisualization({ skills }: SkillsVisualizationProps): React
 
       {/* Visualization area */}
       <div className="min-h-[300px]">
-        <SkillProficiencyBar skills={skills} category={selectedCategory || undefined} />
+        <SkillProficiencyBar
+          skills={skills}
+          category={selectedCategory || undefined}
+        />
       </div>
     </div>
-  )
+  );
 }

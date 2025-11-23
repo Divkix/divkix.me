@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { useEffect, useState, useRef } from "react"
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion"
-import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations"
+import { useEffect, useState, useRef } from "react";
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations";
 
 interface ParallaxOrbProps {
-  mouseX: ReturnType<typeof useMotionValue<number>>
-  mouseY: ReturnType<typeof useMotionValue<number>>
-  scrollProgress: ReturnType<typeof useMotionValue<number>>
-  scrollSpeed: number
-  mouseMultiplier: number
-  color: string
-  size: number
-  position: { top?: string; bottom?: string; left?: string; right?: string }
-  blur: number
-  opacity: number
-  disableMouseParallax: boolean
-  prefersReducedMotion: boolean
+  mouseX: ReturnType<typeof useMotionValue<number>>;
+  mouseY: ReturnType<typeof useMotionValue<number>>;
+  scrollProgress: ReturnType<typeof useMotionValue<number>>;
+  scrollSpeed: number;
+  mouseMultiplier: number;
+  color: string;
+  size: number;
+  position: { top?: string; bottom?: string; left?: string; right?: string };
+  blur: number;
+  opacity: number;
+  disableMouseParallax: boolean;
+  prefersReducedMotion: boolean;
 }
 
 function ParallaxOrb({
@@ -37,20 +37,24 @@ function ParallaxOrb({
   const scrollY = useTransform(
     scrollProgress,
     [0, 1],
-    prefersReducedMotion ? [0, 0] : [0, -scrollSpeed * 200]
-  )
+    prefersReducedMotion ? [0, 0] : [0, -scrollSpeed * 200],
+  );
 
   // Mouse-based parallax (horizontal and vertical movement)
   const mouseParallaxX = useTransform(
     mouseX,
     [-50, 50],
-    disableMouseParallax ? [0, 0] : [-mouseMultiplier * 50, mouseMultiplier * 50]
-  )
+    disableMouseParallax
+      ? [0, 0]
+      : [-mouseMultiplier * 50, mouseMultiplier * 50],
+  );
   const mouseParallaxY = useTransform(
     mouseY,
     [-50, 50],
-    disableMouseParallax ? [0, 0] : [-mouseMultiplier * 50, mouseMultiplier * 50]
-  )
+    disableMouseParallax
+      ? [0, 0]
+      : [-mouseMultiplier * 50, mouseMultiplier * 50],
+  );
 
   return (
     <motion.div
@@ -79,78 +83,78 @@ function ParallaxOrb({
       }}
       aria-hidden="true"
     />
-  )
+  );
 }
 
 export function ParallaxBackground() {
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const prefersReducedMotion = usePrefersReducedMotion()
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const rafIdRef = useRef<number | null>(null)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const rafIdRef = useRef<number | null>(null);
 
   // Detect touch devices
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (typeof window === "undefined") return;
 
     const checkTouchDevice = () => {
       setIsTouchDevice(
         "ontouchstart" in window ||
           navigator.maxTouchPoints > 0 ||
           // @ts-ignore - for older browsers
-          navigator.msMaxTouchPoints > 0
-      )
-    }
+          navigator.msMaxTouchPoints > 0,
+      );
+    };
 
-    checkTouchDevice()
+    checkTouchDevice();
 
     // Debounced resize handler
-    let resizeTimeout: NodeJS.Timeout
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      clearTimeout(resizeTimeout)
-      resizeTimeout = setTimeout(checkTouchDevice, 150)
-    }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkTouchDevice, 150);
+    };
 
-    window.addEventListener("resize", handleResize, { passive: true })
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => {
-      window.removeEventListener("resize", handleResize)
-      clearTimeout(resizeTimeout)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
 
   // Track mouse position for desktop parallax with RAF throttling
   useEffect(() => {
-    if (typeof window === "undefined") return
-    if (isTouchDevice || prefersReducedMotion) return
+    if (typeof window === "undefined") return;
+    if (isTouchDevice || prefersReducedMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       // Use RAF to throttle updates to 60fps max
-      if (rafIdRef.current !== null) return
+      if (rafIdRef.current !== null) return;
 
       rafIdRef.current = requestAnimationFrame(() => {
         // Convert mouse position to -50 to 50 range
-        const x = (e.clientX / window.innerWidth - 0.5) * 100
-        const y = (e.clientY / window.innerHeight - 0.5) * 100
-        mouseX.set(x)
-        mouseY.set(y)
-        rafIdRef.current = null
-      })
-    }
+        const x = (e.clientX / window.innerWidth - 0.5) * 100;
+        const y = (e.clientY / window.innerHeight - 0.5) * 100;
+        mouseX.set(x);
+        mouseY.set(y);
+        rafIdRef.current = null;
+      });
+    };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true })
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mousemove", handleMouseMove);
       if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
+        cancelAnimationFrame(rafIdRef.current);
       }
-    }
-  }, [isTouchDevice, prefersReducedMotion, mouseX, mouseY])
+    };
+  }, [isTouchDevice, prefersReducedMotion, mouseX, mouseY]);
 
   // Track scroll progress for scroll-based parallax
-  const { scrollYProgress } = useScroll()
+  const { scrollYProgress } = useScroll();
 
   // Disable all parallax effects if reduced motion is preferred
-  const disableMouseParallax = isTouchDevice || prefersReducedMotion
+  const disableMouseParallax = isTouchDevice || prefersReducedMotion;
 
   // Orb configurations - each layer with different speeds for depth
   const orbs = [
@@ -209,10 +213,10 @@ export function ParallaxBackground() {
       mouseMultiplier: 0.8,
       key: "orb-5",
     },
-  ]
+  ];
 
   // Reduce orb count on mobile for performance
-  const displayOrbs = isTouchDevice ? orbs.slice(0, 3) : orbs
+  const displayOrbs = isTouchDevice ? orbs.slice(0, 3) : orbs;
 
   return (
     <div
@@ -253,5 +257,5 @@ export function ParallaxBackground() {
         aria-hidden="true"
       />
     </div>
-  )
+  );
 }

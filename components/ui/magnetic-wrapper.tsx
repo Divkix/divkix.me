@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useRef, ReactNode } from "react"
-import { motion } from "framer-motion"
-import { useMagneticEffect } from "@/lib/hooks/use-interactive-animations"
-import { cn } from "@/lib/utils"
+import { useRef, ReactNode } from "react";
+import { motion } from "framer-motion";
+import { useMagneticEffect } from "@/lib/hooks/use-interactive-animations";
+import { cn } from "@/lib/utils";
 
 interface MagneticWrapperProps {
-  children: ReactNode
-  className?: string
-  strength?: number
+  children: ReactNode;
+  className?: string;
+  strength?: number;
 }
 
 /**
@@ -23,8 +23,8 @@ export function MagneticWrapper({
   className,
   strength = 0.3,
 }: MagneticWrapperProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { x, y } = useMagneticEffect(ref, strength)
+  const ref = useRef<HTMLDivElement>(null);
+  const { x, y } = useMagneticEffect(ref, strength);
 
   return (
     <motion.div
@@ -40,5 +40,5 @@ export function MagneticWrapper({
     >
       {children}
     </motion.div>
-  )
+  );
 }

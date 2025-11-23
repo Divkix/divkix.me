@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 interface TimelinePathProps {
-  nodeCount: number
-  className?: string
+  nodeCount: number;
+  className?: string;
 }
 
 /**
  * SVG path connecting timeline nodes vertically with drawing animation
  */
-export function TimelinePath({ nodeCount, className }: TimelinePathProps): React.JSX.Element {
+export function TimelinePath({
+  nodeCount,
+  className,
+}: TimelinePathProps): React.JSX.Element {
   // Calculate path height based on number of nodes
   // Each node is approximately 150px apart
-  const pathHeight = Math.max(100, (nodeCount - 1) * 150)
+  const pathHeight = Math.max(100, (nodeCount - 1) * 150);
 
   return (
     <svg
@@ -38,5 +41,5 @@ export function TimelinePath({ nodeCount, className }: TimelinePathProps): React
         }}
       />
     </svg>
-  )
+  );
 }
