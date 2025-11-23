@@ -1,11 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": [
-    "next.config.ts",
-    "app/**/*.{ts,tsx}",
-    "scripts/**/*.{js,ts}",
-    "mdx-components.tsx"
-  ],
+  "entry": ["app/**/*.{ts,tsx}", "scripts/**/*.{js,ts}"],
   "project": ["**/*.{ts,tsx,js,jsx,mjs}"],
   "ignore": [
     "**/*.test.{ts,tsx}",
@@ -13,9 +8,9 @@
     ".next/**",
     "out/**",
     "node_modules/**",
-    ".open-next/**"
+    ".open-next/**",
+    "mdx-components.tsx"
   ],
-  "ignoreDependencies": ["@types/*"],
   "next": {
     "entry": ["next.config.ts"]
   }
