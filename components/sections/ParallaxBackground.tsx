@@ -247,7 +247,7 @@ export function ParallaxBackground() {
 
       {/* Bottom gradient fade for smooth blend into Projects section */}
       <div
-        className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-linear-to-t from-background to-transparent"
         aria-hidden="true"
       />
 

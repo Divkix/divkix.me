@@ -92,7 +92,7 @@ export function SkillProficiencyBar({
                     {/* Progress bar */}
                     <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden relative">
                       <motion.div
-                        className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                        className="h-full bg-linear-to-r from-primary to-accent rounded-full"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.proficiency}%` }}
                         viewport={{ once: true }}
