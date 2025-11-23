@@ -5,7 +5,14 @@
       "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
       "date": "2025-10-31",
       "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline.",
-      "tags": ["AI", "LM Studio", "Privacy", "Mac", "Qwen", "Local AI"],
+      "tags": [
+        "AI",
+        "LM Studio",
+        "Privacy",
+        "Mac",
+        "Qwen",
+        "Local AI"
+      ],
       "author": "Divanshu Chauhan",
       "readingTime": 6,
       "published": true
@@ -31,6 +38,6 @@
       "published": true
     }
   ],
-  "generatedAt": "2025-11-23T01:50:11.634Z",
+  "generatedAt": "2025-11-23T04:42:20.159Z",
   "totalPosts": 3
 }
