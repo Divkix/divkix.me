@@ -99,8 +99,8 @@ export function Contact() {
             Get in <GradientText>Touch</GradientText>
           </h2>
           <p className="text-xl text-foreground/70">
-            Have a project in mind or just want to chat? I&apos;d love to hear from
-            you.
+            Have a project in mind or just want to chat? I&apos;d love to hear
+            from you.
           </p>
         </motion.div>
 

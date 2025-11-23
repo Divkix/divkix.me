@@ -42,7 +42,8 @@ export function Projects() {
         <motion.div variants={staggerItem} className="text-center space-y-4">
           <h2 className="text-4xl font-display font-bold">Projects</h2>
           <p className="text-foreground/60 max-w-2xl mx-auto">
-            A selection of projects I&apos;ve built across different technologies.
+            A selection of projects I&apos;ve built across different
+            technologies.
           </p>
         </motion.div>
 
