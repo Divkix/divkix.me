@@ -11,6 +11,7 @@
     ".open-next/**",
     "mdx-components.tsx"
   ],
+  "ignoreDependencies": ["tw-animate-css"],
   "next": {
     "entry": ["next.config.ts"]
   }
