@@ -23,7 +23,7 @@ const springConfig: SpringOptions = {
  * @param ref - Reference to the element to track mouse position for
  * @returns Object containing mouseX and mouseY motion values
  */
-export function useMousePosition(ref: RefObject<HTMLElement | null>) {
+function useMousePosition(ref: RefObject<HTMLElement | null>) {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const rafIdRef = useRef<number | null>(null)

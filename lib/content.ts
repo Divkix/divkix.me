@@ -2,7 +2,7 @@
 // This allows the code to work in Cloudflare Workers and edge environments
 import postsData from "@/content/blog/posts.json"
 
-export interface Post {
+interface Post {
   slug: string
   title: string
   date: string
