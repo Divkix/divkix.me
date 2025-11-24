@@ -5,8 +5,8 @@
  * This allows us to avoid filesystem access at runtime in Cloudflare Workers
  */
 
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const matter = require("gray-matter");
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");

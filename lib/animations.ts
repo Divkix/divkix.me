@@ -6,7 +6,7 @@ import type { Variants } from "framer-motion";
  * Avoids layout shifts that cause reflows
  */
 
-const fadeIn: Variants = {
+const _fadeIn: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -113,7 +113,7 @@ export const heroTitle: Variants = {
  * Scale animation with GPU acceleration
  * Used for modal/popup appearances
  */
-const scaleIn: Variants = {
+const _scaleIn: Variants = {
   hidden: {
     opacity: 0,
     scale: 0.95,
@@ -132,7 +132,7 @@ const scaleIn: Variants = {
  * Slide in from right
  * GPU-accelerated with translateX
  */
-const slideInRight: Variants = {
+const _slideInRight: Variants = {
   hidden: {
     opacity: 0,
     x: 50,
@@ -151,7 +151,7 @@ const slideInRight: Variants = {
  * Slide in from left
  * GPU-accelerated with translateX
  */
-const slideInLeft: Variants = {
+const _slideInLeft: Variants = {
   hidden: {
     opacity: 0,
     x: -50,

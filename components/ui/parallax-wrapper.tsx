@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode, RefObject } from "react";
+import type { ReactNode, RefObject } from "react";
 import { useParallax } from "@/lib/hooks/use-parallax";
 
 interface ParallaxWrapperProps {

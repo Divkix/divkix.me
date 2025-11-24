@@ -262,4 +262,4 @@ export const siteConfig = {
   ],
 } as const;
 
-type SiteConfig = typeof siteConfig;
+export type SiteConfig = typeof siteConfig;

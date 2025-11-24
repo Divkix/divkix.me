@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 import { use3DTilt } from "@/lib/hooks/use-interactive-animations";
 import { cn } from "@/lib/utils";
 

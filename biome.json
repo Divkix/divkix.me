@@ -32,18 +32,18 @@
   },
   "linter": {
     "enabled": true,
-    "rules": { "recommended": false, "style": { "useBlockStatements": "off" } },
-    "includes": [
-      "**",
-      "!.next/**",
-      "!out/**",
-      "!build/**",
-      "!next-env.d.ts",
-      "!.next/**",
-      "!out/**",
-      "!build/**",
-      "!next-env.d.ts"
-    ]
+    "rules": {
+      "recommended": true,
+      "style": { "useBlockStatements": "off" },
+      "complexity": { "noImportantStyles": "off" },
+      "security": { "noDangerouslySetInnerHtml": "off" },
+      "suspicious": {
+        "noArrayIndexKey": "warn",
+        "useIterableCallbackReturn": "off"
+      },
+      "a11y": { "noSvgWithoutTitle": "warn" }
+    },
+    "includes": ["**", "!.next/**", "!out/**", "!build/**", "!next-env.d.ts"]
   },
   "javascript": {
     "formatter": {

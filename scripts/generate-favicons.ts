@@ -28,8 +28,8 @@
  *   - public/site.webmanifest
  */
 
-import { writeFileSync } from "fs";
-import path from "path";
+import { writeFileSync } from "node:fs";
+import path from "node:path";
 import sharp from "sharp";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { siteConfig } from "@/content/site.config";
 
 const baseUrl = "https://divkix.me";

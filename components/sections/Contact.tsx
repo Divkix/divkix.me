@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { Textarea } from "@/components/ui/textarea";
-import { slideUp, staggerContainer, staggerItem } from "@/lib/animations";
+import { staggerContainer, staggerItem } from "@/lib/animations";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import { CopyButton } from "@/components/blog/CopyButton";
 import { cn } from "@/lib/utils";
 

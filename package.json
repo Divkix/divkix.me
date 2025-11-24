@@ -22,10 +22,12 @@
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-rss.js",
     "build": "bun run prebuild && next build --webpack",
     "preview": "bun run build && bunx serve out",
-    "lint": "eslint",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,json,css,md,mdx}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,json,css,md,mdx}\"",
+    "format": "biome format --write .",
+    "format:check": "biome check --formatter-enabled=true --linter-enabled=false",
+    "check": "biome check",
     "knip": "knip"
   },
   "dependencies": {
@@ -63,11 +65,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.3",
-    "eslint-config-prettier": "^10.1.8",
     "knip": "^5.70.1",
-    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 import { useMagneticEffect } from "@/lib/hooks/use-interactive-animations";
 import { cn } from "@/lib/utils";
 

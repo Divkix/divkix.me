@@ -21,7 +21,7 @@ function CountUp({ value }: { value: string }) {
 
   // Extract number and suffix
   const match = value.match(/^(\d+)(\+|M\+|K\+)?$/);
-  const targetNumber = match ? parseInt(match[1]) : 0;
+  const targetNumber = match ? parseInt(match[1], 10) : 0;
   const suffix = match ? match[2] || "" : value;
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function CountUp({ value }: { value: string }) {
         const progress = Math.min(elapsed / duration, 1);
 
         // Easing function for smoother animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const easeOutQuart = 1 - (1 - progress) ** 4;
         const newCount = Math.floor(easeOutQuart * targetNumber);
 
         setCount(newCount);

@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  SpringOptions,
+  type SpringOptions,
   useMotionValue,
   useScroll,
   useSpring,
   useTransform,
 } from "framer-motion";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
 
 /**
  * Spring configuration for smooth, natural animations
@@ -23,7 +23,7 @@ const springConfig: SpringOptions = {
  * @param ref - Reference to the element to track mouse position for
  * @returns Object containing mouseX and mouseY motion values
  */
-function useMousePosition(ref: RefObject<HTMLElement | null>) {
+function _useMousePosition(ref: RefObject<HTMLElement | null>) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rafIdRef = useRef<number | null>(null);
