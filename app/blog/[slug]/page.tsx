@@ -1,11 +1,11 @@
-import { getAllPosts, getPostBySlug } from "@/lib/content";
-import { Badge } from "@/components/ui/badge";
-import { formatDate } from "@/lib/utils";
-import { generateBlogPostSEO } from "@/lib/seo";
-import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getAllPosts, getPostBySlug } from "@/lib/content";
+import { generateBlogPostSEO } from "@/lib/seo";
+import { formatDate } from "@/lib/utils";
 import { BlogArticleWrapper } from "./blog-article-wrapper";
 
 // Force static rendering to prevent hydration issues in Cloudflare Workers

@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { usePrefersReducedMotion } from "@/lib/hooks/use-interactive-animations";
 
 /**

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 
 interface BlogArticleWrapperProps {

@@ -1,7 +1,7 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { RefObject, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface ReadingProgressProps {

@@ -1,12 +1,11 @@
 "use client";
 
+import { motion, useScroll, useTransform } from "framer-motion";
+import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ThemeToggle } from "./ThemeToggle";
-import { cn } from "@/lib/utils";
-import { useEffect, useState, useRef } from "react";
-import { MenuIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +13,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { label: "Home", href: "/" },

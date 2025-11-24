@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { GradientText } from "@/components/shared/GradientText";
+import { SocialIcons } from "@/components/shared/SocialIcons";
 import { Button } from "@/components/ui/button";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
-import { GradientText } from "@/components/shared/GradientText";
-import { SocialIcons } from "@/components/shared/SocialIcons";
 import { siteConfig } from "@/content/site.config";
 import {
   heroStaggerContainer,

@@ -1,7 +1,7 @@
 "use client";
 
+import { MotionValue, useScroll, useTransform } from "framer-motion";
 import { RefObject, useEffect, useState } from "react";
-import { useScroll, useTransform, MotionValue } from "framer-motion";
 import { usePrefersReducedMotion } from "./use-interactive-animations";
 
 interface ParallaxReturn {

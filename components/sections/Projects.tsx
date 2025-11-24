@@ -1,7 +1,10 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,13 +12,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { TiltCard } from "@/components/ui/tilt-card";
 import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
+import { TiltCard } from "@/components/ui/tilt-card";
 import { siteConfig } from "@/content/site.config";
 import { staggerContainer, staggerItem } from "@/lib/animations";
-import { ExternalLink } from "lucide-react";
 
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p) => p.tags)),

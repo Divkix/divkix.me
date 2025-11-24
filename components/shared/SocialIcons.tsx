@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Instagram, Mail } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { siteConfig } from "@/content/site.config";

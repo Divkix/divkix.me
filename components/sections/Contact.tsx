@@ -1,20 +1,20 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import * as z from "zod";
 import { GradientText } from "@/components/shared/GradientText";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
+import { Textarea } from "@/components/ui/textarea";
 import { slideUp, staggerContainer, staggerItem } from "@/lib/animations";
-import { Loader2, CheckCircle2 } from "lucide-react";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

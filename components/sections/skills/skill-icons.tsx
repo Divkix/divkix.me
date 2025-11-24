@@ -1,28 +1,28 @@
 "use client";
 
-import {
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiGo,
-  SiRust,
-  SiC,
-  SiReact,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiMongodb,
-  SiPostgresql,
-  SiGit,
-  SiDocker,
-  SiAmazonwebservices,
-  SiDart,
-  SiHetzner,
-  SiSupabase,
-  SiCloudflare,
-} from "react-icons/si";
-import { DiJava } from "react-icons/di";
 import { Code } from "lucide-react";
 import type { IconType } from "react-icons";
+import { DiJava } from "react-icons/di";
+import {
+  SiAmazonwebservices,
+  SiC,
+  SiCloudflare,
+  SiDart,
+  SiDocker,
+  SiGit,
+  SiGo,
+  SiHetzner,
+  SiJavascript,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiRust,
+  SiSupabase,
+  SiTypescript,
+} from "react-icons/si";
 
 /**
  * Icon mapping for skill names

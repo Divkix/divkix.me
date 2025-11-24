@@ -28,9 +28,9 @@
  *   - public/site.webmanifest
  */
 
-import sharp from "sharp";
 import { writeFileSync } from "fs";
 import path from "path";
+import sharp from "sharp";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const SOURCE_IMAGE = path.join(PUBLIC_DIR, "divkix-logo.png");

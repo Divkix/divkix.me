@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
+import { Contact } from "@/components/sections/Contact";
 import { Hero3D } from "@/components/sections/Hero3D";
 import { Highlights } from "@/components/sections/Highlights";
-import { Contact } from "@/components/sections/Contact";
 import { siteConfig } from "@/content/site.config";
 
 // Dynamic imports for heavy components to reduce initial bundle size

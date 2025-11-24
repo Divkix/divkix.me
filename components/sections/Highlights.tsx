@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/content/site.config";
 import { staggerContainer, staggerItem } from "@/lib/animations";
-import { useEffect, useRef, useState } from "react";
 
 const highlights = [
   { label: "Users", value: siteConfig.facts.impact },

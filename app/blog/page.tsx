@@ -1,4 +1,5 @@
-import { getAllPosts } from "@/lib/content";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -6,11 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { TiltCard } from "@/components/ui/tilt-card";
-import Link from "next/link";
-import { formatDate } from "@/lib/utils";
+import { getAllPosts } from "@/lib/content";
 import { generateSEO } from "@/lib/seo";
+import { formatDate } from "@/lib/utils";
 
 export const metadata = generateSEO({
   title: "Blog",

@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { siteConfig } from "@/content/site.config";
 import { staggerContainer, staggerItem } from "@/lib/animations";
-import { MapPin } from "lucide-react";
-import { TimelinePath } from "./experience/TimelinePath";
 import { TimelineNode } from "./experience/TimelineNode";
+import { TimelinePath } from "./experience/TimelinePath";
 
 export function Experience() {
   return (

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, RefObject, useRef } from "react";
 import {
+  SpringOptions,
   useMotionValue,
+  useScroll,
   useSpring,
   useTransform,
-  useScroll,
-  SpringOptions,
 } from "framer-motion";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 /**
  * Spring configuration for smooth, natural animations
