@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,17 +88,38 @@ export function Projects() {
               >
                 <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
                   <TiltCard>
-                    <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col">
+                    <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col overflow-hidden">
+                      <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
+                        {"image" in project && project.image ? (
+                          <Image
+                            src={project.image as string}
+                            alt={project.name}
+                            fill
+                            className="object-cover transition-transform duration-500 hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                            <span className="text-4xl font-display font-bold text-foreground/10 select-none">
+                              {project.name.slice(0, 2).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                       <CardHeader>
                         <div className="flex justify-between items-start gap-2">
-                          <CardTitle>{project.name}</CardTitle>
+                          <CardTitle className="line-clamp-1">
+                            {project.name}
+                          </CardTitle>
                           {"period" in project && project.period && (
                             <span className="text-xs text-foreground/60 shrink-0">
                               {project.period}
                             </span>
                           )}
                         </div>
-                        <CardDescription>{project.desc}</CardDescription>
+                        <CardDescription className="line-clamp-2">
+                          {project.desc}
+                        </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4 mt-auto">
                         <div className="flex flex-wrap gap-2">

@@ -188,6 +188,7 @@ export const siteConfig = {
     {
       name: "ASU Capstone",
       desc: "Full-stack platform for managing and showcasing Arizona State University capstone projects.",
+      image: "/og-image.png",
       tags: ["Next.js", "TypeScript", "Python", "Go"],
       period: "Aug 2024 – Present",
       links: [{ label: "Live", href: "https://asucapstone.com" }],
@@ -195,6 +196,7 @@ export const siteConfig = {
     {
       name: "PickMyClass",
       desc: "ASU class enrollment monitoring system. Tracks seat availability and sends instant notifications to students.",
+      image: "/og/blog/pickmyclass-never-miss-your-dream-class.png",
       tags: ["Next.js", "TypeScript"],
       period: "2024",
       links: [{ label: "Live", href: "https://pickmyclass.app" }],

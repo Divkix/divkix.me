@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ToastProvider } from "@/components/providers/ToastProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { generateSEO } from "@/lib/seo";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="aurora-background" />
+          <CustomCursor />
           {children}
           <ToastProvider />
         </ThemeProvider>
