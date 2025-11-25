@@ -1,8 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaqAccordion } from "@/components/blog/FaqAccordion";
+import { HowToSteps } from "@/components/blog/HowToSteps";
+import { KeyTakeaways } from "@/components/blog/KeyTakeaways";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import { TldrSummary } from "@/components/blog/TldrSummary";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -135,6 +139,14 @@ export default async function BlogPostPage({
             <meta itemProp="description" content={post.excerpt} />
           </header>
 
+          {/* TL;DR - quick summary for scanners */}
+          {post.tldr && <TldrSummary summary={post.tldr} />}
+
+          {/* Key Takeaways - main learnings */}
+          {post.keyTakeaways && post.keyTakeaways.length > 0 && (
+            <KeyTakeaways takeaways={post.keyTakeaways} />
+          )}
+
           <BlogArticleWrapper readingTimeMinutes={readingTimeMinutes}>
             <div
               className="prose prose-slate dark:prose-invert max-w-none"
@@ -143,6 +155,12 @@ export default async function BlogPostPage({
               <MDXContent />
             </div>
           </BlogArticleWrapper>
+
+          {/* FAQ Section */}
+          {post.faq && post.faq.length > 0 && <FaqAccordion items={post.faq} />}
+
+          {/* HowTo Steps */}
+          {post.howto && <HowToSteps howto={post.howto} />}
 
           {/* Related Posts Section */}
           {post.relatedPosts && post.relatedPosts.length > 0 && (

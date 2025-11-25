@@ -5,7 +5,7 @@
     <link>https://divkix.me/blog</link>
     <description>Developer building useful tools with code and curiosity.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 03:41:24 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 04:03:31 GMT</lastBuildDate>
     <atom:link href="https://divkix.me/rss.xml" rel="self" type="application/rss+xml"/>
     <author>divkix@divkix.me (Divanshu Chauhan)</author>
     <item>
@@ -21,6 +21,10 @@
       <category>Mac</category>
       <category>Qwen</category>
       <category>Local AI</category>
+      <category>M4 Pro</category>
+      <category>Vision Models</category>
+      <category>ChatGPT Alternative</category>
+      <category>Offline AI</category>
     </item>
     <item>
       <title><![CDATA[PickMyClass: Never Miss Your Dream Class Again]]></title>
@@ -29,16 +33,16 @@
       <pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate>
       <description><![CDATA[How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing.]]></description>
       <author>divkix@divkix.me (Divanshu Chauhan)</author>
-      
-    </item>
-    <item>
-      <title><![CDATA[Welcome to My Portfolio]]></title>
-      <link>https://divkix.me/blog/hello-world</link>
-      <guid>https://divkix.me/blog/hello-world</guid>
-      <pubDate>Mon, 27 Oct 2025 00:00:00 GMT</pubDate>
-      <description><![CDATA[An introduction to my new portfolio site built with Next.js, TypeScript, and React Three Fiber.]]></description>
-      <author>divkix@divkix.me (Divanshu Chauhan)</author>
-      
+      <category>Side Project</category>
+      <category>Puppeteer</category>
+      <category>Web Scraping</category>
+      <category>Next.js</category>
+      <category>Cloudflare Workers</category>
+      <category>Supabase</category>
+      <category>ASU</category>
+      <category>College</category>
+      <category>SaaS</category>
+      <category>Full Stack</category>
     </item>
   </channel>
 </rss>
