@@ -1,6 +1,431 @@
 {
   "posts": [
     {
+      "slug": "ai-coding-tools-compared-2025",
+      "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+      "date": "2025-11-24",
+      "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs).",
+      "tags": [
+        "AI",
+        "Claude Code",
+        "Cursor",
+        "GitHub Copilot",
+        "LM Studio",
+        "Coding Tools",
+        "Developer Experience",
+        "AI Assistants",
+        "Productivity",
+        "2025"
+      ],
+      "author": "Divanshu Chauhan",
+      "readingTime": 8,
+      "wordCount": 1546,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-four-tools-and-their-actual-philosophies",
+          "text": "The Four Tools (And Their Actual Philosophies)",
+          "level": 2
+        },
+        {
+          "id": "when-i-reach-for-claude-code",
+          "text": "When I Reach for Claude Code",
+          "level": 2
+        },
+        {
+          "id": "when-i-reach-for-cursor",
+          "text": "When I Reach for Cursor",
+          "level": 2
+        },
+        {
+          "id": "when-i-reach-for-copilot",
+          "text": "When I Reach for Copilot",
+          "level": 2
+        },
+        {
+          "id": "when-i-still-use-lm-studio",
+          "text": "When I Still Use LM Studio",
+          "level": 2
+        },
+        {
+          "id": "the-honest-downsides",
+          "text": "The Honest Downsides",
+          "level": 2
+        },
+        {
+          "id": "my-actual-daily-workflow",
+          "text": "My Actual Daily Workflow",
+          "level": 2
+        },
+        {
+          "id": "cost-breakdown",
+          "text": "Cost Breakdown",
+          "level": 2
+        },
+        {
+          "id": "the-bottom-line",
+          "text": "The Bottom Line",
+          "level": 2
+        }
+      ],
+      "tldr": "Different AI coding tools excel at different tasks - Claude Code for complex refactors, Cursor for exploration, Copilot for autocomplete, and LM Studio for privacy. Using all three strategically beats trying to force one tool for everything.",
+      "keyTakeaways": [
+        "Claude Code dominates complex multi-file refactors and terminal-based workflows with MCP integrations",
+        "Cursor's chat-in-editor beats everything for exploratory coding and codebase questions",
+        "GitHub Copilot still has the best autocomplete flow - tab-tab-tab beats typing for boilerplate",
+        "Local LLMs (LM Studio) are essential for sensitive code and offline work despite being slower",
+        "Cost breakdown: You'll pay $30-50/month for full coverage, or $0 if you only use free tiers + LM Studio"
+      ],
+      "faq": [
+        {
+          "q": "Can't I just pick one AI coding tool?",
+          "a": "Yes, but you'll be handicapped. Each tool has genuine strengths - Claude Code's MCP for terminal work, Cursor's codebase indexing, Copilot's autocomplete speed. Using one exclusively means missing out on what the others do best."
+        },
+        {
+          "q": "Is Claude Code worth it over just using ChatGPT?",
+          "a": "If you do terminal work, refactors spanning 5+ files, or want MCP integrations (browser automation, docs, local tools), absolutely. If you just want chat assistance, ChatGPT is cheaper."
+        },
+        {
+          "q": "Why use LM Studio when cloud tools are faster?",
+          "a": "Three reasons: privacy (code never leaves your machine), offline capability, and zero recurring cost. I use it for client work with NDAs and when traveling without reliable internet."
+        },
+        {
+          "q": "Which tool should I start with as a beginner?",
+          "a": "GitHub Copilot. It's $10/month, works in any editor, and teaches you patterns through autocomplete. Add Claude Code when you're doing multi-file refactors. Add Cursor when you need better codebase understanding."
+        }
+      ],
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "side-project-stack-2025-grad-student",
+          "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+          "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+        },
+        {
+          "slug": "lm-studio-local-ai-mac",
+          "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
+          "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
+        },
+        {
+          "slug": "zero-cost-portfolio-cloudflare-workers",
+          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+        }
+      ]
+    },
+    {
+      "slug": "side-project-stack-2025-grad-student",
+      "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+      "date": "2025-11-24",
+      "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users.",
+      "tags": [
+        "Side Projects",
+        "Tech Stack",
+        "Grad Student",
+        "Next.js",
+        "Supabase",
+        "Cloudflare",
+        "TypeScript",
+        "Building in Public",
+        "Productivity",
+        "2025"
+      ],
+      "author": "Divanshu Chauhan",
+      "readingTime": 10,
+      "wordCount": 1885,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-constraint-time-is-the-enemy",
+          "text": "The Constraint: Time is the Enemy",
+          "level": 2
+        },
+        {
+          "id": "the-core-stack",
+          "text": "The Core Stack",
+          "level": 2
+        },
+        {
+          "id": "next-js-15-app-router",
+          "text": "Next.js 15 (App Router)",
+          "level": 3
+        },
+        {
+          "id": "typescript-non-negotiable",
+          "text": "TypeScript - Non-Negotiable",
+          "level": 3
+        },
+        {
+          "id": "supabase-database-auth-realtime",
+          "text": "Supabase - Database + Auth + Realtime",
+          "level": 3
+        },
+        {
+          "id": "cloudflare-workers-deploy-and-forget",
+          "text": "Cloudflare Workers - Deploy and Forget",
+          "level": 3
+        },
+        {
+          "id": "the-speed-tools",
+          "text": "The Speed Tools",
+          "level": 2
+        },
+        {
+          "id": "shadcn-ui-copy-paste-components",
+          "text": "shadcn/ui - Copy-Paste Components",
+          "level": 3
+        },
+        {
+          "id": "tailwind-css-no-context-switching",
+          "text": "Tailwind CSS - No Context Switching",
+          "level": 3
+        },
+        {
+          "id": "biome-fast-linting-formatting",
+          "text": "Biome - Fast Linting/Formatting",
+          "level": 3
+        },
+        {
+          "id": "real-project-examples",
+          "text": "Real Project Examples",
+          "level": 2
+        },
+        {
+          "id": "pickmyclass-supabase-scaling",
+          "text": "PickMyClass: Supabase Scaling",
+          "level": 3
+        },
+        {
+          "id": "alita-robot-go-for-high-traffic",
+          "text": "Alita Robot: Go for High Traffic",
+          "level": 3
+        },
+        {
+          "id": "lessons-from-250k-users",
+          "text": "Lessons from 250K+ Users",
+          "level": 2
+        },
+        {
+          "id": "the-stack-decisions-i-regret",
+          "text": "The Stack Decisions I Regret",
+          "level": 2
+        },
+        {
+          "id": "what-i-d-tell-past-me",
+          "text": "What I'd Tell Past Me",
+          "level": 2
+        },
+        {
+          "id": "quick-stack-comparison",
+          "text": "Quick Stack Comparison",
+          "level": 2
+        },
+        {
+          "id": "the-bottom-line",
+          "text": "The Bottom Line",
+          "level": 2
+        }
+      ],
+      "tldr": "Time-starved grad student's battle-tested stack: Next.js 15 + TypeScript + Supabase + Cloudflare Workers. Optimized for shipping fast, not resume padding.",
+      "keyTakeaways": [
+        "Use managed services (Supabase, Cloudflare) to eliminate ops work - your time is more valuable than $5/month",
+        "TypeScript is non-negotiable for side projects you'll touch 6 months later",
+        "Copy-paste UI components (shadcn/ui) beats building from scratch every time",
+        "Deployment should be boring - Cloudflare Workers deploy in 30 seconds and cost $0",
+        "Optimize for iteration speed over architectural purity when shipping under time pressure"
+      ],
+      "faq": [
+        {
+          "q": "Why not just use Python/Django for everything?",
+          "a": "I tried. TypeScript catches so many bugs before deployment that I stopped fighting it. Plus Next.js gives you SSR, API routes, and deployment in one package."
+        },
+        {
+          "q": "Isn't Supabase vendor lock-in?",
+          "a": "Yes, and I don't care. For side projects, the alternative is spending weekends debugging Postgres connections. Supabase's free tier is ridiculously generous and I can always migrate if a project actually makes money."
+        },
+        {
+          "q": "What about costs at scale?",
+          "a": "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (1M+ users) runs on minimal infra. Most projects never hit paid tiers. If they do, you've got bigger problems to solve (good problems)."
+        },
+        {
+          "q": "Why Biome over ESLint + Prettier?",
+          "a": "20x faster, one config file, zero conflicts between linter and formatter. Migrated all my projects in 2024 and never looked back. Time saved adds up."
+        }
+      ],
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "ai-coding-tools-compared-2025",
+          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
+        },
+        {
+          "slug": "zero-cost-portfolio-cloudflare-workers",
+          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+        },
+        {
+          "slug": "pickmyclass-never-miss-your-dream-class",
+          "title": "PickMyClass: Never Miss Your Dream Class Again",
+          "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+        }
+      ]
+    },
+    {
+      "slug": "zero-cost-portfolio-cloudflare-workers",
+      "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+      "date": "2025-11-24",
+      "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel.",
+      "tags": [
+        "Cloudflare Workers",
+        "Next.js",
+        "Edge Computing",
+        "Serverless",
+        "Free Hosting",
+        "OpenNext",
+        "Portfolio",
+        "Web Development",
+        "Cost Optimization",
+        "2025"
+      ],
+      "author": "Divanshu Chauhan",
+      "readingTime": 7,
+      "wordCount": 1284,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-stack-nobody-tells-you-about",
+          "text": "The Stack Nobody Tells You About",
+          "level": 2
+        },
+        {
+          "id": "why-not-vercel-the-real-reasons",
+          "text": "Why Not Vercel? (The Real Reasons)",
+          "level": 2
+        },
+        {
+          "id": "the-free-tier-reality-check",
+          "text": "The Free Tier Reality Check",
+          "level": 2
+        },
+        {
+          "id": "edge-runtime-constraints-the-pain-points",
+          "text": "Edge Runtime Constraints (The Pain Points)",
+          "level": 2
+        },
+        {
+          "id": "the-blog-problem",
+          "text": "The Blog Problem",
+          "level": 3
+        },
+        {
+          "id": "the-prebuild-pattern",
+          "text": "The Prebuild Pattern",
+          "level": 3
+        },
+        {
+          "id": "wrangler-config-basics",
+          "text": "Wrangler Config Basics",
+          "level": 2
+        },
+        {
+          "id": "performance-the-actual-numbers",
+          "text": "Performance: The Actual Numbers",
+          "level": 2
+        },
+        {
+          "id": "build-and-deploy-commands",
+          "text": "Build and Deploy Commands",
+          "level": 2
+        },
+        {
+          "id": "the-honest-downsides",
+          "text": "The Honest Downsides",
+          "level": 2
+        },
+        {
+          "id": "when-you-d-actually-pay",
+          "text": "When You'd Actually Pay",
+          "level": 2
+        },
+        {
+          "id": "the-migration-path",
+          "text": "The Migration Path",
+          "level": 2
+        },
+        {
+          "id": "should-you-do-this",
+          "text": "Should You Do This?",
+          "level": 2
+        }
+      ],
+      "tldr": "I host my Next.js portfolio on Cloudflare Workers completely free using OpenNext, getting global edge deployment and zero cold starts without paying Vercel's premium.",
+      "keyTakeaways": [
+        "Cloudflare Workers free tier: 100K requests/day with zero bandwidth limits beats Vercel's 100GB cap",
+        "V8 isolates mean 5ms cold starts vs 200-500ms for traditional serverless functions",
+        "OpenNext adapter makes Next.js work on edge runtime with minimal config changes",
+        "Edge runtime constraints require prebuild strategy - no filesystem access at runtime",
+        "Global deployment to 330+ cities happens automatically without multi-region setup"
+      ],
+      "faq": [
+        {
+          "q": "Can I use Next.js App Router with Cloudflare Workers?",
+          "a": "Yes, but with constraints. Server components work fine, but you can't use Node.js APIs like 'fs' at runtime. OpenNext handles the adaptation automatically."
+        },
+        {
+          "q": "What happens when I exceed 100K requests/day?",
+          "a": "Cloudflare charges $0.50 per million requests after that. For a portfolio, you'd need viral traffic to hit this. I've never exceeded it."
+        },
+        {
+          "q": "Do I need to change my Next.js code significantly?",
+          "a": "Minimal changes. Main constraint is no filesystem access at runtime. Use prebuild scripts to generate JSON from MDX/markdown instead of reading files dynamically."
+        },
+        {
+          "q": "How does performance compare to Vercel?",
+          "a": "Equal or better. Both use edge networks, but Cloudflare's V8 isolates have faster cold starts than Vercel's serverless functions. Real-world: 20-50ms response times globally."
+        }
+      ],
+      "howto": {
+        "name": "How to Deploy Next.js to Cloudflare Workers",
+        "totalTime": "PT20M",
+        "steps": [
+          {
+            "name": "Install OpenNext Cloudflare adapter",
+            "text": "Run 'bun add -D @opennextjs/cloudflare' and create wrangler.jsonc config file with worker name and compatibility flags."
+          },
+          {
+            "name": "Add build scripts to package.json",
+            "text": "Add 'preview' script for local testing and 'deploy' script that runs Next.js build followed by OpenNext build and Cloudflare deployment."
+          },
+          {
+            "name": "Configure edge-compatible code",
+            "text": "Replace any Node.js filesystem calls with prebuild scripts. Generate static JSON files at build time instead of reading dynamically at runtime."
+          },
+          {
+            "name": "Deploy to Cloudflare",
+            "text": "Run 'bun run deploy' to build and upload. Your site will be live on workers.dev subdomain immediately, then add custom domain in Cloudflare dashboard."
+          }
+        ]
+      },
+      "relatedPosts": [
+        {
+          "slug": "side-project-stack-2025-grad-student",
+          "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+          "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+        },
+        {
+          "slug": "pickmyclass-never-miss-your-dream-class",
+          "title": "PickMyClass: Never Miss Your Dream Class Again",
+          "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+        },
+        {
+          "slug": "ai-coding-tools-compared-2025",
+          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
+        }
+      ]
+    },
+    {
       "slug": "lm-studio-local-ai-mac",
       "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
       "date": "2025-10-31",
@@ -137,9 +562,19 @@
       },
       "relatedPosts": [
         {
-          "slug": "pickmyclass-never-miss-your-dream-class",
-          "title": "PickMyClass: Never Miss Your Dream Class Again",
-          "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+          "slug": "ai-coding-tools-compared-2025",
+          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
+        },
+        {
+          "slug": "side-project-stack-2025-grad-student",
+          "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+          "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+        },
+        {
+          "slug": "zero-cost-portfolio-cloudflare-workers",
+          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
         }
       ]
     },
@@ -254,13 +689,23 @@
       "howto": null,
       "relatedPosts": [
         {
-          "slug": "lm-studio-local-ai-mac",
-          "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
-          "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
+          "slug": "side-project-stack-2025-grad-student",
+          "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+          "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+        },
+        {
+          "slug": "zero-cost-portfolio-cloudflare-workers",
+          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+        },
+        {
+          "slug": "ai-coding-tools-compared-2025",
+          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         }
       ]
     }
   ],
-  "generatedAt": "2025-11-25T04:03:31.433Z",
-  "totalPosts": 2
+  "generatedAt": "2025-11-25T04:26:15.206Z",
+  "totalPosts": 5
 }

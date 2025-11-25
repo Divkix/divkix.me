@@ -1,0 +1,294 @@
+---
+title: "How I Host My Portfolio for $0/Month on Cloudflare"
+date: "2025-11-24"
+excerpt: "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+tags: ["Cloudflare Workers", "Next.js", "Edge Computing", "Serverless", "Free Hosting", "OpenNext", "Portfolio", "Web Development", "Cost Optimization", "2025"]
+published: true
+tldr: "I host my Next.js portfolio on Cloudflare Workers completely free using OpenNext, getting global edge deployment and zero cold starts without paying Vercel's premium."
+keyTakeaways:
+  - "Cloudflare Workers free tier: 100K requests/day with zero bandwidth limits beats Vercel's 100GB cap"
+  - "V8 isolates mean 5ms cold starts vs 200-500ms for traditional serverless functions"
+  - "OpenNext adapter makes Next.js work on edge runtime with minimal config changes"
+  - "Edge runtime constraints require prebuild strategy - no filesystem access at runtime"
+  - "Global deployment to 330+ cities happens automatically without multi-region setup"
+faq:
+  - q: "Can I use Next.js App Router with Cloudflare Workers?"
+    a: "Yes, but with constraints. Server components work fine, but you can't use Node.js APIs like 'fs' at runtime. OpenNext handles the adaptation automatically."
+  - q: "What happens when I exceed 100K requests/day?"
+    a: "Cloudflare charges $0.50 per million requests after that. For a portfolio, you'd need viral traffic to hit this. I've never exceeded it."
+  - q: "Do I need to change my Next.js code significantly?"
+    a: "Minimal changes. Main constraint is no filesystem access at runtime. Use prebuild scripts to generate JSON from MDX/markdown instead of reading files dynamically."
+  - q: "How does performance compare to Vercel?"
+    a: "Equal or better. Both use edge networks, but Cloudflare's V8 isolates have faster cold starts than Vercel's serverless functions. Real-world: 20-50ms response times globally."
+howto:
+  name: "How to Deploy Next.js to Cloudflare Workers"
+  totalTime: "PT20M"
+  steps:
+    - name: "Install OpenNext Cloudflare adapter"
+      text: "Run 'bun add -D @opennextjs/cloudflare' and create wrangler.jsonc config file with worker name and compatibility flags."
+    - name: "Add build scripts to package.json"
+      text: "Add 'preview' script for local testing and 'deploy' script that runs Next.js build followed by OpenNext build and Cloudflare deployment."
+    - name: "Configure edge-compatible code"
+      text: "Replace any Node.js filesystem calls with prebuild scripts. Generate static JSON files at build time instead of reading dynamically at runtime."
+    - name: "Deploy to Cloudflare"
+      text: "Run 'bun run deploy' to build and upload. Your site will be live on workers.dev subdomain immediately, then add custom domain in Cloudflare dashboard."
+---
+
+I haven't paid for hosting in two years. Not because I'm using some sketchy free trial, but because my portfolio genuinely costs $0/month to run on Cloudflare Workers.
+
+This isn't a flex post. It's the architecture breakdown of how divkix.me runs on Cloudflare's edge network with Next.js 15, why I picked it over Vercel, and the actual constraints you'll hit.
+
+## The Stack Nobody Tells You About
+
+Here's what powers this site:
+
+- **Next.js 15** (App Router, RSC)
+- **OpenNext** (`@opennextjs/cloudflare`) - the adapter that makes Next.js work on Workers
+- **Cloudflare Workers** - edge runtime using V8 isolates
+- **Wrangler** - Cloudflare's deployment CLI
+
+The secret sauce is OpenNext. It's an open-source adapter that converts Next.js builds into formats that edge runtimes understand. You can't just deploy Next.js to Cloudflare Workers directly. OpenNext bridges the gap.
+
+## Why Not Vercel? (The Real Reasons)
+
+Vercel hosts Next.js perfectly. But here's why I left:
+
+**1. Free Tier Limits**
+
+Vercel's free tier gives you 100GB bandwidth. That sounds like a lot until you add images, videos, or get a Reddit hug of death. Cloudflare? Unlimited bandwidth. Period.
+
+**2. Vendor Lock-In**
+
+Vercel owns Next.js. Great for integration, terrible for negotiating power. If they change pricing or terms, you're stuck migrating. Cloudflare Workers runs on open web standards.
+
+**3. Cold Starts**
+
+Vercel's serverless functions use containers. Cold starts are 200-500ms. Cloudflare Workers use V8 isolates - basically lightweight JS contexts. Cold starts? 5ms. Not 5 seconds. 5 milliseconds.
+
+**4. Global Edge = Default**
+
+Vercel Edge Functions cost extra. Cloudflare Workers deploy to 330+ cities automatically. No configuration. No upcharge.
+
+## The Free Tier Reality Check
+
+Let's compare the actual numbers:
+
+| Feature | Cloudflare Workers | Vercel | Netlify |
+|---------|-------------------|--------|---------|
+| Requests/Day | 100,000 | Unlimited* | Unlimited* |
+| Bandwidth | Unlimited | 100GB | 100GB |
+| Function Invocations | 100K/day | 100 hours compute | 125K/month |
+| Cold Start Time | ~5ms | 200-500ms | 200-500ms |
+| Global Edge | Yes (330+ cities) | $20/mo add-on | Paid plans only |
+| Overage Cost | $0.50/1M requests | Pay-as-you-go | Pay-as-you-go |
+
+*Vercel/Netlify limit bandwidth, not requests. Hit 100GB and you're throttled or billed.
+
+For a portfolio or blog, you'll never hit 100K requests/day unless you're Hacker News frontpage famous. I average 2-3K requests/day. Not even close.
+
+## Edge Runtime Constraints (The Pain Points)
+
+Cloudflare Workers run on the edge. That means no Node.js. No filesystem. No `fs.readFileSync()`. This breaks a lot of Next.js patterns.
+
+### The Blog Problem
+
+My blog uses MDX files. Typical Next.js pattern:
+
+```typescript
+// This DOES NOT WORK on Cloudflare Workers
+import fs from 'fs';
+import path from 'path';
+
+export function getBlogPosts() {
+  const files = fs.readdirSync('content/blog');
+  return files.map(file => {
+    const content = fs.readFileSync(`content/blog/${file}`);
+    return parseMDX(content);
+  });
+}
+```
+
+No `fs` module at runtime. The solution? **Prebuild everything.**
+
+### The Prebuild Pattern
+
+I wrote a build script that runs before deployment:
+
+```javascript
+// scripts/generate-posts-metadata.js
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+const postsDir = 'content/blog';
+const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.mdx'));
+
+const posts = files.map(filename => {
+  const content = fs.readFileSync(path.join(postsDir, filename), 'utf8');
+  const { data } = matter(content);
+  return {
+    slug: filename.replace('.mdx', ''),
+    ...data,
+    readingTime: calculateReadingTime(content)
+  };
+});
+
+fs.writeFileSync('content/blog/posts.json', JSON.stringify(posts, null, 2));
+```
+
+Now at runtime, I just import the JSON:
+
+```typescript
+// lib/content.ts
+import postsData from '@/content/blog/posts.json';
+
+export function getAllPosts() {
+  return postsData; // No filesystem needed
+}
+```
+
+This runs at build time with Node.js, outputs static JSON, and the edge runtime only reads JSON. Problem solved.
+
+## Wrangler Config Basics
+
+Here's the minimal `wrangler.jsonc` config:
+
+```json
+{
+  "name": "divkix-me",
+  "compatibility_date": "2025-11-24",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets"
+  }
+}
+```
+
+- `nodejs_compat` enables some Node.js APIs (Buffer, process.env)
+- `global_fetch_strictly_public` enforces standards-compliant fetch
+- `assets.directory` points to OpenNext's build output
+
+OpenNext generates `.open-next/` folder with all Worker-compatible assets. Wrangler uploads it.
+
+## Performance: The Actual Numbers
+
+I ran tests from 5 global locations. Here's reality:
+
+**Homepage (SSG)**
+- San Francisco: 23ms
+- London: 31ms
+- Singapore: 28ms
+- Mumbai: 35ms
+- São Paulo: 42ms
+
+**Blog Post (SSR)**
+- San Francisco: 45ms
+- London: 52ms
+- Singapore: 48ms
+- Mumbai: 61ms
+- São Paulo: 58ms
+
+These are total response times, not TTFB. Cold starts are invisible. V8 isolates are fast.
+
+For comparison, my old Vercel setup averaged 80-120ms on dynamic routes because of container cold starts.
+
+## Build and Deploy Commands
+
+My `package.json` scripts:
+
+```json
+{
+  "scripts": {
+    "prebuild": "node scripts/generate-posts-metadata.js",
+    "build": "bun run prebuild && next build",
+    "preview": "bun run build && wrangler pages dev .open-next/assets",
+    "deploy": "bun run build && wrangler pages deploy .open-next/assets"
+  }
+}
+```
+
+Workflow:
+1. `bun run prebuild` - generates posts.json from MDX
+2. `next build` - Next.js builds app
+3. OpenNext transforms output (happens automatically via next.config)
+4. `wrangler pages deploy` - uploads to Cloudflare
+
+First deploy took 2 minutes. Updates take 30-45 seconds.
+
+## The Honest Downsides
+
+**1. Debugging Is Harder**
+
+Local development uses Node.js. Production uses V8 isolates. Sometimes code works locally but breaks on Workers. You'll need to test with `wrangler pages dev` before deploying.
+
+**2. No Incremental Static Regeneration (ISR)**
+
+Next.js ISR doesn't work on Workers. You get static or fully dynamic. No middle ground. For a portfolio, this doesn't matter. For a high-traffic blog, you'll need full SSR or static builds.
+
+**3. OpenNext Is Community-Maintained**
+
+Vercel isn't maintaining this. The community is. Updates lag behind Next.js releases. I'm on Next.js 15.0, OpenNext adapter works, but edge cases exist.
+
+**4. Limited Node.js APIs**
+
+`nodejs_compat` flag enables some APIs, but not everything. No child processes, no native modules, no complex crypto. Check compatibility before committing.
+
+**5. Build Times**
+
+OpenNext adds 10-15 seconds to build time. Not terrible, but noticeable. Vercel builds are faster because they control the entire stack.
+
+## When You'd Actually Pay
+
+Cloudflare charges after 100K requests/day. Let's math this out:
+
+- 100K requests/day = 3M requests/month (free)
+- Next 10M requests = $5
+- 13M requests/month = $5 total
+
+Compare to Vercel Hobby (free) → Pro ($20/mo) jump. No middle ground.
+
+For context, a site getting 13M requests/month is doing 430K requests/day. That's 180 requests/minute every minute of every day. Your portfolio won't hit this unless it's not a portfolio anymore.
+
+## The Migration Path
+
+If you're on Vercel now:
+
+1. Install OpenNext: `bun add -D @opennextjs/cloudflare`
+2. Create `wrangler.jsonc` with basic config
+3. Audit your code for `fs`, `path`, Node.js APIs
+4. Move filesystem operations to prebuild scripts
+5. Test locally: `bun run preview`
+6. Deploy: `bun run deploy`
+7. Add custom domain in Cloudflare dashboard
+
+I migrated in 3 hours. Most of that was rewriting the blog system to use prebuild JSON instead of runtime filesystem reads.
+
+## Should You Do This?
+
+**Yes, if:**
+- You want $0/month hosting with no asterisks
+- You're building a portfolio, blog, or low-traffic site
+- You're comfortable with edge runtime constraints
+- You value fast cold starts and global edge
+
+**No, if:**
+- You need ISR (revalidate every X seconds)
+- You rely heavily on Node.js-specific libraries
+- You want zero-config deployment (Vercel is easier)
+- Your site uses database connections extensively (Workers have connection limits)
+
+For divkix.me, Cloudflare Workers is perfect. No hosting bills, global performance, and the constraints force better architecture decisions. I prebuild everything anyway. Why not make it official?
+
+The free tier isn't a trial. It's permanent. Cloudflare makes money from enterprises, not personal portfolios. Use that to your advantage.
+
+---
+
+**Resources:**
+- [OpenNext Documentation](https://opennext.js.org)
+- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers)
+- [My Portfolio Source Code](https://github.com/divkix/divkix.me) (see wrangler.jsonc and prebuild scripts)
+
+The hosting bill that doesn't exist? That's not a hack. That's just picking the right tool for the job.

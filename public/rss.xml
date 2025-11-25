@@ -5,9 +5,63 @@
     <link>https://divkix.me/blog</link>
     <description>Developer building useful tools with code and curiosity.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 04:03:31 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 04:26:15 GMT</lastBuildDate>
     <atom:link href="https://divkix.me/rss.xml" rel="self" type="application/rss+xml"/>
     <author>divkix@divkix.me (Divanshu Chauhan)</author>
+    <item>
+      <title><![CDATA[Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)]]></title>
+      <link>https://divkix.me/blog/ai-coding-tools-compared-2025</link>
+      <guid>https://divkix.me/blog/ai-coding-tools-compared-2025</guid>
+      <pubDate>Mon, 24 Nov 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs).]]></description>
+      <author>divkix@divkix.me (Divanshu Chauhan)</author>
+      <category>AI</category>
+      <category>Claude Code</category>
+      <category>Cursor</category>
+      <category>GitHub Copilot</category>
+      <category>LM Studio</category>
+      <category>Coding Tools</category>
+      <category>Developer Experience</category>
+      <category>AI Assistants</category>
+      <category>Productivity</category>
+      <category>2025</category>
+    </item>
+    <item>
+      <title><![CDATA[My 2025 Stack for Shipping Side Projects Fast as a Grad Student]]></title>
+      <link>https://divkix.me/blog/side-project-stack-2025-grad-student</link>
+      <guid>https://divkix.me/blog/side-project-stack-2025-grad-student</guid>
+      <pubDate>Mon, 24 Nov 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users.]]></description>
+      <author>divkix@divkix.me (Divanshu Chauhan)</author>
+      <category>Side Projects</category>
+      <category>Tech Stack</category>
+      <category>Grad Student</category>
+      <category>Next.js</category>
+      <category>Supabase</category>
+      <category>Cloudflare</category>
+      <category>TypeScript</category>
+      <category>Building in Public</category>
+      <category>Productivity</category>
+      <category>2025</category>
+    </item>
+    <item>
+      <title><![CDATA[How I Host My Portfolio for $0/Month on Cloudflare]]></title>
+      <link>https://divkix.me/blog/zero-cost-portfolio-cloudflare-workers</link>
+      <guid>https://divkix.me/blog/zero-cost-portfolio-cloudflare-workers</guid>
+      <pubDate>Mon, 24 Nov 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel.]]></description>
+      <author>divkix@divkix.me (Divanshu Chauhan)</author>
+      <category>Cloudflare Workers</category>
+      <category>Next.js</category>
+      <category>Edge Computing</category>
+      <category>Serverless</category>
+      <category>Free Hosting</category>
+      <category>OpenNext</category>
+      <category>Portfolio</category>
+      <category>Web Development</category>
+      <category>Cost Optimization</category>
+      <category>2025</category>
+    </item>
     <item>
       <title><![CDATA[Running AI on My Mac: Why I Ditched ChatGPT for LM Studio]]></title>
       <link>https://divkix.me/blog/lm-studio-local-ai-mac</link>
