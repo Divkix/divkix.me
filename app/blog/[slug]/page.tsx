@@ -1,9 +1,13 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { RelatedPosts } from "@/components/blog/RelatedPosts";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getAllPosts, getPostBySlug } from "@/lib/content";
+import { generateBlogPostSchemas } from "@/lib/schema";
 import { generateBlogPostSEO } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { BlogArticleWrapper } from "./blog-article-wrapper";
@@ -31,7 +35,14 @@ export async function generateMetadata({
     return {};
   }
 
-  return generateBlogPostSEO(post.title, post.excerpt, post.slug, post.date);
+  return generateBlogPostSEO(
+    post.title,
+    post.excerpt,
+    post.slug,
+    post.date,
+    post.tags,
+    post.author,
+  );
 }
 
 export default async function BlogPostPage({
@@ -52,34 +63,93 @@ export default async function BlogPostPage({
   // Extract numeric reading time from string (e.g., "5 min read" -> 5)
   const readingTimeMinutes =
     typeof post.readingTime === "string"
-      ? parseInt(post.readingTime.match(/\d+/)?.[0] || "0", 10)
+      ? Number.parseInt(post.readingTime.match(/\d+/)?.[0] || "0", 10)
       : post.readingTime;
 
+  // Generate JSON-LD schemas for this post
+  const schemas = generateBlogPostSchemas(
+    {
+      title: post.title,
+      excerpt: post.excerpt,
+      slug: post.slug,
+      date: post.date,
+      author: post.author,
+      tags: post.tags,
+      readingTime: readingTimeMinutes,
+      wordCount: post.wordCount,
+    },
+    post.faq,
+    post.howto,
+  );
+
   return (
-    <article className="container mx-auto px-4 py-20">
-      <div className="max-w-3xl mx-auto space-y-8">
-        <Button variant="ghost" asChild className="mb-4">
-          <Link href="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
-          </Link>
-        </Button>
+    <>
+      <JsonLd data={schemas} />
+      {/* Table of Contents - fixed sidebar on xl screens */}
+      {post.toc && post.toc.length >= 3 && <TableOfContents toc={post.toc} />}
 
-        <header className="space-y-4">
-          <h1 className="text-5xl font-display font-bold">{post.title}</h1>
+      <article
+        className="container mx-auto px-4 py-20"
+        itemScope
+        itemType="https://schema.org/BlogPosting"
+      >
+        <div className="max-w-3xl mx-auto space-y-8">
+          <Button variant="ghost" asChild className="mb-4">
+            <Link href="/blog">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Blog
+            </Link>
+          </Button>
 
-          <div className="flex items-center gap-4 text-foreground/60">
-            <Badge variant="secondary">{post.readingTime}</Badge>
-            <span>{formatDate(post.date)}</span>
-          </div>
-        </header>
+          <header className="space-y-4">
+            <h1 className="text-5xl font-display font-bold" itemProp="headline">
+              {post.title}
+            </h1>
 
-        <BlogArticleWrapper readingTimeMinutes={readingTimeMinutes}>
-          <div className="prose prose-slate dark:prose-invert max-w-none">
-            <MDXContent />
-          </div>
-        </BlogArticleWrapper>
-      </div>
-    </article>
+            <div className="flex flex-wrap items-center gap-4 text-foreground/60">
+              <Badge variant="secondary">{post.readingTime}</Badge>
+              <time dateTime={post.date} itemProp="datePublished">
+                {formatDate(post.date)}
+              </time>
+              <address
+                className="not-italic"
+                itemProp="author"
+                itemScope
+                itemType="https://schema.org/Person"
+              >
+                by{" "}
+                <span itemProp="name">{post.author || "Divanshu Chauhan"}</span>
+              </address>
+            </div>
+
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="outline" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
+
+            <meta itemProp="description" content={post.excerpt} />
+          </header>
+
+          <BlogArticleWrapper readingTimeMinutes={readingTimeMinutes}>
+            <div
+              className="prose prose-slate dark:prose-invert max-w-none"
+              itemProp="articleBody"
+            >
+              <MDXContent />
+            </div>
+          </BlogArticleWrapper>
+
+          {/* Related Posts Section */}
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <RelatedPosts posts={post.relatedPosts} />
+          )}
+        </div>
+      </article>
+    </>
   );
 }

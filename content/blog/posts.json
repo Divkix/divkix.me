@@ -15,7 +15,71 @@
       ],
       "author": "Divanshu Chauhan",
       "readingTime": 6,
-      "published": true
+      "wordCount": 1006,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-cloud-problem-no-one-talks-about",
+          "text": "The Cloud Problem No One Talks About",
+          "level": 2
+        },
+        {
+          "id": "how-i-found-lm-studio",
+          "text": "How I Found LM Studio",
+          "level": 2
+        },
+        {
+          "id": "my-m4-pro-makes-this-possible",
+          "text": "My M4 Pro Makes This Possible",
+          "level": 2
+        },
+        {
+          "id": "vision-models-changed-everything",
+          "text": "Vision Models Changed Everything",
+          "level": 2
+        },
+        {
+          "id": "what-i-actually-use-it-for",
+          "text": "What I Actually Use It For",
+          "level": 2
+        },
+        {
+          "id": "the-honest-downsides",
+          "text": "The Honest Downsides",
+          "level": 2
+        },
+        {
+          "id": "why-i-keep-using-it-anyway",
+          "text": "Why I Keep Using It Anyway",
+          "level": 2
+        },
+        {
+          "id": "getting-started-is-easier-than-you-think",
+          "text": "Getting Started Is Easier Than You Think",
+          "level": 2
+        },
+        {
+          "id": "my-final-take",
+          "text": "My Final Take",
+          "level": 2
+        }
+      ],
+      "tldr": null,
+      "keyTakeaways": [],
+      "faq": null,
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "pickmyclass-never-miss-your-dream-class",
+          "title": "PickMyClass: Never Miss Your Dream Class Again",
+          "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+        },
+        {
+          "slug": "hello-world",
+          "title": "Welcome to My Portfolio",
+          "excerpt": "An introduction to my new portfolio site built with Next.js, TypeScript, and React Three Fiber."
+        }
+      ]
     },
     {
       "slug": "pickmyclass-never-miss-your-dream-class",
@@ -25,7 +89,61 @@
       "tags": [],
       "author": "Divanshu Chauhan",
       "readingTime": 3,
-      "published": true
+      "wordCount": 593,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-story-behind-the-build",
+          "text": "The Story Behind the Build",
+          "level": 2
+        },
+        {
+          "id": "what-pickmyclass-does",
+          "text": "What PickMyClass Does",
+          "level": 2
+        },
+        {
+          "id": "the-technical-challenge",
+          "text": "The Technical Challenge",
+          "level": 2
+        },
+        {
+          "id": "built-with-modern-web-tech",
+          "text": "Built With Modern Web Tech",
+          "level": 2
+        },
+        {
+          "id": "why-it-matters",
+          "text": "Why It Matters",
+          "level": 2
+        },
+        {
+          "id": "what-i-learned",
+          "text": "What I Learned",
+          "level": 2
+        },
+        {
+          "id": "looking-forward",
+          "text": "Looking Forward",
+          "level": 2
+        }
+      ],
+      "tldr": null,
+      "keyTakeaways": [],
+      "faq": null,
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "lm-studio-local-ai-mac",
+          "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
+          "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
+        },
+        {
+          "slug": "hello-world",
+          "title": "Welcome to My Portfolio",
+          "excerpt": "An introduction to my new portfolio site built with Next.js, TypeScript, and React Three Fiber."
+        }
+      ]
     },
     {
       "slug": "hello-world",
@@ -35,9 +153,43 @@
       "tags": [],
       "author": "Divanshu Chauhan",
       "readingTime": 1,
-      "published": true
+      "wordCount": 178,
+      "published": true,
+      "toc": [
+        {
+          "id": "what-to-expect",
+          "text": "What to Expect",
+          "level": 2
+        },
+        {
+          "id": "built-with-modern-tech",
+          "text": "Built With Modern Tech",
+          "level": 2
+        },
+        {
+          "id": "what-s-next",
+          "text": "What's Next?",
+          "level": 2
+        }
+      ],
+      "tldr": null,
+      "keyTakeaways": [],
+      "faq": null,
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "lm-studio-local-ai-mac",
+          "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
+          "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
+        },
+        {
+          "slug": "pickmyclass-never-miss-your-dream-class",
+          "title": "PickMyClass: Never Miss Your Dream Class Again",
+          "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
+        }
+      ]
     }
   ],
-  "generatedAt": "2025-11-24T20:08:22.704Z",
+  "generatedAt": "2025-11-25T03:41:23.982Z",
   "totalPosts": 3
 }

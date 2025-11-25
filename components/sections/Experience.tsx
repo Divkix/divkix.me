@@ -35,7 +35,7 @@ export function Experience() {
 
               {siteConfig.education.map((edu, index) => (
                 <motion.div
-                  key={index}
+                  key={edu.title}
                   variants={staggerItem}
                   className="relative"
                 >
@@ -84,7 +84,7 @@ export function Experience() {
 
               {siteConfig.experience.map((company, companyIndex) => (
                 <motion.div
-                  key={companyIndex}
+                  key={company.company}
                   variants={staggerItem}
                   className="relative"
                 >
@@ -121,8 +121,8 @@ export function Experience() {
                             <div className="absolute left-2 top-8 bottom-8 w-0.5 bg-border" />
                           )}
 
-                          {company.positions.map((position, posIndex) => (
-                            <div key={posIndex} className="relative pl-8">
+                          {company.positions.map((position) => (
+                            <div key={position.title} className="relative pl-8">
                               {/* Timeline dot for positions */}
                               {company.positions.length > 1 && (
                                 <div className="absolute left-0 top-2 h-4 w-4 rounded-full border-2 border-primary bg-background" />
@@ -138,8 +138,8 @@ export function Experience() {
                                   </span>
                                 </div>
                                 <ul className="space-y-2 text-sm text-foreground/70">
-                                  {position.highlights.map((highlight, i) => (
-                                    <li key={i} className="flex gap-2">
+                                  {position.highlights.map((highlight) => (
+                                    <li key={highlight} className="flex gap-2">
                                       <span className="text-primary mt-1.5">
                                         •
                                       </span>

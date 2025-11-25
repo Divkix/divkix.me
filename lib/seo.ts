@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/content/site.config";
 
-const baseUrl = "https://divkix.me";
+export const baseUrl = "https://divkix.me";
 
 export function generateSEO(overrides?: Metadata): Metadata {
   return {
@@ -20,6 +20,9 @@ export function generateSEO(overrides?: Metadata): Metadata {
     ],
     authors: [{ name: siteConfig.name, url: `mailto:${siteConfig.email}` }],
     creator: siteConfig.name,
+    alternates: {
+      canonical: overrides?.alternates?.canonical || baseUrl,
+    },
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -82,22 +85,39 @@ export function generateBlogPostSEO(
   excerpt: string,
   slug: string,
   date: string,
+  tags?: string[],
+  author?: string,
 ): Metadata {
+  const postUrl = `${baseUrl}/blog/${slug}`;
+  const ogImageUrl = `${baseUrl}/og/blog/${slug}.png`;
+
   return generateSEO({
     title,
     description: excerpt,
+    keywords: tags,
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
       type: "article",
       publishedTime: date,
-      url: `${baseUrl}/blog/${slug}`,
+      url: postUrl,
+      authors: [author || siteConfig.name],
+      tags: tags,
       images: [
         {
-          url: `${baseUrl}/og-image.png`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: title,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: excerpt,
+      images: [ogImageUrl],
     },
   });
 }

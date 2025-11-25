@@ -3,6 +3,7 @@
 /**
  * Build script to generate posts metadata at build time
  * This allows us to avoid filesystem access at runtime in Cloudflare Workers
+ * Includes TOC extraction, related posts calculation, and extended frontmatter
  */
 
 const fs = require("node:fs");
@@ -11,6 +12,44 @@ const matter = require("gray-matter");
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
 const OUTPUT_FILE = path.join(CONTENT_DIR, "posts.json");
+
+/**
+ * Extract table of contents from markdown content
+ * Returns array of { id, text, level }
+ */
+function extractToc(content) {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const toc = [];
+  let match = headingRegex.exec(content);
+
+  while (match !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    toc.push({ id, text, level });
+    match = headingRegex.exec(content);
+  }
+
+  return toc;
+}
+
+/**
+ * Calculate tag similarity between two posts
+ * Returns number of matching tags
+ */
+function calculateTagSimilarity(tags1 = [], tags2 = []) {
+  const set1 = new Set(tags1.map((t) => t.toLowerCase()));
+  const set2 = new Set(tags2.map((t) => t.toLowerCase()));
+  let intersection = 0;
+  for (const tag of set1) {
+    if (set2.has(tag)) intersection++;
+  }
+  return intersection;
+}
 
 function getAllPosts() {
   console.log("📚 Generating blog posts metadata...");
@@ -37,9 +76,12 @@ function getAllPosts() {
     // Parse frontmatter
     const { data: frontmatter, content } = matter(fileContent);
 
-    // Calculate reading time (rough estimate: 200 words per minute)
+    // Calculate word count and reading time
     const wordCount = content.split(/\s+/g).length;
     const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+    // Extract table of contents
+    const toc = extractToc(content);
 
     return {
       slug,
@@ -49,8 +91,14 @@ function getAllPosts() {
       tags: frontmatter.tags || [],
       author: frontmatter.author || "Divanshu Chauhan",
       readingTime,
-      published: frontmatter.published !== false, // default to true if not specified
-      // Add any other frontmatter fields you need
+      wordCount,
+      published: frontmatter.published !== false,
+      toc,
+      // Extended frontmatter for GEO/AI optimization
+      tldr: frontmatter.tldr || null,
+      keyTakeaways: frontmatter.keyTakeaways || [],
+      faq: frontmatter.faq || null,
+      howto: frontmatter.howto || null,
     };
   });
 
@@ -59,6 +107,22 @@ function getAllPosts() {
 
   // Filter out unpublished posts
   const publishedPosts = posts.filter((post) => post.published);
+
+  // Calculate related posts for each post based on tag similarity
+  for (const post of publishedPosts) {
+    const otherPosts = publishedPosts.filter((p) => p.slug !== post.slug);
+
+    post.relatedPosts = otherPosts
+      .map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt,
+        score: calculateTagSimilarity(post.tags, p.tags),
+      }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map(({ slug, title, excerpt }) => ({ slug, title, excerpt }));
+  }
 
   // Create the output
   const output = {

@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "dev": "next dev --webpack",
-    "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-rss.js",
+    "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-rss.js && node scripts/generate-og-images.js",
     "build": "bun run prebuild && next build --webpack",
     "preview": "bun run build && bunx serve out",
     "lint": "biome check",

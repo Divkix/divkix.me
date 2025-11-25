@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { generateSEO } from "@/lib/seo";
 
 const inter = Inter({
@@ -35,6 +37,8 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <JsonLd data={generatePersonSchema()} />
+        <JsonLd data={generateWebSiteSchema()} />
       </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}

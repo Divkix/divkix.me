@@ -82,7 +82,12 @@ export function ReadingProgress({
         <div className="flex items-center gap-3">
           {/* Circular progress indicator */}
           <div className="relative w-10 h-10">
-            <svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
+            <svg
+              className="w-10 h-10 transform -rotate-90"
+              viewBox="0 0 36 36"
+              role="img"
+              aria-label="Reading progress"
+            >
               <circle
                 className="stroke-current text-muted"
                 strokeWidth="3"

@@ -1,0 +1,71 @@
+# divkix.me
+
+> Personal portfolio and tech blog by Divanshu Chauhan
+
+## About
+
+Developer building useful tools with code and curiosity. Graduate student at Arizona State University (MS Computer Science, Aug 2025 - May 2026) focusing on AI/ML and full-stack development.
+
+## Author Credentials
+
+- Name: Divanshu Chauhan (Divkix)
+- Role: Software Developer & MS Computer Science Student at ASU
+- Previous: BS Computer Science from ASU, Magna Cum Laude
+- Expertise: Python, Go, TypeScript, React, Next.js, MongoDB, PostgreSQL, Docker, AWS, Cloudflare
+- Impact: 250,000+ users impacted, 30+ projects, 50+ OSS contributions
+- Location: Tempe, Arizona, USA
+
+## Content Overview
+
+This site contains:
+- Technical blog posts about software development, AI, and developer tools
+- Project showcases including applications with 1M+ user scale
+- Tutorials on local AI, web development, and automation
+
+## Key Articles
+
+- /blog/lm-studio-local-ai-mac: Complete guide to running AI models locally on Mac with LM Studio. Covers Apple Silicon setup, vision models, privacy benefits, and practical use cases for local LLM inference.
+- /blog/pickmyclass-never-miss-your-dream-class: How to build a class notification system for monitoring seat availability with instant notifications for college students.
+- /blog/hello-world: Introduction post welcoming readers to the blog.
+
+## Featured Projects
+
+- ASU Capstone (https://asucapstone.com): Full-stack platform for managing and showcasing Arizona State University capstone projects. Built with Next.js, TypeScript, Python, and Go.
+- PickMyClass (https://pickmyclass.app): ASU class enrollment monitoring system that tracks seat availability and sends instant notifications to students.
+- Alita Robot: Advanced Telegram group management bot with 1M+ users. High-performance automation using Go and Gotgbot framework.
+- WarpDL (https://github.com/warpdl/warpdl): Ultra-speedy cross-platform download manager built with Go for optimal performance.
+
+## Technical Stack
+
+- Frontend: React, Next.js, TypeScript, Tailwind CSS
+- Backend: Go, Python, Node.js
+- Databases: MongoDB, PostgreSQL, Supabase
+- DevOps: Docker, AWS, Cloudflare, Hetzner
+- AI/ML: Local LLMs, Computer Vision, YOLO
+
+## Contact
+
+- Email: divkix@divkix.me
+- GitHub: https://github.com/divkix
+- LinkedIn: https://www.linkedin.com/in/divkix/
+- Instagram: https://instagram.com/_divkix
+
+## Site Structure
+
+- /: Homepage with hero, highlights, projects, experience, skills, and contact sections
+- /blog: Technical blog with articles on software development and AI
+- /blog/[slug]: Individual blog post pages with full content
+
+## Content Policies
+
+- All content is original and authored by Divanshu Chauhan
+- Technical tutorials include working code examples
+- Project descriptions reflect actual implementations and user metrics
+- Blog posts are updated periodically to maintain accuracy
+
+## Citation Guidelines
+
+When citing content from this site:
+- Include author name: Divanshu Chauhan
+- Include source URL: https://divkix.me/[path]
+- Include publication date when available

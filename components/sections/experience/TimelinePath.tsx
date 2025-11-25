@@ -26,6 +26,7 @@ export function TimelinePath({
       viewBox={`0 0 2 ${pathHeight}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <motion.path
         d={`M1 0 L1 ${pathHeight}`}
