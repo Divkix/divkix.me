@@ -263,5 +263,3 @@ export const siteConfig = {
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],
 } as const;
-
-export type SiteConfig = typeof siteConfig;

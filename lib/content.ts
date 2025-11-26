@@ -16,7 +16,7 @@ export interface FAQ {
 }
 
 // Types for HowTo schema
-export interface HowToStep {
+interface HowToStep {
   name: string;
   text: string;
 }
@@ -34,7 +34,7 @@ export interface RelatedPost {
   excerpt: string;
 }
 
-export interface Post {
+interface Post {
   slug: string;
   title: string;
   date: string;

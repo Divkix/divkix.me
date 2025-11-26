@@ -1,35 +1,8 @@
-/**
- * JSON-LD Schema generators for SEO structured data
- * Supports Person, WebSite, BlogPosting, BreadcrumbList, and FAQPage schemas
- */
-
 import { siteConfig } from "@/content/site.config";
+import type { FAQ, HowTo } from "@/lib/content";
 import { baseUrl } from "@/lib/seo";
 
-// Types for schema data
-export interface TocItem {
-  id: string;
-  text: string;
-  level: number;
-}
-
-export interface FAQ {
-  q: string;
-  a: string;
-}
-
-export interface HowToStep {
-  name: string;
-  text: string;
-}
-
-export interface HowTo {
-  name: string;
-  totalTime: string;
-  steps: HowToStep[];
-}
-
-export interface BlogPostSchemaData {
+type BlogPostSchemaData = {
   title: string;
   excerpt: string;
   slug: string;
@@ -39,12 +12,12 @@ export interface BlogPostSchemaData {
   readingTime?: number;
   wordCount?: number;
   dateModified?: string;
-}
+};
 
-export interface BreadcrumbItem {
+type BreadcrumbItem = {
   name: string;
   url: string;
-}
+};
 
 /**
  * Generate Person schema for E-E-A-T signals
@@ -108,7 +81,7 @@ export function generateWebSiteSchema() {
 /**
  * Generate BlogPosting schema for individual blog posts
  */
-export function generateBlogPostingSchema(post: BlogPostSchemaData) {
+function generateBlogPostingSchema(post: BlogPostSchemaData) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -142,7 +115,7 @@ export function generateBlogPostingSchema(post: BlogPostSchemaData) {
 /**
  * Generate BreadcrumbList schema for navigation
  */
-export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
+function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -158,7 +131,7 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
 /**
  * Generate FAQPage schema for FAQ sections
  */
-export function generateFAQSchema(faqs: FAQ[]) {
+function generateFAQSchema(faqs: FAQ[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -176,7 +149,7 @@ export function generateFAQSchema(faqs: FAQ[]) {
 /**
  * Generate HowTo schema for tutorial/guide content
  */
-export function generateHowToSchema(howTo: HowTo) {
+function generateHowToSchema(howTo: HowTo) {
   return {
     "@context": "https://schema.org",
     "@type": "HowTo",

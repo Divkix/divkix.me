@@ -17,22 +17,6 @@ const _fadeIn: Variants = {
   },
 };
 
-export const slideUp: Variants = {
-  hidden: {
-    opacity: 0,
-    // Use translate3d for GPU acceleration
-    y: 20,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
 export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
