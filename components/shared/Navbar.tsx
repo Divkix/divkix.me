@@ -1,10 +1,15 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -37,6 +42,10 @@ export function Navbar() {
   const blur = useTransform(scrollY, [0, 100], [0, 12]);
   const opacity = useTransform(scrollY, [0, 100], [0.6, 1]);
   const scale = useTransform(scrollY, [0, 100], [1, 0.98]);
+
+  // Use useMotionTemplate for reactive style updates
+  const backdropFilter = useMotionTemplate`blur(${blur}px)`;
+  const backgroundColor = useMotionTemplate`oklch(var(--background) / ${opacity})`;
 
   useEffect(() => {
     // Only run on homepage
@@ -86,6 +95,18 @@ export function Navbar() {
     };
   }, [pathname]);
 
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -103,22 +124,25 @@ export function Navbar() {
     }
   };
 
-  const getIsActive = (href: string) => {
-    // For homepage link
-    if (href === "/") {
-      return pathname === "/" && !activeSection;
-    }
-    // For blog
-    if (href === "/blog") {
-      return pathname.startsWith("/blog");
-    }
-    // For anchor links, check if we're on homepage and if this section is active
-    if (href.startsWith("/#")) {
-      const section = href.replace("/#", "");
-      return pathname === "/" && activeSection === section;
-    }
-    return false;
-  };
+  const getIsActive = useCallback(
+    (href: string) => {
+      // For homepage link
+      if (href === "/") {
+        return pathname === "/" && !activeSection;
+      }
+      // For blog
+      if (href === "/blog") {
+        return pathname.startsWith("/blog");
+      }
+      // For anchor links, check if we're on homepage and if this section is active
+      if (href.startsWith("/#")) {
+        const section = href.replace("/#", "");
+        return pathname === "/" && activeSection === section;
+      }
+      return false;
+    },
+    [pathname, activeSection],
+  );
 
   return (
     <>
@@ -131,8 +155,8 @@ export function Navbar() {
       <motion.nav
         className="sticky top-0 z-50 w-full glass-surface"
         style={{
-          backdropFilter: blur.get() > 0 ? `blur(${blur.get()}px)` : undefined,
-          backgroundColor: `oklch(var(--background) / ${opacity.get()})`,
+          backdropFilter,
+          backgroundColor,
           scale,
         }}
       >

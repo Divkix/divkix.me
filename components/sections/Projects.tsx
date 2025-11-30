@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,11 +25,15 @@ const allTags = Array.from(
 export function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  const filteredProjects = selectedTag
-    ? siteConfig.projects.filter((p) =>
-        (p.tags as readonly string[]).includes(selectedTag),
-      )
-    : siteConfig.projects;
+  const filteredProjects = useMemo(
+    () =>
+      selectedTag
+        ? siteConfig.projects.filter((p) =>
+            (p.tags as readonly string[]).includes(selectedTag),
+          )
+        : siteConfig.projects,
+    [selectedTag],
+  );
 
   return (
     <section id="projects" className="container mx-auto px-4 py-20">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SkillProficiencyBar } from "./SkillProficiencyBar";
 
 interface Skill {
@@ -21,8 +21,11 @@ export function SkillsVisualization({
 }: SkillsVisualizationProps): React.JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Get unique categories
-  const categories = Array.from(new Set(skills.map((s) => s.category)));
+  // Get unique categories - memoized to avoid recalculation on every render
+  const categories = useMemo(
+    () => Array.from(new Set(skills.map((s) => s.category))),
+    [skills],
+  );
 
   return (
     <div className="space-y-6">

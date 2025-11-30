@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const isHoveringRef = useRef(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -17,39 +18,46 @@ export const CustomCursor = () => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
-    };
 
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
-
-    const handleLinkHoverStart = (e: MouseEvent) => {
+      // Detect link/button hover during mouse movement
       const target = e.target as HTMLElement;
-      if (
-        target.tagName.toLowerCase() === "a" ||
-        target.tagName.toLowerCase() === "button" ||
-        target.closest("a") ||
-        target.closest("button")
-      ) {
-        setIsHovering(true);
+      const isOverInteractive =
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.closest("a") !== null ||
+        target.closest("button") !== null;
+
+      // Only update state if hover status changed (avoids unnecessary re-renders)
+      if (isOverInteractive !== isHoveringRef.current) {
+        isHoveringRef.current = isOverInteractive;
+        setIsHovering(isOverInteractive);
       }
     };
 
-    const handleLinkHoverEnd = () => {
-      setIsHovering(false);
+    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+      // Reset hover state when cursor leaves window
+      if (isHoveringRef.current) {
+        isHoveringRef.current = false;
+        setIsHovering(false);
+      }
     };
 
     window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseenter", handleMouseEnter);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    window.addEventListener("mouseover", handleLinkHoverStart);
-    window.addEventListener("mouseout", handleLinkHoverEnd);
+    document.documentElement.addEventListener("mouseenter", handleMouseEnter);
+    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mouseenter", handleMouseEnter);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-      window.removeEventListener("mouseover", handleLinkHoverStart);
-      window.removeEventListener("mouseout", handleLinkHoverEnd);
+      document.documentElement.removeEventListener(
+        "mouseenter",
+        handleMouseEnter
+      );
+      document.documentElement.removeEventListener(
+        "mouseleave",
+        handleMouseLeave
+      );
     };
   }, [cursorX, cursorY]);
 

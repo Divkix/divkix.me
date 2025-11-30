@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 interface TypewriterEffectProps {
   words: string[];
@@ -9,11 +9,11 @@ interface TypewriterEffectProps {
   cursorClassName?: string;
 }
 
-export const TypewriterEffect = ({
+export const TypewriterEffect = memo(function TypewriterEffect({
   words,
   className,
   cursorClassName,
-}: TypewriterEffectProps) => {
+}: TypewriterEffectProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -49,4 +49,4 @@ export const TypewriterEffect = ({
       />
     </span>
   );
-};
+});
