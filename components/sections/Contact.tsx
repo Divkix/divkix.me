@@ -41,8 +41,6 @@ export function Contact() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace YOUR_FORMSPREE_FORM_ID with your actual Formspree form ID
-      // Get it from https://formspree.io (free tier available)
       const response = await fetch("https://formspree.io/f/xgvreprq", {
         method: "POST",
         headers: {
@@ -123,11 +121,13 @@ export function Contact() {
                   <Input
                     id="name"
                     placeholder="Your name"
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? "name-error" : undefined}
                     {...register("name")}
                     disabled={isSubmitting}
                   />
                   {errors.name && (
-                    <p className="text-sm text-destructive">
+                    <p id="name-error" className="text-sm text-destructive">
                       {errors.name.message}
                     </p>
                   )}
@@ -139,11 +139,13 @@ export function Contact() {
                     id="email"
                     type="email"
                     placeholder="your@email.com"
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "email-error" : undefined}
                     {...register("email")}
                     disabled={isSubmitting}
                   />
                   {errors.email && (
-                    <p className="text-sm text-destructive">
+                    <p id="email-error" className="text-sm text-destructive">
                       {errors.email.message}
                     </p>
                   )}
@@ -155,11 +157,15 @@ export function Contact() {
                     id="message"
                     placeholder="Your message..."
                     rows={6}
+                    aria-invalid={!!errors.message}
+                    aria-describedby={
+                      errors.message ? "message-error" : undefined
+                    }
                     {...register("message")}
                     disabled={isSubmitting}
                   />
                   {errors.message && (
-                    <p className="text-sm text-destructive">
+                    <p id="message-error" className="text-sm text-destructive">
                       {errors.message.message}
                     </p>
                   )}

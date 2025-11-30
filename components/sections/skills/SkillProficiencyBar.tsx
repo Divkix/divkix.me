@@ -81,16 +81,26 @@ export function SkillProficiencyBar({
                   <div className="flex items-center gap-3">
                     {/* Skill icon */}
                     <div className="shrink-0">
-                      <Icon className="h-5 w-5 text-foreground/70" />
+                      <Icon className="h-5 w-5 text-foreground/70" aria-hidden="true" />
                     </div>
 
                     {/* Skill name */}
-                    <span className="text-sm font-medium text-foreground w-28 shrink-0">
+                    <span
+                      id={`skill-label-${skill.name.toLowerCase().replace(/\s+/g, "-")}`}
+                      className="text-sm font-medium text-foreground w-28 shrink-0"
+                    >
                       {skill.name}
                     </span>
 
                     {/* Progress bar */}
-                    <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden relative">
+                    <div
+                      className="flex-1 h-4 bg-muted rounded-full overflow-hidden relative"
+                      role="progressbar"
+                      aria-valuenow={skill.proficiency}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={`${skill.name}: ${skill.proficiency}% proficiency`}
+                    >
                       <motion.div
                         className="h-full bg-linear-to-r from-primary to-accent rounded-full"
                         initial={{ width: 0 }}
@@ -112,6 +122,7 @@ export function SkillProficiencyBar({
                           duration: 0.3,
                           delay: catIndex * 0.1 + skillIndex * 0.05 + 0.5,
                         }}
+                        aria-hidden="true"
                       >
                         {skill.proficiency}%
                       </motion.span>

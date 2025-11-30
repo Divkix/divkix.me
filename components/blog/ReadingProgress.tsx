@@ -16,7 +16,7 @@ export function ReadingProgress({
   className,
 }: ReadingProgressProps): React.JSX.Element | null {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isMounted, setIsMounted] = useState<boolean>(() => false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: articleRef,
@@ -41,6 +41,10 @@ export function ReadingProgress({
   const [percent, setPercent] = useState<number>(0);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (latest) => {
       const remaining = Math.max(0, readingTime * (1 - latest));
       const pct = Math.round(latest * 100);
@@ -56,7 +60,6 @@ export function ReadingProgress({
   }, [smoothProgress, readingTime]);
 
   if (!isMounted) {
-    setIsMounted(true);
     return null;
   }
 
@@ -86,7 +89,7 @@ export function ReadingProgress({
               className="w-10 h-10 transform -rotate-90"
               viewBox="0 0 36 36"
               role="img"
-              aria-label="Reading progress"
+              aria-label={`Reading progress: ${percent}%`}
             >
               <circle
                 className="stroke-current text-muted"

@@ -12,9 +12,9 @@ const highlights = [
   { label: "OSS Contributions", value: siteConfig.facts.oss },
 ];
 
-function CountUp({ value }: { value: string }) {
+function CountUp({ value, label }: { value: string; label: string }) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLOutputElement>(null);
   const isInView = useInView(ref, { once: true });
   const rafIdRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -59,10 +59,17 @@ function CountUp({ value }: { value: string }) {
     }
   }, [isInView, targetNumber]);
 
+  const displayValue = targetNumber
+    ? `${count.toLocaleString()}${suffix}`
+    : value;
+  const finalValue = targetNumber
+    ? `${targetNumber.toLocaleString()}${suffix}`
+    : value;
+
   return (
-    <div ref={ref}>
-      {targetNumber ? `${count.toLocaleString()}${suffix}` : value}
-    </div>
+    <output ref={ref} aria-label={`${label}: ${finalValue}`}>
+      {displayValue}
+    </output>
   );
 }
 
@@ -89,7 +96,7 @@ export function Highlights() {
                   minWidth: "8ch", // Reserve space for largest number
                 }}
               >
-                <CountUp value={highlight.value} />
+                <CountUp value={highlight.value} label={highlight.label} />
               </div>
               <div className="text-sm text-foreground/60">
                 {highlight.label}
