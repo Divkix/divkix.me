@@ -120,7 +120,7 @@ export function Projects() {
                             />
                           </>
                         ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                          <div className="absolute inset-0 bg-linear-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                             <span className="text-4xl font-display font-bold text-foreground/10 select-none">
                               {project.name.slice(0, 2).toUpperCase()}
                             </span>
