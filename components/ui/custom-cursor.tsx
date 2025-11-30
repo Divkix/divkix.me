@@ -52,11 +52,11 @@ export const CustomCursor = () => {
       window.removeEventListener("mousemove", moveCursor);
       document.documentElement.removeEventListener(
         "mouseenter",
-        handleMouseEnter
+        handleMouseEnter,
       );
       document.documentElement.removeEventListener(
         "mouseleave",
-        handleMouseLeave
+        handleMouseLeave,
       );
     };
   }, [cursorX, cursorY]);

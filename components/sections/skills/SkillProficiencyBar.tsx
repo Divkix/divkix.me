@@ -81,7 +81,10 @@ export function SkillProficiencyBar({
                   <div className="flex items-center gap-3">
                     {/* Skill icon */}
                     <div className="shrink-0">
-                      <Icon className="h-5 w-5 text-foreground/70" aria-hidden="true" />
+                      <Icon
+                        className="h-5 w-5 text-foreground/70"
+                        aria-hidden="true"
+                      />
                     </div>
 
                     {/* Skill name */}
