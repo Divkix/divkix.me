@@ -136,7 +136,7 @@ const components = {
         {...props}
       >
         {children}
-        <ExternalLink className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+        <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
         <span className="sr-only">(opens in new tab)</span>
       </a>
     );

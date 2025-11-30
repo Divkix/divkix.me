@@ -45,7 +45,7 @@ export const TypewriterEffect = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-        className={`inline-block w-[2px] h-[1em] align-middle ml-1 bg-primary ${cursorClassName}`}
+        className={`inline-block w-0.5 h-[1em] align-middle ml-1 bg-primary ${cursorClassName}`}
       />
     </span>
   );
