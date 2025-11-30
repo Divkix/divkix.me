@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,7 @@ import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { siteConfig } from "@/content/site.config";
 import { staggerContainer, staggerItem } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p) => p.tags)),
@@ -24,6 +25,11 @@ const allTags = Array.from(
 
 export function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = useCallback((projectName: string) => {
+    setLoadedImages((prev) => new Set(prev).add(projectName));
+  }, []);
 
   const filteredProjects = useMemo(
     () =>
@@ -95,13 +101,24 @@ export function Projects() {
                     <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col overflow-hidden">
                       <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
                         {"image" in project && project.image ? (
-                          <Image
-                            src={project.image as string}
-                            alt={project.name}
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
+                          <>
+                            {!loadedImages.has(project.name) && (
+                              <div className="absolute inset-0 bg-muted animate-pulse" />
+                            )}
+                            <Image
+                              src={project.image as string}
+                              alt={project.name}
+                              fill
+                              onLoad={() => handleImageLoad(project.name)}
+                              className={cn(
+                                "object-cover transition-all duration-500 hover:scale-105",
+                                loadedImages.has(project.name)
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                          </>
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                             <span className="text-4xl font-display font-bold text-foreground/10 select-none">
