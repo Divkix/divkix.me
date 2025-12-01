@@ -1,21 +1,22 @@
 /**
  * Favicon Generation Script
  *
- * This script generates all necessary favicon and icon files from a source logo image.
+ * Generates all necessary favicon and icon files from the SVG favicon.
  *
  * What it does:
  * 1. Generates multiple PNG favicon sizes (16x16, 32x32, 48x48) for various browser contexts
  * 2. Creates Apple Touch Icon (180x180) for iOS devices when adding site to home screen
  * 3. Creates Android Chrome icons (192x192, 512x512) for PWA installation
- * 4. Generates favicon.ico file for legacy browser support
+ * 4. Generates proper favicon.ico file for legacy browser support
  * 5. Creates site.webmanifest for Progressive Web App (PWA) support
  *
  * Usage:
  *   bun run scripts/generate-favicons.ts
  *
  * Requirements:
- *   - Source image must be at public/divkix-logo.png
+ *   - Source SVG must be at public/favicon.svg
  *   - Sharp package must be installed (bun add -d sharp)
+ *   - png-to-ico package must be installed (bun add -d png-to-ico)
  *
  * Output files:
  *   - public/favicon-16x16.png
@@ -28,12 +29,13 @@
  *   - public/site.webmanifest
  */
 
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import pngToIco from "png-to-ico";
 import sharp from "sharp";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-const SOURCE_IMAGE = path.join(PUBLIC_DIR, "divkix-logo.png");
+const SOURCE_SVG = path.join(PUBLIC_DIR, "favicon.svg");
 
 interface FaviconConfig {
   size: number;
@@ -50,33 +52,41 @@ const configs: FaviconConfig[] = [
 ];
 
 async function generateFavicons() {
-  console.log("🎨 Generating favicons from divkix-logo.png...");
+  console.log("Generating favicons from favicon.svg...");
 
   try {
-    // Generate PNG files
+    const svgBuffer = readFileSync(SOURCE_SVG);
+
+    // Generate PNG files from SVG
     for (const config of configs) {
-      await sharp(SOURCE_IMAGE)
-        .resize(config.size, config.size, {
-          fit: "contain",
-          background: { r: 0, g: 0, b: 0, alpha: 0 },
-        })
+      await sharp(svgBuffer, { density: 300 })
+        .resize(config.size, config.size)
         .png()
         .toFile(path.join(PUBLIC_DIR, config.name));
 
-      console.log(`✓ Generated ${config.name}`);
+      console.log(`Generated ${config.name}`);
     }
 
-    // Generate favicon.ico (using 32x32)
-    const icoBuffer = await sharp(SOURCE_IMAGE)
-      .resize(32, 32, {
-        fit: "contain",
-        background: { r: 0, g: 0, b: 0, alpha: 0 },
-      })
+    // Generate proper favicon.ico using png-to-ico
+    // ICO format supports multiple sizes embedded in one file
+    const ico16 = await sharp(svgBuffer, { density: 300 })
+      .resize(16, 16)
       .png()
       .toBuffer();
 
+    const ico32 = await sharp(svgBuffer, { density: 300 })
+      .resize(32, 32)
+      .png()
+      .toBuffer();
+
+    const ico48 = await sharp(svgBuffer, { density: 300 })
+      .resize(48, 48)
+      .png()
+      .toBuffer();
+
+    const icoBuffer = await pngToIco([ico16, ico32, ico48]);
     writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer);
-    console.log("✓ Generated favicon.ico");
+    console.log("Generated favicon.ico (proper ICO format with 16x16, 32x32, 48x48)");
 
     // Generate site.webmanifest
     const manifest = {
@@ -96,7 +106,7 @@ async function generateFavicons() {
           type: "image/png",
         },
       ],
-      theme_color: "#000000",
+      theme_color: "#DC2626",
       background_color: "#000000",
       display: "standalone",
       start_url: "/",
@@ -106,11 +116,11 @@ async function generateFavicons() {
       path.join(PUBLIC_DIR, "site.webmanifest"),
       JSON.stringify(manifest, null, 2),
     );
-    console.log("✓ Generated site.webmanifest");
+    console.log("Generated site.webmanifest");
 
-    console.log("✨ All favicons generated successfully!");
+    console.log("All favicons generated successfully!");
   } catch (error) {
-    console.error("❌ Error generating favicons:", error);
+    console.error("Error generating favicons:", error);
     process.exit(1);
   }
 }
