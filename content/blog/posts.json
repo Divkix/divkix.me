@@ -2,9 +2,9 @@
   "posts": [
     {
       "slug": "authenticity-paradox-online-persona",
-      "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
+      "title": "The Authenticity Paradox: Online Persona vs Real Self",
       "date": "2025-12-07",
-      "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it.",
+      "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession.",
       "tags": [
         "Authenticity",
         "Psychology",
@@ -15,38 +15,38 @@
         "Identity"
       ],
       "author": "Divanshu Chauhan",
-      "readingTime": 9,
-      "wordCount": 1796,
+      "readingTime": 10,
+      "wordCount": 1912,
       "published": true,
       "toc": [
         {
-          "id": "the-dashboard-that-controls-my-emotions",
-          "text": "The Dashboard That Controls My Emotions",
+          "id": "how-social-media-metrics-control-my-mood",
+          "text": "How Social Media Metrics Control My Mood",
           "level": 2
         },
         {
-          "id": "which-version-of-me-is-real",
-          "text": "Which Version of Me Is Real?",
+          "id": "online-persona-vs-real-life-which-version-is-real",
+          "text": "Online Persona vs Real Life: Which Version Is Real?",
           "level": 2
         },
         {
-          "id": "500k-users-felt-like-a-lie",
-          "text": "500k Users Felt Like a Lie",
+          "id": "why-sharing-success-feels-performative-developer-imposter-syndrome",
+          "text": "Why Sharing Success Feels Performative (Developer Imposter Syndrome)",
           "level": 2
         },
         {
-          "id": "i-read-the-book-i-still-care-about-everything",
-          "text": "I Read the Book. I Still Care About Everything.",
+          "id": "the-psychology-of-caring-too-much-in-a-don-t-give-a-f-ck-world",
+          "text": "The Psychology of Caring Too Much in a \"Don't Give a F*ck\" World",
           "level": 2
         },
         {
-          "id": "the-portfolio-that-s-supposed-to-show-who-i-am",
-          "text": "The Portfolio That's Supposed to Show Who I Am",
+          "id": "the-authenticity-paradox-of-personal-branding",
+          "text": "The Authenticity Paradox of Personal Branding",
           "level": 2
         },
         {
-          "id": "no-conclusion-just-awareness",
-          "text": "No Conclusion, Just Awareness",
+          "id": "living-with-the-digital-identity-paradox",
+          "text": "Living With the Digital Identity Paradox",
           "level": 2
         }
       ],
@@ -663,8 +663,8 @@
         },
         {
           "slug": "authenticity-paradox-online-persona",
-          "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
-          "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it."
+          "title": "The Authenticity Paradox: Online Persona vs Real Self",
+          "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession."
         },
         {
           "slug": "side-project-stack-2025-grad-student",
@@ -795,12 +795,12 @@
         },
         {
           "slug": "authenticity-paradox-online-persona",
-          "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
-          "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it."
+          "title": "The Authenticity Paradox: Online Persona vs Real Self",
+          "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession."
         }
       ]
     }
   ],
-  "generatedAt": "2025-12-06T10:51:37.177Z",
+  "generatedAt": "2025-12-06T11:02:37.744Z",
   "totalPosts": 6
 }
