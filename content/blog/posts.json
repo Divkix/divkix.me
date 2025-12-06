@@ -1,6 +1,101 @@
 {
   "posts": [
     {
+      "slug": "authenticity-paradox-online-persona",
+      "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
+      "date": "2025-12-07",
+      "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it.",
+      "tags": [
+        "Authenticity",
+        "Psychology",
+        "Social Media",
+        "Personal Growth",
+        "Developer Life",
+        "Mental Health",
+        "Identity"
+      ],
+      "author": "Divanshu Chauhan",
+      "readingTime": 9,
+      "wordCount": 1796,
+      "published": true,
+      "toc": [
+        {
+          "id": "the-dashboard-that-controls-my-emotions",
+          "text": "The Dashboard That Controls My Emotions",
+          "level": 2
+        },
+        {
+          "id": "which-version-of-me-is-real",
+          "text": "Which Version of Me Is Real?",
+          "level": 2
+        },
+        {
+          "id": "500k-users-felt-like-a-lie",
+          "text": "500k Users Felt Like a Lie",
+          "level": 2
+        },
+        {
+          "id": "i-read-the-book-i-still-care-about-everything",
+          "text": "I Read the Book. I Still Care About Everything.",
+          "level": 2
+        },
+        {
+          "id": "the-portfolio-that-s-supposed-to-show-who-i-am",
+          "text": "The Portfolio That's Supposed to Show Who I Am",
+          "level": 2
+        },
+        {
+          "id": "no-conclusion-just-awareness",
+          "text": "No Conclusion, Just Awareness",
+          "level": 2
+        }
+      ],
+      "tldr": "Online authenticity is a paradox - the more you try to be 'real,' the more you perform. After honestly examining my metrics obsession, platform personas, and the gap between my LinkedIn self and actual self, I realized the only authenticity available might be knowing you're playing a game.",
+      "keyTakeaways": [
+        "The 'authenticity paradox': striving to be authentic online makes authenticity unreachable",
+        "Metrics (stars, followers, views) can literally control your mood if you let them",
+        "Different platforms create different versions of you - and none of them are the 'real' one",
+        "Caring about everything isn't weakness - it's awareness of human complexity",
+        "The only honest move might be admitting you're performing while you perform"
+      ],
+      "faq": [
+        {
+          "q": "What is the authenticity paradox?",
+          "a": "Research shows that to appear 'authentic' online, you must share vulnerable or negative experiences - but doing so has social costs. The very act of presenting authenticity becomes a performance, making true authenticity either unreachable or only possible at great personal cost."
+        },
+        {
+          "q": "Why do I feel behind when I see others' success on social media?",
+          "a": "Social comparison on platforms like LinkedIn and Twitter triggers anxiety because you're comparing your full internal experience (doubts, struggles, mundane days) to others' curated highlights. Studies show this is universal - even successful people feel it."
+        },
+        {
+          "q": "Is it bad to check metrics like GitHub stars or LinkedIn views?",
+          "a": "Not inherently, but when metrics 'decide your mood' daily, it becomes problematic. The feedback loop of external validation can disconnect you from internal values and make your self-worth contingent on numbers you can't fully control."
+        },
+        {
+          "q": "Can you be authentic online while maintaining a professional presence?",
+          "a": "Partially. You can be selectively authentic - sharing real experiences without sharing everything. But full authenticity requires vulnerability that most professional contexts punish. The key is being aware of what you're choosing to show and why."
+        }
+      ],
+      "howto": null,
+      "relatedPosts": [
+        {
+          "slug": "ai-coding-tools-compared-2025",
+          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
+        },
+        {
+          "slug": "side-project-stack-2025-grad-student",
+          "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
+          "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+        },
+        {
+          "slug": "zero-cost-portfolio-cloudflare-workers",
+          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
+          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+        }
+      ]
+    },
+    {
       "slug": "ai-coding-tools-compared-2025",
       "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
       "date": "2025-11-24",
@@ -567,14 +662,14 @@
           "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         },
         {
+          "slug": "authenticity-paradox-online-persona",
+          "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
+          "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it."
+        },
+        {
           "slug": "side-project-stack-2025-grad-student",
           "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
           "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
-        },
-        {
-          "slug": "zero-cost-portfolio-cloudflare-workers",
-          "title": "How I Host My Portfolio for $0/Month on Cloudflare",
-          "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
         }
       ]
     },
@@ -699,13 +794,13 @@
           "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
         },
         {
-          "slug": "ai-coding-tools-compared-2025",
-          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
-          "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
+          "slug": "authenticity-paradox-online-persona",
+          "title": "The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging",
+          "excerpt": "I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it."
         }
       ]
     }
   ],
-  "generatedAt": "2025-11-26T08:01:05.155Z",
-  "totalPosts": 5
+  "generatedAt": "2025-12-06T10:51:37.177Z",
+  "totalPosts": 6
 }

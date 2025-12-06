@@ -5,9 +5,24 @@
     <link>https://divkix.me/blog</link>
     <description>Developer building useful tools with code and curiosity.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 08:01:05 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 10:51:37 GMT</lastBuildDate>
     <atom:link href="https://divkix.me/rss.xml" rel="self" type="application/rss+xml"/>
     <author>divkix@divkix.me (Divanshu Chauhan)</author>
+    <item>
+      <title><![CDATA[The Authenticity Paradox: Why My Online Persona and Real Self Are Diverging]]></title>
+      <link>https://divkix.me/blog/authenticity-paradox-online-persona</link>
+      <guid>https://divkix.me/blog/authenticity-paradox-online-persona</guid>
+      <pubDate>Sun, 07 Dec 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[I have 500k users on a project I built. I check my GitHub stars daily. And I still feel like I'm behind everyone on Twitter. Here's what the research says about why we can't be 'authentic' online - and my own messy experience with it.]]></description>
+      <author>divkix@divkix.me (Divanshu Chauhan)</author>
+      <category>Authenticity</category>
+      <category>Psychology</category>
+      <category>Social Media</category>
+      <category>Personal Growth</category>
+      <category>Developer Life</category>
+      <category>Mental Health</category>
+      <category>Identity</category>
+    </item>
     <item>
       <title><![CDATA[Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)]]></title>
       <link>https://divkix.me/blog/ai-coding-tools-compared-2025</link>
