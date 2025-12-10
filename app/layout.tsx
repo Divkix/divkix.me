@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ToastProvider } from "@/components/providers/ToastProvider";
@@ -40,6 +41,11 @@ export default function RootLayout({
         />
         <JsonLd data={generatePersonSchema()} />
         <JsonLd data={generateWebSiteSchema()} />
+        <Script
+          src="/u/s.js"
+          data-website-id="c27cdff0-16e4-49c7-b4c8-6b229ef3fd83"
+          strategy="afterInteractive"
+        />
       </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
