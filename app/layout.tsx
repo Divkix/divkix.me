@@ -42,9 +42,8 @@ export default function RootLayout({
         <JsonLd data={generatePersonSchema()} />
         <JsonLd data={generateWebSiteSchema()} />
         <Script
-          src="/u/s.js"
+          src="https://analytics.divkix.me/s.js"
           data-website-id="c27cdff0-16e4-49c7-b4c8-6b229ef3fd83"
-          strategy="afterInteractive"
         />
       </head>
       <body

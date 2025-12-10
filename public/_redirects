@@ -1,3 +1,0 @@
-# Umami analytics proxy (first-party)
-/u/s.js https://analytics.divkix.me/script.js 200
-/u/e/* https://analytics.divkix.me/api/:splat 200
