@@ -1,3 +1,7 @@
+# Security headers
+/*
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
 # Cache headers for Cloudflare Pages static export
 # Immutable caching for Next.js static assets (hashed filenames)
 /_next/static/*
