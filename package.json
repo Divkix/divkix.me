@@ -65,7 +65,7 @@
     "@types/node": "^24.10.2",
     "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3",
-    "knip": "^5.72.0",
+    "knip": "^5.73.0",
     "png-to-ico": "^3.0.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
