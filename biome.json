@@ -1,8 +1,18 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "ignoreUnknown": false },
-  "css": { "parser": { "tailwindDirectives": true } },
+  "$schema": "https://biomejs.dev/schemas/2.3.9/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
@@ -34,14 +44,22 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "style": { "useBlockStatements": "off" },
-      "complexity": { "noImportantStyles": "off" },
-      "security": { "noDangerouslySetInnerHtml": "off" },
+      "style": {
+        "useBlockStatements": "off"
+      },
+      "complexity": {
+        "noImportantStyles": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
       "suspicious": {
         "noArrayIndexKey": "warn",
         "useIterableCallbackReturn": "off"
       },
-      "a11y": { "noSvgWithoutTitle": "warn" }
+      "a11y": {
+        "noSvgWithoutTitle": "warn"
+      }
     },
     "includes": ["**", "!.next/**", "!out/**", "!build/**", "!next-env.d.ts"]
   },
@@ -218,8 +236,12 @@
             "noUnwantedPolyfillio": "warn",
             "useGoogleFontPreconnect": "warn"
           },
-          "security": { "noDangerouslySetInnerHtmlWithChildren": "error" },
-          "style": { "noHeadElement": "warn" },
+          "security": {
+            "noDangerouslySetInnerHtmlWithChildren": "error"
+          },
+          "style": {
+            "noHeadElement": "warn"
+          },
           "suspicious": {
             "noCommentText": "error",
             "noDocumentImportInPage": "error",
@@ -230,10 +252,19 @@
         }
       }
     },
-    { "includes": ["**/*.ts", "**/*.tsx"], "javascript": { "globals": [] } }
+    {
+      "includes": ["**/*.ts", "**/*.tsx"],
+      "javascript": {
+        "globals": []
+      }
+    }
   ],
   "assist": {
     "enabled": true,
-    "actions": { "source": { "organizeImports": "on" } }
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   }
 }

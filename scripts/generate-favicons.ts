@@ -86,7 +86,9 @@ async function generateFavicons() {
 
     const icoBuffer = await pngToIco([ico16, ico32, ico48]);
     writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer);
-    console.log("Generated favicon.ico (proper ICO format with 16x16, 32x32, 48x48)");
+    console.log(
+      "Generated favicon.ico (proper ICO format with 16x16, 32x32, 48x48)",
+    );
 
     // Generate site.webmanifest
     const manifest = {
