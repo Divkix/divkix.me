@@ -18,9 +18,9 @@
     "not dead"
   ],
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev --turbopack",
     "prebuild": "bun scripts/generate-posts-metadata.js && bun scripts/generate-rss.js && bun scripts/generate-og-images.js",
-    "build": "bun run prebuild && next build --webpack",
+    "build": "bun run prebuild && next build --turbopack",
     "preview": "bun run build && bunx serve out",
     "lint": "biome check .",
     "lint:fix": "biome check --write",
