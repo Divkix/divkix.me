@@ -128,6 +128,17 @@ export function generateSoftwareApplicationSchema(
 }
 
 /**
+ * Convert date string to ISO 8601 DateTime with timezone
+ * Google Rich Results requires full DateTime format, not just Date
+ */
+function toISODateTime(date: string): string {
+  // If already has time component, return as-is
+  if (date.includes("T")) return date;
+  // Convert YYYY-MM-DD to YYYY-MM-DDTHH:MM:SSZ (midnight UTC)
+  return `${date}T00:00:00Z`;
+}
+
+/**
  * Generate BlogPosting schema for individual blog posts
  */
 function generateBlogPostingSchema(post: BlogPostSchemaData) {
@@ -138,8 +149,8 @@ function generateBlogPostingSchema(post: BlogPostSchemaData) {
     headline: post.title,
     description: post.excerpt,
     url: `${baseUrl}/blog/${post.slug}`,
-    datePublished: post.date,
-    dateModified: post.dateModified || post.date,
+    datePublished: toISODateTime(post.date),
+    dateModified: toISODateTime(post.dateModified || post.date),
     author: {
       "@id": `${baseUrl}/#author`,
     },
