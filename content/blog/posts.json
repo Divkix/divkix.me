@@ -2,9 +2,9 @@
   "posts": [
     {
       "slug": "authenticity-paradox-online-persona",
-      "title": "The Authenticity Paradox: Online Persona vs Real Self",
+      "title": "The Developer's Authenticity Paradox: Why Success Feels Like Performance",
       "date": "2025-12-07",
-      "dateModified": "2025-12-06",
+      "dateModified": "2025-12-24",
       "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession.",
       "tags": [
         "Authenticity",
@@ -13,26 +13,28 @@
         "Personal Growth",
         "Developer Life",
         "Mental Health",
-        "Identity"
+        "Identity",
+        "Imposter Syndrome",
+        "Developer Burnout"
       ],
       "author": "Divanshu Chauhan",
       "readingTime": 10,
-      "wordCount": 1912,
+      "wordCount": 1960,
       "published": true,
       "toc": [
         {
-          "id": "how-social-media-metrics-control-my-mood",
-          "text": "How Social Media Metrics Control My Mood",
+          "id": "the-metrics-trap-how-github-and-linkedin-impact-developer-mental-health",
+          "text": "The Metrics Trap: How GitHub and LinkedIn Impact Developer Mental Health",
           "level": 2
         },
         {
-          "id": "online-persona-vs-real-life-which-version-is-real",
-          "text": "Online Persona vs Real Life: Which Version Is Real?",
+          "id": "the-curated-self-balancing-online-persona-and-real-identity",
+          "text": "The Curated Self: Balancing Online Persona and Real Identity",
           "level": 2
         },
         {
-          "id": "why-sharing-success-feels-performative-developer-imposter-syndrome",
-          "text": "Why Sharing Success Feels Performative (Developer Imposter Syndrome)",
+          "id": "developer-imposter-syndrome-why-success-feels-like-a-performance",
+          "text": "Developer Imposter Syndrome: Why Success Feels Like a Performance",
           "level": 2
         },
         {
@@ -81,7 +83,7 @@
       "relatedPosts": [
         {
           "slug": "ai-coding-tools-compared-2025",
-          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "title": "Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared",
           "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         },
         {
@@ -98,9 +100,9 @@
     },
     {
       "slug": "ai-coding-tools-compared-2025",
-      "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+      "title": "Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared",
       "date": "2025-11-24",
-      "dateModified": "2025-11-24",
+      "dateModified": "2025-12-24",
       "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs).",
       "tags": [
         "AI",
@@ -112,11 +114,13 @@
         "Developer Experience",
         "AI Assistants",
         "Productivity",
-        "2025"
+        "2025",
+        "Best AI Coding Assistant",
+        "2026"
       ],
       "author": "Divanshu Chauhan",
       "readingTime": 8,
-      "wordCount": 1546,
+      "wordCount": 1560,
       "published": true,
       "toc": [
         {
@@ -354,7 +358,7 @@
       "relatedPosts": [
         {
           "slug": "ai-coding-tools-compared-2025",
-          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "title": "Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared",
           "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         },
         {
@@ -519,7 +523,7 @@
         },
         {
           "slug": "ai-coding-tools-compared-2025",
-          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "title": "Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared",
           "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         }
       ]
@@ -663,12 +667,12 @@
       "relatedPosts": [
         {
           "slug": "ai-coding-tools-compared-2025",
-          "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
+          "title": "Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared",
           "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs)."
         },
         {
           "slug": "authenticity-paradox-online-persona",
-          "title": "The Authenticity Paradox: Online Persona vs Real Self",
+          "title": "The Developer's Authenticity Paradox: Why Success Feels Like Performance",
           "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession."
         },
         {
@@ -801,12 +805,12 @@
         },
         {
           "slug": "authenticity-paradox-online-persona",
-          "title": "The Authenticity Paradox: Online Persona vs Real Self",
+          "title": "The Developer's Authenticity Paradox: Why Success Feels Like Performance",
           "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession."
         }
       ]
     }
   ],
-  "generatedAt": "2025-12-23T21:22:53.700Z",
+  "generatedAt": "2025-12-23T22:26:34.242Z",
   "totalPosts": 6
 }

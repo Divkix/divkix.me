@@ -5,11 +5,11 @@
     <link>https://divkix.me/blog</link>
     <description>Developer building useful tools with code and curiosity.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 21:22:53 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 22:26:34 GMT</lastBuildDate>
     <atom:link href="https://divkix.me/rss.xml" rel="self" type="application/rss+xml"/>
     <author>divkix@divkix.me (Divanshu Chauhan)</author>
     <item>
-      <title><![CDATA[The Authenticity Paradox: Online Persona vs Real Self]]></title>
+      <title><![CDATA[The Developer's Authenticity Paradox: Why Success Feels Like Performance]]></title>
       <link>https://divkix.me/blog/authenticity-paradox-online-persona</link>
       <guid>https://divkix.me/blog/authenticity-paradox-online-persona</guid>
       <pubDate>Sun, 07 Dec 2025 00:00:00 GMT</pubDate>
@@ -22,9 +22,11 @@
       <category>Developer Life</category>
       <category>Mental Health</category>
       <category>Identity</category>
+      <category>Imposter Syndrome</category>
+      <category>Developer Burnout</category>
     </item>
     <item>
-      <title><![CDATA[Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)]]></title>
+      <title><![CDATA[Claude Code vs Cursor vs Copilot (2025): Best AI Coding Tools Compared]]></title>
       <link>https://divkix.me/blog/ai-coding-tools-compared-2025</link>
       <guid>https://divkix.me/blog/ai-coding-tools-compared-2025</guid>
       <pubDate>Mon, 24 Nov 2025 00:00:00 GMT</pubDate>
@@ -40,6 +42,8 @@
       <category>AI Assistants</category>
       <category>Productivity</category>
       <category>2025</category>
+      <category>Best AI Coding Assistant</category>
+      <category>2026</category>
     </item>
     <item>
       <title><![CDATA[My 2025 Stack for Shipping Side Projects Fast as a Grad Student]]></title>
