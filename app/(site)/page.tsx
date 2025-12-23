@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { Contact } from "@/components/sections/Contact";
 import { Hero3D } from "@/components/sections/Hero3D";
 import { Highlights } from "@/components/sections/Highlights";
-import { siteConfig } from "@/content/site.config";
 
 // Dynamic imports for heavy components to reduce initial bundle size
 // ParallaxBackground and InteractiveGradient have heavy animation logic
@@ -60,28 +59,8 @@ const Skills = dynamic(
 );
 
 export default function HomePage() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.name,
-    url: "https://divkix.me",
-    image: "https://divkix.me/og-image.png",
-    jobTitle: "Software Developer",
-    description: siteConfig.about,
-    email: siteConfig.email,
-    alumniOf: siteConfig.education.map((edu) => ({
-      "@type": "EducationalOrganization",
-      name: edu.title.split("—")[1]?.trim() || edu.title,
-    })),
-    knowsAbout: siteConfig.skills,
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <InteractiveGradient />
       <ParallaxBackground />
       <Hero3D />

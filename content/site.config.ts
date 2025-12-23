@@ -17,6 +17,12 @@ export const siteConfig = {
     country: "USA",
   },
 
+  seo: {
+    jobTitle: "Software Engineer",
+    metaDescription:
+      "Portfolio of Divanshu Chauhan (divkix), a Computer Science student at Arizona State University specializing in AI, Go, and Python. Explore open-source projects like WarpDL and Alita Robot.",
+  },
+
   facts: {
     impact: "250000+",
     projects: "30+",
@@ -269,6 +275,8 @@ export const siteConfig = {
   socials: [
     { label: "GitHub", href: "https://github.com/divkix" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/divkix/" },
+    { label: "X", href: "https://x.com/divkix" },
+    { label: "Hugging Face", href: "https://huggingface.co/divkix" },
     { label: "Instagram", href: "https://instagram.com/_divkix" },
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],

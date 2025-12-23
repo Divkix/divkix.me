@@ -7,15 +7,19 @@ export function generateSEO(overrides?: Metadata): Metadata {
   return {
     metadataBase: new URL(baseUrl),
     title: {
-      default: `${siteConfig.name} — ${siteConfig.tagline}`,
-      template: `%s — ${siteConfig.name}`,
+      default: `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & CS Student at ASU`,
+      template: `%s | ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`,
     },
-    description: siteConfig.about,
+    description: siteConfig.seo?.metaDescription || siteConfig.about,
     keywords: [
-      "developer",
+      siteConfig.name,
+      siteConfig.handle,
+      siteConfig.handle.toLowerCase(),
       "software engineer",
+      "developer",
       "portfolio",
-      "full stack",
+      "ASU",
+      "Arizona State University",
       ...siteConfig.skills.map((skill) => skill.name),
     ],
     authors: [{ name: siteConfig.name, url: `mailto:${siteConfig.email}` }],
@@ -41,8 +45,10 @@ export function generateSEO(overrides?: Metadata): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: siteConfig.name,
-      description: siteConfig.about,
+      site: "@divkix",
+      creator: "@divkix",
+      title: `${siteConfig.name} (${siteConfig.handle.toLowerCase()})`,
+      description: siteConfig.seo?.metaDescription || siteConfig.about,
       images: [`${baseUrl}/og-image.png`],
     },
     robots: {

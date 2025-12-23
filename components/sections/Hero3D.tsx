@@ -40,6 +40,13 @@ export function Hero3D() {
             <GradientText>{siteConfig.name.split(" ")[1]}</GradientText>
           </motion.h1>
 
+          <motion.p
+            variants={heroStaggerItem}
+            className="text-lg text-muted-foreground/60 font-mono tracking-wide mt-2"
+          >
+            @{siteConfig.handle.toLowerCase()}
+          </motion.p>
+
           <motion.div
             variants={heroStaggerItem}
             className="text-xl lg:text-3xl text-foreground/80 max-w-2xl mx-auto h-8 sm:h-10"

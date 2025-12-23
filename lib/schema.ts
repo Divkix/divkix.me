@@ -23,7 +23,7 @@ type BreadcrumbItem = {
  * Generate Person schema for E-E-A-T signals
  */
 export function generatePersonSchema() {
-  const currentEmployer = siteConfig.experience[0];
+  const jobTitle = siteConfig.seo?.jobTitle || siteConfig.experience[0]?.positions[0]?.title || "Software Engineer";
 
   return {
     "@context": "https://schema.org",
@@ -31,8 +31,10 @@ export function generatePersonSchema() {
     "@id": `${baseUrl}/#author`,
     name: siteConfig.name,
     alternateName: siteConfig.handle,
-    jobTitle: currentEmployer.positions[0].title,
-    description: siteConfig.about,
+    givenName: siteConfig.name.split(" ")[0],
+    familyName: siteConfig.name.split(" ")[1],
+    jobTitle: jobTitle,
+    description: siteConfig.seo?.metaDescription || siteConfig.about,
     url: baseUrl,
     email: siteConfig.email,
     image: `${baseUrl}${siteConfig.authorImage}`,
@@ -47,7 +49,7 @@ export function generatePersonSchema() {
     knowsAbout: siteConfig.skills.map((s) => s.name),
     worksFor: {
       "@type": "Organization",
-      name: currentEmployer.company,
+      name: siteConfig.experience[0].company,
       address: {
         "@type": "PostalAddress",
         addressLocality: siteConfig.address.locality,
