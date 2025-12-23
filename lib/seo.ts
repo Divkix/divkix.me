@@ -77,6 +77,7 @@ export function generateBlogPostSEO(
   date: string,
   tags?: string[],
   author?: string,
+  dateModified?: string,
 ): Metadata {
   const postUrl = `${baseUrl}/blog/${slug}`;
   const ogImageUrl = `${baseUrl}/og/blog/${slug}.png`;
@@ -91,6 +92,7 @@ export function generateBlogPostSEO(
     openGraph: {
       type: "article",
       publishedTime: date,
+      ...(dateModified && { modifiedTime: dateModified }),
       url: postUrl,
       authors: [author || siteConfig.name],
       tags: tags,
@@ -106,7 +108,8 @@ export function generateBlogPostSEO(
     twitter: {
       card: "summary_large_image",
       title: title,
-      description: excerpt,
+      description:
+        excerpt.length > 200 ? `${excerpt.slice(0, 197)}...` : excerpt,
       images: [ogImageUrl],
     },
   });

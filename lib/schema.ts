@@ -23,17 +23,20 @@ type BreadcrumbItem = {
  * Generate Person schema for E-E-A-T signals
  */
 export function generatePersonSchema() {
+  const currentEmployer = siteConfig.experience[0];
+
   return {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": `${baseUrl}/#author`,
     name: siteConfig.name,
     alternateName: siteConfig.handle,
-    jobTitle: "Software Developer",
+    jobTitle: currentEmployer.positions[0].title,
     description: siteConfig.about,
     url: baseUrl,
     email: siteConfig.email,
-    image: `${baseUrl}/og-image.png`,
+    image: `${baseUrl}${siteConfig.authorImage}`,
+    nationality: siteConfig.nationality,
     sameAs: siteConfig.socials
       .filter((s) => s.label !== "Email")
       .map((s) => s.href),
@@ -42,12 +45,40 @@ export function generatePersonSchema() {
       name: edu.title.split(" — ")[1] || edu.title,
     })),
     knowsAbout: siteConfig.skills.map((s) => s.name),
+    worksFor: {
+      "@type": "Organization",
+      name: currentEmployer.company,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: siteConfig.address.locality,
+        addressRegion: siteConfig.address.region,
+        addressCountry: siteConfig.address.country,
+      },
+    },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Tempe",
-      addressRegion: "Arizona",
-      addressCountry: "USA",
+      addressLocality: siteConfig.address.locality,
+      addressRegion: siteConfig.address.region,
+      addressCountry: siteConfig.address.country,
     },
+  };
+}
+
+/**
+ * Generate ProfilePage schema for About page
+ */
+export function generateProfilePageSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": `${baseUrl}/about#webpage`,
+    name: `About ${siteConfig.name}`,
+    description: siteConfig.about,
+    mainEntity: {
+      "@id": `${baseUrl}/#author`,
+    },
+    dateCreated: siteConfig.profileCreatedDate,
+    dateModified: new Date().toISOString().split("T")[0],
   };
 }
 
@@ -75,6 +106,22 @@ export function generateWebSiteSchema() {
       },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+/**
+ * Generate SoftwareApplication schema for tool reviews
+ */
+export function generateSoftwareApplicationSchema(
+  name: string,
+  description: string,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: name,
+    description: description,
+    applicationCategory: "DeveloperApplication",
   };
 }
 
@@ -108,6 +155,10 @@ function generateBlogPostingSchema(post: BlogPostSchemaData) {
     inLanguage: "en-US",
     isPartOf: {
       "@id": `${baseUrl}/#website`,
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".tldr-summary", ".key-takeaways"],
     },
   };
 }

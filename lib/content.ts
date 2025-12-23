@@ -38,6 +38,7 @@ interface Post {
   slug: string;
   title: string;
   date: string;
+  dateModified?: string | null;
   excerpt: string;
   content?: string;
   readingTime: string | number;

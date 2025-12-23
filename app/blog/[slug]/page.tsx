@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AuthorBio } from "@/components/blog/AuthorBio";
 import { FaqAccordion } from "@/components/blog/FaqAccordion";
 import { HowToSteps } from "@/components/blog/HowToSteps";
 import { KeyTakeaways } from "@/components/blog/KeyTakeaways";
@@ -46,6 +47,7 @@ export async function generateMetadata({
     post.date,
     post.tags,
     post.author,
+    post.dateModified ?? undefined,
   );
 }
 
@@ -113,8 +115,16 @@ export default async function BlogPostPage({
             <div className="flex flex-wrap items-center gap-4 text-foreground/60">
               <Badge variant="secondary">{post.readingTime}</Badge>
               <time dateTime={post.date} itemProp="datePublished">
-                {formatDate(post.date)}
+                Published {formatDate(post.date)}
               </time>
+              {post.dateModified && (
+                <>
+                  <span>•</span>
+                  <time dateTime={post.dateModified} itemProp="dateModified">
+                    Updated {formatDate(post.dateModified)}
+                  </time>
+                </>
+              )}
               <address
                 className="not-italic"
                 itemProp="author"
@@ -161,6 +171,11 @@ export default async function BlogPostPage({
 
           {/* HowTo Steps */}
           {post.howto && <HowToSteps howto={post.howto} />}
+
+          {/* Author Bio - E-E-A-T signal */}
+          <div className="pt-8 border-t">
+            <AuthorBio />
+          </div>
 
           {/* Related Posts Section */}
           {post.relatedPosts && post.relatedPosts.length > 0 && (

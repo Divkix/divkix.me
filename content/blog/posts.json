@@ -4,6 +4,7 @@
       "slug": "authenticity-paradox-online-persona",
       "title": "The Authenticity Paradox: Online Persona vs Real Self",
       "date": "2025-12-07",
+      "dateModified": "2025-12-24",
       "excerpt": "The authenticity paradox explained: why your online persona diverges from your real self. Psychology research + my experience with 500k users and daily metrics obsession.",
       "tags": [
         "Authenticity",
@@ -99,6 +100,7 @@
       "slug": "ai-coding-tools-compared-2025",
       "title": "Claude Code vs Cursor vs Copilot: Why I Use All Three (And When)",
       "date": "2025-11-24",
+      "dateModified": "2025-12-24",
       "excerpt": "I've spent $50+/month on AI coding tools for a year. Here's what actually works, what's overhyped, and when to use each tool (including free local LLMs).",
       "tags": [
         "AI",
@@ -212,6 +214,7 @@
       "slug": "side-project-stack-2025-grad-student",
       "title": "My 2025 Stack for Shipping Side Projects Fast as a Grad Student",
       "date": "2025-11-24",
+      "dateModified": "2025-12-24",
       "excerpt": "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users.",
       "tags": [
         "Side Projects",
@@ -370,6 +373,7 @@
       "slug": "zero-cost-portfolio-cloudflare-workers",
       "title": "How I Host My Portfolio for $0/Month on Cloudflare",
       "date": "2025-11-24",
+      "dateModified": "2025-12-24",
       "excerpt": "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel.",
       "tags": [
         "Cloudflare Workers",
@@ -524,6 +528,7 @@
       "slug": "lm-studio-local-ai-mac",
       "title": "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio",
       "date": "2025-10-31",
+      "dateModified": "2025-12-24",
       "excerpt": "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline.",
       "tags": [
         "AI",
@@ -677,6 +682,7 @@
       "slug": "pickmyclass-never-miss-your-dream-class",
       "title": "PickMyClass: Never Miss Your Dream Class Again",
       "date": "2025-10-28",
+      "dateModified": "2025-12-24",
       "excerpt": "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing.",
       "tags": [
         "Side Project",
@@ -801,6 +807,6 @@
       ]
     }
   ],
-  "generatedAt": "2025-12-16T02:37:56.294Z",
+  "generatedAt": "2025-12-23T20:33:55.223Z",
   "totalPosts": 6
 }

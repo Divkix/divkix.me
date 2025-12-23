@@ -23,6 +23,7 @@ const navItems = [
   { label: "Skills", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
   { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
 ];
 
 export function Navbar() {
@@ -111,6 +112,10 @@ export function Navbar() {
     // For blog
     if (href === "/blog") {
       return pathname.startsWith("/blog");
+    }
+    // For about
+    if (href === "/about") {
+      return pathname === "/about";
     }
     // For anchor links, check if we're on homepage and if this section is active
     if (href.startsWith("/#")) {

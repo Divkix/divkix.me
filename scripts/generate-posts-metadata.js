@@ -8,6 +8,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const { execSync } = require("node:child_process");
 const matter = require("gray-matter");
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
@@ -51,6 +52,26 @@ function calculateTagSimilarity(tags1 = [], tags2 = []) {
   return intersection;
 }
 
+/**
+ * Get the last git commit date for a file
+ * Returns ISO date string (YYYY-MM-DD) or null if not in git
+ */
+function getGitLastModified(filePath) {
+  try {
+    const result = execSync(`git log -1 --format="%aI" -- "${filePath}"`, {
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "ignore"],
+    }).trim();
+
+    if (!result) return null;
+
+    // Return just the date portion (YYYY-MM-DD)
+    return result.split("T")[0];
+  } catch {
+    return null;
+  }
+}
+
 function getAllPosts() {
   console.log("📚 Generating blog posts metadata...");
 
@@ -87,6 +108,7 @@ function getAllPosts() {
       slug,
       title: frontmatter.title || "Untitled",
       date: frontmatter.date || new Date().toISOString(),
+      dateModified: frontmatter.dateModified || getGitLastModified(filePath),
       excerpt: frontmatter.excerpt || "",
       tags: frontmatter.tags || [],
       author: frontmatter.author || "Divanshu Chauhan",

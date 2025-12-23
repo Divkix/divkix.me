@@ -19,7 +19,7 @@ export function TldrSummary({ summary }: TldrSummaryProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <Card className="border-l-4 border-l-primary bg-primary/5">
+      <Card className="tldr-summary border-l-4 border-l-primary bg-primary/5">
         <CardContent className="flex items-start gap-3 py-4">
           <Lightbulb className="h-5 w-5 text-primary shrink-0 mt-0.5" />
           <div>
