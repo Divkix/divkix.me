@@ -15,7 +15,8 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-6">
             <p className="text-sm text-foreground/60">
-              © {new Date().getFullYear()} {siteConfig.name}
+              © {new Date().getFullYear()} {siteConfig.name}. All rights
+              reserved.
             </p>
             <nav className="flex items-center gap-4">
               {footerLinks.map((link) => (

@@ -9,6 +9,13 @@ export const siteConfig = {
   authorImage: "/divanshu-chauhan.jpeg",
   yearsOfExperience: 5,
   certifications: [],
+  nationality: "Indian",
+  profileCreatedDate: "2024-01-01",
+  address: {
+    locality: "Tempe",
+    region: "Arizona",
+    country: "USA",
+  },
 
   facts: {
     impact: "250000+",

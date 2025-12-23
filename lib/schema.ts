@@ -36,7 +36,7 @@ export function generatePersonSchema() {
     url: baseUrl,
     email: siteConfig.email,
     image: `${baseUrl}${siteConfig.authorImage}`,
-    nationality: "Indian",
+    nationality: siteConfig.nationality,
     sameAs: siteConfig.socials
       .filter((s) => s.label !== "Email")
       .map((s) => s.href),
@@ -50,16 +50,16 @@ export function generatePersonSchema() {
       name: currentEmployer.company,
       address: {
         "@type": "PostalAddress",
-        addressLocality: currentEmployer.location.split(", ")[0],
-        addressRegion: currentEmployer.location.split(", ")[1]?.split(" ")[0],
-        addressCountry: currentEmployer.location.split(", ")[2] || "USA",
+        addressLocality: siteConfig.address.locality,
+        addressRegion: siteConfig.address.region,
+        addressCountry: siteConfig.address.country,
       },
     },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Tempe",
-      addressRegion: "Arizona",
-      addressCountry: "USA",
+      addressLocality: siteConfig.address.locality,
+      addressRegion: siteConfig.address.region,
+      addressCountry: siteConfig.address.country,
     },
   };
 }
@@ -77,7 +77,7 @@ export function generateProfilePageSchema() {
     mainEntity: {
       "@id": `${baseUrl}/#author`,
     },
-    dateCreated: "2024-01-01",
+    dateCreated: siteConfig.profileCreatedDate,
     dateModified: new Date().toISOString().split("T")[0],
   };
 }
@@ -115,7 +115,6 @@ export function generateWebSiteSchema() {
 export function generateSoftwareApplicationSchema(
   name: string,
   description: string,
-  rating?: number,
 ) {
   return {
     "@context": "https://schema.org",
@@ -123,15 +122,6 @@ export function generateSoftwareApplicationSchema(
     name: name,
     description: description,
     applicationCategory: "DeveloperApplication",
-    ...(rating && {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: rating,
-        bestRating: 5,
-        worstRating: 1,
-        ratingCount: 1,
-      },
-    }),
   };
 }
 

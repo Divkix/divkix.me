@@ -14,10 +14,8 @@ import { siteConfig } from "@/content/site.config";
  * Includes schema.org Person microdata for SEO
  */
 export function AuthorBio() {
-  // Calculate years of experience from first experience entry
-  const firstExperienceYear = 2019; // Based on CBSE x IBM internship (Sep 2019)
-  const currentYear = new Date().getFullYear();
-  const yearsOfExperience = currentYear - firstExperienceYear;
+  // Use years of experience from siteConfig
+  const yearsOfExperience = siteConfig.yearsOfExperience;
 
   // Get social links
   const githubLink = siteConfig.socials.find((s) => s.label === "GitHub");

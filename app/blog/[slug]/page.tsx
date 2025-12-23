@@ -47,6 +47,7 @@ export async function generateMetadata({
     post.date,
     post.tags,
     post.author,
+    post.dateModified ?? undefined,
   );
 }
 

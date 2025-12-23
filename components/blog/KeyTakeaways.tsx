@@ -36,7 +36,7 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
     >
-      <Card>
+      <Card className="key-takeaways">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
             <ListChecks className="h-5 w-5 text-primary" />
