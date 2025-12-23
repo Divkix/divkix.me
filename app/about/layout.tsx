@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Footer } from "@/components/shared/Footer";
+import { Navbar } from "@/components/shared/Navbar";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
@@ -19,5 +21,13 @@ export default function AboutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <Navbar />
+      <main id="main-content" className="min-h-screen">
+        {children}
+      </main>
+      <Footer />
+    </>
+  );
 }

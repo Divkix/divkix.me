@@ -89,8 +89,8 @@ export function Projects() {
                 <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
                   <TiltCard>
                     <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col overflow-hidden">
-                      <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
-                        {"image" in project && project.image ? (
+                      {"image" in project && project.image && (
+                        <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
                           <Image
                             src={project.image as string}
                             alt={project.name}
@@ -98,14 +98,8 @@ export function Projects() {
                             className="object-cover transition-transform duration-500 hover:scale-105"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
-                        ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                            <span className="text-4xl font-display font-bold text-foreground/10 select-none">
-                              {project.name.slice(0, 2).toUpperCase()}
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                       <CardHeader>
                         <div className="flex justify-between items-start gap-2">
                           <CardTitle className="line-clamp-1">
