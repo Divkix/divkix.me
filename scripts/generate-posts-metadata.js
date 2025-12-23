@@ -87,6 +87,7 @@ function getAllPosts() {
       slug,
       title: frontmatter.title || "Untitled",
       date: frontmatter.date || new Date().toISOString(),
+      dateModified: frontmatter.dateModified || null,
       excerpt: frontmatter.excerpt || "",
       tags: frontmatter.tags || [],
       author: frontmatter.author || "Divanshu Chauhan",

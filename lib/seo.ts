@@ -3,6 +3,21 @@ import { siteConfig } from "@/content/site.config";
 
 export const baseUrl = "https://divkix.me";
 
+/**
+ * Enhance title with compelling hooks and year context
+ */
+export function enhanceTitle(
+  title: string,
+  _type: "blog" | "page" = "blog",
+): string {
+  // Return original title for now - can be enhanced with patterns later
+  // Examples of enhancements:
+  // - Add year if relevant: "Guide to X in 2025"
+  // - Add compelling hooks: "The Complete Guide to X"
+  // - Add context: "How to X: A Practical Guide"
+  return title;
+}
+
 export function generateSEO(overrides?: Metadata): Metadata {
   return {
     metadataBase: new URL(baseUrl),
@@ -77,6 +92,7 @@ export function generateBlogPostSEO(
   date: string,
   tags?: string[],
   author?: string,
+  dateModified?: string,
 ): Metadata {
   const postUrl = `${baseUrl}/blog/${slug}`;
   const ogImageUrl = `${baseUrl}/og/blog/${slug}.png`;
@@ -91,6 +107,7 @@ export function generateBlogPostSEO(
     openGraph: {
       type: "article",
       publishedTime: date,
+      ...(dateModified && { modifiedTime: dateModified }),
       url: postUrl,
       authors: [author || siteConfig.name],
       tags: tags,
@@ -106,7 +123,8 @@ export function generateBlogPostSEO(
     twitter: {
       card: "summary_large_image",
       title: title,
-      description: excerpt,
+      description:
+        excerpt.length > 200 ? `${excerpt.slice(0, 197)}...` : excerpt,
       images: [ogImageUrl],
     },
   });

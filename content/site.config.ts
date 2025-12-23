@@ -6,6 +6,9 @@ export const siteConfig = {
   email: "divkix@divkix.me",
   about:
     "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
+  authorImage: "/divanshu-chauhan.jpeg",
+  yearsOfExperience: 5,
+  certifications: [],
 
   facts: {
     impact: "250000+",
