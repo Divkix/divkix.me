@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,7 +30,6 @@ export function Navbar() {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const rafIdRef = useRef<number | null>(null);
 
   const { scrollY } = useScroll();
 
@@ -43,48 +42,31 @@ export function Navbar() {
     // Only run on homepage
     if (pathname !== "/") return;
 
-    const handleScroll = () => {
-      // Use RAF to throttle scroll handler to 60fps max
-      if (rafIdRef.current !== null) return;
+    // Use IntersectionObserver to detect active section without forced reflows
+    const sections = ["projects", "experience", "skills", "contact"];
 
-      rafIdRef.current = requestAnimationFrame(() => {
-        const sections = ["projects", "experience", "skills", "contact"];
-        const scrollPosition = window.scrollY + 100; // Offset for navbar height
-
-        // Check if at the top
-        if (scrollPosition < 300) {
-          setActiveSection("");
-          rafIdRef.current = null;
-          return;
-        }
-
-        // Find which section is currently in view
-        for (const section of sections) {
-          const element = document.getElementById(section);
-          if (element) {
-            const { offsetTop, offsetHeight } = element;
-            if (
-              scrollPosition >= offsetTop &&
-              scrollPosition < offsetTop + offsetHeight
-            ) {
-              setActiveSection(section);
-              rafIdRef.current = null;
-              return;
-            }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        }
-        rafIdRef.current = null;
-      });
-    };
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: "-20% 0px -60% 0px", // Trigger when section is 20% from top
+      },
+    );
 
-    handleScroll(); // Check initial position
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) {
+        observer.observe(element);
       }
-    };
+    });
+
+    return () => observer.disconnect();
   }, [pathname]);
 
   const handleAnchorClick = (

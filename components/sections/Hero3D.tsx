@@ -9,11 +9,7 @@ import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { siteConfig } from "@/content/site.config";
-import {
-  heroStaggerContainer,
-  heroStaggerItem,
-  heroTitle,
-} from "@/lib/animations";
+import { heroStaggerContainer, heroStaggerItem } from "@/lib/animations";
 
 export function Hero3D() {
   return (
@@ -25,24 +21,21 @@ export function Hero3D() {
       </ParallaxWrapper>
 
       <div className="flex flex-col items-center text-center max-w-4xl mx-auto flex-grow justify-center">
+        {/* LCP-critical h1 renders immediately without animation wrapper */}
+        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-display font-bold tracking-tight">
+          {siteConfig.name.split(" ")[0]}{" "}
+          <GradientText>{siteConfig.name.split(" ")[1]}</GradientText>
+        </h1>
+
         <motion.div
           variants={heroStaggerContainer}
           initial="hidden"
           animate="show"
-          className="space-y-8 w-full"
+          className="space-y-8 w-full mt-8"
         >
-          {/* LCP-critical h1 renders immediately with minimal animation */}
-          <motion.h1
-            variants={heroTitle}
-            className="text-5xl sm:text-6xl lg:text-8xl font-display font-bold tracking-tight"
-          >
-            {siteConfig.name.split(" ")[0]}{" "}
-            <GradientText>{siteConfig.name.split(" ")[1]}</GradientText>
-          </motion.h1>
-
           <motion.p
             variants={heroStaggerItem}
-            className="text-lg text-muted-foreground/60 font-mono tracking-wide mt-2"
+            className="text-lg text-muted-foreground/60 font-mono tracking-wide"
           >
             @{siteConfig.handle.toLowerCase()}
           </motion.p>

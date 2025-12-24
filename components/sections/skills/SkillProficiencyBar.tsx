@@ -62,7 +62,7 @@ export function SkillProficiencyBar({
     <div className="space-y-6 max-w-5xl mx-auto">
       {categories.map((cat, catIndex) => (
         <div key={cat} className="space-y-3">
-          <h4 className="text-base font-semibold text-foreground/80">{cat}</h4>
+          <h3 className="text-base font-semibold text-foreground/80">{cat}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {groupedSkills[cat].map((skill, skillIndex) => {
               const Icon = getSkillIcon(skill.name);

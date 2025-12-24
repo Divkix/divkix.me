@@ -3,6 +3,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -50,13 +51,33 @@ function Button({
     asChild?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  // Cache button dimensions using ResizeObserver to avoid forced reflows on click
+  useEffect(() => {
+    const button = buttonRef.current;
+    if (!button) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      setDimensions({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
+      });
+    });
+
+    observer.observe(button);
+    return () => observer.disconnect();
+  }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Create ripple effect
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const ripple = document.createElement("span");
-    const size = Math.max(rect.width, rect.height);
+
+    // Use cached dimensions instead of rect.width/rect.height to avoid forced reflow
+    const size = Math.max(dimensions.width, dimensions.height);
     const x = e.clientX - rect.left - size / 2;
     const y = e.clientY - rect.top - size / 2;
 
@@ -84,6 +105,7 @@ function Button({
 
   return (
     <Comp
+      ref={buttonRef}
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       onClick={handleClick}

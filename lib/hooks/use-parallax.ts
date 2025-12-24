@@ -20,7 +20,13 @@ export function useParallax(
   ref?: RefObject<HTMLElement>,
 ): ParallaxReturn {
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Detect hydration complete to prevent CLS from parallax transforms
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Detect mobile devices with debounced resize handler
   useEffect(() => {
@@ -51,10 +57,11 @@ export function useParallax(
 
   // Calculate parallax offset
   // Multiply by viewport height and speed factor for smooth movement
+  // Only apply transform after mount to prevent CLS
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, -(speed * 200)], // Negative for upward movement
+    isMounted ? [0, -(speed * 200)] : [0, 0], // No transform until mounted
   );
 
   // Disable parallax on mobile or if user prefers reduced motion
