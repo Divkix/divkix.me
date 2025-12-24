@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,19 @@ import { ParallaxWrapper } from "@/components/ui/parallax-wrapper";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { siteConfig } from "@/content/site.config";
 import { staggerContainer, staggerItem } from "@/lib/animations";
+
+/**
+ * Generate responsive image srcset for project images
+ * Uses pre-generated WebP images at multiple sizes
+ */
+function getResponsiveImage(imagePath: string) {
+  const basePath = imagePath.replace(".webp", "");
+  return {
+    srcSet: `${basePath}-480.webp 480w, ${basePath}-768.webp 768w, ${basePath}.webp 1200w`,
+    sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+    src: imagePath,
+  };
+}
 
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p) => p.tags)),
@@ -89,18 +102,27 @@ export function Projects() {
                 <ParallaxWrapper speed={0.5 + (index % 3) * 0.1}>
                   <TiltCard>
                     <Card className="h-full glass-surface hover:border-primary/50 transition-colors flex flex-col overflow-hidden">
-                      {"image" in project && project.image && (
-                        <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
-                          <Image
-                            src={project.image as string}
-                            alt={project.name}
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            priority={index < 2}
-                          />
-                        </div>
-                      )}
+                      {"image" in project &&
+                        project.image &&
+                        (() => {
+                          const responsive = getResponsiveImage(
+                            project.image as string,
+                          );
+                          return (
+                            <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
+                              {/* biome-ignore lint/performance/noImgElement: Using native img with srcset for responsive images since next/image doesn't optimize with unoptimized:true */}
+                              <img
+                                src={responsive.src}
+                                srcSet={responsive.srcSet}
+                                sizes={responsive.sizes}
+                                alt={project.name}
+                                loading={index < 2 ? "eager" : "lazy"}
+                                decoding="async"
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                              />
+                            </div>
+                          );
+                        })()}
                       <CardHeader>
                         <div className="flex justify-between items-start gap-2">
                           <CardTitle className="line-clamp-1">

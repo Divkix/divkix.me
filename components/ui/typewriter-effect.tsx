@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface TypewriterEffectProps {
@@ -41,11 +40,8 @@ export const TypewriterEffect = ({
   return (
     <span className={className}>
       {currentText}
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-        className={`inline-block w-0.5 h-[1em] align-middle ml-1 bg-primary ${cursorClassName}`}
+      <span
+        className={`inline-block w-0.5 h-[1em] align-middle ml-1 bg-primary animate-[cursor-blink_1s_ease-in-out_infinite] ${cursorClassName}`}
       />
     </span>
   );

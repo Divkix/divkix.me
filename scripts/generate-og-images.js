@@ -233,8 +233,29 @@ async function generateOGImages() {
         .webp({ quality: 80 })
         .toFile(webpOutputPath);
 
+      // Generate responsive sizes
+      const responsiveSizes = [
+        { width: 768, suffix: "-768" },
+        { width: 480, suffix: "-480" },
+      ];
+
+      for (const size of responsiveSizes) {
+        const height = Math.round(size.width * (630 / 1200));
+        const responsiveOutput = path.join(
+          OUTPUT_DIR,
+          `${post.slug}${size.suffix}.webp`,
+        );
+
+        await sharp(Buffer.from(svg))
+          .resize(size.width, height)
+          .webp({ quality: 80 })
+          .toFile(responsiveOutput);
+      }
+
       generated++;
-      console.log(`Generated: ${post.slug}.png and ${post.slug}.webp`);
+      console.log(
+        `Generated: ${post.slug}.png, ${post.slug}.webp, ${post.slug}-768.webp, ${post.slug}-480.webp`,
+      );
     } catch (error) {
       console.error(
         `Error generating OG image for ${post.slug}:`,
