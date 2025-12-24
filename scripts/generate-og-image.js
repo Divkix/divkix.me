@@ -69,14 +69,26 @@ async function generateOGImage() {
   `;
 
   try {
-    // Generate the OG image from SVG
+    // Generate PNG (for OG meta tags - social platforms require it)
     await sharp(Buffer.from(svgBackground)).png().toFile(OUTPUT_FILE);
 
     console.log(`Generated: ${OUTPUT_FILE}`);
 
-    // Verify file was created
+    // Verify PNG file was created
     const stats = fs.statSync(OUTPUT_FILE);
     console.log(`File size: ${(stats.size / 1024).toFixed(2)} KB`);
+
+    // Generate WebP (for display in Image components - smaller file size)
+    const WEBP_OUTPUT = OUTPUT_FILE.replace(".png", ".webp");
+    await sharp(Buffer.from(svgBackground))
+      .webp({ quality: 80 })
+      .toFile(WEBP_OUTPUT);
+
+    console.log(`Generated: ${WEBP_OUTPUT}`);
+
+    // Verify WebP file was created
+    const webpStats = fs.statSync(WEBP_OUTPUT);
+    console.log(`File size: ${(webpStats.size / 1024).toFixed(2)} KB`);
   } catch (error) {
     console.error("Error generating OG image:", error.message);
     process.exit(1);

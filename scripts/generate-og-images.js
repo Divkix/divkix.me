@@ -205,13 +205,18 @@ async function generateOGImages() {
 
   for (const post of posts) {
     const outputPath = path.join(OUTPUT_DIR, `${post.slug}.png`);
+    const webpOutputPath = path.join(OUTPUT_DIR, `${post.slug}.webp`);
 
-    // Check if image already exists and is newer than posts.json
-    if (fs.existsSync(outputPath)) {
+    // Check if both images already exist and are newer than posts.json
+    if (fs.existsSync(outputPath) && fs.existsSync(webpOutputPath)) {
       const imageStats = fs.statSync(outputPath);
+      const webpStats = fs.statSync(webpOutputPath);
       const postsStats = fs.statSync(POSTS_JSON);
 
-      if (imageStats.mtime > postsStats.mtime) {
+      if (
+        imageStats.mtime > postsStats.mtime &&
+        webpStats.mtime > postsStats.mtime
+      ) {
         skipped++;
         continue;
       }
@@ -219,9 +224,17 @@ async function generateOGImages() {
 
     try {
       const svg = generatePostSvg(post);
+
+      // Generate PNG (for OG meta tags - social platforms require it)
       await sharp(Buffer.from(svg)).png().toFile(outputPath);
+
+      // Generate WebP (for display in Image components - smaller file size)
+      await sharp(Buffer.from(svg))
+        .webp({ quality: 80 })
+        .toFile(webpOutputPath);
+
       generated++;
-      console.log(`Generated: ${post.slug}.png`);
+      console.log(`Generated: ${post.slug}.png and ${post.slug}.webp`);
     } catch (error) {
       console.error(
         `Error generating OG image for ${post.slug}:`,

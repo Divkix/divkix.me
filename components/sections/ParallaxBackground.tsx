@@ -74,6 +74,7 @@ function ParallaxOrb({
         transform: "translate3d(0, 0, 0)",
         // Contain layout to prevent layout shifts
         contain: "layout style paint",
+        willChange: "transform",
       }}
       transition={{
         type: "spring",
@@ -91,7 +92,10 @@ export function ParallaxBackground() {
   const mouseY = useMotionValue(0);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const rafIdRef = useRef<number | null>(null);
+
+  useEffect(() => setMounted(true), []);
 
   // Detect touch devices
   useEffect(() => {
@@ -217,6 +221,16 @@ export function ParallaxBackground() {
 
   // Reduce orb count on mobile for performance
   const displayOrbs = isTouchDevice ? orbs.slice(0, 3) : orbs;
+
+  if (!mounted) {
+    return (
+      <div
+        className="absolute top-0 left-0 w-full h-[calc(100vh+50rem)] z-0 pointer-events-none overflow-hidden"
+        style={{ contain: "layout style" }}
+        aria-hidden="true"
+      />
+    );
+  }
 
   return (
     <div
