@@ -23,7 +23,10 @@ type BreadcrumbItem = {
  * Generate Person schema for E-E-A-T signals
  */
 export function generatePersonSchema() {
-  const jobTitle = siteConfig.seo?.jobTitle || siteConfig.experience[0]?.positions[0]?.title || "Software Engineer";
+  const jobTitle =
+    siteConfig.seo?.jobTitle ||
+    siteConfig.experience[0]?.positions[0]?.title ||
+    "Software Engineer";
 
   return {
     "@context": "https://schema.org",
