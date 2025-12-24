@@ -75,25 +75,6 @@ export const heroStaggerItem: Variants = {
 };
 
 /**
- * Instant variant for LCP-critical content (h1)
- * Renders immediately with no delay for optimal LCP
- */
-export const heroTitle: Variants = {
-  hidden: {
-    opacity: 1, // Start visible immediately
-    y: 0,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.2, // Fast fade-in only
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-/**
  * Scale animation with GPU acceleration
  * Used for modal/popup appearances
  */

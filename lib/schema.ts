@@ -70,24 +70,6 @@ export function generatePersonSchema() {
 }
 
 /**
- * Generate ProfilePage schema for About page
- */
-export function generateProfilePageSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "@id": `${baseUrl}/about#webpage`,
-    name: `About ${siteConfig.name}`,
-    description: siteConfig.about,
-    mainEntity: {
-      "@id": `${baseUrl}/#author`,
-    },
-    dateCreated: siteConfig.profileCreatedDate,
-    dateModified: new Date().toISOString().split("T")[0],
-  };
-}
-
-/**
  * Generate WebSite schema for site-wide SEO
  */
 export function generateWebSiteSchema() {
@@ -111,22 +93,6 @@ export function generateWebSiteSchema() {
       },
       "query-input": "required name=search_term_string",
     },
-  };
-}
-
-/**
- * Generate SoftwareApplication schema for tool reviews
- */
-export function generateSoftwareApplicationSchema(
-  name: string,
-  description: string,
-) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: name,
-    description: description,
-    applicationCategory: "DeveloperApplication",
   };
 }
 
