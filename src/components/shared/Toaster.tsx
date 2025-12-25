@@ -6,7 +6,9 @@ export function Toaster() {
 
   useEffect(() => {
     const updateTheme = () => {
-      setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+      setTheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
     };
 
     updateTheme();

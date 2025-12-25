@@ -11,7 +11,8 @@ const allPosts = await getCollection("blog");
 const posts = allPosts
   .filter((post: CollectionEntry<"blog">) => post.data.published === true)
   .sort(
-    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
 
 // Calculate reading time (200 words per minute)
@@ -29,10 +30,12 @@ type PostWithReadingTime = {
 };
 
 // Pre-calculate reading times for all posts
-const postsWithReadingTime: PostWithReadingTime[] = posts.map((post: CollectionEntry<"blog">) => ({
-  post,
-  readingTime: calculateReadingTime(post.body),
-}));
+const postsWithReadingTime: PostWithReadingTime[] = posts.map(
+  (post: CollectionEntry<"blog">) => ({
+    post,
+    readingTime: calculateReadingTime(post.body),
+  }),
+);
 ---
 
 <BlogLayout

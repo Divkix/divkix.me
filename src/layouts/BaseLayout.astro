@@ -1,10 +1,10 @@
 ---
 import "@/styles/globals.css";
 import { ClientRouter } from "astro:transitions";
+import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { Toaster } from "@/components/shared/Toaster";
 
 interface Props {
   title?: string;

@@ -1,13 +1,12 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["src/pages/**/*.{astro,ts}", "src/content/**/*.ts", "scripts/**/*.{js,ts}"],
-  "project": ["src/**/*.{ts,tsx,astro}"],
-  "ignore": [
-    "**/*.test.{ts,tsx}",
-    "dist/**",
-    ".astro/**",
-    "node_modules/**"
+  "entry": [
+    "src/pages/**/*.{astro,ts}",
+    "src/content/**/*.ts",
+    "scripts/**/*.{js,ts}"
   ],
+  "project": ["src/**/*.{ts,tsx,astro}"],
+  "ignore": ["**/*.test.{ts,tsx}", "dist/**", ".astro/**", "node_modules/**"],
   "astro": {
     "entry": ["astro.config.mjs"]
   }
