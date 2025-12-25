@@ -1,9 +1,9 @@
+import { readFileSync } from "node:fs";
+import astroLlmsTxt from "@4hse/astro-llms-txt";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import astroLlmsTxt from "@4hse/astro-llms-txt";
 import { defineConfig } from "astro/config";
-import { readFileSync } from "node:fs";
 import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
 
 // Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
@@ -25,7 +25,9 @@ try {
   }
 } catch {
   // posts.json may not exist on first build, continue without blog dates
-  console.warn("Warning: posts.json not found, sitemap will use build date for blog posts");
+  console.warn(
+    "Warning: posts.json not found, sitemap will use build date for blog posts",
+  );
 }
 
 export default defineConfig({
