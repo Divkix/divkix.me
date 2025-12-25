@@ -1,5 +1,11 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": [
+    "@tailwindcss/typography",
+    "mdast-util-to-string",
+    "tw-animate-css",
+    "tailwindcss"
+  ],
   "entry": [
     "src/pages/**/*.{astro,ts}",
     "src/content/**/*.ts",

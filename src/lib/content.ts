@@ -1,5 +1,5 @@
 // Types for table of contents
-export interface TocItem {
+interface TocItem {
   id: string;
   text: string;
   level: number;
@@ -24,13 +24,13 @@ export interface HowTo {
 }
 
 // Types for related posts
-export interface RelatedPost {
+interface RelatedPost {
   slug: string;
   title: string;
   excerpt: string;
 }
 
-export interface Post {
+interface Post {
   slug: string;
   title: string;
   date: string;
