@@ -1,8 +1,8 @@
-import { toString } from "mdast-util-to-string";
+import { toString as mdastToString } from "mdast-util-to-string";
 
 export function remarkReadingTime() {
   return (tree, { data }) => {
-    const textOnPage = toString(tree);
+    const textOnPage = mdastToString(tree);
     const wordCount = textOnPage.split(/\s+/g).filter(Boolean).length;
     const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 

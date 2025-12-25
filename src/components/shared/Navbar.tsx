@@ -44,7 +44,14 @@ export function Navbar() {
     // Only run on homepage
     if (pathname !== "/") return;
 
-    const sections = ["hero", "highlights", "projects", "experience", "skills", "contact"];
+    const sections = [
+      "hero",
+      "highlights",
+      "projects",
+      "experience",
+      "skills",
+      "contact",
+    ];
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100; // offset for navbar height
@@ -53,7 +60,10 @@ export function Navbar() {
         const element = document.getElementById(sectionId);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(sectionId);
             break;
           }
@@ -87,7 +97,12 @@ export function Navbar() {
   const getIsActive = (href: string) => {
     // For homepage link - active when at hero/highlights or no section detected
     if (href === "/") {
-      return pathname === "/" && (!activeSection || activeSection === "hero" || activeSection === "highlights");
+      return (
+        pathname === "/" &&
+        (!activeSection ||
+          activeSection === "hero" ||
+          activeSection === "highlights")
+      );
     }
     // For blog
     if (href === "/blog") {

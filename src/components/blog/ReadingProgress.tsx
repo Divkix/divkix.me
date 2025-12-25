@@ -37,11 +37,17 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
   const circumference = 2 * Math.PI * 18;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-  if (!isVisible) return <></>;
+  if (!isVisible) return null;
 
   return (
     <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-card/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border">
-      <svg width="44" height="44" className="-rotate-90">
+      <svg
+        width="44"
+        height="44"
+        className="-rotate-90"
+        role="img"
+        aria-label={`Reading progress: ${Math.round(progress)}%`}
+      >
         <circle
           cx="22"
           cy="22"

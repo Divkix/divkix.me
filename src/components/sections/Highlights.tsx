@@ -92,8 +92,8 @@ export function Highlights() {
   return (
     <section id="highlights" className="container mx-auto px-4 py-20">
       <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {stats.map((stat, index) => (
-          <StatCard key={index} {...stat} />
+        {stats.map((stat) => (
+          <StatCard key={stat.label} {...stat} />
         ))}
       </div>
     </section>
