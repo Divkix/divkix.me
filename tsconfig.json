@@ -7,8 +7,8 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "noImplicitAny": false,
-    "strictNullChecks": false
+    "noImplicitAny": true,
+    "strictNullChecks": true
   },
   "include": ["src/**/*", "astro.config.mjs"],
   "exclude": ["node_modules", "dist"]

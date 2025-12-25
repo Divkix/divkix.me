@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { siteConfig } from "@/data/site.config";
 
+type Project = (typeof siteConfig.projects)[number];
+type ProjectLink = Project["links"][number];
+
 /**
  * Generate responsive image srcset for project images
  * Uses pre-generated WebP images at multiple sizes
@@ -26,14 +29,14 @@ function getResponsiveImage(imagePath: string) {
 }
 
 const allTags = Array.from(
-  new Set(siteConfig.projects.flatMap((p) => p.tags)),
+  new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),
 ) as string[];
 
 export function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const filteredProjects = selectedTag
-    ? siteConfig.projects.filter((p) =>
+    ? siteConfig.projects.filter((p: Project) =>
         (p.tags as readonly string[]).includes(selectedTag),
       )
     : siteConfig.projects;
@@ -58,7 +61,7 @@ export function Projects() {
           >
             All
           </Button>
-          {allTags.map((tag) => (
+          {allTags.map((tag: string) => (
             <Button
               key={tag}
               variant={selectedTag === tag ? "default" : "outline"}
@@ -72,7 +75,7 @@ export function Projects() {
 
         {/* Projects grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project: Project, index: number) => (
             <div
               key={project.name}
               className="animate-fade-in-up opacity-0"
@@ -120,7 +123,7 @@ export function Projects() {
                 </CardHeader>
                 <CardContent className="space-y-4 mt-auto">
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
+                    {project.tags.map((tag: string) => (
                       <Badge key={tag} variant="secondary">
                         {tag}
                       </Badge>
@@ -128,7 +131,7 @@ export function Projects() {
                   </div>
                   {project.links.length > 0 && (
                     <div className="flex gap-2">
-                      {project.links.map((link) => (
+                      {project.links.map((link: ProjectLink) => (
                         <Button
                           key={link.label}
                           variant="outline"

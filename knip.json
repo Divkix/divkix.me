@@ -1,18 +1,14 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["app/**/*.{ts,tsx}", "scripts/**/*.{js,ts}"],
-  "project": ["**/*.{ts,tsx,js,jsx,mjs}"],
+  "entry": ["src/pages/**/*.{astro,ts}", "src/content/**/*.ts", "scripts/**/*.{js,ts}"],
+  "project": ["src/**/*.{ts,tsx,astro}"],
   "ignore": [
     "**/*.test.{ts,tsx}",
-    "**/*.spec.{ts,tsx}",
-    ".next/**",
-    "out/**",
-    "node_modules/**",
-    ".open-next/**",
-    "mdx-components.tsx"
+    "dist/**",
+    ".astro/**",
+    "node_modules/**"
   ],
-  "ignoreDependencies": ["tw-animate-css"],
-  "next": {
-    "entry": ["next.config.ts"]
+  "astro": {
+    "entry": ["astro.config.mjs"]
   }
 }

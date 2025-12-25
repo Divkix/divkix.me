@@ -1,5 +1,9 @@
 ---
 import { siteConfig } from "@/data/site.config";
+
+type Position = (typeof siteConfig.experience)[number]["positions"][number];
+type Company = (typeof siteConfig.experience)[number];
+type Education = (typeof siteConfig.education)[number];
 ---
 
 <section id="experience" class="container mx-auto px-4 py-20">
@@ -16,7 +20,7 @@ import { siteConfig } from "@/data/site.config";
           <!-- Timeline line -->
           <div class="absolute left-2 top-8 bottom-0 w-0.5 bg-primary/30 timeline-line"></div>
 
-          {siteConfig.education.map((edu, index) => (
+          {siteConfig.education.map((edu: Education, index: number) => (
             <div class="relative timeline-item" style={`animation-delay: ${index * 0.15}s`}>
               <!-- Timeline node -->
               <div class="absolute left-0 top-6 timeline-node" style={`animation-delay: ${index * 0.15}s`}>
@@ -55,7 +59,7 @@ import { siteConfig } from "@/data/site.config";
           <!-- Timeline line -->
           <div class="absolute left-2 top-8 bottom-0 w-0.5 bg-primary/30 timeline-line"></div>
 
-          {siteConfig.experience.map((company, companyIndex) => (
+          {siteConfig.experience.map((company: Company, companyIndex: number) => (
             <div class="relative timeline-item" style={`animation-delay: ${companyIndex * 0.15}s`}>
               <!-- Timeline node -->
               <div class="absolute left-0 top-6 timeline-node" style={`animation-delay: ${companyIndex * 0.15}s`}>
@@ -102,7 +106,7 @@ import { siteConfig } from "@/data/site.config";
                         <div class="absolute left-2 top-8 bottom-8 w-0.5 bg-border"></div>
                       )}
 
-                      {company.positions.map((position) => (
+                      {company.positions.map((position: Position) => (
                         <div class="relative pl-8">
                           <!-- Timeline dot for positions -->
                           {company.positions.length > 1 && (
@@ -119,7 +123,7 @@ import { siteConfig } from "@/data/site.config";
                               </span>
                             </div>
                             <ul class="space-y-2 text-sm text-foreground/70">
-                              {position.highlights.map((highlight) => (
+                              {position.highlights.map((highlight: string) => (
                                 <li class="flex gap-2">
                                   <span class="text-primary mt-1.5">•</span>
                                   <span>{highlight}</span>

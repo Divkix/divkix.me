@@ -8,8 +8,8 @@ import { formatDate } from "@/lib/utils";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts
-    .filter((post) => post.data.published === true)
-    .map((post) => ({
+    .filter((post: CollectionEntry<"blog">) => post.data.published === true)
+    .map((post: CollectionEntry<"blog">) => ({
       params: { slug: post.slug },
       props: { post },
     }));
@@ -17,6 +17,12 @@ export async function getStaticPaths() {
 
 interface Props {
   post: CollectionEntry<"blog">;
+}
+
+interface Heading {
+  slug: string;
+  text: string;
+  depth: number;
 }
 
 const { post } = Astro.props;
@@ -39,7 +45,7 @@ const readingTime = `${readingTimeMinutes} min read`;
 const wordCount = calculateWordCount(post.body);
 
 // Convert headings to TOC items
-const toc = headings.map((h) => ({
+const toc = headings.map((h: Heading) => ({
   id: h.slug,
   text: h.text,
   level: h.depth,
@@ -109,7 +115,7 @@ const faqSchema = post.data.faq
   ? {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: post.data.faq.map((faq) => ({
+      mainEntity: post.data.faq.map((faq: { q: string; a: string }) => ({
         "@type": "Question",
         name: faq.q,
         acceptedAnswer: {
@@ -127,7 +133,7 @@ const howtoSchema = post.data.howto
       "@type": "HowTo",
       name: post.data.howto.name,
       totalTime: post.data.howto.totalTime,
-      step: post.data.howto.steps.map((step, index) => ({
+      step: post.data.howto.steps.map((step: { name: string; text: string }, index: number) => ({
         "@type": "HowToStep",
         position: index + 1,
         name: step.name,
@@ -161,7 +167,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
       <nav class="space-y-2 text-sm">
         <h3 class="font-semibold mb-4">Table of Contents</h3>
         <ul class="space-y-2">
-          {toc.map((item) => (
+          {toc.map((item: { id: string; text: string; level: number }) => (
             <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
               <a
                 href={`#${item.id}`}
@@ -237,7 +243,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
 
         {post.data.tags && post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2">
-            {post.data.tags.map((tag) => (
+            {post.data.tags.map((tag: string) => (
               <span class="text-xs px-2 py-1 border border-border/60 rounded">
                 {tag}
               </span>
@@ -261,7 +267,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
         <div class="key-takeaways glass-surface p-6 rounded-lg">
           <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
           <ul class="space-y-2">
-            {post.data.keyTakeaways.map((takeaway) => (
+            {post.data.keyTakeaways.map((takeaway: string) => (
               <li class="flex items-start gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -297,7 +303,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
         <div class="space-y-4">
           <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
-            {post.data.faq.map((faq) => (
+            {post.data.faq.map((faq: { q: string; a: string }) => (
               <details class="glass-surface p-6 rounded-lg group">
                 <summary class="font-semibold cursor-pointer list-none flex items-center justify-between">
                   {faq.q}
@@ -331,7 +337,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
             Total time: {post.data.howto.totalTime}
           </p>
           <ol class="space-y-4">
-            {post.data.howto.steps.map((step, index) => (
+            {post.data.howto.steps.map((step: { name: string; text: string }, index: number) => (
               <li class="glass-surface p-6 rounded-lg">
                 <div class="flex gap-4">
                   <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
