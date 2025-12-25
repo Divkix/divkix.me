@@ -27,6 +27,7 @@
     "format": "biome format --write ."
   },
   "dependencies": {
+    "@4hse/astro-llms-txt": "^1.0.4",
     "@astrojs/mdx": "^4.0.0",
     "@astrojs/react": "^4.0.0",
     "@astrojs/rss": "^4.0.0",

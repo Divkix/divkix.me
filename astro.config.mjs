@@ -1,6 +1,7 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import astroLlmsTxt from "@4hse/astro-llms-txt";
 import { defineConfig } from "astro/config";
 import { readFileSync } from "node:fs";
 import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
@@ -57,6 +58,55 @@ export default defineConfig({
           priority: isHomepage ? 1.0 : 0.5,
         };
       },
+    }),
+    astroLlmsTxt({
+      title: "Divanshu Chauhan",
+      description:
+        "Portfolio and blog of Divanshu Chauhan (divkix), a Software Engineer and CS grad student at Arizona State University. Building tools with Go, Python, TypeScript, and AI.",
+      details: `
+## About
+Developer with 5+ years experience specializing in Go, Python, and TypeScript.
+Creator of Alita Robot (1M+ Telegram users) and PickMyClass (ASU class monitoring).
+Currently: MS Computer Science at Arizona State University.
+
+## Contact
+- Email: divkix@divkix.me
+- GitHub: https://github.com/divkix
+- LinkedIn: https://linkedin.com/in/divkix
+      `.trim(),
+      docSet: [
+        {
+          title: "Main Content",
+          description: "Index of all pages with links",
+          url: "/llms.txt",
+          include: ["**/*"],
+          promote: ["/blog/**"],
+          demote: ["/404", "/privacy"],
+        },
+        {
+          title: "Full Documentation",
+          description: "Complete site content in one file",
+          url: "/llms-full.txt",
+          include: ["**/*"],
+          promote: ["/blog/**"],
+          demote: ["/404", "/privacy"],
+        },
+        {
+          title: "Compact",
+          description: "Headings and structure only",
+          url: "/llms-small.txt",
+          include: ["**/*"],
+          onlyStructure: true,
+          promote: ["/blog/**"],
+        },
+      ],
+      optionalLinks: [
+        {
+          label: "Privacy Policy",
+          url: "/privacy/",
+          description: "Site privacy policy",
+        },
+      ],
     }),
   ],
   markdown: {
