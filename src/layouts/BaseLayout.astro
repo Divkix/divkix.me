@@ -68,7 +68,7 @@ const websiteSchema = generateWebSiteSchema();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://analytics.divkix.me" />
 
-    <!-- Fonts - Async loading to prevent render blocking -->
+    <!-- Fonts - display=swap prevents render blocking -->
     <link
       rel="preload"
       as="style"
@@ -77,15 +77,7 @@ const websiteSchema = generateWebSiteSchema();
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Space+Grotesk:wght@400..700&display=swap"
       rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
     />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Space+Grotesk:wght@400..700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
 
     <!-- View Transitions -->
     <ClientRouter />
