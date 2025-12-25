@@ -1,0 +1,173 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+---
+
+<SiteLayout
+  title="About"
+  description={`About ${siteConfig.name} - ${siteConfig.tagline}`}
+>
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <!-- Header -->
+      <div class="space-y-4">
+        <h1 class="text-5xl font-display font-bold">About Me</h1>
+        <p class="text-xl text-foreground/70">
+          {siteConfig.tagline}
+        </p>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="glass-surface p-8 rounded-lg space-y-6">
+        <div class="flex gap-6 items-start flex-col md:flex-row">
+          <img
+            src={siteConfig.authorImage}
+            alt={siteConfig.name}
+            class="w-32 h-32 rounded-full object-cover"
+            loading="eager"
+          />
+          <div class="flex-1 space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold">{siteConfig.name}</h2>
+              <p class="text-foreground/70">@{siteConfig.handle.toLowerCase()}</p>
+            </div>
+            <p class="text-foreground/80">
+              {siteConfig.about}
+            </p>
+            <div class="flex flex-wrap gap-4 text-sm text-foreground/60">
+              <div class="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                {siteConfig.location}
+              </div>
+              <div class="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                <a href={`mailto:${siteConfig.email}`} class="hover:text-primary">
+                  {siteConfig.email}
+                </a>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-3 pt-2">
+              {siteConfig.socials.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm px-4 py-2 border border-border/60 rounded-lg hover:border-primary hover:text-primary transition-colors"
+                >
+                  {social.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="space-y-6">
+        <h2 class="text-3xl font-display font-bold">Experience</h2>
+        <div class="space-y-6">
+          {siteConfig.experience.map((exp) => (
+            <div class="glass-surface p-6 rounded-lg space-y-4">
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <div>
+                  <h3 class="text-xl font-bold">{exp.company}</h3>
+                  <p class="text-foreground/60">{exp.location}</p>
+                </div>
+                <span class="text-sm text-foreground/60">{exp.duration}</span>
+              </div>
+              <div class="space-y-4">
+                {exp.positions.map((position) => (
+                  <div class="border-l-2 border-primary/30 pl-4 space-y-2">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                      <h4 class="font-semibold">{position.title}</h4>
+                      <span class="text-sm text-foreground/60">{position.year}</span>
+                    </div>
+                    <ul class="text-sm text-foreground/70 space-y-1 list-disc list-inside">
+                      {position.highlights.map((highlight) => (
+                        <li>{highlight}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="space-y-6">
+        <h2 class="text-3xl font-display font-bold">Education</h2>
+        <div class="space-y-4">
+          {siteConfig.education.map((edu) => (
+            <div class="glass-surface p-6 rounded-lg">
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <div>
+                  <h3 class="text-xl font-bold">{edu.title}</h3>
+                  {edu.focus && (
+                    <p class="text-foreground/70">Focus: {edu.focus}</p>
+                  )}
+                  {edu.honors && (
+                    <p class="text-foreground/70">Honors: {edu.honors}</p>
+                  )}
+                </div>
+                <span class="text-sm text-foreground/60">{edu.year}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="glass-surface p-8 rounded-lg">
+        <h2 class="text-3xl font-display font-bold mb-6">Impact</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">
+              {siteConfig.facts.impact}
+            </div>
+            <div class="text-foreground/70">Lives Impacted</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">
+              {siteConfig.facts.projects}
+            </div>
+            <div class="text-foreground/70">Projects Built</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">
+              {siteConfig.facts.oss}
+            </div>
+            <div class="text-foreground/70">OSS Contributions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

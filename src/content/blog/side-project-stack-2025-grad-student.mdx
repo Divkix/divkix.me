@@ -1,0 +1,207 @@
+---
+title: "My 2025 Stack for Shipping Side Projects Fast as a Grad Student"
+date: "2025-11-24"
+excerpt: "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
+tags: ["Side Projects", "Tech Stack", "Grad Student", "Next.js", "Supabase", "Cloudflare", "TypeScript", "Building in Public", "Productivity", "2025"]
+published: true
+tldr: "Time-starved grad student's battle-tested stack: Next.js 15 + TypeScript + Supabase + Cloudflare Workers. Optimized for shipping fast, not resume padding."
+keyTakeaways:
+  - "Use managed services (Supabase, Cloudflare) to eliminate ops work - your time is more valuable than $5/month"
+  - "TypeScript is non-negotiable for side projects you'll touch 6 months later"
+  - "Copy-paste UI components (shadcn/ui) beats building from scratch every time"
+  - "Deployment should be boring - Cloudflare Workers deploy in 30 seconds and cost $0"
+  - "Optimize for iteration speed over architectural purity when shipping under time pressure"
+faq:
+  - q: "Why not just use Python/Django for everything?"
+    a: "I tried. TypeScript catches so many bugs before deployment that I stopped fighting it. Plus Next.js gives you SSR, API routes, and deployment in one package."
+  - q: "Isn't Supabase vendor lock-in?"
+    a: "Yes, and I don't care. For side projects, the alternative is spending weekends debugging Postgres connections. Supabase's free tier is ridiculously generous and I can always migrate if a project actually makes money."
+  - q: "What about costs at scale?"
+    a: "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (1M+ users) runs on minimal infra. Most projects never hit paid tiers. If they do, you've got bigger problems to solve (good problems)."
+  - q: "Why Biome over ESLint + Prettier?"
+    a: "20x faster, one config file, zero conflicts between linter and formatter. Migrated all my projects in 2024 and never looked back. Time saved adds up."
+---
+
+I've shipped 30+ projects while getting my master's degree in Computer Science at ASU. None of them are perfect. Most serve specific needs. A few have actually scaled to real users—PickMyClass helps thousands of ASU students grab classes, Alita Robot serves over 1 million Telegram users.
+
+Here's the thing nobody tells you about side projects in grad school: you don't have time. Between CS courses, TA work, and pretending to have a social life, every tech decision is a time trade-off. Pick the wrong stack and you'll spend weekends debugging CORS errors instead of shipping features.
+
+This is the stack I landed on after burning time on frameworks that promised "developer experience" but delivered dependency hell.
+
+## The Constraint: Time is the Enemy
+
+I have maybe 10-15 hours a week for side projects. That's it. Every hour spent on setup, configuration, or deployment is an hour not spent building the actual thing people will use.
+
+This constraint shaped everything. I don't pick technologies because they look good on a resume. I pick them because they let me ship fast and move on to the next idea.
+
+Most side projects fail not because the idea was bad, but because you gave up before shipping. The stack's job is to get out of your way.
+
+## The Core Stack
+
+### Next.js 15 (App Router)
+
+Yeah, I know. "Another Next.js fanboy." Hear me out.
+
+I've built projects in Flask, Django, FastAPI, SvelteKit, and vanilla React. Next.js won because it handles SSR, API routes, routing, and deployment configuration in one framework. No webpack configs. No separate backend server. No arguing with yourself about project structure at 2 AM.
+
+The App Router (Next.js 13+) finally makes server components feel natural. I can fetch data directly in components without prop drilling or useState soup. For a student project that needs to work in 2 weeks, this matters.
+
+**Why not Astro/Remix/SvelteKit?** Astro is great for content sites but limiting for interactive apps. Remix is solid but smaller ecosystem. SvelteKit is lovely but I'm already productive in React and don't have time to context-switch. Next.js isn't perfect but it's predictable.
+
+### TypeScript - Non-Negotiable
+
+I used to write JavaScript and tell myself "I'll add types later." Later never came. I'd revisit code after 3 months and have zero idea what shape the data was supposed to be.
+
+TypeScript catches bugs before they hit production. When you're juggling coursework and projects, you can't afford silent runtime errors that only surface when users complain.
+
+The autocomplete alone saves hours. No more cmd+tabbing to docs to remember function signatures.
+
+### Supabase - Database + Auth + Realtime
+
+This is where I save the most time. Supabase gives you Postgres, authentication, real-time subscriptions, storage, and Edge Functions in one platform.
+
+**PickMyClass example:** I needed to monitor ASU class availability and notify students instantly. With Supabase, I set up database triggers that fire Edge Functions when class seats open up. No Redis, no message queues, no Docker Compose files. Just SQL and TypeScript.
+
+I optimized one query from 40 seconds to 16 milliseconds—a 2,500x speedup—by adding proper indexes. Supabase's dashboard made this trivial. You can see slow queries, explain plans, and add indexes without SSHing into servers.
+
+The free tier is absurdly generous: 500 MB database, 50k monthly active users, 2GB file storage. Most student projects never leave free tier.
+
+**Why not Firebase?** I tried. Firestore's NoSQL model is great until you need to query data in ways you didn't plan for. Postgres lets me change my mind. Also, vendor lock-in with Firebase's proprietary query language scared me more than Supabase (which is just Postgres).
+
+### Cloudflare Workers - Deploy and Forget
+
+I deploy to Cloudflare Workers using OpenNext. Here's the entire deployment process:
+
+```bash
+bun run deploy
+```
+
+That's it. No EC2 instances. No Nginx configs. No PM2 processes dying at 3 AM. Workers boot in milliseconds, scale automatically, and cost $0 for most projects.
+
+My portfolio site (the one you're reading this on) serves global traffic on Cloudflare's free tier. Zero cold starts. Zero downtime in 6 months.
+
+**The catch:** No filesystem access at runtime. You can't read files dynamically. Everything needs to be bundled at build time. For my blog, I pre-generate metadata from MDX files into JSON. Annoying initially, but forces you to think about edge compatibility.
+
+## The Speed Tools
+
+### shadcn/ui - Copy-Paste Components
+
+I wasted so much time building modals, dropdowns, and form inputs from scratch. shadcn/ui changed this.
+
+It's not a component library you install. You copy the component code into your project. Built on Radix UI primitives (accessible) and styled with Tailwind. If you need to customize, you just edit the code. No fighting with CSS overrides or `!important` hacks.
+
+I can scaffold a full dashboard UI in 30 minutes. Forms with validation, data tables, modals, toasts—all copy-paste. This is the cheat code.
+
+### Tailwind CSS - No Context Switching
+
+Utility classes are ugly until you realize you never leave your HTML file to write CSS. No naming things. No cascading bugs. No wondering which stylesheet is overriding your button color.
+
+I use Tailwind v4 now (still in alpha but stable enough). The new CSS variable system is cleaner. My entire color palette lives in `globals.css` and supports dark mode automatically.
+
+**Hot take:** If you're building alone and moving fast, semantic CSS is a waste of time. Tailwind's verbosity is a feature, not a bug. You can read a component and know exactly what it looks like without opening DevTools.
+
+### Biome - Fast Linting/Formatting
+
+In 2024 I ripped out ESLint and Prettier from all my projects and replaced them with Biome. Single tool, zero conflicts, 20x faster.
+
+ESLint + Prettier always fought over formatting rules. Biome handles both in one config file. Runs linting and formatting in parallel. Saves 3-5 seconds on every commit hook, which adds up to hours over a semester.
+
+## Real Project Examples
+
+### PickMyClass: Supabase Scaling
+
+PickMyClass monitors ASU course enrollment and texts students when seats open. Built in a weekend, now used by thousands of students every semester.
+
+**The scaling problem:** Initially, I was fetching all class data on every request. 40-second load times. Terrible UX.
+
+**The fix:** Added Postgres indexes on course number and semester columns. Load time dropped to 16ms. That's 2,500x faster. I didn't change databases or add caching layers. Just proper indexing.
+
+Supabase's query analyzer showed me exactly which queries were slow. Fixed in an afternoon. This is why I use Postgres over NoSQL—you can optimize when you need to without rewriting everything.
+
+### Alita Robot: Go for High Traffic
+
+Alita is a Telegram bot serving 1M+ users. I wrote it in Go, not TypeScript.
+
+**Why Go here?** Telegram bots need to handle webhooks fast. Go's concurrency model (goroutines) makes this trivial. The bot handles thousands of concurrent requests without breaking a sweat.
+
+I use TypeScript for web apps and Go for high-throughput services. Don't be dogmatic about one language. Use the right tool.
+
+The bot runs on minimal infrastructure—single VPS, no load balancer. Go's performance headroom is insane compared to Node.js for this use case.
+
+## Lessons from 250K+ Users
+
+**Lesson 1: Managed services beat custom infrastructure every time.**
+
+I used to self-host Postgres in Docker. Spent more time on backups, updates, and "why is this container restarting" than building features. Supabase costs $0 for most projects and handles all of that.
+
+Your time is worth more than $10/month. If you're optimizing cloud costs before you have users, you're optimizing the wrong thing.
+
+**Lesson 2: TypeScript saves you from yourself.**
+
+Half the bugs I catch are type errors that would've been runtime crashes. When users depend on your project (like students trying to enroll in classes), silent failures aren't acceptable.
+
+**Lesson 3: Deployment friction kills projects.**
+
+If deploying takes more than 5 minutes, you'll do it less often. Smaller, frequent deploys mean fewer bugs. Cloudflare Workers and Vercel make deployment boring, which is exactly what you want.
+
+**Lesson 4: Users don't care about your stack.**
+
+PickMyClass users care that they get notified when CS 101 has seats. They don't care if it's built in Next.js or Ruby on Rails. Ship fast, iterate based on feedback, move on.
+
+## The Stack Decisions I Regret
+
+**Using MongoDB for early projects.** I thought schemaless was "flexible." It was chaos. Every query was a gamble. Migrating to Postgres (via Supabase) fixed this. Schemas are good actually.
+
+**Not using TypeScript from day one.** I have 5 projects in plain JavaScript that I'm scared to touch now. Adding types retroactively is painful. Just start with TypeScript.
+
+**Over-engineering before users.** I built elaborate caching layers and microservices before anyone used the product. Wasted weeks. Start with a monolith. Scale when you need to (you probably won't).
+
+**Avoiding vendor lock-in too hard.** I spent days setting up self-hosted auth instead of using Supabase Auth. The self-hosted version broke three times. Supabase Auth has worked flawlessly for 2 years. Pragmatism beats purity.
+
+## What I'd Tell Past Me
+
+Start with this stack. Don't experiment with "interesting" tech until you've shipped 5 projects with boring tech.
+
+Copy more code. Every form validation schema you write from scratch is time you didn't spend on the unique part of your idea.
+
+Use managed services aggressively. Database, auth, file storage, email—all solvable with Supabase, Cloudflare, and Resend. Don't self-host unless you're learning DevOps specifically.
+
+Ship incomplete projects. PickMyClass launched with zero tests and one feature. Users gave feedback. I iterated. Perfect is the enemy of shipped.
+
+TypeScript, linting, and formatting are non-negotiable. Future you will thank present you.
+
+## Quick Stack Comparison
+
+**This stack vs MERN (Mongo, Express, React, Node):**
+- Next.js handles routing + API routes (no Express needed)
+- Postgres > Mongo for relational data (most data is relational)
+- TypeScript catches bugs Mongo's schemaless design hides
+
+**This stack vs Django + React:**
+- Django is great but overkill for side projects
+- Next.js unifies frontend/backend (no CORS, no separate deploys)
+- Python is slower than Node for I/O-heavy tasks
+
+**This stack vs Serverless Framework:**
+- Next.js on Cloudflare Workers IS serverless
+- Less configuration, better DX
+- OpenNext handles the messy parts
+
+**This stack vs Rails:**
+- Rails is incredible for rapid prototyping but heavier
+- I already know TypeScript well (leverage existing skills)
+- Next.js ecosystem moves faster
+
+## The Bottom Line
+
+This stack lets me go from idea to deployed project in a weekend. That's the metric that matters when you're a grad student with 10 hours a week.
+
+Next.js for frontend + API routes. TypeScript for sanity. Supabase for database + auth. Cloudflare Workers for deployment. shadcn/ui for UI. Tailwind for styling. Biome for linting/formatting.
+
+None of these are the "best" tools in isolation. Together, they minimize the time between idea and shipped product. That's what matters.
+
+Your mileage will vary. If you're deep in the Python ecosystem, FastAPI + Postgres + Vercel might be better. If you're building mobile apps, React Native + Supabase makes sense. The principle is the same: pick tools that let you ship fast and stay out of your way.
+
+I've got 6 more project ideas and 5 months until graduation. This stack will ship them all. Or I'll learn something new and write another post about what I got wrong.
+
+Now stop reading and go build something.

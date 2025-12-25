@@ -1,0 +1,63 @@
+---
+// Inline script to prevent FOUC (Flash of Unstyled Content)
+// This runs immediately before the page is rendered
+---
+
+<script is:inline>
+  // Immediately get theme from localStorage or system preference
+  (function () {
+    const getThemePreference = () => {
+      if (typeof localStorage !== "undefined") {
+        const stored = localStorage.getItem("theme");
+        if (stored) {
+          return stored;
+        }
+      }
+
+      // Fall back to system preference
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+
+      return "light";
+    };
+
+    const theme = getThemePreference();
+
+    // Apply theme immediately to prevent flash
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    // Store initial theme
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("theme", theme);
+    }
+
+    // Listen for storage events (cross-tab sync)
+    window.addEventListener("storage", (e) => {
+      if (e.key === "theme") {
+        if (e.newValue === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+    });
+
+    // Listen for system preference changes
+    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    darkModeQuery.addEventListener("change", (e) => {
+      // Only update if user hasn't set a manual preference
+      if (!localStorage.getItem("theme")) {
+        if (e.matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+    });
+  })();
+</script>

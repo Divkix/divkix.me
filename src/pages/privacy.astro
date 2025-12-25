@@ -1,0 +1,144 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+
+const lastUpdated = "December 25, 2025";
+---
+
+<SiteLayout
+  title="Privacy Policy"
+  description={`Privacy Policy for ${siteConfig.name}'s portfolio website`}
+>
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div class="space-y-4">
+        <h1 class="text-5xl font-display font-bold">Privacy Policy</h1>
+        <p class="text-foreground/60">Last updated: {lastUpdated}</p>
+      </div>
+
+      <div class="prose prose-slate dark:prose-invert max-w-none">
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Overview</h2>
+          <p class="text-foreground/80">
+            This privacy policy describes how {siteConfig.name} ("I", "me", "my")
+            collects, uses, and protects information on this website (divkix.me).
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Information Collection</h2>
+          <p class="text-foreground/80">
+            This website is built with privacy in mind and collects minimal information:
+          </p>
+          <ul class="list-disc list-inside space-y-2 text-foreground/80">
+            <li>
+              <strong>Contact Form:</strong> When you submit the contact form, I collect
+              your name, email address, and message content to respond to your inquiry.
+            </li>
+            <li>
+              <strong>Analytics:</strong> This site may use privacy-respecting analytics
+              to understand visitor patterns without tracking personal information.
+            </li>
+            <li>
+              <strong>Cookies:</strong> This site uses minimal cookies, primarily for
+              theme preferences (dark/light mode).
+            </li>
+          </ul>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">How Information is Used</h2>
+          <p class="text-foreground/80">
+            Information collected is used solely for:
+          </p>
+          <ul class="list-disc list-inside space-y-2 text-foreground/80">
+            <li>Responding to contact form submissions</li>
+            <li>Improving website content and user experience</li>
+            <li>Remembering user preferences (theme settings)</li>
+          </ul>
+          <p class="text-foreground/80">
+            I do not sell, trade, or share your personal information with third parties.
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Data Security</h2>
+          <p class="text-foreground/80">
+            I implement reasonable security measures to protect your information.
+            However, no method of transmission over the internet is 100% secure.
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Third-Party Services</h2>
+          <p class="text-foreground/80">
+            This website is hosted on Cloudflare Workers. Please refer to
+            <a
+              href="https://www.cloudflare.com/privacypolicy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary hover:underline"
+            >
+              Cloudflare's Privacy Policy
+            </a>
+            for information about their data handling practices.
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Your Rights</h2>
+          <p class="text-foreground/80">You have the right to:</p>
+          <ul class="list-disc list-inside space-y-2 text-foreground/80">
+            <li>Request access to information I have collected</li>
+            <li>Request deletion of your information</li>
+            <li>Opt-out of any data collection</li>
+          </ul>
+          <p class="text-foreground/80">
+            To exercise these rights, contact me at{" "}
+            <a
+              href={`mailto:${siteConfig.email}`}
+              class="text-primary hover:underline"
+            >
+              {siteConfig.email}
+            </a>
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Children's Privacy</h2>
+          <p class="text-foreground/80">
+            This website is not intended for children under 13 years of age.
+            I do not knowingly collect information from children under 13.
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Changes to This Policy</h2>
+          <p class="text-foreground/80">
+            I may update this privacy policy from time to time. Changes will be posted
+            on this page with an updated "Last updated" date.
+          </p>
+        </section>
+
+        <section class="glass-surface p-8 rounded-lg space-y-4">
+          <h2 class="text-2xl font-bold">Contact</h2>
+          <p class="text-foreground/80">
+            If you have questions about this privacy policy, please contact me at:
+          </p>
+          <ul class="list-none space-y-2 text-foreground/80">
+            <li>
+              Email:{" "}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                class="text-primary hover:underline"
+              >
+                {siteConfig.email}
+              </a>
+            </li>
+            <li>Website: <a href="/" class="text-primary hover:underline">divkix.me</a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

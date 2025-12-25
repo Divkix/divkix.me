@@ -1,0 +1,113 @@
+---
+interface HowToStep {
+  name: string;
+  text: string;
+}
+
+interface HowTo {
+  name: string;
+  totalTime: string;
+  steps: HowToStep[];
+}
+
+interface Props {
+  howto: HowTo;
+}
+
+const { howto } = Astro.props;
+
+if (!howto || !howto.steps || howto.steps.length === 0) {
+  return null;
+}
+
+/**
+ * Format ISO 8601 duration to human-readable string
+ * e.g., "PT15M" -> "15 min", "PT1H30M" -> "1h 30min"
+ */
+function formatDuration(duration: string): string {
+  const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return duration;
+
+  const hours = match[1] ? `${match[1]}h` : "";
+  const minutes = match[2] ? `${match[2]} min` : "";
+  const seconds = match[3] ? `${match[3]}s` : "";
+
+  return [hours, minutes, seconds].filter(Boolean).join(" ") || duration;
+}
+---
+
+<section aria-label="Tutorial steps" class="mt-12 pt-8 border-t border-border">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-display font-bold flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-primary"
+      >
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+      </svg>
+      {howto.name}
+    </h2>
+    <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-1"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+      {formatDuration(howto.totalTime)}
+    </span>
+  </div>
+
+  <ol class="relative border-l border-border ml-4 space-y-6">
+    {howto.steps.map((step, index) => (
+      <li class="ml-6 howto-step" style={`animation-delay: ${index * 0.15}s`}>
+        <span class="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+          {index + 1}
+        </span>
+        <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm">
+          <div class="flex flex-col space-y-1.5 p-6 pb-2">
+            <h3 class="text-base font-semibold leading-none tracking-tight">{step.name}</h3>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-foreground/70 text-sm">{step.text}</p>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .howto-step {
+    opacity: 0;
+    animation: stagger-fade-in 0.4s ease-out forwards;
+  }
+
+  @keyframes stagger-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

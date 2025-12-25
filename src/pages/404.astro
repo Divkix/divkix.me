@@ -1,0 +1,51 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro";
+---
+
+<SiteLayout
+  title="404 - Page Not Found"
+  description="The page you're looking for doesn't exist."
+>
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-2xl mx-auto text-center space-y-8">
+      <div class="space-y-4">
+        <h1 class="text-9xl font-display font-bold text-primary">404</h1>
+        <h2 class="text-3xl font-bold">Page Not Found</h2>
+        <p class="text-xl text-foreground/70">
+          Oops! The page you're looking for seems to have wandered off into the void.
+        </p>
+      </div>
+
+      <div class="glass-surface p-8 rounded-lg space-y-6">
+        <p class="text-foreground/80">
+          The page you're trying to reach doesn't exist or may have been moved.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/"
+            class="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Go Home
+          </a>
+          <a
+            href="/blog"
+            class="px-6 py-3 border border-border rounded-lg hover:border-primary transition-colors"
+          >
+            View Blog
+          </a>
+        </div>
+      </div>
+
+      <div class="text-sm text-foreground/60">
+        <p>
+          If you believe this is a mistake, please{" "}
+          <a href="/#contact" class="text-primary hover:underline">
+            contact me
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

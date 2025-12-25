@@ -1,0 +1,21 @@
+---
+interface Props {
+  className?: string;
+  variant?: "default" | "glass";
+}
+
+const { className = "", variant = "default" } = Astro.props;
+
+const variantClasses = {
+  default: "bg-card text-card-foreground border shadow-sm",
+  glass: "glass-surface border",
+};
+---
+
+<div class:list={[
+  "rounded-lg p-6",
+  variantClasses[variant],
+  className
+]}>
+  <slot />
+</div>

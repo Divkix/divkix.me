@@ -1,0 +1,59 @@
+# Security headers
+/*
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+# Cache headers for Cloudflare Pages static export
+# Immutable caching for Next.js static assets (hashed filenames)
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache CSS files
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache JavaScript files
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache font files
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache image files
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+# Revalidation cache for HTML pages (1 hour)
+/
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Cache blog posts (1 day, revalidate)
+/blog/*
+  Cache-Control: public, max-age=86400, must-revalidate

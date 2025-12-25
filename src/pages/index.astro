@@ -1,0 +1,210 @@
+---
+import Highlights from "@/components/sections/Highlights";
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+
+// Homepage sections will be React islands for interactivity
+// For now, we create placeholder sections that show the structure
+
+// Group skills by category for the skills section
+type Skill = { name: string; category: string; proficiency: number };
+const groupedSkills: Record<string, Skill[]> = {};
+for (const skill of siteConfig.skills) {
+  if (!groupedSkills[skill.category]) {
+    groupedSkills[skill.category] = [];
+  }
+  groupedSkills[skill.category].push({ ...skill });
+}
+---
+
+<SiteLayout showScrollProgress={true}>
+  <!-- Interactive Gradient Background - Will be React island -->
+  <div data-placeholder="interactive-gradient" class="fixed inset-0 -z-10 pointer-events-none">
+    <!-- TODO: Replace with InteractiveGradient React component -->
+  </div>
+
+  <!-- Parallax Background - Will be React island -->
+  <div data-placeholder="parallax-background" class="fixed inset-0 -z-10 pointer-events-none">
+    <!-- TODO: Replace with ParallaxBackground React component -->
+  </div>
+
+  <!-- Hero Section - Will be React island with Framer Motion animations -->
+  <section id="hero" class="min-h-screen flex items-center justify-center px-4">
+    <div data-placeholder="hero" class="max-w-4xl mx-auto text-center space-y-6">
+      <h1 class="text-5xl md:text-7xl font-display font-bold">
+        {siteConfig.name}
+      </h1>
+      <p class="text-xl md:text-2xl text-foreground/70">
+        {siteConfig.tagline}
+      </p>
+      <div class="flex gap-4 justify-center items-center flex-wrap">
+        {siteConfig.socials.slice(0, 4).map((social) => (
+          <a
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-foreground/60 hover:text-primary transition-colors"
+          >
+            {social.label}
+          </a>
+        ))}
+      </div>
+      <div class="flex gap-4 justify-center flex-wrap pt-4">
+        <a
+          href="#projects"
+          class="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+        >
+          View Projects
+        </a>
+        <a
+          href="#contact"
+          class="px-6 py-3 border border-border rounded-lg hover:border-primary transition-colors"
+        >
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights Section - React island with count-up animations -->
+  <Highlights client:visible />
+
+  <!-- Projects Section - Will be React island with filtering -->
+  <section id="projects" class="py-20 px-4 bg-card/50">
+    <div data-placeholder="projects" class="container mx-auto">
+      <h2 class="text-4xl font-display font-bold text-center mb-12">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {siteConfig.projects.slice(0, 6).map((project) => (
+          <div class="glass-surface p-6 rounded-lg space-y-4">
+            <h3 class="text-xl font-bold">{project.name}</h3>
+            <p class="text-foreground/70 text-sm">{project.desc}</p>
+            <div class="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            {project.links && (
+              <div class="flex gap-2">
+                {project.links.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm text-primary hover:underline"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section - Will be React island with expandable timeline -->
+  <section id="experience" class="py-20 px-4">
+    <div data-placeholder="experience" class="container mx-auto">
+      <h2 class="text-4xl font-display font-bold text-center mb-12">Experience</h2>
+      <div class="max-w-4xl mx-auto space-y-8">
+        {siteConfig.experience.map((exp) => (
+          <div class="glass-surface p-6 rounded-lg space-y-4">
+            <div class="flex justify-between items-start flex-wrap gap-2">
+              <div>
+                <h3 class="text-xl font-bold">{exp.company}</h3>
+                <p class="text-foreground/60">{exp.location}</p>
+              </div>
+              <span class="text-sm text-foreground/60">{exp.duration}</span>
+            </div>
+            <div class="space-y-4">
+              {exp.positions.map((position) => (
+                <div class="border-l-2 border-primary/30 pl-4 space-y-2">
+                  <div class="flex justify-between items-start flex-wrap gap-2">
+                    <h4 class="font-semibold">{position.title}</h4>
+                    <span class="text-sm text-foreground/60">{position.year}</span>
+                  </div>
+                  <ul class="text-sm text-foreground/70 space-y-1 list-disc list-inside">
+                    {position.highlights.map((highlight) => (
+                      <li>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 px-4 bg-card/50">
+    <div data-placeholder="skills" class="container mx-auto">
+      <h2 class="text-4xl font-display font-bold text-center mb-12">Skills</h2>
+      <div class="max-w-4xl mx-auto">
+        {Object.entries(groupedSkills).map(([category, skills]) => (
+          <div class="mb-8">
+            <h3 class="text-xl font-semibold mb-4">{category}</h3>
+            <div class="flex flex-wrap gap-3">
+              {skills.map((skill) => (
+                <span class="px-4 py-2 glass-surface rounded-lg text-sm">
+                  {skill.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section - Will be React island with form validation -->
+  <section id="contact" class="py-20 px-4">
+    <div data-placeholder="contact" class="container mx-auto">
+      <h2 class="text-4xl font-display font-bold text-center mb-12">Get in Touch</h2>
+      <div class="max-w-2xl mx-auto glass-surface p-8 rounded-lg">
+        <form class="space-y-6">
+          <div>
+            <label for="name" class="block text-sm font-medium mb-2">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="w-full px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="w-full px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium mb-2">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              class="w-full px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
