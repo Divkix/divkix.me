@@ -18,4 +18,4 @@ User-agent: cohere-ai
 Allow: /
 
 # Sitemap location
-Sitemap: https://divkix.me/sitemap.xml
+Sitemap: https://divkix.me/sitemap-index.xml

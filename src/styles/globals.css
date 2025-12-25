@@ -55,7 +55,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.64 0.22 264.5);
+  --primary: oklch(0.55 0.22 264.5);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -89,7 +89,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.72 0.22 264.5);
+  --primary: oklch(0.78 0.20 264.5);
   --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -173,23 +173,6 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* Ripple effect for buttons */
-  .ripple {
-    position: absolute;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.6);
-    transform: scale(0);
-    animation: ripple 600ms ease-out;
-    pointer-events: none;
-  }
-
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-
   /* Timeline node animations */
   @keyframes timeline-node-appear {
     from {
@@ -238,9 +221,4 @@
     scroll-behavior: auto !important;
   }
 
-  /* Disable ripple animation */
-  .ripple {
-    animation: none;
-    display: none;
-  }
 }
