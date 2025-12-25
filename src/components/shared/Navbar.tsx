@@ -45,7 +45,7 @@ export function Navbar() {
     if (pathname !== "/") return;
 
     // Use IntersectionObserver to detect active section without forced reflows
-    const sections = ["projects", "experience", "skills", "contact"];
+    const sections = ["hero", "highlights", "projects", "experience", "skills", "contact"];
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -89,9 +89,9 @@ export function Navbar() {
   };
 
   const getIsActive = (href: string) => {
-    // For homepage link
+    // For homepage link - active when at hero/highlights or no section detected
     if (href === "/") {
-      return pathname === "/" && !activeSection;
+      return pathname === "/" && (!activeSection || activeSection === "hero" || activeSection === "highlights");
     }
     // For blog
     if (href === "/blog") {

@@ -84,7 +84,7 @@ export function Projects() {
                 animationFillMode: "forwards",
               }}
             >
-              <Card className="h-full glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col overflow-hidden">
+              <Card className="glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col overflow-hidden">
                 {"image" in project &&
                   project.image &&
                   (() => {

@@ -94,6 +94,12 @@ const websiteSchema = generateWebSiteSchema();
         });
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
       }
+
+      // Reapply theme after Astro view transitions swap the DOM
+      document.addEventListener('astro:after-swap', () => {
+        const isDark = getThemePreference() === 'dark';
+        document.documentElement.classList.toggle('dark', isDark);
+      });
     </script>
 
     <!-- JSON-LD Structured Data -->
