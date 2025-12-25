@@ -1,0 +1,101 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { formatDate } from "@/lib/utils";
+
+// Get all blog posts from content collections
+const allPosts = await getCollection("blog");
+
+// Filter published posts and sort by date (newest first)
+const posts = allPosts
+  .filter((post: CollectionEntry<"blog">) => post.data.published === true)
+  .sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
+
+// Calculate reading time (200 words per minute)
+function calculateReadingTime(content: string): string {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+}
+
+// Type for post with reading time
+type PostWithReadingTime = {
+  post: CollectionEntry<"blog">;
+  readingTime: string;
+};
+
+// Pre-calculate reading times for all posts
+const postsWithReadingTime: PostWithReadingTime[] = posts.map(
+  (post: CollectionEntry<"blog">) => ({
+    post,
+    readingTime: calculateReadingTime(post.body),
+  }),
+);
+---
+
+<BlogLayout
+  title="Blog"
+  description="Thoughts on software development, technology, and building products."
+>
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <div class="space-y-4">
+        <h1 class="text-5xl font-display font-bold">Blog</h1>
+        <p class="text-xl text-foreground/70">
+          Thoughts on software development, technology, and building products.
+        </p>
+      </div>
+
+      {posts.length === 0 ? (
+        <p class="text-foreground/60">No posts yet. Check back soon!</p>
+      ) : (
+        <div class="space-y-6">
+          {postsWithReadingTime.map((item: PostWithReadingTime) => (
+            <a
+              href={`/blog/${item.post.slug}`}
+              class="block transition-all hover:scale-[1.01]"
+            >
+              <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
+                <div class="p-6 space-y-4">
+                  <div class="flex items-center justify-between gap-4 flex-wrap">
+                    <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
+                      {item.readingTime}
+                    </span>
+                    <time
+                      datetime={item.post.data.date}
+                      class="text-sm text-foreground/60"
+                    >
+                      {formatDate(item.post.data.date)}
+                    </time>
+                  </div>
+                  <h2 class="text-2xl font-bold hover:text-primary transition-colors">
+                    {item.post.data.title}
+                  </h2>
+                  {item.post.data.excerpt && (
+                    <p class="text-base text-foreground/70">
+                      {item.post.data.excerpt}
+                    </p>
+                  )}
+                  {item.post.data.tags && item.post.data.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {item.post.data.tags.map((tag: string) => (
+                        <span class="text-xs px-2 py-1 border border-border/60 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</BlogLayout>

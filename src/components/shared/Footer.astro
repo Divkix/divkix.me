@@ -1,0 +1,35 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SocialIcons from "./SocialIcons.astro";
+
+const footerLinks = [
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Privacy", href: "/privacy" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+      <div class="flex flex-col items-center gap-4 md:flex-row md:gap-6">
+        <p class="text-sm text-foreground/60">
+          © {currentYear} {siteConfig.name}. All rights reserved.
+        </p>
+        <nav class="flex items-center gap-4">
+          {footerLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-sm text-foreground/60 hover:text-foreground transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+      <SocialIcons size="sm" />
+    </div>
+  </div>
+</footer>

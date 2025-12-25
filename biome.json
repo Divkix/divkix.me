@@ -61,7 +61,14 @@
         "noSvgWithoutTitle": "warn"
       }
     },
-    "includes": ["**", "!.next/**", "!out/**", "!build/**", "!next-env.d.ts"]
+    "includes": [
+      "**",
+      "!.next/**",
+      "!out/**",
+      "!build/**",
+      "!next-env.d.ts",
+      "!**/*.astro"
+    ]
   },
   "javascript": {
     "formatter": {

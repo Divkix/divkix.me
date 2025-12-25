@@ -1,0 +1,379 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { baseUrl } from "@/lib/seo";
+import { formatDate } from "@/lib/utils";
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts
+    .filter((post: CollectionEntry<"blog">) => post.data.published === true)
+    .map((post: CollectionEntry<"blog">) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+interface Heading {
+  slug: string;
+  text: string;
+  depth: number;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+
+// Calculate reading time (200 words per minute)
+function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
+// Calculate word count
+function calculateWordCount(content: string): number {
+  return content.trim().split(/\s+/).length;
+}
+
+const readingTimeMinutes = calculateReadingTime(post.body);
+const readingTime = `${readingTimeMinutes} min read`;
+const wordCount = calculateWordCount(post.body);
+
+// Convert headings to TOC items
+const toc = headings.map((h: Heading) => ({
+  id: h.slug,
+  text: h.text,
+  level: h.depth,
+}));
+
+// Show TOC if there are 3+ headings
+const showToc = toc.length >= 3;
+
+// Generate JSON-LD schemas for BlogPosting
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${baseUrl}/blog/${post.slug}#article`,
+  headline: post.data.title,
+  description: post.data.excerpt,
+  url: `${baseUrl}/blog/${post.slug}`,
+  datePublished: `${post.data.date}T00:00:00Z`,
+  dateModified: post.data.dateModified
+    ? `${post.data.dateModified}T00:00:00Z`
+    : `${post.data.date}T00:00:00Z`,
+  author: {
+    "@type": "Person",
+    name: post.data.author || "Divanshu Chauhan",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Divanshu Chauhan",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `${baseUrl}/blog/${post.slug}`,
+  },
+  image: `${baseUrl}/og/blog/${post.slug}.png`,
+  keywords: post.data.tags?.join(", "),
+  wordCount: wordCount,
+  timeRequired: `PT${readingTimeMinutes}M`,
+  inLanguage: "en-US",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: baseUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: `${baseUrl}/blog`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: post.data.title,
+      item: `${baseUrl}/blog/${post.slug}`,
+    },
+  ],
+};
+
+// FAQ Schema (if present)
+const faqSchema = post.data.faq
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: post.data.faq.map((faq: { q: string; a: string }) => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.a,
+        },
+      })),
+    }
+  : null;
+
+// HowTo Schema (if present)
+const howtoSchema = post.data.howto
+  ? {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: post.data.howto.name,
+      totalTime: post.data.howto.totalTime,
+      step: post.data.howto.steps.map(
+        (step: { name: string; text: string }, index: number) => ({
+          "@type": "HowToStep",
+          position: index + 1,
+          name: step.name,
+          text: step.text,
+        }),
+      ),
+    }
+  : null;
+
+// Generate page title and description
+const pageTitle = post.data.title;
+const pageDescription = post.data.excerpt;
+const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
+---
+
+<BlogLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={ogImage}
+  showReadingProgress={true}
+  readingTime={readingTimeMinutes}
+>
+  <!-- JSON-LD Schemas -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  {faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  {howtoSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(howtoSchema)} />}
+
+  <!-- Table of Contents - Fixed sidebar on xl screens -->
+  {showToc && (
+    <aside class="hidden xl:block fixed top-24 right-8 w-64 max-h-[calc(100vh-8rem)] overflow-y-auto">
+      <nav class="space-y-2 text-sm">
+        <h3 class="font-semibold mb-4">Table of Contents</h3>
+        <ul class="space-y-2">
+          {toc.map((item: { id: string; text: string; level: number }) => (
+            <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
+              <a
+                href={`#${item.id}`}
+                class="text-foreground/60 hover:text-primary transition-colors"
+              >
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  )}
+
+  <article
+    class="container mx-auto px-4 py-20"
+    itemscope
+    itemtype="https://schema.org/BlogPosting"
+  >
+    <div class="max-w-3xl mx-auto space-y-8">
+      <!-- Back to Blog button -->
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m12 19-7-7 7-7" />
+          <path d="M19 12H5" />
+        </svg>
+        Back to Blog
+      </a>
+
+      <!-- Article Header -->
+      <header class="space-y-4">
+        <h1 class="text-5xl font-display font-bold" itemprop="headline">
+          {post.data.title}
+        </h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-foreground/60">
+          <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
+            {readingTime}
+          </span>
+          <time datetime={post.data.date} itemprop="datePublished">
+            Published {formatDate(post.data.date)}
+          </time>
+          {post.data.dateModified && (
+            <>
+              <span>•</span>
+              <time datetime={post.data.dateModified} itemprop="dateModified">
+                Updated {formatDate(post.data.dateModified)}
+              </time>
+            </>
+          )}
+          <address
+            class="not-italic"
+            itemprop="author"
+            itemscope
+            itemtype="https://schema.org/Person"
+          >
+            by <span itemprop="name">{post.data.author || "Divanshu Chauhan"}</span>
+          </address>
+        </div>
+
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag: string) => (
+              <span class="text-xs px-2 py-1 border border-border/60 rounded">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <meta itemprop="description" content={post.data.excerpt} />
+      </header>
+
+      <!-- TL;DR Summary -->
+      {post.data.tldr && (
+        <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
+          <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
+          <p class="text-foreground/70">{post.data.tldr}</p>
+        </div>
+      )}
+
+      <!-- Key Takeaways -->
+      {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
+        <div class="key-takeaways glass-surface p-6 rounded-lg">
+          <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
+          <ul class="space-y-2">
+            {post.data.keyTakeaways.map((takeaway: string) => (
+              <li class="flex items-start gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary flex-shrink-0 mt-0.5"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                <span class="text-foreground/70">{takeaway}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Article Content -->
+      <div
+        class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20"
+        itemprop="articleBody"
+      >
+        <Content />
+      </div>
+
+      <!-- FAQ Section -->
+      {post.data.faq && post.data.faq.length > 0 && (
+        <div class="space-y-4">
+          <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
+          <div class="space-y-4">
+            {post.data.faq.map((faq: { q: string; a: string }) => (
+              <details class="glass-surface p-6 rounded-lg group">
+                <summary class="font-semibold cursor-pointer list-none flex items-center justify-between">
+                  {faq.q}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="group-open:rotate-180 transition-transform"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </summary>
+                <p class="mt-4 text-foreground/70">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- HowTo Steps -->
+      {post.data.howto && (
+        <div class="space-y-4">
+          <h2 class="text-2xl font-bold">{post.data.howto.name}</h2>
+          <p class="text-foreground/60">
+            Total time: {post.data.howto.totalTime}
+          </p>
+          <ol class="space-y-4">
+            {post.data.howto.steps.map((step: { name: string; text: string }, index: number) => (
+              <li class="glass-surface p-6 rounded-lg">
+                <div class="flex gap-4">
+                  <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+                    {index + 1}
+                  </span>
+                  <div class="flex-1">
+                    <h3 class="font-semibold mb-2">{step.name}</h3>
+                    <p class="text-foreground/70">{step.text}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      <!-- Author Bio -->
+      <div class="pt-8 border-t border-border/40">
+        <div class="flex gap-4 items-start">
+          <img
+            src="/divanshu-chauhan.jpeg"
+            alt="Divanshu Chauhan"
+            class="w-16 h-16 rounded-full"
+            loading="lazy"
+          />
+          <div>
+            <h3 class="font-semibold">{post.data.author || "Divanshu Chauhan"}</h3>
+            <p class="text-sm text-foreground/70 mt-1">
+              Software Engineer and Computer Science student at Arizona State University.
+              Passionate about building useful tools and contributing to open source.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</BlogLayout>

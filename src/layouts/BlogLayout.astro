@@ -1,0 +1,43 @@
+---
+import { ReadingProgress } from "@/components/blog/ReadingProgress";
+import Footer from "@/components/shared/Footer.astro";
+import { Navbar } from "@/components/shared/Navbar";
+import { baseUrl } from "@/lib/seo";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  showReadingProgress?: boolean;
+  readingTime?: number; // in minutes
+}
+
+const {
+  title,
+  description,
+  ogImage = `${baseUrl}/og-image.png`,
+  showReadingProgress = false,
+  readingTime = 5,
+} = Astro.props;
+
+const canonical = `${baseUrl}${Astro.url.pathname}`;
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage} canonical={canonical}>
+  <!-- Navbar - React island with client:load -->
+  <Navbar client:load />
+
+  <!-- Reading Progress - React island with client:load (conditional) -->
+  {showReadingProgress && (
+    <ReadingProgress client:load readingTime={readingTime} />
+  )}
+
+  <!-- Main Content -->
+  <main id="main-content" class="min-h-screen pt-20">
+    <slot />
+  </main>
+
+  <!-- Footer - Astro component -->
+  <Footer />
+</BaseLayout>

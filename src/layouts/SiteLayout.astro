@@ -1,0 +1,35 @@
+---
+import Footer from "@/components/shared/Footer.astro";
+import { Navbar } from "@/components/shared/Navbar";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
+import { siteConfig } from "@/data/site.config";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  showScrollProgress?: boolean;
+}
+
+const {
+  title = `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & CS Student at ASU`,
+  description = siteConfig.seo?.metaDescription || siteConfig.about,
+  showScrollProgress = false,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Navbar - React island with client:load -->
+  <Navbar client:load />
+
+  <!-- Scroll Progress (optional, for homepage) -->
+  {showScrollProgress && <ScrollProgress client:load />}
+
+  <!-- Main Content -->
+  <main id="main-content" class="min-h-screen">
+    <slot />
+  </main>
+
+  <!-- Footer - Astro component -->
+  <Footer />
+</BaseLayout>

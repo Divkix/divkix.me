@@ -1,0 +1,18 @@
+---
+import { Contact } from "@/components/sections/Contact";
+import Experience from "@/components/sections/Experience.astro";
+import Hero from "@/components/sections/Hero.astro";
+import { Highlights } from "@/components/sections/Highlights";
+import { Projects } from "@/components/sections/Projects";
+import Skills from "@/components/sections/Skills.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+---
+
+<SiteLayout showScrollProgress={true}>
+  <Hero />
+  <Highlights client:visible />
+  <Projects client:visible />
+  <Experience />
+  <Skills />
+  <Contact client:visible />
+</SiteLayout>
