@@ -36,8 +36,18 @@ export function Navbar() {
       setScrolled(window.scrollY > 50);
     };
 
+    // Handle View Transitions navigation (Astro ClientRouter)
+    const handlePageLoad = () => {
+      setPathname(window.location.pathname);
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    document.addEventListener("astro:page-load", handlePageLoad);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("astro:page-load", handlePageLoad);
+    };
   }, []);
 
   useEffect(() => {
