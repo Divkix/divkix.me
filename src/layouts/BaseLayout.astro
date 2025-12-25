@@ -76,17 +76,28 @@ const websiteSchema = generateWebSiteSchema();
 
     <!-- Theme Script -->
     <script is:inline>
-      // Initialize theme before page renders to prevent flash
-      const getThemePreference = () => {
+      // Get theme from localStorage or system preference
+      function getThemePreference() {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
         }
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      };
+      }
 
-      const isDark = getThemePreference() === 'dark';
-      document.documentElement.classList.toggle('dark', isDark);
+      // Apply theme to document
+      function applyTheme(doc = document) {
+        const theme = getThemePreference();
+        if (theme === 'dark') {
+          doc.documentElement.classList.add('dark');
+        } else {
+          doc.documentElement.classList.remove('dark');
+        }
+      }
 
+      // Apply theme on initial load
+      applyTheme();
+
+      // Sync theme changes to localStorage via MutationObserver
       if (typeof localStorage !== 'undefined') {
         const observer = new MutationObserver(() => {
           const isDark = document.documentElement.classList.contains('dark');
@@ -95,10 +106,19 @@ const websiteSchema = generateWebSiteSchema();
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
       }
 
-      // Reapply theme after Astro view transitions swap the DOM
+      // Apply theme to incoming document BEFORE swap (prevents flash)
+      document.addEventListener('astro:before-swap', (event) => {
+        const theme = getThemePreference();
+        if (theme === 'dark') {
+          event.newDocument.documentElement.classList.add('dark');
+        } else {
+          event.newDocument.documentElement.classList.remove('dark');
+        }
+      });
+
+      // Fallback: reapply theme after swap completes
       document.addEventListener('astro:after-swap', () => {
-        const isDark = getThemePreference() === 'dark';
-        document.documentElement.classList.toggle('dark', isDark);
+        applyTheme();
       });
     </script>
 

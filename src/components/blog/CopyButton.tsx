@@ -1,5 +1,5 @@
 import { Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface CopyButtonProps {
@@ -8,9 +8,13 @@ interface CopyButtonProps {
 
 export function CopyButton({
   code,
-}: CopyButtonProps): React.JSX.Element | null {
-  const [copied, setCopied] = useState<boolean>(false);
-  const [isMounted, setIsMounted] = useState<boolean>(() => false);
+}: CopyButtonProps): React.JSX.Element {
+  const [copied, setCopied] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleCopy = async (): Promise<void> => {
     try {
@@ -27,10 +31,7 @@ export function CopyButton({
     }
   };
 
-  if (!isMounted) {
-    setIsMounted(true);
-    return null;
-  }
+  if (!isMounted) return <></>;
 
   return (
     <button

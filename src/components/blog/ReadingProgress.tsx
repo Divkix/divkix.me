@@ -37,7 +37,7 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
   const circumference = 2 * Math.PI * 18;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-  if (!isVisible) return null;
+  if (!isVisible) return <></>;
 
   return (
     <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-card/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-border">

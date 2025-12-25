@@ -44,31 +44,27 @@ export function Navbar() {
     // Only run on homepage
     if (pathname !== "/") return;
 
-    // Use IntersectionObserver to detect active section without forced reflows
     const sections = ["hero", "highlights", "projects", "experience", "skills", "contact"];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100; // offset for navbar height
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
           }
-        });
-      },
-      {
-        threshold: 0.3,
-        rootMargin: "-20% 0px -60% 0px", // Trigger when section is 20% from top
-      },
-    );
-
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) {
-        observer.observe(element);
+        }
       }
-    });
+    };
 
-    return () => observer.disconnect();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
   const handleAnchorClick = (

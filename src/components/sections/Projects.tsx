@@ -74,14 +74,14 @@ export function Projects() {
         </div>
 
         {/* Projects grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
           {filteredProjects.map((project: Project, index: number) => (
             <div
               key={project.name}
-              className="animate-fade-in-up opacity-0"
+              className="animate-fade-in-up"
               style={{
                 animationDelay: `${200 + index * 50}ms`,
-                animationFillMode: "forwards",
+                animationFillMode: "both",
               }}
             >
               <Card className="glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col overflow-hidden">
