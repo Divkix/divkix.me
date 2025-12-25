@@ -197,33 +197,3 @@ function generateHowToSchema(howTo: HowTo) {
   };
 }
 
-/**
- * Generate combined schemas for blog posts
- * Returns an array of all applicable schemas
- */
-export function generateBlogPostSchemas(
-  post: BlogPostSchemaData,
-  faq?: FAQ[] | null,
-  howTo?: HowTo | null,
-  // biome-ignore lint/suspicious/noExplicitAny: JSON-LD schemas can have various shapes
-): Record<string, any>[] {
-  // biome-ignore lint/suspicious/noExplicitAny: JSON-LD schemas can have various shapes
-  const schemas: Record<string, any>[] = [
-    generateBlogPostingSchema(post),
-    generateBreadcrumbSchema([
-      { name: "Home", url: baseUrl },
-      { name: "Blog", url: `${baseUrl}/blog` },
-      { name: post.title, url: `${baseUrl}/blog/${post.slug}` },
-    ]),
-  ];
-
-  if (faq && faq.length > 0) {
-    schemas.push(generateFAQSchema(faq));
-  }
-
-  if (howTo && howTo.steps.length > 0) {
-    schemas.push(generateHowToSchema(howTo));
-  }
-
-  return schemas;
-}

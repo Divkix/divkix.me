@@ -29,5 +29,3 @@ export function ScrollProgress() {
     </div>
   );
 }
-
-export default ScrollProgress;

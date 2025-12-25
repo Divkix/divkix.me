@@ -73,5 +73,3 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
     </div>
   );
 }
-
-export default ReadingProgress;

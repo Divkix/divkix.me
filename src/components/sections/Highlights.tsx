@@ -99,5 +99,3 @@ export function Highlights() {
     </section>
   );
 }
-
-export default Highlights;
