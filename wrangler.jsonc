@@ -2,6 +2,6 @@
   "name": "divkix-me",
   "compatibility_date": "2025-12-25",
   "assets": {
-    "directory": "./out"
+    "directory": "./dist"
   }
 }
