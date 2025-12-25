@@ -4,6 +4,7 @@ import { ViewTransitions } from "astro:transitions";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+import { Toaster } from "@/components/shared/Toaster";
 
 interface Props {
   title?: string;
@@ -112,5 +113,8 @@ const websiteSchema = generateWebSiteSchema();
 
     <!-- Page Content -->
     <slot />
+
+    <!-- Toast Notifications -->
+    <Toaster client:load />
   </body>
 </html>

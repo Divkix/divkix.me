@@ -1,6 +1,7 @@
 ---
 import Footer from "@/components/shared/Footer.astro";
 import { Navbar } from "@/components/shared/Navbar";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { siteConfig } from "@/data/site.config";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -22,14 +23,7 @@ const {
   <Navbar client:load />
 
   <!-- Scroll Progress (optional, for homepage) -->
-  {showScrollProgress && (
-    <div data-placeholder="scroll-progress">
-      <!-- TODO: Replace with actual ScrollProgress component when created -->
-      <div class="fixed top-0 left-0 right-0 z-40 h-1 bg-primary/20">
-        <div class="h-full bg-primary transition-all duration-150" style="width: 0%"></div>
-      </div>
-    </div>
-  )}
+  {showScrollProgress && <ScrollProgress client:load />}
 
   <!-- Main Content -->
   <main id="main-content" class="min-h-screen">

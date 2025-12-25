@@ -24,11 +24,6 @@ export default defineConfig({
       wrap: true,
     },
   },
-  vite: {
-    optimizeDeps: {
-      exclude: ["motion"],
-    },
-  },
   compressHTML: true,
   build: {
     inlineStylesheets: "auto",
