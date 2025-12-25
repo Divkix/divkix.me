@@ -1,6 +1,6 @@
 ---
 import "@/styles/globals.css";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
@@ -72,7 +72,7 @@ const websiteSchema = generateWebSiteSchema();
     />
 
     <!-- View Transitions -->
-    <ViewTransitions />
+    <ClientRouter />
 
     <!-- Theme Script -->
     <script is:inline>
@@ -97,11 +97,12 @@ const websiteSchema = generateWebSiteSchema();
     </script>
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
     <!-- Analytics -->
     <script
+      is:inline
       async
       src="https://analytics.divkix.me/s.js"
       data-website-id="c27cdff0-16e4-49c7-b4c8-6b229ef3fd83"
