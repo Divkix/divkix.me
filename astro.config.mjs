@@ -37,7 +37,14 @@ export default defineConfig({
     react(),
     mdx(),
     sitemap({
+      xslURL: "/sitemap.xsl",
       filter: (page) => !page.includes("/draft/"),
+      namespaces: {
+        news: false,
+        xhtml: false,
+        image: false,
+        video: false,
+      },
       serialize(item) {
         const blogDate = blogDateMap.get(item.url);
 
