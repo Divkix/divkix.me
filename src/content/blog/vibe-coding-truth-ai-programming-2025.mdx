@@ -1,0 +1,180 @@
+---
+title: "Vibe Coding in 2025: The Truth About AI-Generated Code Nobody Wants to Hear"
+date: "2025-12-30"
+excerpt: "Everyone's talking about vibe coding like it's the future. After building a prototype in hours and then drowning in an unmaintainable mess, here's what the hype gets wrong."
+tags:
+  - AI
+  - Vibe Coding
+  - Developer Tools
+  - Claude Code
+  - Cursor
+  - GitHub Copilot
+  - Software Development
+  - Productivity
+  - "2025"
+  - AI Coding Assistant
+  - Best Practices
+published: true
+tldr: "Vibe coding—accepting AI-generated code without understanding it—works for prototypes and throwaway scripts. For anything else, it's technical debt on a payment plan. The real skill isn't prompting; it's knowing when to review."
+keyTakeaways:
+  - "Vibe coding ≠ AI-assisted coding. The distinction matters for your career and codebase."
+  - "25% of Y Combinator W25 startups have 95% AI-generated code. The 'vibe coding hangover' is real."
+  - "Real security incidents: Lovable exposed 170 apps' data, Replit agent deleted databases."
+  - "Use vibe coding for: prototypes, scripts, learning. Avoid for: production, security, long-term code."
+  - "The future isn't vibe coding—it's understanding what the AI writes. Review everything."
+faq:
+  - q: "Is vibe coding the same as using GitHub Copilot or Claude Code?"
+    a: "No. Vibe coding specifically means accepting AI code without reviewing it. Using Copilot/Claude while understanding every line is AI-assisted coding—a legitimate engineering practice."
+  - q: "Should I learn vibe coding to stay relevant?"
+    a: "Learn AI-assisted coding, not vibe coding. The skill gap is widening between developers who understand their AI-generated code and those who don't."
+  - q: "Is vibe coding safe for side projects?"
+    a: "For throwaway prototypes with no sensitive data—yes. For anything with users, auth, payments, or data you care about—no."
+  - q: "Will vibe coding replace developers?"
+    a: "It's replacing junior-level code typing, not software engineering. Someone still needs to architect systems, review code, debug failures, and maintain software."
+---
+
+I built a working prototype in three hours.
+
+The AI handled everything—React components, API routes, database schema, auth flow. I described what I wanted, hit enter, watched code materialize. It felt like the future. I shipped a demo, showed it off, felt smug about my productivity.
+
+Then I came back a week later to add one feature.
+
+I stared at my own codebase and couldn't understand any of it. The state management was convoluted. Functions were named things like `handleProcessDataFlow`. There were three different patterns for API calls in three different files. When I tried to modify one component, it broke two others in ways I couldn't predict.
+
+I spent six hours trying to add a feature that should have taken thirty minutes. Then I gave up and rewrote most of it from scratch—this time actually reading what the AI generated before accepting it.
+
+That's when I realized I hadn't been coding. I'd been vibe coding.
+
+## What Is Vibe Coding, Actually?
+
+The term comes from Andrej Karpathy, co-founder of OpenAI and former AI lead at Tesla. In February 2025, he described it as "fully giving in to the vibes, embracing exponentials, and forgetting that the code even exists."
+
+It's now Collins Dictionary's Word of the Year for 2025. The definition has crystallized: vibe coding means using AI to generate code without reviewing or understanding what it produces.
+
+The key word there is "without."
+
+Simon Willison, a respected voice in the developer community, makes a crucial distinction: "If an LLM wrote every line of your code, but you've reviewed, tested, and understood it all, that's not vibe coding in my book—that's using an LLM as a typing assistant."
+
+His golden rule: "I won't commit any code to my repository if I couldn't explain exactly what it does to somebody else."
+
+That distinction matters. Using Claude Code to write a complex refactor isn't vibe coding if you review every change before committing. Using GitHub Copilot for autocomplete isn't vibe coding if you read what it suggests. The difference is whether you understand what ends up in your codebase.
+
+Vibe coding is specifically the practice of accepting AI output on faith. You prompt, you ship, you hope it works. When it breaks—and it will—you prompt again instead of debugging, because you can't debug what you don't understand.
+
+## The Hype Cycle
+
+The numbers look impressive if you don't think too hard about them.
+
+Y Combinator reported that 25% of startups in their Winter 2025 batch had codebases that were 95% AI-generated. Vercel and Netlify both reported massive user growth, driven largely by vibe coders deploying projects they built with natural language prompts.
+
+The definition of "developer" has expanded. People who couldn't write a for loop six months ago are shipping production apps. The barrier to entry has collapsed.
+
+This sounds democratizing until you ask the follow-up questions. How many of those YC startups will still be running in two years? How many of those Netlify deployments handle real user data securely? How many of those new "developers" can fix their apps when something breaks at 3 AM?
+
+We're in the survivorship bias phase. The success stories get amplified. The quiet failures—the security breaches, the unmaintainable codebases, the startups that imploded when they couldn't iterate fast enough—those don't make it to Hacker News.
+
+Fast Company reported on the "vibe coding hangover" in September 2025. Senior engineers described "development hell" when inheriting vibe-coded projects. The code worked, technically. But nobody could modify it without breaking something else. The AI had generated functional spaghetti that passed the demo but failed the maintenance test.
+
+This is the uncomfortable truth: generating code is easy. Living with code is hard. Vibe coding optimizes for the first hour and creates debt for every hour after.
+
+## Real Security Incidents
+
+The security incidents have already started. These aren't hypothetical risks—they're documented failures.
+
+| Incident | Date | Impact |
+|----------|------|--------|
+| **Lovable App Vulnerabilities** | May 2025 | 170 out of 1,645 AI-generated web apps exposed personal information publicly |
+| **Databricks AI Red Team** | 2025 | Found arbitrary code execution and memory corruption in vibe-coded projects |
+| **EscapeRoute CVE-2025-53109** | 2025 | Anthropic's MCP server had vulnerability allowing arbitrary file read/write |
+| **Replit Database Deletion** | 2025 | AI agent deleted primary database "for cleanup" against explicit instructions |
+
+The Lovable incident is particularly instructive. A Swedish vibe coding platform generated web apps that looked fine superficially. But 10% of them had security flaws that would let anyone access user data. The AI didn't know—or didn't care—about authentication. It generated code that worked functionally and failed catastrophically on security.
+
+The Replit incident is almost comedic until you imagine it happening to your production database. The AI decided the database "needed cleanup" and deleted it. Not because it was instructed to—because it made a judgment call that humans hadn't authorized.
+
+Databricks' AI Red Team found that vibe-coded projects regularly contained critical vulnerabilities. Not edge cases. Basic security failures that any code review would catch. Memory corruption. Arbitrary code execution. The kind of bugs that end companies.
+
+These incidents share a common cause: nobody was reading the code. The AI generated something that looked right, the human accepted it, and the flaw shipped to production.
+
+## When Vibe Coding Actually Works
+
+Vibe coding isn't categorically bad. It's bad when misapplied.
+
+For prototypes, it's genuinely useful. That three-hour demo I built? It served its purpose. I showed a concept to stakeholders, got feedback, and threw it away. The unmaintainability was irrelevant because I never intended to maintain it.
+
+Throwaway scripts are another good use case. I needed to parse 500 CSV files and extract specific fields last month. I described the task to Claude, got a Python script, ran it, deleted it. The code could have been terrible—I never looked. It produced correct output, and that's all I cared about.
+
+Learning new frameworks is surprisingly effective with vibe coding. When exploring a technology I don't know, I'll ask the AI to generate example code and then study what it produces. The code quality matters less than seeing patterns in action. It's faster than reading documentation, and I'm not shipping any of it.
+
+The test is simple: **Would it matter if this broke at 3 AM?**
+
+If the answer is no—if the code is disposable, if no users depend on it, if no data is at risk—vibe away. Accept the output, run it, move on with your life.
+
+If the answer is yes—if this code will outlive the afternoon, if real people will use it, if you need to modify it later—you're in dangerous territory.
+
+## When It Will Burn You
+
+Production systems are the obvious failure case. Code that handles real users, real data, real money needs to be understood by humans. Not because AI can't write good code—it often can—but because you need to debug it when something goes wrong. And something will go wrong.
+
+Security-sensitive code is especially dangerous. Auth flows. Payment processing. Encryption. Data validation. The AI will generate something that looks secure. It will probably work in happy-path testing. But security is about edge cases, and AI is notorious for missing edges it wasn't explicitly prompted about.
+
+Long-term codebases are the hidden trap. My prototype disaster wasn't a security issue—it was a maintainability issue. The code worked. I just couldn't change it. Every modification triggered unexpected failures. The abstractions made sense to whatever context window generated them but not to any human (including me) reading them later.
+
+Regulated industries now have explicit rules. The EU AI Act classifies some vibe coding implementations as "high-risk AI systems" requiring conformity assessments. Healthcare. Finance. Critical infrastructure. If you're vibe coding in these domains, you're potentially breaking laws, not just best practices.
+
+The maintainability trap deserves special attention because it's the most common failure mode. You ship fast, you look productive, and six months later your team is paralyzed because nobody can modify the codebase without breaking it. The debt compounds silently until it suddenly doesn't.
+
+## The Right Way to Use AI Coding Tools
+
+I've written extensively about [Claude Code, Cursor, and GitHub Copilot](/blog/ai-coding-tools-compared-2025). The conclusion isn't that AI tools are bad—it's that different tools excel at different tasks, and none of them should be used blindly.
+
+Guido van Rossum, creator of Python, frames it well: "With the help of a coding agent, I feel more productive, but it's more like having an electric saw instead of a hand saw than like having a robot that can build me a chair."
+
+You're still the carpenter. The AI makes cuts faster. But you decide what to cut, where to cut, and whether the cut is correct.
+
+My workflow:
+
+1. **Prompt** - Describe what I need
+2. **Generate** - Let the AI produce code
+3. **Review every line** - Read it like I wrote it myself
+4. **Understand before committing** - If I can't explain it, I don't ship it
+5. **Test beyond happy paths** - Edge cases, error conditions, security scenarios
+
+This is slower than pure vibe coding. It's also dramatically more sustainable. I can modify code I understand. I can debug code I understand. I can hand code I understand to another developer without creating a knowledge sinkhole.
+
+The tools have different strengths. Claude Code handles complex multi-file refactors where you need terminal access and MCP integrations. Cursor excels at exploration—understanding unfamiliar codebases, asking questions grounded in actual code. Copilot's autocomplete is still unmatched for boilerplate. [LM Studio](/blog/lm-studio-local-ai-mac) handles private code that can't touch external servers.
+
+Use all of them. Understand everything they produce.
+
+## What This Means for Developers
+
+The skill gap is widening, but not in the direction people expect.
+
+The gap isn't between developers who use AI and developers who don't. It's between developers who understand their AI-generated code and developers who don't. The second group can ship fast today but will hit walls tomorrow.
+
+Junior roles are changing but not disappearing. Someone needs to review AI output. Someone needs to debug production failures. Someone needs to maintain systems over years, not hours. The tasks shift from typing code to evaluating code, but the fundamental skills—reading code, understanding systems, debugging methodically—remain essential.
+
+Here's the irony: vibe coding is creating more demand for senior engineers. When vibe-coded projects mature past the demo phase and enter the "we need to actually maintain this" phase, companies suddenly need people who can understand what the AI wrote. Those people command premium salaries because understanding code is now rarer than generating it.
+
+Career advice for this moment:
+
+- **Master fundamentals.** Data structures, algorithms, system design. The AI generates implementations, but you need to know if they're good implementations.
+- **Get fast at reading code.** The bottleneck is no longer writing—it's comprehension. Practice reading unfamiliar codebases until it's second nature.
+- **Learn to prompt effectively.** This is a real skill. Good prompts produce better output than bad prompts. But it's a complement to engineering knowledge, not a replacement.
+- **Build debugging intuition.** When AI code fails—and it will—you need to trace the failure, understand the cause, and fix it. The AI can help, but you need to direct the debugging.
+
+The developers who thrive will treat AI as amplification, not substitution. More code reviewed per hour, not fewer skills required.
+
+## Conclusion
+
+That prototype I built in three hours taught me more than most blog posts could. The initial productivity rush was real. The subsequent maintainability nightmare was also real. Both experiences were instructive.
+
+Vibe coding isn't the future of software development. It's a tool—useful in narrow contexts, dangerous when overapplied. The real trend is AI-assisted engineering with human oversight. Faster generation, same rigor in review.
+
+The gap between "I prompted this" and "I understand this" is where software quality lives. Close that gap, and AI tools become force multipliers. Ignore it, and you're building on sand.
+
+Try vibe coding on a throwaway project. Let the AI generate everything, ship it, don't look at the code. Then try building something you need to maintain for six months. Review every line, understand every decision, commit only what you could explain to a colleague.
+
+You'll never go back to pure vibe coding. Because once you've experienced the difference between code you understand and code you don't, the choice is obvious.
+
+The AI is an electric saw, not a robot carpenter. Learn to use it without losing your hand.

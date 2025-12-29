@@ -11,8 +11,8 @@ const path = require("node:path");
 const { execSync } = require("node:child_process");
 const matter = require("gray-matter");
 
-const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
-const OUTPUT_FILE = path.join(CONTENT_DIR, "posts.json");
+const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog");
+const OUTPUT_FILE = path.join(process.cwd(), "content", "blog", "posts.json");
 
 /**
  * Extract table of contents from markdown content
@@ -153,7 +153,8 @@ function getAllPosts() {
     totalPosts: publishedPosts.length,
   };
 
-  // Write to JSON file
+  // Ensure output directory exists and write to JSON file
+  fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
 
   console.log(`✅ Generated metadata for ${publishedPosts.length} posts`);

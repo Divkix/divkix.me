@@ -1,5 +1,8 @@
 node_modules/
 dist/
+
+# Generated at build time
+content/blog/
 *.tsbuildinfo
 .DS_Store
 .vercel
