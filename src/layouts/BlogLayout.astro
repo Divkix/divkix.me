@@ -28,9 +28,9 @@ const canonical = `${baseUrl}${Astro.url.pathname}`;
   <!-- Navbar - React island with client:load -->
   <Navbar client:load />
 
-  <!-- Reading Progress - React island with client:load (conditional) -->
+  <!-- Reading Progress - React island (client-only, no SSR) -->
   {showReadingProgress && (
-    <ReadingProgress client:load readingTime={readingTime} />
+    <ReadingProgress client:only="react" readingTime={readingTime} />
   )}
 
   <!-- Main Content -->
