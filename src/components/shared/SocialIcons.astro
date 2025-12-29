@@ -8,6 +8,16 @@ interface Props {
 
 const { size = "default", className = "" } = Astro.props;
 
+// SEO-optimized aria-labels with full name
+const ariaLabels: Record<string, string> = {
+  GitHub: `${siteConfig.name} on GitHub`,
+  LinkedIn: `${siteConfig.name} on LinkedIn`,
+  X: `${siteConfig.name} on X`,
+  Instagram: `${siteConfig.name} on Instagram`,
+  "Hugging Face": `${siteConfig.name} on Hugging Face`,
+  Email: `Email ${siteConfig.name}`,
+};
+
 const sizeClasses = {
   sm: "h-4 w-4",
   default: "h-5 w-5",
@@ -51,7 +61,7 @@ const iconPaths = {
         href={social.href}
         target={isEmail ? undefined : "_blank"}
         rel={isEmail ? undefined : "noopener noreferrer"}
-        aria-label={social.label}
+        aria-label={ariaLabels[social.label] || social.label}
         class:list={[
           buttonSize,
           "inline-flex items-center justify-center rounded-md",

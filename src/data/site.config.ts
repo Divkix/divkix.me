@@ -20,7 +20,7 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Portfolio of Divanshu Chauhan (divkix), a Computer Science student at Arizona State University specializing in AI, Go, and Python. Explore open-source projects like WarpDL and Alita Robot.",
+      "Divanshu Chauhan is a grad student at ASU specializing in AI and software engineering. Explore his projects and portfolio at divkix.me.",
   },
 
   facts: {

@@ -14,6 +14,14 @@ const socialIcons = {
 const mainSocials = siteConfig.socials.filter((s) =>
   ["GitHub", "LinkedIn", "X", "Email"].includes(s.label),
 );
+
+// SEO-optimized aria-labels with full name
+const ariaLabels: Record<string, string> = {
+  GitHub: `${siteConfig.name} on GitHub`,
+  LinkedIn: `${siteConfig.name} on LinkedIn`,
+  X: `${siteConfig.name} on X`,
+  Email: `Email ${siteConfig.name}`,
+};
 ---
 
 <section id="hero" class="container mx-auto px-4 min-h-[calc(100vh-4rem)] flex flex-col justify-center relative overflow-hidden py-20">
@@ -51,7 +59,7 @@ const mainSocials = siteConfig.socials.filter((s) =>
               href={social.href}
               target={social.label !== "Email" ? "_blank" : undefined}
               rel={social.label !== "Email" ? "noopener noreferrer" : undefined}
-              aria-label={social.label}
+              aria-label={ariaLabels[social.label] || social.label}
               class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
             >
               <svg

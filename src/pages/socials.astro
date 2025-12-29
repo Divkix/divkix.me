@@ -1,0 +1,127 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+
+// Map social labels to their descriptive action text for SEO
+const socialActions: Record<string, string> = {
+  GitHub: "View code by",
+  LinkedIn: "Connect with",
+  X: "Follow",
+  Instagram: "Follow",
+  "Hugging Face": "Explore AI models by",
+  Email: "Email",
+};
+
+// Filter out email for the main list (handled separately)
+const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
+const emailSocial = siteConfig.socials.find((s) => s.label === "Email");
+---
+
+<SiteLayout
+  title="Connect"
+  description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
+>
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-2xl mx-auto space-y-12">
+      <!-- Header -->
+      <div class="space-y-4 text-center">
+        <h1 class="text-5xl font-display font-bold">Connect</h1>
+        <p class="text-xl text-foreground/70">
+          Find {siteConfig.name} across the web
+        </p>
+      </div>
+
+      <!-- Social Links with Full Name Anchor Text -->
+      <nav class="space-y-4" aria-label="Social media profiles">
+        {socialLinks.map((social) => {
+          const action = socialActions[social.label] || "Follow";
+          return (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="glass-surface p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            >
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <span class="text-xl font-bold text-primary">
+                    {social.label.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <span class="text-lg font-semibold block">
+                    {action} {siteConfig.name} on {social.label}
+                  </span>
+                  <span class="text-sm text-foreground/60 block">
+                    {social.href.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                  </span>
+                </div>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-foreground/40 group-hover:text-primary transition-colors"
+              >
+                <path d="M7 7h10v10" />
+                <path d="M7 17 17 7" />
+              </svg>
+            </a>
+          );
+        })}
+
+        {emailSocial && (
+          <a
+            href={emailSocial.href}
+            class="glass-surface p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+          >
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <span class="text-xl font-bold text-primary">@</span>
+              </div>
+              <div>
+                <span class="text-lg font-semibold block">
+                  Email {siteConfig.name}
+                </span>
+                <span class="text-sm text-foreground/60 block">
+                  {siteConfig.email}
+                </span>
+              </div>
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-foreground/40 group-hover:text-primary transition-colors"
+            >
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+          </a>
+        )}
+      </nav>
+
+      <!-- Additional context for SEO -->
+      <div class="text-center text-foreground/60 text-sm space-y-2">
+        <p>
+          {siteConfig.name} is a {siteConfig.seo?.jobTitle || "Software Engineer"} based in {siteConfig.location}.
+        </p>
+        <p>
+          Also known as <strong>@{siteConfig.handle.toLowerCase()}</strong> on most platforms.
+        </p>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

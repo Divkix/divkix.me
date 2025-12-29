@@ -73,16 +73,22 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
               </div>
             </div>
             <div class="flex flex-wrap gap-3 pt-2">
-              {siteConfig.socials.map((social) => (
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-sm px-4 py-2 border border-border/60 rounded-lg hover:border-primary hover:text-primary transition-colors"
-                >
-                  {social.label}
-                </a>
-              ))}
+              {siteConfig.socials.map((social) => {
+                const isEmail = social.label === "Email";
+                const linkText = isEmail
+                  ? `Email ${siteConfig.name}`
+                  : `${siteConfig.name} on ${social.label}`;
+                return (
+                  <a
+                    href={social.href}
+                    target={isEmail ? undefined : "_blank"}
+                    rel={isEmail ? undefined : "noopener noreferrer"}
+                    class="text-sm px-4 py-2 border border-border/60 rounded-lg hover:border-primary hover:text-primary transition-colors"
+                  >
+                    {linkText}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
