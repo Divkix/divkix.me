@@ -4,190 +4,150 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Modern portfolio site built with Next.js 15, TypeScript, Tailwind CSS v4, and Framer Motion. Deployed on Cloudflare Workers using OpenNext for edge runtime compatibility. Features a single-page homepage with smooth scrolling sections (Hero, Highlights, Projects, Experience, Skills, Contact) and a separate blog system powered by MDX with build-time metadata generation.
+Portfolio site built with Astro 5, TypeScript, Tailwind CSS v4, and React (islands). Static output deployed to any static host. Features a single-page homepage with sections (Hero, Highlights, Projects, Experience, Skills, Contact), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data.
 
 ## Build & Development Commands
 
 ```bash
-# Development
-bun run dev                 # Start development server on localhost:3000
-
-# Build
-bun run build              # Run prebuild script + Next.js build
-bun run prebuild           # Generate blog posts metadata (runs automatically before build)
-
-# Linting
-bun run lint               # Run ESLint
-
-# Cloudflare Deployment
-bun run preview            # Build and preview locally with OpenNext
-bun run deploy             # Build and deploy to Cloudflare Workers
-bun run upload             # Build and upload without deploying
-bun run cf-typegen         # Generate Cloudflare Worker types
+bun run dev           # Start dev server on localhost:4321
+bun run build         # Production build (outputs to dist/)
+bun run preview       # Preview production build locally
+bun run lint          # Run Biome linter
+bun run lint:fix      # Auto-fix lint issues
+bun run format        # Format code with Biome
+bun run type-check    # Run astro check for TypeScript errors
 ```
-
-**Important:** Always run `bun run prebuild` before building. This generates `content/blog/posts.json` from MDX files, which is required for the blog to work in Cloudflare Workers (filesystem access not available at runtime).
 
 ## Architecture
 
-### Deployment Model
+### Astro Islands Pattern
 
-The site uses **@opennextjs/cloudflare** to adapt Next.js for Cloudflare Workers. Key constraint: no filesystem access at runtime. All dynamic content (blog posts) must be pre-generated at build time into JSON files.
+Components are either `.astro` (static, server-rendered) or `.tsx` (React, client-hydrated). React components requiring interactivity use client directives:
 
-### App Router Structure
-
-```
-app/
-├── (site)/              # Main site route group
-│   ├── layout.tsx       # Site-specific layout
-│   └── page.tsx         # Single-page homepage (Hero, Highlights, Projects, Experience, Skills, Contact)
-├── blog/
-│   ├── [slug]/          # Dynamic blog post pages
-│   │   └── page.tsx     # Loads MDX content dynamically
-│   ├── layout.tsx       # Blog-specific layout
-│   └── page.tsx         # Blog listing (reads from posts.json)
-├── api/contact/         # Contact form API endpoint
-│   └── route.ts
-├── rss.xml/             # RSS feed generation
-│   └── route.ts
-└── layout.tsx           # Root layout (providers, metadata)
+```astro
+<Highlights client:visible />  <!-- Hydrate when visible in viewport -->
+<Contact client:visible />
+<Toaster client:load />        <!-- Hydrate immediately on page load -->
 ```
 
-### Content System
+Static sections (Hero, Experience, Skills, Footer, SocialIcons) are `.astro` files - no client JS shipped.
 
-**Blog Posts:**
+### Content Collections
 
-- MDX files in `content/blog/*.mdx` with frontmatter (title, date, excerpt, tags, author, published)
-- Build script (`scripts/generate-posts-metadata.js`) generates `content/blog/posts.json`
-- Runtime code (`lib/content.ts`) reads from JSON, never filesystem
-- Reading time calculated at build time (200 words/min)
-
-**Site Configuration:**
-
-- All site content centralized in `content/site.config.ts`
-- Includes personal info, skills, projects, experience, education, socials
-- Type-safe exports with `as const` for strict typing
-
-### Animations
-
-Hero section uses Framer Motion with stagger effects for smooth entrance animations:
+Blog posts use Astro's Content Collections API. Schema defined in `src/content/config.ts`:
 
 ```typescript
-// From components/sections/Hero3D.tsx
-<motion.div
-  variants={staggerContainer}
-  initial="hidden"
-  animate="show"
->
-  <motion.h1 variants={staggerItem}>...</motion.h1>
-  <motion.p variants={staggerItem}>...</motion.p>
-</motion.div>
+// Frontmatter fields
+title, date, dateModified?, excerpt, tags[], published, author?
+tldr?, keyTakeaways[]?, faq[]?, howto?
 ```
 
-**Highlights section** features count-up animations using `useInView` hook to trigger when scrolled into viewport. Numbers animate from 0 to target value over 2 seconds.
+Posts live in `src/content/blog/*.mdx`. Access via `getCollection("blog")` at build time.
+
+**Important:** A parallel `content/blog/posts.json` is pre-generated for the sitemap integration (Astro config runs before content collections are available). This is read in `astro.config.mjs` to populate `lastmod` dates.
+
+### File Structure
+
+```
+src/
+├── pages/              # File-based routing
+│   ├── index.astro     # Homepage (Hero → Highlights → Projects → Experience → Skills → Contact)
+│   ├── blog/
+│   │   ├── index.astro # Blog listing
+│   │   └── [slug].astro # Dynamic blog post pages
+│   ├── about.astro, privacy.astro, 404.astro
+│   ├── rss.xml.ts      # RSS feed generation
+│   └── robots.txt.ts   # Dynamic robots.txt
+├── layouts/
+│   ├── BaseLayout.astro    # Root HTML, meta tags, View Transitions, theme script
+│   ├── SiteLayout.astro    # Navbar + Footer wrapper
+│   └── BlogLayout.astro    # Blog-specific layout with reading progress
+├── components/
+│   ├── sections/       # Page sections (Hero.astro, Projects.tsx, etc.)
+│   ├── shared/         # Navbar.tsx, Footer.astro, ThemeToggle.tsx
+│   ├── ui/             # shadcn-style primitives (Button, Card, Input, etc.)
+│   └── blog/           # Blog-specific components
+├── content/
+│   ├── blog/*.mdx      # Blog post files
+│   └── config.ts       # Content collection schema (Zod)
+├── data/
+│   └── site.config.ts  # All site content (skills, projects, experience, socials)
+├── lib/
+│   ├── utils.ts        # cn() helper, formatDate(), etc.
+│   ├── schema.ts       # JSON-LD structured data generators
+│   ├── seo.ts          # SEO utilities, baseUrl constant
+│   └── remark-reading-time.mjs  # Remark plugin for reading time
+└── styles/
+    ├── globals.css     # Tailwind imports, CSS variables, custom styles
+    └── animations.css  # Keyframe animations
+```
 
 ### Styling
 
-- Tailwind CSS v4 with custom design system
-- Colors use OKLCH color space for better perceptual uniformity
-- CSS variables in `app/globals.css` (`:root` for light, `.dark` for dark mode)
-- shadcn/ui components in `components/ui/` (Radix UI primitives)
+- Tailwind CSS v4 configured via `postcss.config.mjs` (not @astrojs/tailwind - that's v3 only)
+- OKLCH color space for perceptual uniformity
+- CSS variables in `src/styles/globals.css` for theming (`:root` light, `.dark` dark mode)
+- View Transitions enabled via `<ClientRouter />` in BaseLayout
 
-### Forms & Validation
+### Site Configuration
 
-- React Hook Form + Zod for form handling and validation
-- Contact form in `components/sections/Contact.tsx` posts to `/api/contact`
+All content centralized in `src/data/site.config.ts`:
+- Personal info, tagline, contact
+- Skills array with categories and proficiency scores
+- Projects array with tags, links, periods
+- Experience with nested positions per company
+- Education and social links
 
-## Key Files & Patterns
+Exported as `const` for type inference.
+
+## Key Patterns
 
 ### Adding Blog Posts
 
-1. Create `content/blog/your-post.mdx`:
-
+1. Create `src/content/blog/your-post.mdx`:
 ```mdx
 ---
 title: "Post Title"
-date: "2025-10-28"
+date: "2025-01-15"
 excerpt: "Brief description"
 tags: ["tag1", "tag2"]
 published: true
 ---
 
-Content here...
+Content with MDX support...
 ```
 
-2. Run `bun run prebuild` to regenerate `posts.json`
-3. Post appears automatically on blog page
+2. Post automatically appears on `/blog` and `/blog/your-post`
 
-### Modifying Site Content
+### SEO & Structured Data
 
-Edit `content/site.config.ts` to update:
+- JSON-LD schemas generated in `src/lib/schema.ts` (Person, WebSite)
+- Blog posts include BlogPosting, BreadcrumbList, optional FAQ/HowTo schemas
+- OpenGraph and Twitter meta tags in BaseLayout
+- Sitemap via `@astrojs/sitemap` with custom serialization for blog dates
+- RSS feed at `/rss.xml`
+- LLMs.txt files via `@4hse/astro-llms-txt` integration
 
-- Personal information
-- Skills list
-- Projects array (name, desc, tags, period, links)
-- Experience and education
-- Social links
+### React Islands
 
-### TypeScript Configuration
+Interactive components are React with client hydration:
+- `Highlights.tsx` - Count-up animations triggered by viewport visibility
+- `Projects.tsx` - Tag filtering with state
+- `Contact.tsx` - Form with react-hook-form + Zod validation
+- `Navbar.tsx` - Mobile menu state, smooth scrolling
+- `ThemeToggle.tsx` - Dark/light mode toggle
 
-- Strict mode enabled
-- Path alias: `@/*` maps to project root
-- ESM with bundler module resolution
-- No unused locals/parameters allowed
+### Theme Handling
 
-### Image Optimization
-
-Next.js image config supports AVIF/WebP with multiple device sizes. Use `next/image` for all images.
-
-## Testing in Edge Environment
-
-The site must work in Cloudflare Workers (no Node.js APIs). Test locally with:
-
-```bash
-bun run preview
-```
-
-This builds with OpenNext and previews in a local Worker environment.
-
-## Key Components
-
-### Homepage Sections (in order)
-
-1. **Hero3D** - Animated hero with name, tagline, social icons, and CTA buttons
-2. **Highlights** - Statistics dashboard with count-up animations (impact, projects, OSS)
-3. **Projects** - Project cards with filtering by tags
-4. **Experience** - Timeline of work experience with expandable positions
-5. **Skills** - Grid display of technical skills
-6. **Contact** - Contact form with validation
-
-### Shared Components
-
-- **Navbar** - Navigation with smooth scrolling, theme toggle, and mobile menu
-- **Footer** - Site footer with social links
-- **GradientText** - Wrapper for gradient text effects
-- **SocialIcons** - Social media icon links
-- **ThemeToggle** - Dark/light mode switcher
+Theme script in BaseLayout runs inline (no FOUC):
+1. Reads from localStorage or system preference
+2. MutationObserver syncs class changes back to localStorage
+3. View Transition hooks (`astro:before-swap`) apply theme to incoming document
 
 ## Common Pitfalls
 
-1. **Filesystem Access:** Never use `fs` module in runtime code. Pre-generate data at build time.
-2. **Blog Metadata:** Must run prebuild script before deploying, or blog will break. The blog listing depends on `posts.json`.
-3. **Cloudflare Compatibility:** Check compatibility flags in `wrangler.jsonc` when using Node.js APIs.
-4. **Animation Performance:** Use `viewport={{ once: true }}` for scroll-triggered animations to prevent re-triggering.
-5. **Client Components:** Framer Motion requires `"use client"` directive. Hero3D and Highlights are client components.
-
-## Scripts
-
-- `generate-posts-metadata.js`: Generates blog metadata JSON from MDX files
-- `generate-favicons.ts`: Generates multiple favicon formats (referenced in git status)
-
-## Deployment
-
-The project is configured for Cloudflare Workers:
-
-- Worker name: `divkix-me` (in `wrangler.jsonc`)
-- Assets directory: `.open-next/assets`
-- Compatibility flags: `nodejs_compat`, `global_fetch_strictly_public`
-
-Use `bun run deploy` to build and deploy in one command.
+1. **Tailwind v4**: No `@astrojs/tailwind` integration - use `@tailwindcss/postcss` in postcss config
+2. **Client Directives**: React components need `client:visible` or `client:load` to hydrate
+3. **Content Collections**: Only available in `.astro` files during build, not in `astro.config.mjs`
+4. **TypeScript Paths**: Use `@/` alias (maps to `./src/*`)
+5. **Biome**: This project uses Biome, not ESLint/Prettier
