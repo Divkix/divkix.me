@@ -15,6 +15,30 @@ const profilePageSchema = {
   url: `${baseUrl}/divkix`,
 };
 
+// FAQ Schema for identity disambiguation - helps capture "who is divkix" queries
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Who is divkix?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Divkix is the online handle and username of ${siteConfig.name}, a ${siteConfig.seo?.jobTitle || "Software Engineer"} based in ${siteConfig.location}. You can find divkix on GitHub, LinkedIn, X (Twitter), and other platforms.`,
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is divkix the same person as Divanshu Chauhan?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Yes, divkix is the online handle of ${siteConfig.name}. They are the same person. ${siteConfig.name} uses "divkix" as a consistent username across GitHub, LinkedIn, X, and other social platforms.`,
+      },
+    },
+  ],
+};
+
 // Top 3 projects for quick showcase
 const topProjects = siteConfig.projects.slice(0, 3);
 
@@ -30,7 +54,8 @@ const navLinks = [
   title="divkix | Divanshu Chauhan"
   description="divkix is Divanshu Chauhan - Software Engineer and open source contributor."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto space-y-12">

@@ -235,7 +235,8 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
             itemscope
             itemtype="https://schema.org/Person"
           >
-            by <span itemprop="name">{post.data.author || "Divanshu Chauhan"}</span>
+            by <a href="/divkix" itemprop="url" class="hover:text-primary"><span itemprop="name">{post.data.author || "Divanshu Chauhan"}</span></a>
+            <meta itemprop="alternateName" content={siteConfig.handle.toLowerCase()} />
           </address>
         </div>
 

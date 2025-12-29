@@ -67,6 +67,17 @@ const websiteSchema = generateWebSiteSchema();
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name}'s Blog`} href="/rss.xml" />
 
+    <!-- Identity Verification (rel="me") -->
+    {siteConfig.socials
+      .filter((s) => s.label !== "Email")
+      .map((social) => (
+        <link rel="me" href={social.href} />
+      ))
+    }
+
+    <!-- Author -->
+    <meta name="author" content={siteConfig.name} />
+
     <!-- Preconnect hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

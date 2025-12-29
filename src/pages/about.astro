@@ -1,12 +1,28 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { baseUrl } from "@/lib/seo";
+
+// AboutPage schema for SEO - links to main Person entity
+const aboutPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${baseUrl}/about`,
+  mainEntity: {
+    "@id": `${baseUrl}/#author`,
+  },
+  name: `About ${siteConfig.name}`,
+  description: `About ${siteConfig.name}, known online as ${siteConfig.handle.toLowerCase()}. ${siteConfig.tagline}`,
+  url: `${baseUrl}/about`,
+};
 ---
 
 <SiteLayout
   title={`About ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
   description={`About ${siteConfig.name}, known online as ${siteConfig.handle.toLowerCase()}. ${siteConfig.tagline}`}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
+
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-12">
       <!-- Header -->
@@ -85,7 +101,7 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
                   <a
                     href={social.href}
                     target={isEmail ? undefined : "_blank"}
-                    rel={isEmail ? undefined : "noopener noreferrer"}
+                    rel={isEmail ? undefined : "me noopener noreferrer"}
                     class="text-sm px-4 py-2 border border-border/60 rounded-lg hover:border-primary hover:text-primary transition-colors"
                   >
                     {linkText}
