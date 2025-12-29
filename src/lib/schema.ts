@@ -61,7 +61,7 @@ export function generateWebSiteSchema() {
     "@id": `${baseUrl}/#website`,
     name: siteConfig.name,
     alternateName: siteConfig.handle,
-    description: siteConfig.about,
+    description: siteConfig.seo?.metaDescription || siteConfig.about,
     url: baseUrl,
     publisher: {
       "@id": `${baseUrl}/#author`,
@@ -75,5 +75,42 @@ export function generateWebSiteSchema() {
       },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+/**
+ * Generate author schema for blog posts
+ * Links to main Person schema when author is site owner
+ */
+export function generateBlogAuthorSchema(authorName?: string) {
+  const isSiteOwner = !authorName || authorName === siteConfig.name;
+
+  if (isSiteOwner) {
+    return {
+      "@type": "Person",
+      "@id": `${baseUrl}/#author`,
+      name: siteConfig.name,
+      alternateName: siteConfig.handle,
+      url: baseUrl,
+    };
+  }
+
+  return {
+    "@type": "Person",
+    name: authorName,
+  };
+}
+
+/**
+ * Generate publisher schema for blog posts
+ * Always references the site owner
+ */
+export function generateBlogPublisherSchema() {
+  return {
+    "@type": "Person",
+    "@id": `${baseUrl}/#author`,
+    name: siteConfig.name,
+    alternateName: siteConfig.handle,
+    url: baseUrl,
   };
 }

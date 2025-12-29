@@ -20,7 +20,7 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Divanshu Chauhan is a grad student at ASU specializing in AI and software engineering. Explore his projects and portfolio at divkix.me.",
+      "Divanshu Chauhan (divkix) is a grad student at ASU specializing in AI and software engineering. Explore his projects and portfolio at divkix.me.",
   },
 
   facts: {

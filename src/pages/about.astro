@@ -4,8 +4,8 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
 ---
 
 <SiteLayout
-  title="About"
-  description={`About ${siteConfig.name} - ${siteConfig.tagline}`}
+  title={`About ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
+  description={`About ${siteConfig.name}, known online as ${siteConfig.handle.toLowerCase()}. ${siteConfig.tagline}`}
 >
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-12">
@@ -14,6 +14,9 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
         <h1 class="text-5xl font-display font-bold">About Me</h1>
         <p class="text-xl text-foreground/70">
           {siteConfig.tagline}
+        </p>
+        <p class="text-foreground/70">
+          I'm {siteConfig.name}, known online as <strong>@{siteConfig.handle.toLowerCase()}</strong>.
         </p>
       </div>
 

@@ -2,6 +2,8 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import { baseUrl } from "@/lib/seo";
+import { generateBlogAuthorSchema, generateBlogPublisherSchema } from "@/lib/schema";
+import { siteConfig } from "@/data/site.config";
 import { formatDate } from "@/lib/utils";
 
 // Generate static paths for all blog posts
@@ -66,14 +68,8 @@ const blogPostingSchema = {
   dateModified: post.data.dateModified
     ? `${post.data.dateModified}T00:00:00Z`
     : `${post.data.date}T00:00:00Z`,
-  author: {
-    "@type": "Person",
-    name: post.data.author || "Divanshu Chauhan",
-  },
-  publisher: {
-    "@type": "Person",
-    name: "Divanshu Chauhan",
-  },
+  author: generateBlogAuthorSchema(post.data.author),
+  publisher: generateBlogPublisherSchema(),
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id": `${baseUrl}/blog/${post.slug}`,
@@ -366,10 +362,13 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
             loading="lazy"
           />
           <div>
-            <h3 class="font-semibold">{post.data.author || "Divanshu Chauhan"}</h3>
+            <h3 class="font-semibold">
+              {post.data.author || siteConfig.name}
+              <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
+            </h3>
             <p class="text-sm text-foreground/70 mt-1">
-              Software Engineer and Computer Science student at Arizona State University.
-              Passionate about building useful tools and contributing to open source.
+              {siteConfig.seo?.jobTitle || "Software Engineer"} based in {siteConfig.location}.
+              <a href="/divkix" class="underline hover:text-primary ml-1">More about {siteConfig.handle.toLowerCase()}</a>
             </p>
           </div>
         </div>
