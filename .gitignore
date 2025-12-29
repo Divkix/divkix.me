@@ -6,6 +6,7 @@ dist/
 .netlify
 _site/
 .astro/
+.wrangler/
 scripts/smoke/*-main/
 scripts/memory/project/src/pages/
 benchmark/projects/
