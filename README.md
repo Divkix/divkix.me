@@ -1,31 +1,29 @@
 # Divkix Portfolio
 
-A modern, production-ready portfolio site built with Next.js 15, TypeScript, and Tailwind CSS. Deployed on Cloudflare Workers with edge-optimized architecture, featuring Framer Motion animations, an MDX-powered blog, and a comprehensive single-page experience.
+A modern, production-ready portfolio site built with Astro 5, TypeScript, Tailwind CSS v4, and React Islands. Static output deployed to Cloudflare Pages, featuring a single-page homepage with smooth scrolling sections, an MDX-powered blog with SEO optimization, and comprehensive structured data.
 
 ## Features
 
-- **Modern Design**: Clean aesthetic with glass surfaces and gradient text effects
-- **Hero Section**: Animated hero with Framer Motion stagger effects and social icons
-- **Highlights Dashboard**: Animated count-up statistics (users, projects, OSS contributions)
+- **Astro Islands Architecture**: Static-first with selective React hydration for interactivity
 - **Single-Page Experience**: Homepage with smooth scrolling sections (Hero, Highlights, Projects, Experience, Skills, Contact)
-- **Blog System**: MDX-powered blog with pre-generated metadata for edge deployment
+- **Blog System**: MDX-powered blog with Astro Content Collections, reading time, and table of contents
+- **Modern Design**: Clean aesthetic with OKLCH color space, glass surfaces, and gradient effects
+- **Dark Mode**: System-aware theme toggle with no flash of unstyled content
 - **Responsive**: Mobile-first design that works on all devices
-- **Accessible**: WCAG AA compliant with keyboard navigation and screen reader support
-- **Fast**: Optimized for Cloudflare Workers with edge runtime
-- **SEO Optimized**: Meta tags, JSON-LD structured data, and semantic HTML
+- **SEO Optimized**: JSON-LD structured data, OpenGraph meta tags, sitemap, and RSS feed
 - **Type-Safe**: 100% TypeScript with strict mode enabled
+- **Fast**: Static output with minimal JavaScript, optimized for edge deployment
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Astro 5 with View Transitions
 - **Language**: TypeScript 5 with strict mode
-- **Styling**: Tailwind CSS v4 with custom design system
+- **Styling**: Tailwind CSS v4 with PostCSS
 - **UI Components**: shadcn/ui (Radix UI primitives)
-- **Animations**: Framer Motion with stagger effects and count-up animations
 - **Forms**: React Hook Form + Zod validation
-- **Content**: MDX with gray-matter and build-time metadata generation
+- **Content**: MDX with gray-matter and Astro Content Collections
 - **Icons**: Lucide React
-- **Deployment**: Cloudflare Workers via @opennextjs/cloudflare
+- **Linting**: Biome (replaces ESLint + Prettier)
 - **Package Manager**: Bun
 
 ## Getting Started
@@ -48,91 +46,87 @@ cd portfolio
 
 ```bash
 bun install
-# or
-npm install
 ```
 
 3. Run the development server:
 
 ```bash
 bun run dev
-# or
-npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Open [http://localhost:4321](http://localhost:4321) in your browser.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start dev server on localhost:4321 |
+| `bun run build` | Production build (runs prebuild + astro build) |
+| `bun run preview` | Preview production build locally |
+| `bun run lint` | Run Biome linter |
+| `bun run lint:fix` | Auto-fix lint issues |
+| `bun run format` | Format code with Biome |
+| `bun run type-check` | Run astro check for TypeScript errors |
+
+### Utility Scripts
+
+Scripts in `/scripts` for asset generation (run manually as needed):
+
+| Script | Description |
+|--------|-------------|
+| `generate-posts-metadata.js` | Generates `posts.json` from MDX (runs automatically in prebuild) |
+| `generate-og-images.js` | Generates OG images for blog posts (runs automatically in prebuild) |
+| `generate-og-image.js` | Generates site-wide OG image |
+| `generate-favicons.ts` | Generates favicons from SVG source |
 
 ## Project Structure
 
 ```
-├── app/                      # Next.js App Router
-│   ├── (site)/              # Main site route group
-│   │   ├── layout.tsx       # Site layout
-│   │   └── page.tsx         # Homepage (Hero, Highlights, Projects, Experience, Skills, Contact)
-│   ├── blog/                # Blog pages
-│   │   ├── [slug]/          # Dynamic blog post pages
-│   │   │   └── page.tsx     # Loads MDX dynamically
-│   │   ├── layout.tsx       # Blog layout
-│   │   └── page.tsx         # Blog listing (reads posts.json)
-│   ├── api/                 # API routes
-│   │   └── contact/         # Contact form endpoint
-│   │       └── route.ts
-│   ├── rss.xml/             # RSS feed generation
-│   │   └── route.ts
-│   ├── layout.tsx           # Root layout with providers
-│   └── globals.css          # Global styles with OKLCH colors
-├── components/              # React components
-│   ├── sections/            # Page sections
-│   │   ├── Hero3D.tsx       # Hero with animated text and social icons
-│   │   ├── Highlights.tsx   # Animated statistics dashboard
-│   │   ├── Projects.tsx     # Projects section with filtering
-│   │   ├── Experience.tsx   # Work experience timeline
-│   │   ├── Skills.tsx       # Skills grid
-│   │   └── Contact.tsx      # Contact form
-│   ├── shared/              # Shared components
-│   │   ├── Navbar.tsx       # Navigation with smooth scroll
-│   │   ├── Footer.tsx       # Site footer
-│   │   ├── GradientText.tsx # Gradient text wrapper
-│   │   ├── SocialIcons.tsx  # Social media icons
-│   │   └── ThemeToggle.tsx  # Dark/light mode toggle
-│   ├── ui/                  # shadcn/ui components (Button, Card, Input, etc.)
-│   ├── mdx/                 # MDX components
-│   └── providers/           # Context providers
-│       └── ThemeProvider.tsx
-├── content/                 # Content files
-│   ├── blog/                # MDX blog posts + generated metadata
-│   │   ├── *.mdx            # Blog post files
-│   │   └── posts.json       # Generated at build time
-│   └── site.config.ts       # Site configuration (all content)
-├── lib/                     # Utilities
-│   ├── utils.ts             # Helper functions (cn, etc.)
-│   ├── animations.ts        # Framer Motion variants
-│   ├── content.ts           # Blog post utilities (reads posts.json)
-│   └── seo.ts               # SEO metadata utilities
-├── scripts/                 # Build scripts
-│   ├── generate-posts-metadata.js  # Generates posts.json from MDX
-│   └── generate-favicons.ts        # Favicon generation
-├── public/                  # Static assets
-│   ├── *.svg                # Icons and logos
-│   └── resume.pdf           # Downloadable resume
-├── next.config.ts           # Next.js configuration with MDX
-├── tailwind.config.ts       # Tailwind configuration
-├── tsconfig.json            # TypeScript configuration
-├── wrangler.jsonc           # Cloudflare Workers configuration
-└── open-next.config.ts      # OpenNext configuration
+├── src/
+│   ├── pages/              # File-based routing
+│   │   ├── index.astro     # Homepage (Hero → Highlights → Projects → Experience → Skills → Contact)
+│   │   ├── blog/
+│   │   │   ├── index.astro # Blog listing
+│   │   │   └── [slug].astro # Dynamic blog post pages
+│   │   ├── about.astro     # About page
+│   │   ├── privacy.astro   # Privacy policy
+│   │   ├── 404.astro       # Not found page
+│   │   ├── rss.xml.ts      # RSS feed generation
+│   │   └── robots.txt.ts   # Dynamic robots.txt
+│   ├── layouts/
+│   │   ├── BaseLayout.astro    # Root HTML, meta tags, View Transitions
+│   │   ├── SiteLayout.astro    # Navbar + Footer wrapper
+│   │   └── BlogLayout.astro    # Blog-specific layout with reading progress
+│   ├── components/
+│   │   ├── sections/       # Page sections (Hero.astro, Projects.tsx, etc.)
+│   │   ├── shared/         # Navbar.tsx, Footer.astro, ThemeToggle.tsx
+│   │   ├── ui/             # shadcn-style primitives (Button, Card, etc.)
+│   │   └── blog/           # Blog-specific components
+│   ├── content/
+│   │   ├── blog/*.mdx      # Blog post files
+│   │   └── config.ts       # Content collection schema (Zod)
+│   ├── data/
+│   │   └── site.config.ts  # All site content (skills, projects, experience)
+│   ├── lib/
+│   │   ├── utils.ts        # cn() helper, formatDate(), etc.
+│   │   ├── schema.ts       # JSON-LD structured data generators
+│   │   └── seo.ts          # SEO utilities
+│   └── styles/
+│       └── globals.css     # Tailwind imports, CSS variables
+├── scripts/                # Build and generation scripts
+├── public/                 # Static assets (favicons, images)
+├── content/blog/           # Generated posts.json (gitignored)
+├── astro.config.mjs        # Astro configuration
+├── postcss.config.mjs      # PostCSS with Tailwind v4
+├── tsconfig.json           # TypeScript configuration
+└── biome.json              # Biome linter configuration
 ```
 
 ## Configuration
 
 ### Editing Site Content
 
-All site content is centralized in `/content/site.config.ts`. Update this file to change:
-
-- Personal information (name, email, location, etc.)
-- Skills and technologies
-- Projects with links and descriptions
-- Work experience and education
-- Social media links
+All site content is centralized in `src/data/site.config.ts`:
 
 ```typescript
 export const siteConfig = {
@@ -141,231 +135,52 @@ export const siteConfig = {
   tagline: "Your tagline here",
   location: "Your Location",
   email: "your@email.com",
-  about: "Brief description about yourself",
-  // ... more config
+  // Skills, projects, experience, education, social links...
 };
 ```
 
 ### Adding Blog Posts
 
-1. Create a new MDX file in `/content/blog/`:
-
-```bash
-touch content/blog/my-new-post.mdx
-```
-
-2. Add frontmatter and content:
+1. Create `src/content/blog/your-post.mdx`:
 
 ```mdx
 ---
-title: "My New Post"
-date: "2025-01-25"
-excerpt: "A brief description of your post"
+title: "Post Title"
+date: "2025-01-15"
+excerpt: "Brief description"
+tags: ["tag1", "tag2"]
+published: true
 ---
 
-# My New Post
-
-Your content here...
+Content with MDX support...
 ```
 
-3. The post will automatically appear on the blog page with reading time calculation.
+2. Post automatically appears on `/blog` and `/blog/your-post`
 
-### Customizing Colors
+## Architecture
 
-Colors are defined in `/app/globals.css` using CSS variables and OKLCH color space:
+### Astro Islands
 
-```css
-:root {
-  --primary: oklch(0.64 0.22 264.5); /* Indigo */
-  --accent: oklch(0.72 0.2 310); /* Fuchsia */
-  --background: oklch(1 0 0); /* White */
-  --foreground: oklch(0.145 0 0); /* Dark gray */
-}
+Components are either `.astro` (static, zero JS) or `.tsx` (React, client-hydrated):
+
+```astro
+<!-- Static - no JS shipped -->
+<Hero />
+<Skills />
+
+<!-- Interactive - hydrated when visible -->
+<Highlights client:visible />
+<Projects client:visible />
+<Contact client:visible />
 ```
 
-Dark mode colors are defined in the `.dark` selector. The design system uses OKLCH for better color interpolation and perceptual uniformity.
+### Styling
 
-### Updating Skills & Projects
-
-Edit the `skills`, `projects`, `experience`, and `education` arrays in `/content/site.config.ts`:
-
-```typescript
-skills: [
-  "Python",
-  "TypeScript",
-  "React",
-  // ... add your skills
-],
-
-projects: [
-  {
-    name: "Project Name",
-    desc: "Brief description",
-    tags: ["Tag1", "Tag2"],
-    links: [
-      { label: "GitHub", href: "https://github.com/..." },
-      { label: "Live", href: "https://..." },
-    ],
-  },
-  // ... add more projects
-],
-```
-
-## Navigation
-
-The site uses a single-page layout with smooth scrolling to sections:
-
-- **Home**: Hero section with animated text and social icons
-- **Highlights**: Animated statistics dashboard (users, projects, OSS contributions)
-- **Projects**: Filterable project gallery (accessible via `/#projects`)
-- **Experience**: Work experience timeline with multiple positions
-- **Skills**: Skills grid showcasing technologies
-- **Contact**: Contact form (accessible via `/#contact`)
-- **Blog**: Separate blog listing page with MDX posts
-
-Navigation links automatically scroll to sections when on the homepage, or navigate to the homepage and scroll when on other pages.
-
-## Scripts
-
-- `bun run dev` - Start development server
-- `bun run build` - Build for production (includes prebuild)
-- `bun run prebuild` - Generate blog posts metadata
-- `bun run start` - Start production server
-- `bun run lint` - Run ESLint
-- `bun run preview` - Preview with OpenNext locally
-- `bun run deploy` - Deploy to Cloudflare Workers
-- `bun run cf-typegen` - Generate Cloudflare types
-
-## Performance Optimizations
-
-The site includes several performance optimizations:
-
-- **Edge deployment** on Cloudflare Workers for global low-latency
-- **Build-time generation** of blog metadata (no filesystem access at runtime)
-- **Image optimization** with AVIF/WebP formats
-- **Font optimization** with next/font
-- **Code splitting** and lazy loading
-- **Package optimization** for lucide-react and framer-motion
-- **Reduced motion support** for accessibility (respects `prefers-reduced-motion`)
-
-Target Lighthouse scores:
-
-- **Performance**: 90+
-- **Accessibility**: 100
-- **Best Practices**: 100
-- **SEO**: 100
-
-## Accessibility
-
-The site follows WCAG AA guidelines and includes:
-
-- Keyboard navigation throughout
-- Screen reader compatible ARIA labels
-- Focus indicators on interactive elements
-- Respects `prefers-reduced-motion` for animations
-- High contrast text ratios
-- Semantic HTML structure
-- Alt text for images
-- Skip to main content link
-
-## Type Safety
-
-The project uses TypeScript with strict mode enabled for maximum type safety:
-
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  }
-}
-```
-
-All components, utilities, and configurations are fully typed with TypeScript.
-
-## Deployment
-
-### Cloudflare Workers (Configured)
-
-This project is configured for Cloudflare Workers deployment:
-
-```bash
-bun run deploy
-```
-
-This will:
-
-1. Generate blog posts metadata
-2. Build the Next.js app with OpenNext
-3. Deploy to Cloudflare Workers
-
-### Configuration
-
-- Worker name: `divkix-me` (in `wrangler.jsonc`)
-- Compatibility flags: `nodejs_compat`, `global_fetch_strictly_public`
-- Assets served from `.open-next/assets`
-
-### Important Notes
-
-- The site is optimized for edge runtime (no filesystem access)
-- Blog posts are pre-generated at build time into `posts.json`
-- Always run `bun run prebuild` before deploying
-- Preview locally with `bun run preview` before deploying
-
-## Customization Tips
-
-### Adding New Sections
-
-1. Create a new component in `/components/sections/`
-2. Import it in `/app/(site)/page.tsx`
-3. Add necessary types in the component
-4. Update `/content/site.config.ts` if needed
-5. Add navigation link with anchor in `/components/shared/Navbar.tsx` if needed
-
-### Modifying Animations
-
-The hero section uses Framer Motion for smooth animations. Modify `/lib/animations.ts` to customize animation variants:
-
-### Customizing Highlights
-
-Edit the statistics displayed in the Highlights section by updating `content/site.config.ts`:
-
-```typescript
-facts: {
-  impact: "250000+",  // Total users reached
-  projects: "30+",    // Number of projects
-  oss: "50+",         // Open source contributions
-}
-```
-
-The Highlights component automatically animates these numbers with a count-up effect.
-
-## Environment Variables
-
-Currently no environment variables are required. If you add external services (analytics, CMS, etc.), create a `.env.local` file:
-
-```bash
-# Example
-NEXT_PUBLIC_ANALYTICS_ID=your_id_here
-```
-
-## Contributing
-
-This is a personal portfolio template. Feel free to fork and customize for your own use.
+- Tailwind CSS v4 via `@tailwindcss/postcss` (not @astrojs/tailwind)
+- OKLCH color space for perceptual uniformity
+- CSS variables for theming (`:root` light, `.dark` dark mode)
+- View Transitions for smooth page navigation
 
 ## License
 
-MIT License - feel free to use this as a template for your own portfolio!
-
-## Credits
-
-- Built by [Divanshu Chauhan](https://divkix.me)
-- Icons from [Lucide](https://lucide.dev)
-- UI components from [shadcn/ui](https://ui.shadcn.com)
-- 3D graphics with [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
-
-## Support
-
-For issues or questions, please open an issue on GitHub or contact [divkix@divkix.me](mailto:divkix@divkix.me).
+MIT

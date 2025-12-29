@@ -4,7 +4,9 @@ dist/
 # Generated at build time
 content/blog/
 public/og/blog/
+public/og-image*
 public/llms*.txt
+public/rss.xml
 *.tsbuildinfo
 .DS_Store
 .vercel

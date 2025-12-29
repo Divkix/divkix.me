@@ -6,15 +6,16 @@ type Skill = { name: string; category: string; proficiency: number };
 // Group skills by category
 const groupedSkills: Record<string, Skill[]> = {};
 for (const skill of siteConfig.skills) {
-  if (!groupedSkills[skill.category]) {
-    groupedSkills[skill.category] = [];
+  const category = skill.category;
+  if (!(category in groupedSkills)) {
+    groupedSkills[category] = [];
   }
-  groupedSkills[skill.category].push({ ...skill });
+  groupedSkills[category]!.push({ ...skill });
 }
 
 // Sort skills within each category by proficiency
 for (const category of Object.keys(groupedSkills)) {
-  groupedSkills[category].sort((a, b) => b.proficiency - a.proficiency);
+  groupedSkills[category]!.sort((a, b) => b.proficiency - a.proficiency);
 }
 
 const categories = Object.keys(groupedSkills);
@@ -34,7 +35,7 @@ const categories = Object.keys(groupedSkills);
         <div class="space-y-3 skill-category" style={`animation-delay: ${catIndex * 0.1}s`}>
           <h3 class="text-base font-semibold text-foreground/80">{category}</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {groupedSkills[category].map((skill, skillIndex) => (
+            {groupedSkills[category]!.map((skill, skillIndex) => (
               <div
                 class="flex items-center gap-3 skill-item"
                 style={`animation-delay: ${catIndex * 0.1 + skillIndex * 0.05}s`}
