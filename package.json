@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node scripts/generate-posts-metadata.js",
+    "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-og-images.js",
     "build": "bun run prebuild && astro build",
     "preview": "astro preview",
     "lint": "biome check .",
