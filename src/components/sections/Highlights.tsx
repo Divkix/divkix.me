@@ -42,7 +42,8 @@ function StatCard({ value, label, description }: StatCardProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
+        const entry = entries[0];
+        if (entry?.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
           animateValue();
         }
