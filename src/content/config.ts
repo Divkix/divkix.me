@@ -5,8 +5,21 @@ const blog = defineCollection({
   schema: z.object({
     // Core metadata
     title: z.string(),
-    date: z.string(),
-    dateModified: z.string().optional(),
+    date: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+      .refine(
+        (date) => !Number.isNaN(Date.parse(date)),
+        "Date must be a valid date",
+      ),
+    dateModified: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+      .refine(
+        (date) => !Number.isNaN(Date.parse(date)),
+        "Date must be a valid date",
+      )
+      .optional(),
     excerpt: z.string(),
     tags: z.array(z.string()),
     published: z.boolean().default(false),

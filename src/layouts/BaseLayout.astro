@@ -1,5 +1,7 @@
 ---
 import "@/styles/globals.css";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/space-grotesk";
 import { ClientRouter } from "astro:transitions";
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
@@ -45,6 +47,9 @@ const websiteSchema = generateWebSiteSchema();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content={siteConfig.name} />
 
     <!-- Twitter -->
@@ -53,6 +58,7 @@ const websiteSchema = generateWebSiteSchema();
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
+    <meta property="twitter:image:alt" content={title} />
     <meta property="twitter:creator" content="@divkix" />
     <meta property="twitter:site" content="@divkix" />
 
@@ -79,20 +85,7 @@ const websiteSchema = generateWebSiteSchema();
     <meta name="author" content={siteConfig.name} />
 
     <!-- Preconnect hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://analytics.divkix.me" />
-
-    <!-- Fonts - display=swap prevents render blocking -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Space+Grotesk:wght@400..700&display=swap"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Space+Grotesk:wght@400..700&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- View Transitions -->
     <ClientRouter />

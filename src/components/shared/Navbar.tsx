@@ -31,9 +31,29 @@ export function Navbar() {
     // Set pathname from window location
     setPathname(window.location.pathname);
 
-    // Handle scroll effect
+    // Handle scroll effect with inline throttle
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let lastExecutedTime = 0;
+    const wait = 100;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const now = Date.now();
+      const remaining = wait - (now - lastExecutedTime);
+
+      if (remaining <= 0) {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+        lastExecutedTime = now;
+        setScrolled(window.scrollY > 50);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(() => {
+          lastExecutedTime = Date.now();
+          timeoutId = null;
+          setScrolled(window.scrollY > 50);
+        }, remaining);
+      }
     };
 
     // Handle View Transitions navigation (Astro ClientRouter)
@@ -41,12 +61,16 @@ export function Navbar() {
       setPathname(window.location.pathname);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("astro:page-load", handlePageLoad);
+    handleScroll(); // Initial check
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("astro:page-load", handlePageLoad);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, []);
 
@@ -63,28 +87,31 @@ export function Navbar() {
       "contact",
     ];
 
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100; // offset for navbar height
-
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(sectionId);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
             break;
           }
         }
+      },
+      {
+        rootMargin: "-20% 0px -80% 0px",
+        threshold: 0,
+      },
+    );
+
+    const elements: Element[] = [];
+    for (const id of sections) {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+        elements.push(element);
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => observer.disconnect();
   }, [pathname]);
 
   const handleAnchorClick = (

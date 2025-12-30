@@ -1,9 +1,12 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import BlogLayout from "@/layouts/BlogLayout.astro";
-import { baseUrl } from "@/lib/seo";
-import { generateBlogAuthorSchema, generateBlogPublisherSchema } from "@/lib/schema";
 import { siteConfig } from "@/data/site.config";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import {
+  generateBlogAuthorSchema,
+  generateBlogPublisherSchema,
+} from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 
 // Generate static paths for all blog posts
@@ -258,7 +261,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
         src={`/og/blog/${post.slug}.webp`}
         srcset={`/og/blog/${post.slug}-480.webp 480w, /og/blog/${post.slug}-768.webp 768w, /og/blog/${post.slug}.webp 1200w`}
         sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, 1200px"
-        alt=""
+        alt={`Featured image for ${post.data.title}`}
         width="1200"
         height="630"
         class="w-full rounded-lg"

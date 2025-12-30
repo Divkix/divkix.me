@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/data/site.config";
@@ -12,12 +10,16 @@ interface StatCardProps {
 
 function StatCard({ value, label, description }: StatCardProps) {
   const [displayValue, setDisplayValue] = useState("0");
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimatedRef = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
+  const animationIdRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Guard: don't create observer if already animated
+    if (hasAnimatedRef.current) return;
+
     const animateValue = () => {
-      const numericValue = parseInt(value.replace(/[^0-9]/g, ""), 10);
+      const numericValue = Number.parseInt(value.replace(/[^0-9]/g, ""), 10);
       const suffix = value.replace(/[0-9]/g, "");
       const duration = 2000;
       const startTime = performance.now();
@@ -33,19 +35,22 @@ function StatCard({ value, label, description }: StatCardProps) {
         setDisplayValue(current.toLocaleString() + suffix);
 
         if (progress < 1) {
-          requestAnimationFrame(animate);
+          animationIdRef.current = requestAnimationFrame(animate);
+        } else {
+          animationIdRef.current = null;
         }
       };
 
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry?.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
+        if (entry?.isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
           animateValue();
+          observer.disconnect(); // Stop observing after animation starts
         }
       },
       { threshold: 0.5 },
@@ -55,8 +60,14 @@ function StatCard({ value, label, description }: StatCardProps) {
       observer.observe(ref.current);
     }
 
-    return () => observer.disconnect();
-  }, [hasAnimated, value]);
+    return () => {
+      observer.disconnect();
+      if (animationIdRef.current !== null) {
+        cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+    };
+  }, [value]);
 
   return (
     <div ref={ref}>

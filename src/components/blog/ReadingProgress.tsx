@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 interface ReadingProgressProps {
@@ -14,23 +12,53 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
     const article = document.querySelector("article");
     if (!article) return;
 
-    const updateProgress = () => {
-      const articleTop = article.offsetTop;
-      const articleHeight = article.offsetHeight;
-      const scrolled = window.scrollY - articleTop;
-      const progress = Math.min(
-        Math.max((scrolled / articleHeight) * 100, 0),
-        100,
-      );
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let lastExecutedTime = 0;
+    const wait = 50;
 
-      setProgress(progress);
-      setIsVisible(window.scrollY > 200);
+    // Cache layout properties to avoid reflow
+    const articleTop = article.offsetTop;
+    const articleHeight = article.offsetHeight;
+
+    const updateProgress = () => {
+      const now = Date.now();
+      const remaining = wait - (now - lastExecutedTime);
+
+      const calculate = () => {
+        const scrolled = window.scrollY - articleTop;
+        const progress = Math.min(
+          Math.max((scrolled / articleHeight) * 100, 0),
+          100,
+        );
+        setProgress(progress);
+        setIsVisible(window.scrollY > 200);
+      };
+
+      if (remaining <= 0) {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+        lastExecutedTime = now;
+        calculate();
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(() => {
+          lastExecutedTime = Date.now();
+          timeoutId = null;
+          calculate();
+        }, remaining);
+      }
     };
 
     window.addEventListener("scroll", updateProgress, { passive: true });
     updateProgress();
 
-    return () => window.removeEventListener("scroll", updateProgress);
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   const timeRemaining = Math.ceil(readingTime * (1 - progress / 100));

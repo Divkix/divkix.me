@@ -72,6 +72,8 @@ const ariaLabels: Record<string, string> = {
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
                 set:html={socialIcons[social.label as keyof typeof socialIcons] || socialIcons.GitHub}
               />
             </a>
@@ -105,6 +107,8 @@ const ariaLabels: Record<string, string> = {
         stroke-linecap="round"
         stroke-linejoin="round"
         class="text-muted-foreground"
+        aria-hidden="true"
+        focusable="false"
       >
         <path d="m6 9 6 6 6-6" />
       </svg>

@@ -110,6 +110,7 @@ export function Contact() {
                   <Input
                     id="name"
                     placeholder="Your name"
+                    autoComplete="name"
                     {...register("name")}
                     disabled={isSubmitting}
                   />
@@ -126,6 +127,7 @@ export function Contact() {
                     id="email"
                     type="email"
                     placeholder="your@email.com"
+                    autoComplete="email"
                     {...register("email")}
                     disabled={isSubmitting}
                   />

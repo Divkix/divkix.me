@@ -4,7 +4,7 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
-import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
+import { remarkReadingTime } from "./src/lib/remark-reading-time";
 
 // Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
 // No @astrojs/tailwind needed - it's only for Tailwind v3
@@ -33,6 +33,11 @@ try {
 export default defineConfig({
   site: "https://divkix.me",
   output: "static",
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+  },
   integrations: [
     react(),
     mdx(),
@@ -88,7 +93,15 @@ Currently: MS Computer Science at Arizona State University.
           title: "Main Content",
           description: "Index of all pages with links",
           url: "/llms.txt",
-          include: ["/", "/about", "/blog", "/blog/**", "/divkix", "/privacy", "/socials"],
+          include: [
+            "/",
+            "/about",
+            "/blog",
+            "/blog/**",
+            "/divkix",
+            "/privacy",
+            "/socials",
+          ],
           promote: ["/blog/**"],
           demote: ["/privacy"],
         },
@@ -96,7 +109,15 @@ Currently: MS Computer Science at Arizona State University.
           title: "Full Documentation",
           description: "Complete site content in one file",
           url: "/llms-full.txt",
-          include: ["/", "/about", "/blog", "/blog/**", "/divkix", "/privacy", "/socials"],
+          include: [
+            "/",
+            "/about",
+            "/blog",
+            "/blog/**",
+            "/divkix",
+            "/privacy",
+            "/socials",
+          ],
           promote: ["/blog/**"],
           demote: ["/privacy"],
         },
@@ -104,7 +125,15 @@ Currently: MS Computer Science at Arizona State University.
           title: "Compact",
           description: "Headings and structure only",
           url: "/llms-small.txt",
-          include: ["/", "/about", "/blog", "/blog/**", "/divkix", "/privacy", "/socials"],
+          include: [
+            "/",
+            "/about",
+            "/blog",
+            "/blog/**",
+            "/divkix",
+            "/privacy",
+            "/socials",
+          ],
           onlyStructure: true,
           promote: ["/blog/**"],
         },
