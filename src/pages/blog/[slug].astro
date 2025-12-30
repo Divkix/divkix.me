@@ -253,6 +253,20 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
         <meta itemprop="description" content={post.data.excerpt} />
       </header>
 
+      <!-- Hero Image -->
+      <img
+        src={`/og/blog/${post.slug}.webp`}
+        srcset={`/og/blog/${post.slug}-480.webp 480w, /og/blog/${post.slug}-768.webp 768w, /og/blog/${post.slug}.webp 1200w`}
+        sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, 1200px"
+        alt=""
+        width="1200"
+        height="630"
+        class="w-full rounded-lg"
+        loading="eager"
+        decoding="async"
+        itemprop="image"
+      />
+
       <!-- TL;DR Summary -->
       {post.data.tldr && (
         <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
