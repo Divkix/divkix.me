@@ -1,6 +1,6 @@
 ---
 title: "I Needed Logs, Not a PhD in Elasticsearch — So I Built Logwell"
-date: "2025-01-06"
+date: "2026-01-06"
 excerpt: "Every logging tool felt like overkill—ELK's operational complexity, Datadog's pricing, Loki's LogQL learning curve. So I built Logwell: one Docker Compose, PostgreSQL-native, real-time streaming. Here's what I learned."
 tags:
   - Logging
@@ -60,6 +60,8 @@ What I wanted: a single Docker Compose file, a web UI, PostgreSQL because I alre
 
 Logwell is embarrassingly simple compared to "real" logging platforms. That's the point.
 
+![Logwell dashboard showing projects list with log counts](/blog/dashboard.png)
+
 One Docker Compose with two services: the app (SvelteKit on Bun) and PostgreSQL. No Redis. No Kafka. No separate search cluster. Your logs go into Postgres and you query them with... Postgres.
 
 The interesting part is making Postgres work for log search without becoming a performance disaster.
@@ -81,6 +83,8 @@ search: tsvector =
 A GIN index makes queries fast. Searching "database connection timeout" across 2 million logs takes ~200ms on my $6/month VPS. Not Elasticsearch-fast, but fast enough that I don't notice.
 
 The 80/20 rule applies here. Most log searches are "show me errors containing X from service Y in the last hour." You don't need inverted indices and distributed shards for that. You need a WHERE clause and an index.
+
+![Logwell log viewer with real-time streaming and search](/blog/logview-screen.png)
 
 ### Real-Time Without Polling
 
@@ -149,6 +153,8 @@ Logwell runs on my VPS, collecting logs from [Alita Robot](/blog/side-project-st
 Honestly? Nothing's broken yet that required serious debugging. The main use so far is watching deploys—I push a new version, open Logwell, and watch logs scroll as the app restarts. Catches startup errors immediately instead of finding out 20 minutes later when users complain.
 
 The other use is just... seeing what's happening. Searching for a specific user's requests when they report something weird. Checking if the scraper actually ran last night. Filtering to warn/error levels to spot patterns I might've missed. It's less "debugging fires" and more "ambient awareness of what my stuff is doing."
+
+![Log statistics showing level distribution over time](/blog/stats-screen.png)
 
 The SDK is minimal:
 
