@@ -12,7 +12,8 @@ tags:
   - Side Projects
   - Open Source
   - OTLP
-  - "2025"
+  - TDD
+  - "2026"
   - AI Coding Assistant
   - Observability
 published: true
@@ -23,6 +24,7 @@ keyTakeaways:
   - "PostgreSQL tsvector with weighted search gives you 80% of Elasticsearch's text search with 5% of the complexity."
   - "SSE batching (1.5s window + 50-log max) balances latency vs throughput better than naive streaming."
   - "Claude Code accelerated architecture decisions and boilerplate—but I had to course-correct on performance patterns."
+  - "TDD with Trophy testing (integration-heavy, red-green-refactor) caught subtle bugs in SSE batching and pagination before production."
 faq:
   - q: "Why not just use Loki?"
     a: "Loki requires learning LogQL and has no built-in UI—you need Grafana. For side projects, I wanted something simpler with batteries included."
@@ -136,6 +138,8 @@ Also: Claude's first API key validation hit the database on every single request
 
 **My take:** Claude accelerates the 70% of coding that's "I know exactly what I want, just need to type it." The other 30%—the subtle correctness issues, the performance footguns, the "this works but will bite you later"—still needs a human reviewing every line. If I'd shipped that setTimeout bug, I'd have spent hours debugging duplicate log entries in production.
 
+How did I catch these bugs? TDD with the Trophy testing strategy. Red-green-refactor: write a failing test, make it pass, clean up. The Trophy part means leaning heavily on integration tests—they give you more confidence than unit tests without the brittleness and slowness of full E2E. I wrote tests for SSE batching behavior (simulating rapid log bursts that trigger both time and size flushes), tsvector search ranking (verifying message matches rank higher than metadata matches), cursor pagination under concurrent inserts, and API key validation caching. The setTimeout bug showed up immediately when the test fired 100 logs in quick succession and asserted no duplicate batches. Would've been a nightmare to debug in production; took 5 minutes to catch with a proper test.
+
 ## Stuff I Learned Building This
 
 **SSE is underrated for server-to-client streaming.** Everyone defaults to WebSockets, but SSE is simpler, works through proxies without special config, and has automatic reconnection built into the browser API. The only gotcha is you need heartbeat events every 30 seconds or proxies/load balancers will kill the connection.
@@ -148,7 +152,7 @@ Also: Claude's first API key validation hit the database on every single request
 
 ## How I'm Actually Using It
 
-Logwell runs on my VPS, collecting logs from [Alita Robot](/blog/side-project-stack-2025-grad-student) (the Telegram bot) and the [PickMyClass](/blog/pickmyclass-never-miss-your-dream-class) scraper. Around 800K logs in the database right now, oldest from about 3 months ago.
+Logwell runs on my VPS, collecting logs from [Alita Robot](/blog/side-project-stack-2026-grad-student) (the Telegram bot) and the [PickMyClass](/blog/pickmyclass-never-miss-your-dream-class) scraper. Around 800K logs in the database right now, oldest from about 3 months ago.
 
 Honestly? Nothing's broken yet that required serious debugging. The main use so far is watching deploys—I push a new version, open Logwell, and watch logs scroll as the app restarts. Catches startup errors immediately instead of finding out 20 minutes later when users complain.
 
@@ -191,6 +195,6 @@ Code's on [GitHub](https://github.com/divkix/logwell). One-click deploy buttons 
 
 ## Related Posts
 
-- [My 2025 Stack for Shipping Side Projects](/blog/side-project-stack-2025-grad-student) — The full toolkit, including why centralized logging matters
+- [My 2026 Stack for Shipping Side Projects](/blog/side-project-stack-2026-grad-student) — The full toolkit, including why centralized logging matters
 - [PickMyClass: Never Miss Your Dream Class](/blog/pickmyclass-never-miss-your-dream-class) — The scraper that generates most of my logs
-- [Vibe Coding in 2025](/blog/vibe-coding-truth-ai-programming-2025) — When AI-generated code works and when it bites you
+- [Vibe Coding in 2026](/blog/vibe-coding-truth-ai-programming-2026) — When AI-generated code works and when it bites you
