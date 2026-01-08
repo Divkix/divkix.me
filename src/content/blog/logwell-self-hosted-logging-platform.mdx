@@ -1,6 +1,7 @@
 ---
 title: "I Needed Logs, Not a PhD in Elasticsearch — So I Built Logwell"
 date: "2026-01-06"
+dateModified: "2026-01-08"
 excerpt: "Every logging tool felt like overkill—ELK's operational complexity, Datadog's pricing, Loki's LogQL learning curve. So I built Logwell: one Docker Compose, PostgreSQL-native, real-time streaming. Here's what I learned."
 tags:
   - Logging
@@ -31,7 +32,7 @@ faq:
   - q: "Can PostgreSQL handle high log volumes?"
     a: "With proper indexing (GIN on tsvector, composite indexes on project+timestamp), PostgreSQL handles tens of millions of logs. For most side projects, this is more than enough."
   - q: "Is this production-ready?"
-    a: "I'm running it in production for my own projects. It's single-user, no rate limiting, no retention policies yet—but the core logging works."
+    a: "I'm running it in production for my own projects. It's single-user, no rate limiting—but the core logging works reliably."
   - q: "How does the real-time streaming work?"
     a: "In-memory event bus + Server-Sent Events. No database polling. Logs hit the DB and broadcast simultaneously."
 ---
@@ -184,7 +185,6 @@ Batches client-side, retries on failure, nothing fancy. Just works.
 
 Logwell doesn't have:
 
-- **Log retention policies** — Old logs accumulate forever. I manually DELETE FROM log WHERE timestamp < '...' periodically. Not ideal.
 - **Multi-user/teams** — Single user only. Fine for personal projects, not for teams.
 - **Rate limiting** — A runaway logging loop could fill your disk. I haven't built protection against this yet.
 - **Alerting** — No "notify me when error rate exceeds X." I still use Uptime Kuma for that.
