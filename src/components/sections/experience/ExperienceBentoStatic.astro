@@ -6,7 +6,10 @@ type Company = (typeof siteConfig.experience)[number];
 type Education = (typeof siteConfig.education)[number];
 
 // Determine card size based on number of positions and tenure
-function getCardSize(company: Company, index: number): "large" | "medium" | "small" {
+function getCardSize(
+  company: Company,
+  index: number,
+): "large" | "medium" | "small" {
   const posCount = company.positions.length;
   if (posCount >= 3 || index === 0) return "large";
   if (posCount >= 2) return "medium";
@@ -14,7 +17,8 @@ function getCardSize(company: Company, index: number): "large" | "medium" | "sma
 }
 
 function getCardClasses(size: "large" | "medium" | "small"): string {
-  const base = "group relative glass-surface rounded-xl border border-border transition-colors duration-300 animate-fade-in-up overflow-hidden hover:border-primary/50";
+  const base =
+    "group relative glass-surface rounded-xl border border-border transition-colors duration-300 animate-fade-in-up overflow-hidden hover:border-primary/50";
   if (size === "large") return `${base} md:col-span-2 lg:col-span-2`;
   if (size === "medium") return `${base} lg:row-span-2`;
   return base;

@@ -69,20 +69,11 @@ async function generateFavicons() {
 
     // Generate proper favicon.ico using png-to-ico
     // ICO format supports multiple sizes embedded in one file
-    const ico16 = await sharp(pngBuffer)
-      .resize(16, 16)
-      .png()
-      .toBuffer();
+    const ico16 = await sharp(pngBuffer).resize(16, 16).png().toBuffer();
 
-    const ico32 = await sharp(pngBuffer)
-      .resize(32, 32)
-      .png()
-      .toBuffer();
+    const ico32 = await sharp(pngBuffer).resize(32, 32).png().toBuffer();
 
-    const ico48 = await sharp(pngBuffer)
-      .resize(48, 48)
-      .png()
-      .toBuffer();
+    const ico48 = await sharp(pngBuffer).resize(48, 48).png().toBuffer();
 
     const icoBuffer = await pngToIco([ico16, ico32, ico48]);
     writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer);
