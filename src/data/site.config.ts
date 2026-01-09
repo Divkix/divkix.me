@@ -58,20 +58,19 @@ export const siteConfig = {
       duration: "Aug 2023 – Present",
       positions: [
         {
+          title: "Engineering Tutor",
+          year: "May 2024 – Present",
+          highlights: [
+            "Tutoring CSE courses including CSE205, CSE230, CSE240, CSE310, CSE330, CSE360",
+          ],
+        },
+        {
           title: "Instructional Aide",
-          year: "Aug 2025 – Present",
+          year: "Aug 2025 – Dec 2025",
           highlights: [
             "Supported CSE110 classes, enhancing learning for 456 students",
             "Collaborated with five professors on instructional materials",
             "Provided one-on-one assistance for complex programming concepts",
-          ],
-        },
-        {
-          title: "Engineering Tutor",
-          year: "May 2024 – Present",
-          highlights: [
-            "Tutoring 8 CSE courses including Data Structures, OS, and Software Engineering",
-            "Supporting students in mastering computer science fundamentals",
           ],
         },
         {
