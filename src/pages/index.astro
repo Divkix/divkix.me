@@ -1,6 +1,6 @@
 ---
 import { Contact } from "@/components/sections/Contact";
-import Experience from "@/components/sections/Experience.astro";
+import { ExperienceBento } from "@/components/sections/experience/ExperienceBento";
 import Hero from "@/components/sections/Hero.astro";
 import { Highlights } from "@/components/sections/Highlights";
 import { Projects } from "@/components/sections/Projects";
@@ -12,7 +12,7 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
   <Hero />
   <Highlights client:visible />
   <Projects client:visible />
-  <Experience />
+  <ExperienceBento client:visible />
   <Skills />
   <Contact client:visible />
 </SiteLayout>

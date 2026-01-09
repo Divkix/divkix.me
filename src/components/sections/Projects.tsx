@@ -15,19 +15,6 @@ import { siteConfig } from "@/data/site.config";
 type Project = (typeof siteConfig.projects)[number];
 type ProjectLink = Project["links"][number];
 
-/**
- * Generate responsive image srcset for project images
- * Uses pre-generated WebP images at multiple sizes
- */
-function getResponsiveImage(imagePath: string) {
-  const basePath = imagePath.replace(".webp", "");
-  return {
-    srcSet: `${basePath}-480.webp 480w, ${basePath}-768.webp 768w, ${basePath}.webp 1200w`,
-    sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
-    src: imagePath,
-  };
-}
-
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),
 ) as string[];
@@ -84,28 +71,7 @@ export function Projects() {
                 animationFillMode: "both",
               }}
             >
-              <Card className="glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col overflow-hidden">
-                {"image" in project &&
-                  project.image &&
-                  (() => {
-                    const responsive = getResponsiveImage(
-                      project.image as string,
-                    );
-                    return (
-                      <div className="relative aspect-video w-full overflow-hidden bg-muted/50">
-                        {/* biome-ignore lint/performance/noImgElement: Using native img with srcset for responsive images */}
-                        <img
-                          src={responsive.src}
-                          srcSet={responsive.srcSet}
-                          sizes={responsive.sizes}
-                          alt={project.name}
-                          loading={index < 2 ? "eager" : "lazy"}
-                          decoding="async"
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
-                      </div>
-                    );
-                  })()}
+              <Card className="glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col h-full">
                 <CardHeader>
                   <div className="flex justify-between items-start gap-2">
                     <CardTitle className="line-clamp-1">
