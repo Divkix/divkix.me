@@ -2,13 +2,25 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "Modern portfolio site with Astro v5, TypeScript, and React Islands",
-  "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/divkix/portfolio.git"
+    "url": "https://github.com/divkix/divkix.me.git"
   },
   "author": "Divanshu Chauhan <divkix@divkix.me>",
   "license": "MIT",
+  "homepage": "https://divkix.me",
+  "bugs": {
+    "url": "https://github.com/divkix/divkix.me/issues"
+  },
+  "keywords": [
+    "portfolio",
+    "astro",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "blog",
+    "mdx"
+  ],
   "browserslist": [
     "chrome >= 92",
     "edge >= 92",
