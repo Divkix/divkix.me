@@ -227,9 +227,7 @@ export const siteConfig = {
       desc: "Self-hosted logging platform with real-time streaming, full-text search, and OTLP-compatible ingestion.",
       tags: ["TypeScript", "Logging", "OTLP"],
       period: "2024 – Present",
-      links: [
-        { label: "GitHub", href: "https://github.com/Divkix/Logwell" },
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/Divkix/Logwell" }],
     },
     {
       name: "Alita Robot",
@@ -245,9 +243,7 @@ export const siteConfig = {
       desc: "Ultra-speedy cross-platform download manager expertly crafted using Go for optimal performance.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Present",
-      links: [
-        { label: "GitHub", href: "https://github.com/warpdl/warpdl" },
-      ],
+      links: [{ label: "GitHub", href: "https://github.com/warpdl/warpdl" }],
     },
     {
       name: "WebResume",
@@ -264,7 +260,10 @@ export const siteConfig = {
       tags: ["Go", "AI/ML", "Qdrant", "MongoDB"],
       period: "2024 – Present",
       links: [
-        { label: "GitHub", href: "https://github.com/Divkix/ai-code-improvement-platform" },
+        {
+          label: "GitHub",
+          href: "https://github.com/Divkix/ai-code-improvement-platform",
+        },
       ],
     },
   ],

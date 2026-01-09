@@ -1,15 +1,8 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, GithubIcon, Globe } from "lucide-react";
 import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { siteConfig } from "@/data/site.config";
 
 type Project = (typeof siteConfig.projects)[number];
@@ -18,6 +11,25 @@ type ProjectLink = Project["links"][number];
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),
 ) as string[];
+
+function getAccentClass(tags: readonly string[]): string {
+  const primaryTag = tags[0]?.toLowerCase() || "";
+
+  if (primaryTag.includes("ai") || primaryTag.includes("ml")) {
+    return "accent-ai";
+  }
+  if (primaryTag === "go") {
+    return "accent-go";
+  }
+  if (primaryTag === "python") {
+    return "accent-python";
+  }
+  return "accent-typescript";
+}
+
+function isFeatured(project: Project): boolean {
+  return project.links.some((link: ProjectLink) => link.label === "Live");
+}
 
 export function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -60,66 +72,95 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Projects grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-          {filteredProjects.map((project: Project, index: number) => (
-            <div
-              key={project.name}
-              className="animate-fade-in-up"
-              style={{
-                animationDelay: `${200 + index * 50}ms`,
-                animationFillMode: "both",
-              }}
-            >
-              <Card className="glass-surface hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col h-full">
-                <CardHeader>
-                  <div className="flex justify-between items-start gap-2">
-                    <CardTitle className="line-clamp-1">
-                      {project.name}
-                    </CardTitle>
-                    {"period" in project && project.period && (
-                      <span className="text-xs text-foreground/60 shrink-0">
-                        {project.period}
-                      </span>
-                    )}
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+          {filteredProjects.map((project: Project, index: number) => {
+            const featured = isFeatured(project);
+            const accentClass = getAccentClass(project.tags);
+
+            return (
+              <article
+                key={project.name}
+                className={`
+                  project-card ${accentClass}
+                  ${featured ? "md:col-span-2 project-card-featured" : "project-card-regular"}
+                  animate-project-entrance
+                `}
+                style={{
+                  animationDelay: `${150 + index * 80}ms`,
+                }}
+              >
+                <div className="project-card-content">
+                  {/* Header */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-start gap-2">
+                      <h3
+                        className={`font-display font-bold leading-tight ${
+                          featured ? "text-2xl" : "text-xl"
+                        }`}
+                      >
+                        {project.name}
+                      </h3>
+                      {"period" in project && project.period && (
+                        <span className="text-xs text-muted-foreground shrink-0">
+                          {project.period}
+                        </span>
+                      )}
+                    </div>
+
+                    <p
+                      className={`text-foreground/70 leading-relaxed ${
+                        featured ? "text-base" : "text-sm line-clamp-2"
+                      }`}
+                    >
+                      {project.desc}
+                    </p>
                   </div>
-                  <CardDescription className="line-clamp-2">
-                    {project.desc}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 mt-auto">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag: string) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  {project.links.length > 0 && (
-                    <div className="flex gap-2">
-                      {project.links.map((link: ProjectLink) => (
-                        <Button
-                          key={link.label}
-                          variant="outline"
-                          size="sm"
-                          asChild
-                        >
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {link.label}
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
+
+                  {/* Footer */}
+                  <div className="space-y-3 mt-4">
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tags.map((tag: string) => (
+                        <Badge key={tag} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
                       ))}
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          ))}
+
+                    {/* Links */}
+                    {project.links.length > 0 && (
+                      <div className="flex gap-2">
+                        {project.links.map((link: ProjectLink) => (
+                          <Button
+                            key={link.label}
+                            variant="outline"
+                            size="sm"
+                            asChild
+                          >
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {link.label === "Live" ? (
+                                <Globe className="mr-1.5 h-3.5 w-3.5" />
+                              ) : link.label === "GitHub" ? (
+                                <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
+                              ) : (
+                                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                              )}
+                              {link.label}
+                            </a>
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         {filteredProjects.length === 0 && (
