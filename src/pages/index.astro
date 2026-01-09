@@ -4,7 +4,7 @@ import { ExperienceBento } from "@/components/sections/experience/ExperienceBent
 import Hero from "@/components/sections/Hero.astro";
 import { Highlights } from "@/components/sections/Highlights";
 import { Projects } from "@/components/sections/Projects";
-import Skills from "@/components/sections/Skills.astro";
+import { Skills } from "@/components/sections/skills";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 ---
 
@@ -13,6 +13,6 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
   <Highlights client:visible />
   <Projects client:visible />
   <ExperienceBento client:visible />
-  <Skills />
+  <Skills client:visible />
   <Contact client:visible />
 </SiteLayout>
