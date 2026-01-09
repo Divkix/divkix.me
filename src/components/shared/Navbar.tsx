@@ -26,6 +26,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [pathname, setPathname] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
     // Set pathname from window location
@@ -114,6 +115,23 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [pathname]);
 
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.attributeName === "class") {
+          const isDark = document.documentElement.classList.contains("dark");
+          setTheme(isDark ? "dark" : "light");
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -174,7 +192,11 @@ export function Navbar() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <a href="/" className="flex items-center">
             <img
-              src="/transparent-text.png"
+              src={
+                theme === "dark"
+                  ? "/transparent-text.png"
+                  : "/transparent-text-dark.png"
+              }
               alt="Divkix"
               className="h-8 w-auto"
             />
