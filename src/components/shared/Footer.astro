@@ -19,6 +19,15 @@ const currentYear = new Date().getFullYear();
         <p class="text-sm text-foreground/60">
           © {currentYear} {siteConfig.name}. All rights reserved.
         </p>
+        <span class="text-sm text-foreground/40">•</span>
+        <a
+          href="https://github.com/divkix/divkix.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-foreground/60 hover:text-foreground transition-colors"
+        >
+          Open Source
+        </a>
         <nav class="flex items-center gap-4">
           {footerLinks.map((link) => (
             <a
