@@ -1,7 +1,7 @@
 /**
  * Favicon Generation Script
  *
- * Generates all necessary favicon and icon files from the SVG favicon.
+ * Generates all necessary favicon and icon files from the logo PNG.
  *
  * What it does:
  * 1. Generates multiple PNG favicon sizes (16x16, 32x32, 48x48) for various browser contexts
@@ -14,7 +14,7 @@
  *   bun run scripts/generate-favicons.ts
  *
  * Requirements:
- *   - Source SVG must be at public/favicon.svg
+ *   - Source PNG must be at public/full-logo.png
  *   - Sharp package must be installed (bun add -d sharp)
  *   - png-to-ico package must be installed (bun add -d png-to-ico)
  *
@@ -35,7 +35,7 @@ import pngToIco from "png-to-ico";
 import sharp from "sharp";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-const SOURCE_SVG = path.join(PUBLIC_DIR, "favicon.svg");
+const SOURCE_PNG = path.join(PUBLIC_DIR, "full-logo.png");
 
 interface FaviconConfig {
   size: number;
@@ -52,14 +52,14 @@ const configs: FaviconConfig[] = [
 ];
 
 async function generateFavicons() {
-  console.log("Generating favicons from favicon.svg...");
+  console.log("Generating favicons from full-logo.png...");
 
   try {
-    const svgBuffer = readFileSync(SOURCE_SVG);
+    const pngBuffer = readFileSync(SOURCE_PNG);
 
-    // Generate PNG files from SVG
+    // Generate PNG files at various sizes
     for (const config of configs) {
-      await sharp(svgBuffer, { density: 300 })
+      await sharp(pngBuffer)
         .resize(config.size, config.size)
         .png()
         .toFile(path.join(PUBLIC_DIR, config.name));
@@ -69,17 +69,17 @@ async function generateFavicons() {
 
     // Generate proper favicon.ico using png-to-ico
     // ICO format supports multiple sizes embedded in one file
-    const ico16 = await sharp(svgBuffer, { density: 300 })
+    const ico16 = await sharp(pngBuffer)
       .resize(16, 16)
       .png()
       .toBuffer();
 
-    const ico32 = await sharp(svgBuffer, { density: 300 })
+    const ico32 = await sharp(pngBuffer)
       .resize(32, 32)
       .png()
       .toBuffer();
 
-    const ico48 = await sharp(svgBuffer, { density: 300 })
+    const ico48 = await sharp(pngBuffer)
       .resize(48, 48)
       .png()
       .toBuffer();

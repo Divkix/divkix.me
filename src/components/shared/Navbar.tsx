@@ -172,8 +172,12 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <a href="/" className="text-xl font-display font-bold">
-            Divkix
+          <a href="/" className="flex items-center">
+            <img
+              src="/transparent-text.png"
+              alt="Divkix"
+              className="h-8 w-auto"
+            />
           </a>
 
           {/* Desktop Navigation */}
