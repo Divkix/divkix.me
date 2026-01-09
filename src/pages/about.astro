@@ -1,4 +1,5 @@
 ---
+import ExperienceBentoStatic from "@/components/sections/experience/ExperienceBentoStatic.astro";
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import { baseUrl } from "@/lib/seo";
@@ -113,61 +114,14 @@ const aboutPageSchema = {
         </div>
       </div>
 
-      <!-- Experience -->
-      <div class="space-y-6">
-        <h2 class="text-3xl font-display font-bold">Experience</h2>
-        <div class="space-y-6">
-          {siteConfig.experience.map((exp) => (
-            <div class="glass-surface p-6 rounded-lg space-y-4">
-              <div class="flex justify-between items-start flex-wrap gap-2">
-                <div>
-                  <h3 class="text-xl font-bold">{exp.company}</h3>
-                  <p class="text-foreground/60">{exp.location}</p>
-                </div>
-                <span class="text-sm text-foreground/60">{exp.duration}</span>
-              </div>
-              <div class="space-y-4">
-                {exp.positions.map((position) => (
-                  <div class="border-l-2 border-primary/30 pl-4 space-y-2">
-                    <div class="flex justify-between items-start flex-wrap gap-2">
-                      <h4 class="font-semibold">{position.title}</h4>
-                      <span class="text-sm text-foreground/60">{position.year}</span>
-                    </div>
-                    <ul class="text-sm text-foreground/70 space-y-1 list-disc list-inside">
-                      {position.highlights.map((highlight) => (
-                        <li>{highlight}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    </div>
 
-      <!-- Education -->
-      <div class="space-y-6">
-        <h2 class="text-3xl font-display font-bold">Education</h2>
-        <div class="space-y-4">
-          {siteConfig.education.map((edu) => (
-            <div class="glass-surface p-6 rounded-lg">
-              <div class="flex justify-between items-start flex-wrap gap-2">
-                <div>
-                  <h3 class="text-xl font-bold">{edu.title}</h3>
-                  {"focus" in edu && edu.focus && (
-                    <p class="text-foreground/70">Focus: {edu.focus}</p>
-                  )}
-                  {"honors" in edu && edu.honors && (
-                    <p class="text-foreground/70">Honors: {edu.honors}</p>
-                  )}
-                </div>
-                <span class="text-sm text-foreground/60">{edu.year}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <!-- Experience & Education Bento Grid - wider container for 3-column layout -->
+    <div class="max-w-6xl mx-auto mt-12">
+      <ExperienceBentoStatic />
+    </div>
+
+    <div class="max-w-4xl mx-auto space-y-12 mt-12">
 
       <!-- Stats -->
       <div class="glass-surface p-8 rounded-lg">
