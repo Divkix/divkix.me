@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-og-images.js",
-    "build": "bun run prebuild && bun run scripts/validate-content.ts && astro build",
+    "build": "bun run prebuild && bun run scripts/validate-content.ts && astro build && bun run scripts/submit-indexnow.ts",
     "preview": "astro preview",
     "lint": "biome check .",
     "lint:fix": "biome check --write",
