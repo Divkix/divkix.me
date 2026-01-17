@@ -49,7 +49,10 @@ function TerminalWindow({
 
   useEffect(() => {
     if (!isVisible) return;
-    const timer = setTimeout(() => setShowContent(true), windowIndex * 200 + 300);
+    const timer = setTimeout(
+      () => setShowContent(true),
+      windowIndex * 200 + 300,
+    );
     return () => clearTimeout(timer);
   }, [isVisible, windowIndex]);
 

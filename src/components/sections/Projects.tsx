@@ -122,7 +122,11 @@ export function Projects() {
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1.5">
                       {project.tags.map((tag: string) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {tag}
                         </Badge>
                       ))}

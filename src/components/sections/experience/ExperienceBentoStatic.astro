@@ -81,7 +81,7 @@ function getCardClasses(size: "large" | "medium" | "small"): string {
               <p class="text-sm text-foreground/60">Focus: {edu.focus}</p>
             )}
             {"honors" in edu && edu.honors && (
-              <span class="inline-block px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded">
+              <span class="inline-block px-2 py-0.5 text-xs font-medium bg-primary/10 text-foreground rounded">
                 {edu.honors}
               </span>
             )}
@@ -164,7 +164,7 @@ function getCardClasses(size: "large" | "medium" | "small"): string {
                   <span class="px-3 py-1 text-xs font-semibold bg-secondary rounded-full">
                     {company.duration}
                   </span>
-                  <p class="text-xs text-foreground/50 mt-1">
+                  <p class="text-xs text-muted-foreground mt-1">
                     {company.positions.length} role{company.positions.length > 1 ? "s" : ""}
                   </p>
                 </div>
@@ -176,7 +176,7 @@ function getCardClasses(size: "large" | "medium" | "small"): string {
                   <span
                     class={`px-3 py-1.5 text-sm rounded-lg ${
                       pIndex === 0
-                        ? "bg-primary/10 text-primary font-medium"
+                        ? "bg-primary/10 text-foreground font-medium"
                         : "bg-muted text-foreground/70"
                     }`}
                   >

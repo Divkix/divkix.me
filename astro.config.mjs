@@ -156,7 +156,7 @@ Currently: MS Computer Science at Arizona State University.
   },
   compressHTML: true,
   build: {
-    inlineStylesheets: "auto",
+    inlineStylesheets: "always",
   },
   prefetch: {
     prefetchAll: true,

@@ -194,10 +194,12 @@ export function Navbar() {
             <img
               src={
                 theme === "dark"
-                  ? "/transparent-text.png"
-                  : "/transparent-text-dark.png"
+                  ? "/transparent-text.webp"
+                  : "/transparent-text-dark.webp"
               }
               alt="Divkix"
+              width={94}
+              height={32}
               className="h-8 w-auto"
             />
           </a>
@@ -215,7 +217,7 @@ export function Navbar() {
                     "relative px-3 py-2 text-sm font-medium transition-colors",
                     isActive
                       ? "text-foreground"
-                      : "text-foreground/60 hover:text-foreground",
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                   aria-label={`Navigate to ${item.label}`}
                 >
@@ -255,7 +257,7 @@ export function Navbar() {
                             "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
                             isActive
                               ? "text-foreground bg-primary/10"
-                              : "text-foreground/60 hover:text-foreground hover:bg-primary/5",
+                              : "text-muted-foreground hover:text-foreground hover:bg-primary/5",
                           )}
                           aria-label={`Navigate to ${item.label} (mobile menu)`}
                         >
