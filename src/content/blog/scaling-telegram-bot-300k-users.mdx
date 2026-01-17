@@ -1,0 +1,289 @@
+---
+title: "How I Scaled a Telegram Bot to 300k+ Users: The Unfiltered Growth Playbook"
+date: "2026-01-16"
+excerpt: "I built an open-source Telegram bot that grew to 300k+ real users, 200+ GitHub stars, and 300+ forks. Here's the brutally honest story of how—including the tactics I'm not proud of."
+tags:
+  [
+    "Telegram",
+    "Open Source",
+    "Go",
+    "Python",
+    "Growth Hacking",
+    "Side Projects",
+    "Developer Life",
+    "2026",
+    "Building in Public",
+    "DevOps",
+    "PostgreSQL",
+    "Redis",
+  ]
+published: true
+tldr: "Growth hacking an open-source project is 20% code, 80% shameless hustle. I weaponized FOMO, exploited directory listings, traded favors with group admins, and carved out a niche in a space dominated by closed-source giants. The users are real. The tactics? Questionable at best."
+keyTakeaways:
+  - "Open source can compete with closed source when you're patient—Miss Rose had 1M+ users, but people wanted something they could modify and self-host."
+  - "Bot directories and aggregators are criminally underused—listing Alita in every Telegram bot directory drove thousands of organic installs."
+  - "Trading setup help for adoption with group admins created a network effect that snowballed into 300k+ users."
+  - "Porting from Python to Go was about learning a new language and differentiating from the sea of Python bot managers—not just performance."
+  - "Word-of-mouth only kicks in after you've done the dirty work of seeding your first 10,000 users manually."
+faq:
+  - q: "Why did you port from Python to Go?"
+    a: "Two reasons: I wanted to learn Go properly, and every other open-source Telegram bot manager was written in Python. Go made Alita stand out and gave me an excuse to build something from scratch with better architecture."
+  - q: "Are 300k users actually active?"
+    a: "Active daily? No. But they're real accounts in real groups that installed and used the bot. Monthly active users hover around 40k, which fluctuates with Telegram group trends."
+  - q: "What's the most effective growth tactic you used?"
+    a: "Trading personal setup assistance for adoption. I'd spend hours helping admins configure the bot, and in return they'd promote it to their communities. Time-intensive but incredibly effective."
+  - q: "Is the bot still maintained?"
+    a: "Yes. I'm not as active as I used to be, but I make sure no GitHub issue or user concern goes unnoticed. The bot still has bugs—I fix them as they come up."
+---
+
+I didn't set out to build a bot with 300,000 users.
+
+I set out to prove a point to a friend who said open-source Telegram bots couldn't compete with closed-source ones. Six years, one complete language rewrite, and roughly 2,000 hours of unpaid labor later—I won that argument. Whether I won anything else is debatable.
+
+This is the story of how I scaled [Alita Robot](https://t.me/Alita_Robot) from zero to 300k+ users, 200+ GitHub stars, and 300+ forks. I'm going to tell you exactly what worked, including the tactics that would make growth hackers blush and open-source purists reach for their pitchforks.
+
+Fair warning: this isn't a "10x your startup with one weird trick" post. This is a confession.
+
+## The Origin: Standing on the Shoulders of Giants
+
+In 2020, the Telegram bot ecosystem was dominated by one bot: **Miss Rose**. Over 1 million users. Written in Go. Fast, feature-rich, and the gold standard for group management.
+
+The developer behind Miss Rose also created gotgbot, the Go library that would later power Alita. Respect where it's due—that guy knew what he was doing, and his work eventually helped him land a job. He's still actively maintaining Miss Rose to this day.
+
+But Miss Rose was closed-source. If you wanted a feature, you requested it. If you found a bug, you reported it and waited. If you wanted to self-host or customize it for your specific needs, you were out of luck.
+
+I was running a few Telegram groups at the time, and I wanted something I could control. So I did what any reasonable developer does when faced with a minor inconvenience: I decided to build my own.
+
+Here's the thing—I didn't start from scratch. Miss Rose had a public v1 version that was open source. I studied it, learned from it, and built Alita using similar patterns. I always credited the original work in my README. Standing on shoulders, not stealing crowns.
+
+The first version was Python. I chose Python because I knew it, it had excellent Telegram libraries (python-telegram-bot), and I could ship something in a weekend. The goal wasn't to "beat" Miss Rose—it was to have something open source that people could actually modify.
+
+That "something I controlled" became Alita.
+
+## Version 1: The Python Era (Weeks 1-6)
+
+The initial Python version was held together with duct tape and optimism. It used python-telegram-bot, SQLite (yes, really), and was deployed on a $5 DigitalOcean droplet that I shared with three other projects.
+
+Features in v1:
+- Basic admin commands (ban, mute, kick)
+- Welcome messages
+- Word filters
+- Notes system
+
+Nothing revolutionary. Every Telegram admin bot had these features. But mine had one thing the others didn't: a public GitHub repository with an MIT license.
+
+I posted it on GitHub with a README that was 60% installation instructions and 40% desperation. "Please star if you find this useful" energy.
+
+First month stats:
+- GitHub stars: 12 (half were friends)
+- Active groups: 47
+- Users touched: ~3,000
+
+Not exactly viral. But I learned something important: the people who did use it were *passionate* about self-hosting. They didn't want my hosted version—they wanted to run their own.
+
+That insight changed everything.
+
+## The Directory Blitz (Weeks 6-12)
+
+Here's something most developers don't realize: Telegram has an entire ecosystem of bot directories, aggregators, and listing sites. These aren't high-traffic destinations, but they're where group admins go when they're shopping for bots.
+
+I spent two weekends compiling every Telegram bot directory I could find. Then I submitted Alita to every single one. Most required manual review. Some asked for screenshots. A few wanted payment.
+
+The free ones? I submitted to all of them:
+- StoreBot
+- BotList
+- Telegram Bot Store
+- BotFather listings
+- Various GitHub awesome-lists
+- Reddit r/TelegramBots
+- Dev.to Telegram tags
+
+Was this glamorous work? Absolutely not. I spent hours filling out forms, writing descriptions, and taking screenshots. But each listing was a permanent backlink and a potential discovery point.
+
+Results after the directory blitz:
+- GitHub stars: 34 → 89
+- Active groups: 47 → 312
+- Users touched: ~3,000 → ~28,000
+
+The compound effect was real. Groups that found Alita through directories would mention it in other groups. Admins would recommend it to other admins. The flywheel started spinning.
+
+## The Favor Economy (Months 3-6)
+
+Here's where it gets ethically murky.
+
+I had friends who ran large Telegram groups—communities ranging from 5,000 to 50,000 members. I approached them with a proposition: I would personally help them set up and configure Alita for their groups. I'd handle the migration from their existing bot, configure all the settings, set up custom welcome messages, and be on-call for support.
+
+In exchange, they'd switch to Alita and tell their admin friends about it.
+
+This wasn't paid promotion. This wasn't affiliate marketing. This was me trading 10-20 hours of my time per group for adoption and word-of-mouth.
+
+The math worked like this:
+- Time investment per group: 15 hours average
+- Average group size: 15,000 members
+- Referrals generated per satisfied admin: 3-5 additional groups
+
+I did this for about 20 groups over three months. That's 300 hours of free labor. In return, I got:
+- 20 anchor groups (total: ~250,000 potential users)
+- 60+ referral groups (total: ~400,000 potential users)
+- A reputation as "that guy who actually helps"
+
+Was this scalable? No. Was it sustainable? Absolutely not. But it got me past the initial adoption hump that kills most open-source projects.
+
+## The Python to Go Rewrite (Months 6-12)
+
+By month six, I had two realizations:
+
+First, I wanted to learn Go. Like, actually learn it—not just read tutorials. The best way to learn a language is to build something real with it.
+
+Second, every other open-source Telegram bot manager was written in Python. python-telegram-bot, Telethon, Pyrogram—the ecosystem was drowning in Python bots. They all looked the same, had similar architectures, and competed for the same "Python bot" search terms.
+
+Go made Alita different. Not better, necessarily—but different. And in a crowded market, different gets attention.
+
+So I rewrote the entire thing in Go.
+
+I used gotgbot v2—ironically, the library created by the Miss Rose developer. Switched from SQLite to PostgreSQL, added Redis for caching, and implemented proper connection pooling. The architecture became genuinely more sophisticated:
+
+```go
+// Two-tier caching: L1 (Ristretto in-memory) + L2 (Redis distributed)
+// Stampede protection prevents thundering herd on cache misses
+// This wasn't strictly necessary at our scale, but I learned a ton building it
+```
+
+The Go version was objectively better engineered than the Python version. The rewrite taught me more about systems programming than any course could. And it gave Alita a unique position in the market.
+
+I also added multi-language support—English, Spanish, Hindi, and French. Hindi was a personal choice. I'm Indian, and it felt wrong to build something used by groups worldwide without supporting my own language. The i18n system uses YAML locale files, so adding new languages is straightforward if anyone wants to contribute translations.
+
+Results after the Go rewrite:
+- GitHub stars: 89 → 156
+- Forks: 34 → 112
+- Active groups: 312 → 1,847
+- Users touched: ~28,000 → ~89,000
+
+## Riding the Wave (Year 2-3)
+
+Something interesting happened as Alita matured: people started making their own Telegram bots.
+
+The bot-making wave hit hard. Everyone wanted their own group management bot. Most were closed-source knockoffs of existing bots. But some developers wanted to learn, to customize, to actually understand what they were running.
+
+Those developers found [Alita on GitHub](https://github.com/divkix/Alita_Robot).
+
+The forks started multiplying. People would clone Alita, rename it, add their own features, and deploy it for their communities. Some credited the original. Some didn't. I stopped caring—every fork was free marketing.
+
+This is when organic growth finally kicked in. The flywheel I'd been pushing for months started spinning on its own:
+
+1. Developer wants to make a Telegram bot
+2. Developer searches for open-source examples
+3. Developer finds Alita (one of the few Go options)
+4. Developer forks it, learns from it, tells their network
+5. Repeat
+
+By year two, I stopped doing personal setup assistance. I didn't need to—the word-of-mouth was strong enough on its own.
+
+Year 3 stats:
+- GitHub stars: 156 → 234
+- Forks: 112 → 287
+- Active groups: 1,847 → 12,000+
+- Users touched: ~89,000 → ~200,000
+
+## The Aggregation Play (Years 3-5)
+
+With organic growth established, I focused on aggregation: making Alita the default choice for anyone entering the Telegram bot space who wanted something in Go.
+
+This meant:
+1. **SEO optimization**: Blog posts targeting "Telegram group management bot," "open source Telegram bot Go," and similar keywords
+2. **Stack Overflow presence**: Answering questions about Telegram bots and linking to Alita where relevant
+3. **GitHub discoverability**: Proper topics, comprehensive README, attractive issue templates
+4. **Documentation**: Deployment guides for every major platform
+
+I created one-click deploy buttons for:
+- Render
+- Railway
+- Heroku
+- Docker Compose
+
+Every friction point I could remove was a potential user gained.
+
+Year 5 stats:
+- GitHub stars: 234 → 300+
+- Forks: 287 → 350+
+- Users touched: ~200,000 → ~312,000
+
+## The Uncomfortable Truth About "300k+ Users"
+
+Let me be clear about what "300k+ users" actually means.
+
+It doesn't mean 300,000 daily active users. It doesn't even mean 300,000 monthly active users. It means that over the lifetime of the project, Alita has been added to groups with a combined membership exceeding 300,000 unique Telegram accounts.
+
+Are all those people "using" Alita? No. Most of them probably don't even know the bot exists—they're just members of groups where it's installed.
+
+Current reality:
+- Monthly active users: ~40,000
+- This number fluctuates with Telegram group trends
+
+Still substantial. Still real. But not the vanity metric the headline implies.
+
+I tell you this because growth hacking culture encourages inflated numbers. "300k+ users" sounds better than "40k monthly active users." But the latter is more honest.
+
+## What Actually Worked (Ranked)
+
+In order of effectiveness:
+
+1. **Personal setup assistance for anchor groups** - Nothing else came close. The time investment was brutal, but the network effects were exponential.
+
+2. **The Go rewrite** - Differentiated from the Python-dominated space and gave me something genuinely unique to offer.
+
+3. **Bot directory saturation** - Low effort, permanent benefit. Every listing is a potential discovery point forever.
+
+4. **Riding the bot-making wave** - Timing luck, not strategy. But being the open-source option when everyone wanted to make bots mattered.
+
+5. **One-click deployment options** - Reduced friction for self-hosters, which increased adoption and contributions.
+
+6. **Comprehensive documentation** - The docs convert browsers into users at a much higher rate than a README alone.
+
+## What Didn't Work
+
+1. **Twitter/X promotion** - Developer Twitter is saturated. Unless you have an existing audience, tweets about your bot disappear into the void.
+
+2. **Hacker News submissions** - Telegram bots aren't sexy enough for HN. Multiple submissions, zero traction.
+
+3. **Paid promotion** - Telegram ad channels are expensive and mostly bots. Negative ROI every time I tried.
+
+4. **Feature parity** - Users didn't switch to Alita because we had more features. They switched because they wanted open source and self-hosting.
+
+## The Tactics I'm Not Proud Of
+
+I promised honesty, so here it is:
+
+**Trading favors with admins** - I essentially bribed my way into large groups by offering free labor. This created an unfair advantage over other open-source projects that didn't have someone willing to spend hundreds of hours on white-glove onboarding.
+
+**Inflated metrics** - "300k+ users" is technically accurate but misleading. I know this. I used it anyway because it's what gets attention.
+
+**Directory spam** - Some of those bot directories explicitly asked not to submit low-traction projects. I submitted anyway.
+
+**Standing on shoulders** - I built on Miss Rose's public v1 code. I credited it, but I also benefited enormously from someone else's architectural decisions. The gotgbot library that powers Alita was created by the same person whose bot I was effectively competing against.
+
+None of these are illegal. Most aren't even uncommon in growth hacking circles. But they're not things I'd put on a resume, either.
+
+## Six Years Later
+
+[Alita Robot](https://github.com/divkix/Alita_Robot) is still running. The Go codebase has grown to 34,000+ lines across 93 files. It has 27 feature modules, from CAPTCHA verification to advanced antiflood with Aho-Corasick string matching.
+
+The project gets contributions from developers I've never met. Groups in languages I don't speak use it daily. Someone built a fork specifically for crypto communities.
+
+Am I as active on it as I used to be? No. But I make sure no GitHub issue goes unanswered, no user concern gets ignored. The bot still has bugs—I fix them as they come up.
+
+Was it worth 2,000+ hours of unpaid labor? I don't know. The experience taught me more about growth than any book or course could. It gave me war stories for interviews. It proved that open source can compete with closed source when you're willing to out-hustle the competition.
+
+But if I'm being honest, I'm not sure I'd do it again.
+
+The hours I spent doing personal onboarding could have been spent on projects with actual revenue potential. The Go rewrite, while educational, was driven partly by wanting to stand out. The directory blitz was effective but mind-numbing.
+
+Growth hacking an open-source project to scale is possible. I'm living proof. But it requires a tolerance for tedium, a willingness to trade time for traction, and a flexible relationship with what constitutes "ethical" marketing.
+
+If you're building something similar, my advice is simple: be prepared to hustle harder than you think is reasonable, be honest with yourself about why you're doing it, and don't expect the work to be glamorous.
+
+The users are real. The growth is real. The grind to get there? Also very, very real.
+
+---
+
+*Alita Robot is open source and available at [github.com/divkix/Alita_Robot](https://github.com/divkix/Alita_Robot) or try the live bot at [t.me/Alita_Robot](https://t.me/Alita_Robot). If you're running a Telegram group and want a self-hosted admin bot, give it a try. Just don't ask me to do your personal setup—I'm retired from that particular hustle.*
