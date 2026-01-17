@@ -481,6 +481,26 @@
   }
 }
 
+/* View Transition Theme Toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+::view-transition-old(root) {
+  z-index: -1;
+}
+
+.aurora-background,
+.aurora-noise {
+  view-transition-name: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
