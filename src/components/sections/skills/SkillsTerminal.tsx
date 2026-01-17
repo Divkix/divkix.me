@@ -82,7 +82,10 @@ function TerminalWindow({
       </div>
 
       {/* Terminal content */}
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-2 relative">
+        {/* Scanlines overlay */}
+        <div className="terminal-scanlines" />
+
         {/* Column headers */}
         <div className="text-xs text-foreground/30 uppercase tracking-wider flex items-center gap-2">
           <span className="w-24">package</span>
@@ -104,14 +107,14 @@ function TerminalWindow({
           </div>
         )}
 
-        {/* Cursor at bottom */}
+        {/* Glowing cursor at bottom */}
         {showContent && (
           <div
             className="text-sm pt-2 opacity-0 animate-[fadeIn_0.3s_ease-out_forwards]"
             style={{ animationDelay: `${skills.length * 60 + 400}ms` }}
           >
             <span className="text-emerald-400">$ </span>
-            <span className="animate-pulse text-foreground/60">▊</span>
+            <span className="terminal-cursor">▊</span>
           </div>
         )}
       </div>
@@ -175,6 +178,49 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
+        }
+
+        /* Scanlines overlay for CRT effect */
+        .terminal-scanlines {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            oklch(0 0 0 / 0.03) 2px,
+            oklch(0 0 0 / 0.03) 4px
+          );
+          z-index: 10;
+        }
+
+        /* Glowing cursor */
+        .terminal-cursor {
+          color: oklch(0.7 0.2 140);
+          text-shadow: 0 0 8px oklch(0.7 0.2 140);
+          animation: cursor-glow 1s ease-in-out infinite;
+        }
+
+        @keyframes cursor-glow {
+          0%, 100% {
+            opacity: 1;
+            text-shadow: 0 0 8px oklch(0.7 0.2 140);
+          }
+          50% {
+            opacity: 0.4;
+            text-shadow: 0 0 4px oklch(0.7 0.2 140);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .terminal-cursor {
+            animation: none;
+            opacity: 1;
+          }
+          .terminal-scanlines {
+            display: none;
+          }
         }
       `}</style>
     </div>

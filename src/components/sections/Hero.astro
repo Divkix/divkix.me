@@ -32,10 +32,10 @@ const ariaLabels: Record<string, string> = {
   </div>
 
   <div class="flex flex-col items-center text-center max-w-4xl mx-auto flex-grow justify-center">
-    <!-- Name with gradient -->
+    <!-- Name with animated gradient -->
     <h1 class="text-5xl sm:text-6xl lg:text-8xl font-display font-bold tracking-tight hero-title">
       {siteConfig.name.split(" ")[0]}{" "}
-      <span class="bg-linear-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+      <span class="gradient-text-animated">
         {siteConfig.name.split(" ")[1]}
       </span>
     </h1>
@@ -60,7 +60,7 @@ const ariaLabels: Record<string, string> = {
               target={social.label !== "Email" ? "_blank" : undefined}
               rel={social.label !== "Email" ? "me noopener noreferrer" : undefined}
               aria-label={ariaLabels[social.label] || social.label}
-              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 social-icon-hover"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ const ariaLabels: Record<string, string> = {
       <div class="flex flex-wrap gap-4 justify-center pt-4 hero-cta">
         <a
           href="#projects"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-full text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-full text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 btn-glow"
         >
           View Projects
         </a>
@@ -192,6 +192,19 @@ const ariaLabels: Record<string, string> = {
       animation: none;
       opacity: 1;
       transform: none;
+    }
+
+    .gradient-text-animated {
+      animation: none;
+      background-size: 100% 100%;
+    }
+
+    .social-icon-hover {
+      transition: none;
+    }
+
+    .btn-glow::before {
+      display: none;
     }
   }
 </style>

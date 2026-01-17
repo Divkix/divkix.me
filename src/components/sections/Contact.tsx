@@ -111,6 +111,7 @@ export function Contact() {
                     id="name"
                     placeholder="Your name"
                     autoComplete="name"
+                    className="input-focus-glow"
                     {...register("name")}
                     disabled={isSubmitting}
                   />
@@ -128,6 +129,7 @@ export function Contact() {
                     type="email"
                     placeholder="your@email.com"
                     autoComplete="email"
+                    className="input-focus-glow"
                     {...register("email")}
                     disabled={isSubmitting}
                   />
@@ -144,6 +146,7 @@ export function Contact() {
                     id="message"
                     placeholder="Your message..."
                     rows={6}
+                    className="input-focus-glow"
                     {...register("message")}
                     disabled={isSubmitting}
                   />
@@ -157,7 +160,7 @@ export function Contact() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full"
+                  className="w-full btn-glow"
                   disabled={isSubmitting}
                 >
                   {isSubmitting && (

@@ -70,14 +70,68 @@ function StatCard({ value, label, description }: StatCardProps) {
   }, [value]);
 
   return (
-    <div ref={ref}>
-      <Card className="text-center p-8 glass-surface hover:border-primary/50 transition-colors">
+    <div ref={ref} className="highlight-card-wrapper">
+      <Card className="text-center p-8 glass-surface transition-all duration-300 highlight-card">
         <div className="text-5xl md:text-6xl font-display font-bold text-primary mb-2">
           {displayValue}
         </div>
         <div className="text-xl font-semibold mb-1">{label}</div>
         <div className="text-muted-foreground text-sm">{description}</div>
       </Card>
+      <style>{`
+        .highlight-card-wrapper {
+          position: relative;
+        }
+
+        .highlight-card-wrapper::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          padding: 1px;
+          border-radius: var(--radius-lg);
+          background: conic-gradient(
+            from var(--border-angle, 0deg),
+            oklch(0.64 0.22 264.5),
+            oklch(0.72 0.2 310),
+            oklch(0.55 0.22 264.5),
+            oklch(0.64 0.22 264.5)
+          );
+          mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          pointer-events: none;
+        }
+
+        .highlight-card-wrapper:hover::before {
+          opacity: 1;
+          animation: border-rotate 3s linear infinite;
+        }
+
+        .highlight-card-wrapper:hover .highlight-card {
+          border-color: transparent;
+          box-shadow:
+            0 8px 24px -8px oklch(0.64 0.22 264.5 / 0.2),
+            0 0 20px -8px oklch(0.64 0.22 264.5 / 0.15);
+        }
+
+        .dark .highlight-card-wrapper:hover .highlight-card {
+          box-shadow:
+            0 8px 32px -8px oklch(0.78 0.2 264.5 / 0.3),
+            0 0 28px -8px oklch(0.78 0.2 264.5 / 0.2);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .highlight-card-wrapper::before {
+            display: none;
+          }
+          .highlight-card-wrapper:hover .highlight-card {
+            border-color: oklch(0.64 0.22 264.5 / 0.5);
+          }
+        }
+      `}</style>
     </div>
   );
 }
