@@ -1,0 +1,334 @@
+---
+title: "I Built a Full-Stack AI App on Cloudflare Workers With D1, Durable Objects, and Queues — Here's What Actually Worked"
+date: "2026-01-26"
+excerpt: "Upload a PDF resume, get a live web portfolio. I built webresume.now entirely on Cloudflare's edge stack — D1 for data, R2 for files, Queues for async processing, Durable Objects for real-time WebSockets, and Gemini for AI parsing. Here's every technical decision, including the ones I regret."
+tags:
+  - Cloudflare Workers
+  - D1
+  - Durable Objects
+  - Next.js
+  - AI
+  - Gemini
+  - Drizzle ORM
+  - R2
+  - WebSocket
+  - Full Stack
+  - Side Projects
+  - "2026"
+  - Edge Computing
+  - Better Auth
+  - Resume Parser
+published: true
+tldr: "webresume.now runs entirely on Cloudflare's edge — D1 (SQLite), R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI via service bindings. The Claim Check Pattern lets anonymous users upload before auth. File hash deduplication prevents duplicate AI parsing. Privacy filtering happens at fetch time, not storage. It works, but D1's quirks and edge runtime constraints mean you're fighting the platform as often as you're building on it."
+keyTakeaways:
+  - "D1 is SQLite on the edge — JSON stored as TEXT, booleans as integers, no row-level security. Drizzle ORM handles most pain, but you'll still JSON.parse() more than you'd like."
+  - "The Claim Check Pattern (upload anonymously → authenticate → claim) reduces auth friction dramatically for new users."
+  - "Durable Objects with WebSocket Hibernation give you real-time updates at near-zero cost — the DO evicts from memory when idle."
+  - "Cloudflare Queues with dead letter queues and orphan recovery crons are essential — AI parsing fails more than you'd expect."
+  - "Two-stage validation (lenient on AI output, strict on user edits) prevents double-encoding and keeps XSS protection where it matters."
+  - "File hash deduplication with a waiting-for-cache pattern prevents duplicate Gemini API calls for the same PDF."
+faq:
+  - q: "Can you build a full-stack app on Cloudflare Workers?"
+    a: "Yes, but with constraints. No filesystem access, no native Node.js modules, D1 is SQLite (not Postgres), and you can't use Next.js Image component. Drizzle ORM + Better Auth + R2 bindings cover most needs. It's production-viable for apps that don't need heavy Node.js dependencies."
+  - q: "How does D1 compare to a real database like PostgreSQL?"
+    a: "D1 is SQLite distributed globally. It's fast for reads, adequate for writes, but lacks row-level security, proper JSON types, and advanced features. JSON is TEXT (always JSON.parse on read), booleans are integers. Good enough for apps with moderate write volume, not great for anything needing complex queries or transactions."
+  - q: "Are Durable Objects overkill for status updates?"
+    a: "With WebSocket Hibernation, no. The DO evicts from memory when no clients are connected and only wakes on new connections or messages. Cost is effectively zero for intermittent status updates. The alternative — HTTP polling every 3 seconds — is more expensive and adds unnecessary D1 load."
+  - q: "How does the AI parsing handle hallucinations and bad output?"
+    a: "Two-stage validation. AI output gets lenient transforms (trim whitespace, normalize URLs, detect garbage patterns like repeating path segments). User edits get strict Zod validation with XSS sanitization. This prevents double-encoding while keeping security where user input enters the system."
+---
+
+Nobody should need to know HTML to have a web portfolio in 2026.
+
+That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services — D1, R2, Queues, Durable Objects, Workers — without reaching for Supabase or Postgres or any external dependency. [webresume.now](https://webresume.now) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL.
+
+Simple pitch. The architecture behind it? Less simple.
+
+## The Stack
+
+Before I get into the interesting parts, here's what powers the app:
+
+- **Next.js 16** (App Router) via OpenNext on Cloudflare Workers
+- **D1** (Cloudflare's SQLite) with Drizzle ORM
+- **R2** for PDF storage (direct bindings, no S3 SDK)
+- **Cloudflare Queues** for async AI parsing (+ dead letter queue)
+- **Durable Objects** with WebSocket Hibernation for real-time status
+- **Better Auth** for Google OAuth + email/password
+- **Gemini 2.5 Flash Lite** for resume parsing via service-bound utility workers
+- **Resend** for password reset emails
+
+If you've read my [Cloudflare portfolio post](/blog/zero-cost-portfolio-cloudflare-workers), this is the same platform — but instead of a static site, it's a full dynamic app with auth, file uploads, AI processing, real-time updates, and seven different resume templates. Every constraint I mentioned in that post? I hit all of them again, plus new ones.
+
+## The Claim Check Pattern: Upload Before You Authenticate
+
+Here's the UX problem: you land on the site, you have your resume PDF ready, and you want to see what happens. But most apps would make you sign in first. By the time you've done the Google OAuth dance, the motivation has evaporated.
+
+The solution is what I call the Claim Check Pattern. It works like dropping off your coat at a venue — you hand it over, get a ticket, and claim it later.
+
+**Step 1: Anonymous Upload.** No account needed. Upload your PDF to `POST /api/upload`. The worker validates the file (content-type, max 5MB, PDF magic number check — yes, it reads the first bytes for `%PDF-`), stores it in R2 under a temp key (`temp/{uuid}/{filename}`), and returns the key. IP-based rate limiting: 10 per hour, 50 per day, with hashed IPs (SHA-256) so no raw IPs hit the database.
+
+**Step 2: Authenticate.** Google OAuth or email/password via Better Auth. The temp upload key sits in an HTTP-only cookie the whole time.
+
+**Step 3: Claim.** `POST /api/resume/claim` links the anonymous upload to the authenticated user. This is where it gets interesting:
+
+```typescript
+// Simplified claim flow — the actual code handles a lot more edge cases
+const fileBytes = await R2.getAsUint8Array(env.R2_BUCKET, tempKey);
+const fileHash = await computeSHA256(fileBytes);
+
+// Check if this exact PDF was already parsed for this user
+const cached = await db.query.resumes.findFirst({
+  where: and(
+    eq(resumes.userId, userId),
+    eq(resumes.fileHash, fileHash),
+    eq(resumes.status, "completed"),
+    isNotNull(resumes.parsedContent)
+  ),
+});
+
+if (cached) {
+  // Skip AI parsing entirely — reuse previous result
+  await upsertSiteData(userId, cached.parsedContent);
+  return { status: "completed", cached: true };
+}
+```
+
+The file hash deduplication saved me real money. Gemini API calls aren't free, and users upload the same resume multiple times more often than you'd think — fixing a typo in their name, trying different templates, abandoning the wizard and restarting. Same SHA-256 hash? Skip the parse.
+
+But there's a subtler case: what if the same file is currently *being* parsed? That's the `waiting_for_cache` status. Instead of firing a duplicate Gemini call, the new resume record waits for the first parse to complete, then copies the result. Ten-minute timeout if the primary parse dies. Belt and suspenders.
+
+## AI Parsing: Two Workers, One Pipeline, Many Hallucinations
+
+Resume parsing is a solved problem in the sense that everyone has a solution and none of them work reliably. I went with Gemini 2.5 Flash Lite — not because it's the best, but because it's cheap and fast enough for structured extraction.
+
+The architecture uses two utility workers composed via Cloudflare service bindings:
+
+1. **pdf-text-worker** — Extracts text from the PDF (max 60KB). Deployed separately, called via binding.
+2. **ai-parser-worker** — Sends text to Gemini with a structured schema prompt. Returns JSON with name, headline, contact, experience, education, skills, projects, certifications.
+
+Service bindings mean these workers call each other internally on Cloudflare's network — no public HTTP, no latency penalty, no CORS. It's like microservices except they actually make sense at this scale.
+
+### The Two-Stage Validation Philosophy
+
+This is the decision I'm most proud of, and it took three rewrites to get right.
+
+**Stage 1 (AI output): Lenient transforms.** Trim whitespace, normalize URLs, detect garbage patterns (repeating path segments like `/divkix/divkix/divkix`), move LinkedIn URLs from the website field to the LinkedIn field. No XSS sanitization here. Why? Because React escapes on render, and sanitizing at parse time would double-encode special characters. An `&` in "AT&T" becomes `&amp;` in the database, then `&amp;amp;` when React renders it. I shipped that bug and it looked terrible.
+
+**Stage 2 (user edits): Strict Zod validation with XSS sanitization.** When users modify their resume content in the editor, *that's* when I sanitize. Strict email regex, URL validation, HTML entity encoding. This is the trust boundary — AI output is internal data, user edits are untrusted input.
+
+```typescript
+// Parse-time: lenient (AI output → display)
+const transformed = transformAiResponse(geminiOutput);
+// No sanitization. React escapes on render.
+
+// Edit-time: strict (user input → storage)
+const validated = resumeContentSchema.parse(userEdits);
+// Full Zod validation + XSS sanitization
+```
+
+Model upgrades don't fix hallucination. I tested Gemini Pro — 25x the cost, maybe 5-15% fewer garbage URLs. Not worth it. The lenient transform approach handles the rest: if a URL has repeating path segments or excessive depth (>12 segments), it gets stripped. Good enough for 95% of resumes.
+
+## Real-Time Status: From HTTP Polling to Durable Objects
+
+The initial version polled `GET /api/resume/status` every 3 seconds while the AI was parsing. It worked. It also hammered D1 with unnecessary reads and felt sluggish — 3 seconds is an eternity when you're staring at a spinner.
+
+I replaced it with Durable Objects and WebSocket Hibernation. The [commit message](https://github.com/divkix/webresume.now) says `feat(realtime): replace HTTP polling with Durable Objects + WebSocket Hibernation` and that undersells how much this changed.
+
+Here's how it works:
+
+**Durable Object (keyed by resumeId):**
+- Client connects via `GET /ws/resume-status?resume_id=X` with WebSocket upgrade
+- DO accepts the connection using the Hibernation API
+- If there's a cached status in DO storage, sends it immediately
+- When the queue consumer finishes parsing, it POSTs to the DO
+- DO broadcasts the status to all connected WebSocket clients
+- On terminal states (completed/failed), schedules a 30-second alarm to clean up
+
+**Why Hibernation API matters:** Without it, the Durable Object stays in memory for the entire parsing duration (30-40 seconds). With Hibernation, it evicts from memory when idle and only wakes up when a message arrives or a WebSocket connects. Cost: effectively zero for intermittent status updates.
+
+```typescript
+// worker.ts — intercept WebSocket upgrades before OpenNext
+if (request.headers.get("Upgrade") === "websocket") {
+  const url = new URL(request.url);
+  if (url.pathname === "/ws/resume-status") {
+    const resumeId = url.searchParams.get("resume_id");
+    const doId = env.RESUME_STATUS_DO.idFromName(resumeId);
+    const stub = env.RESUME_STATUS_DO.get(doId);
+    return stub.fetch(request);
+  }
+}
+// Everything else goes to OpenNext handler
+```
+
+The client still falls back to HTTP polling if WebSocket connection fails. Defense in depth. The notification from queue consumer to DO is best-effort — if it fails, polling catches it. No data loss, just slightly slower UX.
+
+## D1 + Drizzle: SQLite on the Edge (and Its Quirks)
+
+I've been vocal about [using Supabase for side projects](/blog/side-project-stack-2026-grad-student). webresume.now is the first project where I went all-in on D1 instead. Here's the honest assessment.
+
+**What works well:**
+- Drizzle ORM handles most SQLite weirdness transparently
+- Reads are fast (globally distributed replicas)
+- Zero config — it's a Wrangler binding, no connection strings
+- Free tier is generous for side projects
+
+**What bites you:**
+
+**JSON is TEXT.** There's no JSON column type. You store JSON as a string and parse it on read. Drizzle's `json()` type with mode annotation helps, but you'll still write `JSON.parse()` in places where the ORM doesn't handle it — like raw SQL queries or when reading from Better Auth's user table where you added custom fields.
+
+**Booleans are integers.** SQLite stores `true` as `1` and `false` as `0`. Drizzle handles this with `{ mode: 'boolean' }`, but any direct D1 query returns 0/1.
+
+**No row-level security.** Every authorization check is in application code. Forget one `where` clause and you're leaking data. I spent time building helper functions that always filter by `userId` so I couldn't accidentally write an unscoped query.
+
+**Date handling is strings.** No DATE type. Everything is ISO 8601 TEXT. Sorting works because ISO 8601 is lexicographically sortable, but date math requires parsing.
+
+**Primary replica gotcha.** D1 has read replicas globally, but writes go to one primary. If you write and immediately read, you might get stale data from a replica. Better Auth's session handling needs `getSessionDbWithPrimaryFirst()` to avoid this.
+
+The schema has six tables: `user`, `session`, `account`, `verification` (Better Auth managed), plus `resumes`, `siteData`, `handleChanges`, `pageViews`, and `uploadRateLimits`. The `resumes` table is the most interesting — it tracks the full lifecycle with a status enum (`pending_claim` → `queued` → `processing` → `completed`/`failed`/`waiting_for_cache`) and includes a `parsedContentStaged` field for crash recovery. If the queue consumer dies between parsing and committing, the staged content survives.
+
+## Queues, Dead Letters, and Orphan Recovery
+
+AI parsing takes 30-40 seconds. You can't do that synchronously in a Workers request (30-second CPU time limit). Cloudflare Queues handle the async processing.
+
+The queue setup:
+
+```jsonc
+// wrangler.jsonc (simplified)
+{
+  "queues": {
+    "producers": [{ "queue": "resume-parse-queue", "binding": "PARSE_QUEUE" }],
+    "consumers": [{
+      "queue": "resume-parse-queue",
+      "max_batch_size": 1,     // One resume at a time
+      "max_retries": 3,        // Three attempts before DLQ
+      "dead_letter_queue": "resume-parse-dlq"
+    }]
+  }
+}
+```
+
+`max_batch_size: 1` is intentional. Each resume parse is independent and takes 30+ seconds. Batching doesn't help — it just increases the blast radius when something fails.
+
+The queue consumer classifies errors:
+
+- **Retryable** (network timeout, Gemini rate limit): Throw error, let the queue retry with backoff
+- **Non-retryable** (invalid PDF, empty text extraction): Mark resume as `failed`, ack the message
+- **Unknown**: Let it retry. After 3 failures, it goes to the dead letter queue
+
+The dead letter queue (`resume-parse-dlq`) is a parking lot for permanently failed parses. I check it weekly.
+
+But the real lifesaver is the orphan recovery cron. Every 15 minutes, `GET /api/cron/recover-orphaned` scans for resumes stuck in `queued` or `processing` for more than 10 minutes and re-publishes them to the queue. Workers crash. Queues lose messages occasionally. The cron catches everything that falls through.
+
+There's also a nightly cleanup cron (3 AM UTC) that purges expired rate limit entries and temp R2 uploads older than 24 hours.
+
+## Privacy Filtering: One Decision That Simplified Everything
+
+Users can toggle whether their phone number and full address appear on their public portfolio. The question is: where do you enforce this?
+
+Option A: Filter at storage time. Strip phone/address before saving to `siteData`. Problem: if the user changes their privacy settings, you need to re-parse or keep the original data somewhere.
+
+Option B: Filter at fetch time. Store the full parsed content. When rendering the public page, apply privacy filters based on current settings.
+
+I went with Option B. The filtering logic is simple:
+
+```typescript
+// Applied when fetching public resume data
+const settings = JSON.parse(user.privacySettings || "{}");
+if (!settings.show_phone) delete content.contact.phone;
+if (!settings.show_address) {
+  content.contact.location = extractCityState(content.contact.location);
+}
+```
+
+`extractCityState` is smarter than it looks. It handles "123 Main St, San Francisco, CA 94102" → "San Francisco, CA", but also "San Francisco, CA" → "San Francisco, CA" (no-op), and "Mumbai" → "Mumbai" (fallback). Five regex patterns covering most US and international address formats.
+
+The critical design decision: templates receive already-filtered content. They never see the raw data. No template can accidentally leak a phone number because the phone number doesn't exist in the props by the time it reaches the component. Single source of truth, no bypass possible from the client.
+
+Privacy changes also trigger Cloudflare edge cache purges. If you turn off your phone number, the cached version of your public page gets invalidated immediately — not in an hour when the TTL expires.
+
+## Rate Limiting Without Redis
+
+Most rate limiting tutorials assume Redis. I don't have Redis. I have D1.
+
+Two layers:
+
+**IP-based (anonymous endpoints):** Hashed IPs stored in `uploadRateLimits` with `expiresAt` timestamps. A single SQL query with conditional aggregation checks both hourly and daily limits in one roundtrip:
+
+```sql
+SELECT
+  COUNT(CASE WHEN createdAt > datetime('now', '-1 hour') THEN 1 END) as hourly,
+  COUNT(CASE WHEN createdAt > datetime('now', '-24 hours') THEN 1 END) as daily
+FROM upload_rate_limits
+WHERE ipHash = ? AND actionType = 'upload'
+```
+
+No raw IPs in the database. SHA-256 hash is sufficient for equality checks and prevents GDPR headaches.
+
+**User-based (authenticated endpoints):** Query existing records. Resume uploads: 5 per 24 hours (count from `resumes.createdAt`). Handle changes: 3 per 24 hours (count from `handleChanges`). Simple, no extra table needed.
+
+The fail-open vs fail-closed decision matters: anonymous endpoints fail-open (if D1 is down, allow the upload — user-level rate limiting catches abuse on claim). Authenticated endpoints fail-closed in production (if D1 is down, deny the request — better to block than to allow unbounded writes).
+
+## Seven Templates, One Interface
+
+The template system is deliberately simple. Every template receives the same props:
+
+```typescript
+interface TemplateProps {
+  content: ResumeContent;  // Already privacy-filtered
+  profile: {
+    avatar_url: string | null;
+    handle: string;
+  };
+}
+```
+
+Seven templates: MinimalistEditorial (serif, editorial), NeoBrutalist (bold borders), GlassMorphic (blur effects, dark), BentoGrid (mosaic), Spotlight (featured sections), Midnight (dark), BoldCorporate (corporate aesthetic). All mobile-responsive. All use `<img>` tags — no Next.js `<Image />` on Workers.
+
+Adding a new template is one file. Export a React component matching the interface, register it in the template map. No routing changes, no database changes.
+
+## The Honest Downsides
+
+I shipped this. It works. People use it. But here's what I'd warn you about:
+
+**D1 is not Postgres.** If your app needs transactions across tables, complex joins, or JSON operators, D1 will frustrate you. I work around it with application-level consistency (write to multiple tables in sequence, handle partial failures), but it's not elegant.
+
+**No ISR on Workers.** Same constraint as my portfolio. Public resume pages are fully dynamic (SSR) with edge cache in front. No stale-while-revalidate at the framework level — just Cache-Control headers and Cloudflare CDN. For a resume site, the traffic is low enough that D1 handles the load directly.
+
+**Debugging is painful.** Local dev uses Node.js via `next dev`. Production uses V8 isolates. I've had code pass all local tests and break on deploy because of subtle runtime differences. `wrangler dev` catches most of it, but not everything. The Durable Object + Queue integration is particularly hard to test locally.
+
+**Better Auth on D1 needs a proxy hack.** Better Auth internally creates `Date` objects. D1's driver doesn't serialize them correctly. I had to wrap the database connection in a Proxy that intercepts `Date` instances and converts them to ISO strings before they hit the driver. It works, but it's the kind of hack that makes you question your life choices.
+
+**Edge middleware can't access D1.** I wanted to check onboarding status in middleware and redirect incomplete users. Nope — Edge middleware runs in a different context without D1 bindings. Moved the check to page components and API routes. More code, same result.
+
+**Queue reliability isn't 100%.** Messages occasionally get lost. That's why the orphan recovery cron exists. Without it, some resumes would stay in `queued` status forever. Cloudflare's docs acknowledge this — Queues are "at least once" delivery, but the "at least" part sometimes means zero.
+
+## What I'd Do Differently
+
+**Use Postgres (Neon or Supabase) instead of D1.** D1 is fine for simple CRUD. The moment you need JSON queries, complex transactions, or reliable row-level security, you're fighting SQLite semantics on every query. The global distribution isn't worth the limitations for this use case.
+
+**Start with WebSockets, not polling.** The polling → Durable Objects migration was painful. If you know you'll need real-time updates, design for it from day one. The DO Hibernation API is cheap enough that there's no reason to start with polling.
+
+**Fewer templates at launch.** Seven templates meant seven components to keep responsive and consistent. Three would have been enough to validate the concept. I can always add more later.
+
+## Lessons Learned
+
+**Cloudflare's edge stack is production-viable for full apps** — but you're an early adopter. The docs are sparse for complex patterns (Queues + DO + D1 in one Worker). Expect to read source code and Discord threads.
+
+**The Claim Check Pattern is genuinely good UX.** Reducing auth friction at the upload step measurably improved conversion. Users who see their resume being processed are more likely to complete signup than users who hit a login wall first.
+
+**Deduplication saves more than you'd expect.** The file hash cache and waiting-for-cache pattern eliminated roughly 30% of Gemini API calls in the first month. Users reupload constantly.
+
+**Privacy at fetch time, not storage time.** Storing full data and filtering on read is simpler, more flexible, and easier to reason about than trying to maintain multiple filtered copies.
+
+**Edge computing is real, but the edges are sharp.** Every constraint — no filesystem, no native modules, SQLite instead of Postgres, no ISR, middleware limitations — is manageable individually. Stacked together, they add up to a fundamentally different development experience. Know what you're signing up for.
+
+If you want to try it: [webresume.now](https://webresume.now). Upload a PDF, pick a template, get a URL. No code required.
+
+---
+
+## Related Posts
+
+- [How I Host My Portfolio for $0/Month on Cloudflare](/blog/zero-cost-portfolio-cloudflare-workers) — The simpler version: static Next.js on Workers
+- [My 2026 Stack for Shipping Side Projects](/blog/side-project-stack-2026-grad-student) — Why I usually reach for Supabase (and why I didn't here)
+- [I Needed Logs, Not a PhD in Elasticsearch](/blog/logwell-self-hosted-logging-platform) — Another "build it yourself" project, with Claude Code
+- [Vibe Coding in 2026](/blog/vibe-coding-truth-ai-programming-2026) — The AI-assisted development philosophy behind this project
