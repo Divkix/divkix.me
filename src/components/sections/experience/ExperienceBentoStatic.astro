@@ -126,7 +126,7 @@ function getCardClasses(size: "large" | "medium" | "small"): string {
           >
             {/* Gradient overlay for large cards */}
             {size === "large" && (
-              <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div class="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             )}
 
             <div class="relative p-6 h-full flex flex-col">

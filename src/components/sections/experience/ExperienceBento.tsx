@@ -99,7 +99,7 @@ export function ExperienceBento() {
                   >
                     {/* Gradient overlay for large cards */}
                     {size === "large" && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     )}
 
                     <div className="relative p-6 h-full flex flex-col">

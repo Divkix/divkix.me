@@ -295,7 +295,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-primary flex-shrink-0 mt-0.5"
+                  class="text-primary shrink-0 mt-0.5"
                 >
                   <path d="M20 6 9 17l-5-5" />
                 </svg>
@@ -356,7 +356,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
             {post.data.howto.steps.map((step: { name: string; text: string }, index: number) => (
               <li class="glass-surface p-6 rounded-lg">
                 <div class="flex gap-4">
-                  <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+                  <span class="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
                     {index + 1}
                   </span>
                   <div class="flex-1">
