@@ -74,7 +74,7 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@types/mdast": "^4.0.4",
     "@types/node": "^25.1.0",
-    "@types/react": "19.2.10",
+    "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "knip": "^5.82.1",
     "png-to-ico": "^3.0.1",
