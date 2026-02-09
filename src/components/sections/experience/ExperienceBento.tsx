@@ -164,9 +164,9 @@ export function ExperienceBento() {
                         <div className="pt-4 border-t border-border/50 space-y-3">
                           {company.positions[0].highlights
                             .slice(0, 3)
-                            .map((highlight: string, hIndex: number) => (
+                            .map((highlight: string) => (
                               <p
-                                key={hIndex}
+                                key={highlight}
                                 className="text-sm text-foreground/70 leading-relaxed flex gap-2"
                               >
                                 <span className="text-primary shrink-0">

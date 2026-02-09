@@ -155,8 +155,11 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
 
   return (
     <div ref={containerRef} className="max-w-4xl mx-auto space-y-4">
-      {rows.map((row, rowIdx) => (
-        <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {rows.map((row) => (
+        <div
+          key={row.join("-")}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {row.map((category) => {
             const idx = windowIndex++;
             return (

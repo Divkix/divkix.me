@@ -13,14 +13,16 @@ function groupSkillsByCategory(
 ): Record<string, Skill[]> {
   const grouped: Record<string, Skill[]> = {};
   for (const skill of skills) {
-    if (!(skill.category in grouped)) {
-      grouped[skill.category] = [];
+    const existing = grouped[skill.category];
+    if (existing) {
+      existing.push({ ...skill });
+    } else {
+      grouped[skill.category] = [{ ...skill }];
     }
-    grouped[skill.category]!.push({ ...skill });
   }
   // Sort by proficiency within each category
-  for (const category of Object.keys(grouped)) {
-    grouped[category]!.sort((a, b) => b.proficiency - a.proficiency);
+  for (const [, list] of Object.entries(grouped)) {
+    list.sort((a, b) => b.proficiency - a.proficiency);
   }
   return grouped;
 }
