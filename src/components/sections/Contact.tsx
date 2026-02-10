@@ -202,7 +202,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-mono text-sm border border-[oklch(0.7_0.2_140)] text-[oklch(0.7_0.2_140)] px-6 py-2.5 rounded cursor-pointer transition-all hover:bg-[oklch(0.7_0.2_140_/_0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="font-mono text-sm border border-[oklch(0.7_0.2_140)] text-[oklch(0.7_0.2_140)] px-6 py-2.5 rounded cursor-pointer transition-all hover:bg-[oklch(0.7_0.2_140/0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ textShadow: "0 0 2px currentColor" }}
                 >
                   {isSubmitting ? (
@@ -221,7 +221,7 @@ export function Contact() {
           {/* Social links as terminal output */}
           <div className="mt-8 font-mono text-sm space-y-2">
             <p
-              className="text-[oklch(1_0_0_/_0.4)]"
+              className="text-[oklch(1_0_0/0.4)]"
               style={{ textShadow: "0 0 2px currentColor" }}
             >
               or reach me at:

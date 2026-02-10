@@ -34,7 +34,7 @@ function SkillRow({
       <span className="text-[oklch(0.7_0.2_140)] w-28 truncate">
         {skill.name.toLowerCase()}
       </span>
-      <span className="text-[oklch(1_0_0_/_0.35)] w-20 text-xs">
+      <span className="text-[oklch(1_0_0/0.35)] w-20 text-xs">
         {label.toLowerCase()}
       </span>
       <span className="text-[oklch(0.72_0.12_185)] tracking-wider">
@@ -151,7 +151,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
 
           {/* Tab bar */}
           <div
-            className="flex gap-1 mt-3 border-b border-[oklch(1_0_0_/_0.08)]"
+            className="flex gap-1 mt-3 border-b border-[oklch(1_0_0/0.08)]"
             role="tablist"
             aria-label="Skill categories"
           >
@@ -168,7 +168,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
                   ${
                     activeTab === cat
                       ? "text-[oklch(0.78_0.17_65)]"
-                      : "text-[oklch(1_0_0_/_0.4)] hover:text-[oklch(1_0_0_/_0.6)]"
+                      : "text-[oklch(1_0_0/0.4)] hover:text-[oklch(1_0_0/0.6)]"
                   }
                 `}
                 onClick={() => handleTabChange(cat)}
@@ -226,7 +226,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
             {showOutput && (
               <>
                 {/* Column headers */}
-                <div className="text-xs text-[oklch(1_0_0_/_0.3)] uppercase tracking-wider flex items-center gap-3 pt-2">
+                <div className="text-xs text-[oklch(1_0_0/0.3)] uppercase tracking-wider flex items-center gap-3 pt-2">
                   <span className="w-28">package</span>
                   <span className="w-20">level</span>
                   <span>mastery</span>

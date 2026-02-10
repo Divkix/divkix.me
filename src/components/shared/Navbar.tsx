@@ -318,7 +318,7 @@ export function Navbar() {
         <div
           ref={dialogRef}
           id="mobile-nav-dialog"
-          className="fixed inset-0 z-[100] bg-[oklch(0.08_0_0)] flex flex-col"
+          className="fixed inset-0 z-100 bg-[oklch(0.08_0_0)] flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
