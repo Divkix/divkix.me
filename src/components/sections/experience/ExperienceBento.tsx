@@ -57,7 +57,7 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
       {/* Horizontal connector — desktop only */}
       <div
         className={cn(
-          "hidden md:block absolute top-[1.875rem] h-px bg-border w-6",
+          "hidden md:block absolute top-7.5 h-px bg-border w-6",
           isEven ? "left-[calc(50%+8px)]" : "right-[calc(50%+8px)]",
         )}
       />

@@ -199,7 +199,7 @@ Keep existing SVG noise overlay, boost opacity from `0.04` to `0.06` for tactile
 - Monospace nav labels in Geist Mono
 - Text logo `divkix_` in monospace instead of image swap
 - Active indicator: amber underline that **slides** between items (layout animation or CSS translate), not fade-in
-- On scroll: thin gradient `border-bottom` (amber to teal, 1px) instead of shadow/blur
+- On scroll: thin gradient `border-bottom` (amber to teal, 1px) instead of shadow
 - Mobile: full-screen overlay with large typography and staggered entrance (each link slides in from right with 50ms delay), replace stock Sheet sidebar
 
 **Techniques:**
