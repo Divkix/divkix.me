@@ -195,9 +195,18 @@ export function Navbar() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <a
             href="/"
-            className="font-mono font-bold text-lg text-foreground hover:text-primary transition-colors"
+            className="flex items-center transition-opacity hover:opacity-80"
           >
-            divkix_
+            <img
+              src="/transparent-text-dark.webp"
+              alt="divkix"
+              className="h-7 block dark:hidden"
+            />
+            <img
+              src="/transparent-text.webp"
+              alt="divkix"
+              className="h-7 hidden dark:block"
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -256,9 +265,7 @@ export function Navbar() {
           aria-label="Navigation menu"
         >
           <div className="flex items-center justify-between px-4 h-16">
-            <span className="font-mono font-bold text-lg text-[oklch(0.93_0.015_85)]">
-              divkix_
-            </span>
+            <img src="/transparent-text.webp" alt="divkix" className="h-7" />
             <button
               type="button"
               onClick={() => setIsOpen(false)}
