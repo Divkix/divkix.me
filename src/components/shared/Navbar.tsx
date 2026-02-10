@@ -1,13 +1,5 @@
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -24,15 +16,13 @@ const navItems = [
 export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [pathname, setPathname] = useState("");
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    // Set pathname from window location
     setPathname(window.location.pathname);
 
-    // Handle scroll effect with inline throttle
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let lastExecutedTime = 0;
     const wait = 100;
@@ -57,14 +47,13 @@ export function Navbar() {
       }
     };
 
-    // Handle View Transitions navigation (Astro ClientRouter)
     const handlePageLoad = () => {
       setPathname(window.location.pathname);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("astro:page-load", handlePageLoad);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -76,7 +65,6 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    // Only run on homepage
     if (pathname !== "/") return;
 
     const sections = [
@@ -115,28 +103,41 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [pathname]);
 
+  // Staggered entrance animation for mobile menu
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    if (isOpen) {
+      requestAnimationFrame(() => setMenuVisible(true));
+    } else {
+      setMenuVisible(false);
+    }
+  }, [isOpen]);
 
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.attributeName === "class") {
-          const isDark = document.documentElement.classList.contains("dark");
-          setTheme(isDark ? "dark" : "light");
-        }
-      }
-    });
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
-    observer.observe(document.documentElement, { attributes: true });
-    return () => observer.disconnect();
-  }, []);
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen]);
 
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
-    // Close mobile menu when a link is clicked
     setIsOpen(false);
 
     if (href.startsWith("/#") && pathname === "/") {
@@ -150,7 +151,6 @@ export function Navbar() {
   };
 
   const getIsActive = (href: string) => {
-    // For homepage link - active when at hero/highlights or no section detected
     if (href === "/") {
       return (
         pathname === "/" &&
@@ -159,15 +159,12 @@ export function Navbar() {
           activeSection === "highlights")
       );
     }
-    // For blog
     if (href === "/blog") {
       return pathname.startsWith("/blog");
     }
-    // For about
     if (href === "/about") {
       return pathname === "/about";
     }
-    // For anchor links, check if we're on homepage and if this section is active
     if (href.startsWith("/#")) {
       const section = href.replace("/#", "");
       return pathname === "/" && activeSection === section;
@@ -184,28 +181,27 @@ export function Navbar() {
         Skip to main content
       </a>
       <nav
-        className={cn(
-          "sticky top-0 z-50 w-full glass-surface transition-all duration-300",
-          scrolled && "backdrop-blur-md bg-background/90 shadow-sm",
-        )}
+        className="sticky top-0 z-50 w-full bg-background transition-all duration-300"
+        style={
+          scrolled
+            ? {
+                borderBottom: "1px solid transparent",
+                borderImage:
+                  "linear-gradient(to right, var(--primary), var(--accent)) 1",
+              }
+            : undefined
+        }
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <a href="/" className="flex items-center">
-            <img
-              src={
-                theme === "dark"
-                  ? "/transparent-text.webp"
-                  : "/transparent-text-dark.webp"
-              }
-              alt="Divkix"
-              width={94}
-              height={32}
-              className="h-8 w-auto"
-            />
+          <a
+            href="/"
+            className="font-mono font-bold text-lg text-foreground hover:text-primary transition-colors"
+          >
+            divkix_
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = getIsActive(item.href);
               return (
@@ -214,7 +210,7 @@ export function Navbar() {
                   href={item.href}
                   onClick={(e) => handleAnchorClick(e, item.href)}
                   className={cn(
-                    "relative px-3 py-2 text-sm font-medium transition-colors",
+                    "relative px-3 py-2 text-sm font-mono transition-colors",
                     isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
@@ -222,9 +218,14 @@ export function Navbar() {
                   aria-label={`Navigate to ${item.label}`}
                 >
                   {item.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary animate-navbar-indicator" />
-                  )}
+                  <span
+                    className={cn(
+                      "absolute bottom-0 left-0 right-0 h-0.5 bg-primary transition-all duration-300 ease-out origin-left",
+                      isActive
+                        ? "scale-x-100 opacity-100"
+                        : "scale-x-0 opacity-0",
+                    )}
+                  />
                 </a>
               );
             })}
@@ -234,44 +235,72 @@ export function Navbar() {
           {/* Mobile Navigation */}
           <div className="flex md:hidden items-center gap-4">
             <ThemeToggle />
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Open menu">
-                  <MenuIcon className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <SheetHeader>
-                  <SheetTitle className="text-left">Navigation</SheetTitle>
-                </SheetHeader>
-                <nav aria-label="Mobile navigation menu">
-                  <div className="flex flex-col gap-4 mt-8">
-                    {navItems.map((item) => {
-                      const isActive = getIsActive(item.href);
-                      return (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => handleAnchorClick(e, item.href)}
-                          className={cn(
-                            "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
-                            isActive
-                              ? "text-foreground bg-primary/10"
-                              : "text-muted-foreground hover:text-foreground hover:bg-primary/5",
-                          )}
-                          aria-label={`Navigate to ${item.label} (mobile menu)`}
-                        >
-                          {item.label}
-                        </a>
-                      );
-                    })}
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="p-2 text-foreground hover:text-primary transition-colors"
+              aria-label="Open menu"
+            >
+              <MenuIcon className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* Full-screen mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[100] bg-[oklch(0.08_0_0)] flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+        >
+          <div className="flex items-center justify-between px-4 h-16">
+            <span className="font-mono font-bold text-lg text-[oklch(0.93_0.015_85)]">
+              divkix_
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-[oklch(0.93_0.015_85)] hover:text-primary transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <nav
+            className="flex flex-col items-start justify-center flex-1 px-8 gap-6"
+            aria-label="Mobile navigation menu"
+          >
+            {navItems.map((item, i) => {
+              const isActive = getIsActive(item.href);
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleAnchorClick(e, item.href)}
+                  className={cn(
+                    "text-3xl font-mono font-medium",
+                    isActive
+                      ? "text-primary"
+                      : "text-[oklch(0.65_0.01_60)] hover:text-[oklch(0.93_0.015_85)]",
+                  )}
+                  style={{
+                    opacity: menuVisible ? 1 : 0,
+                    transform: menuVisible
+                      ? "translateX(0)"
+                      : "translateX(30px)",
+                    transition: `opacity 0.4s ease-out ${i * 50}ms, transform 0.4s ease-out ${i * 50}ms`,
+                  }}
+                  aria-label={`Navigate to ${item.label}`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </>
   );
 }

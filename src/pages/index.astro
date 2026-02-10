@@ -10,8 +10,11 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
 
 <SiteLayout showScrollProgress={true}>
   <Hero />
+  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Highlights client:visible />
+  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Projects client:visible />
+  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <ExperienceBento client:visible />
   <Skills client:visible />
   <Contact client:visible />

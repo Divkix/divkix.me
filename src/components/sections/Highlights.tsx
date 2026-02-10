@@ -1,21 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { SectionLabel } from "@/components/shared/SectionLabel";
 import { siteConfig } from "@/data/site.config";
 
-interface StatCardProps {
+interface StatProps {
   value: string;
   label: string;
-  description: string;
+  variant: "hero" | "compact";
 }
 
-function StatCard({ value, label, description }: StatCardProps) {
+function AnimatedStat({ value, label, variant }: StatProps) {
   const [displayValue, setDisplayValue] = useState("0");
   const hasAnimatedRef = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
   const animationIdRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Guard: don't create observer if already animated
     if (hasAnimatedRef.current) return;
 
     const animateValue = () => {
@@ -50,7 +49,7 @@ function StatCard({ value, label, description }: StatCardProps) {
         if (entry?.isIntersecting && !hasAnimatedRef.current) {
           hasAnimatedRef.current = true;
           animateValue();
-          observer.disconnect(); // Stop observing after animation starts
+          observer.disconnect();
         }
       },
       { threshold: 0.5 },
@@ -69,69 +68,29 @@ function StatCard({ value, label, description }: StatCardProps) {
     };
   }, [value]);
 
-  return (
-    <div ref={ref} className="highlight-card-wrapper">
-      <Card className="text-center p-8 glass-surface transition-all duration-300 highlight-card">
-        <div className="text-5xl md:text-6xl font-display font-bold text-primary mb-2">
+  if (variant === "hero") {
+    return (
+      <div ref={ref}>
+        <div
+          className="text-7xl md:text-8xl font-mono font-bold text-foreground"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
           {displayValue}
         </div>
-        <div className="text-xl font-semibold mb-1">{label}</div>
-        <div className="text-muted-foreground text-sm">{description}</div>
-      </Card>
-      <style>{`
-        .highlight-card-wrapper {
-          position: relative;
-        }
+        <p className="text-base text-muted-foreground mt-2">{label}</p>
+      </div>
+    );
+  }
 
-        .highlight-card-wrapper::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          padding: 1px;
-          border-radius: var(--radius-lg);
-          background: conic-gradient(
-            from var(--border-angle, 0deg),
-            oklch(0.64 0.22 264.5),
-            oklch(0.72 0.2 310),
-            oklch(0.55 0.22 264.5),
-            oklch(0.64 0.22 264.5)
-          );
-          mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-          mask-composite: exclude;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          pointer-events: none;
-        }
-
-        .highlight-card-wrapper:hover::before {
-          opacity: 1;
-          animation: border-rotate 3s linear infinite;
-        }
-
-        .highlight-card-wrapper:hover .highlight-card {
-          border-color: transparent;
-          box-shadow:
-            0 8px 24px -8px oklch(0.64 0.22 264.5 / 0.2),
-            0 0 20px -8px oklch(0.64 0.22 264.5 / 0.15);
-        }
-
-        .dark .highlight-card-wrapper:hover .highlight-card {
-          box-shadow:
-            0 8px 32px -8px oklch(0.78 0.2 264.5 / 0.3),
-            0 0 28px -8px oklch(0.78 0.2 264.5 / 0.2);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .highlight-card-wrapper::before {
-            display: none;
-          }
-          .highlight-card-wrapper:hover .highlight-card {
-            border-color: oklch(0.64 0.22 264.5 / 0.5);
-          }
-        }
-      `}</style>
+  return (
+    <div ref={ref}>
+      <div
+        className="text-4xl md:text-5xl font-mono font-bold text-foreground"
+        style={{ fontVariantNumeric: "tabular-nums" }}
+      >
+        {displayValue}
+      </div>
+      <p className="text-sm text-muted-foreground mt-1">{label}</p>
     </div>
   );
 }
@@ -141,26 +100,48 @@ export function Highlights() {
     {
       value: siteConfig.facts.impact,
       label: "Users Impacted",
-      description: "Through open source projects",
     },
     {
       value: siteConfig.facts.projects,
       label: "Projects Shipped",
-      description: "From concept to production",
     },
     {
       value: siteConfig.facts.oss,
       label: "OSS Contributions",
-      description: "Commits, PRs, and issues",
     },
   ];
 
+  // First stat is the "hero" stat (largest), rest are compact and stacked right
+  const heroStat = stats[0] as (typeof stats)[number];
+  const secondaryStats = stats.slice(1);
+
   return (
-    <section id="highlights" className="container mx-auto px-4 py-20">
-      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {stats.map((stat) => (
-          <StatCard key={stat.label} {...stat} />
-        ))}
+    <section
+      id="highlights"
+      className="container mx-auto px-4 py-12 reveal-on-scroll"
+    >
+      <SectionLabel number="01" label="highlights" />
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-w-4xl">
+        {/* Main stat: huge full-width treatment */}
+        <div className="flex items-end">
+          <AnimatedStat
+            value={heroStat.value}
+            label={heroStat.label}
+            variant="hero"
+          />
+        </div>
+
+        {/* Secondary stats: stacked */}
+        <div className="flex flex-col justify-between gap-6">
+          {secondaryStats.map((stat) => (
+            <AnimatedStat
+              key={stat.label}
+              value={stat.value}
+              label={stat.label}
+              variant="compact"
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

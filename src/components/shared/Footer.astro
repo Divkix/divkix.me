@@ -1,45 +1,61 @@
 ---
-import { siteConfig } from "@/data/site.config";
-import SocialIcons from "./SocialIcons.astro";
+const currentYear = new Date().getFullYear();
 
 const footerLinks = [
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Connect", href: "/socials" },
-  { label: "Privacy", href: "/privacy" },
+  { label: "home", href: "/" },
+  { label: "blog", href: "/blog" },
+  { label: "about", href: "/about" },
+  { label: "privacy", href: "/privacy" },
 ];
-
-const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t">
-  <div class="container mx-auto px-4 py-8">
-    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
-      <div class="flex flex-col items-center gap-4 md:flex-row md:gap-6">
-        <p class="text-sm text-foreground/60">
-          © {currentYear} {siteConfig.name}. All rights reserved.
-        </p>
-        <span class="text-sm text-foreground/40">•</span>
+<footer class="bg-[oklch(0.08_0_0)] border-t border-[oklch(1_0_0/10%)]">
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3 font-mono">
+      {/* Left: Terminal prompt */}
+      <div class="flex items-center gap-1 text-xs text-[oklch(0.65_0.01_60)]">
+        <span>divkix@portfolio:~$</span>
+        <span
+          class="text-[oklch(0.7_0.2_140)]"
+          style="animation: cursor-blink 1s step-end infinite;"
+        >
+          ▊
+        </span>
+      </div>
+
+      {/* Center: Nav links as terminal commands */}
+      <nav class="flex items-center gap-4 text-xs" aria-label="Footer navigation">
+        {footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-[oklch(0.65_0.01_60)] hover:text-[oklch(0.7_0.2_140)] transition-colors link-underline-grow"
+          >
+            {link.label}
+          </a>
+        ))}
         <a
           href="https://github.com/divkix/divkix.me"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm text-foreground/60 hover:text-foreground transition-colors"
+          class="text-[oklch(0.7_0.2_140)] hover:text-[oklch(0.8_0.2_140)] transition-colors border border-[oklch(0.7_0.2_140/30%)] px-1.5 py-0.5 rounded-sm"
         >
-          Open Source
+          [src]
         </a>
-        <nav class="flex items-center gap-4">
-          {footerLinks.map((link) => (
-            <a
-              href={link.href}
-              class="text-sm text-foreground/60 hover:text-foreground transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+      </nav>
+
+      {/* Right: Status */}
+      <div class="flex items-center gap-2 text-xs text-[oklch(0.65_0.01_60)]">
+        <span class="flex items-center gap-1.5">
+          status:
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.7_0.2_140)] opacity-75"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-[oklch(0.7_0.2_140)]"></span>
+          </span>
+          online
+        </span>
+        <span class="text-[oklch(1_0_0/20%)]">|</span>
+        <span>&copy; {currentYear}</span>
       </div>
-      <SocialIcons size="sm" />
     </div>
   </div>
 </footer>

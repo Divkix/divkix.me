@@ -18,7 +18,7 @@ function getCardSize(
 
 function getCardClasses(size: "large" | "medium" | "small"): string {
   const base =
-    "group relative glass-surface rounded-xl border border-border transition-colors duration-300 animate-fade-in-up overflow-hidden hover:border-primary/50";
+    "group relative glass-surface rounded-xl border border-border transition-colors duration-300 reveal-on-scroll overflow-hidden hover:border-primary/50";
   if (size === "large") return `${base} md:col-span-2 lg:col-span-2`;
   if (size === "medium") return `${base} lg:row-span-2`;
   return base;
@@ -53,7 +53,7 @@ function getCardClasses(size: "large" | "medium" | "small"): string {
     <div class="flex flex-wrap gap-4">
       {siteConfig.education.map((edu: Education, index: number) => (
         <div
-          class="flex-1 min-w-[280px] glass-surface rounded-xl border border-border p-5 animate-fade-in-up hover:border-primary/50 transition-colors"
+          class="flex-1 min-w-[280px] glass-surface rounded-xl border border-border p-5 reveal-on-scroll hover:border-primary/50 transition-colors"
           style={`animation-delay: ${index * 100}ms; animation-fill-mode: backwards;`}
         >
           <div class="space-y-2">
