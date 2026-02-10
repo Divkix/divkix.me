@@ -1,8 +1,15 @@
-/* Fade in up animation */
-@keyframes fade-in-up {
+/* ===== SCROLL-DRIVEN SECTION REVEALS ===== */
+
+.reveal-on-scroll {
+  animation: reveal-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+@keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(2rem);
   }
   to {
     opacity: 1;
@@ -10,24 +17,57 @@
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out;
+@supports not (animation-timeline: view()) {
+  .reveal-on-scroll {
+    animation: none;
+    opacity: 1;
+  }
 }
 
-/* Animation delays */
-.animation-delay-100 {
-  animation-delay: 100ms;
+/* Stagger delays for card grids */
+.reveal-delay-1 {
+  --reveal-delay: 100ms;
+}
+.reveal-delay-2 {
+  --reveal-delay: 200ms;
+}
+.reveal-delay-3 {
+  --reveal-delay: 300ms;
+}
+.reveal-delay-4 {
+  --reveal-delay: 400ms;
 }
 
-.animation-delay-200 {
-  animation-delay: 200ms;
+/* ===== TEXT CLIP-PATH REVEAL ===== */
+
+.text-clip-reveal {
+  animation: clip-reveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.animation-delay-300 {
-  animation-delay: 300ms;
+@keyframes clip-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
 }
 
-/* Navbar indicator animation */
+/* ===== CARD ENTRANCE ===== */
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== NAVBAR INDICATOR ===== */
+
 @keyframes navbar-indicator {
   from {
     transform: scaleX(0);
@@ -44,7 +84,8 @@
   transform-origin: left;
 }
 
-/* Cursor blink animation (for TypewriterEffect) */
+/* ===== CURSOR ANIMATIONS ===== */
+
 @keyframes cursor-blink {
   0%,
   100% {
@@ -55,7 +96,20 @@
   }
 }
 
-/* Project card slide-up reveal */
+@keyframes cursor-glow {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px oklch(0.7 0.2 140);
+  }
+  50% {
+    opacity: 0.4;
+    text-shadow: 0 0 4px oklch(0.7 0.2 140);
+  }
+}
+
+/* ===== PROJECT CARD ANIMATIONS ===== */
+
 @keyframes slide-up-reveal {
   from {
     opacity: 0;
@@ -71,96 +125,8 @@
   animation: slide-up-reveal 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Project grid stagger entrance */
-@keyframes project-entrance {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* ===== TEXT REVEAL (LEFT CLIP) ===== */
 
-.animate-project-entrance {
-  animation: project-entrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-}
-
-/* Subtle shimmer effect for featured cards */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    oklch(1 0 0 / 0.08) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-/* ===== VISUAL ENHANCEMENTS ===== */
-
-/* Gradient text animation - shifts background position */
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.animate-gradient-shift {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease-in-out infinite;
-}
-
-/* Glow pulse - for button hover effects */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-    filter: blur(12px);
-  }
-  50% {
-    opacity: 0.7;
-    filter: blur(16px);
-  }
-}
-
-.animate-glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-/* Rotating border gradient angle */
-@property --border-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes border-rotate {
-  from {
-    --border-angle: 0deg;
-  }
-  to {
-    --border-angle: 360deg;
-  }
-}
-
-/* Text reveal from left using clip-path */
 @keyframes text-reveal {
   from {
     clip-path: inset(0 100% 0 0);
@@ -174,41 +140,33 @@
   animation: text-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Aurora background drift - subtle movement */
-@keyframes aurora-drift {
+/* ===== TIMELINE NODE ANIMATIONS ===== */
+
+@keyframes timeline-node-appear {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes timeline-pulse {
   0%,
   100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(2%, 1%) rotate(0.5deg);
+    transform: scale(1);
+    opacity: 0.8;
   }
   50% {
-    transform: translate(-1%, 2%) rotate(-0.5deg);
-  }
-  75% {
-    transform: translate(-2%, -1%) rotate(0.3deg);
+    transform: scale(1.5);
+    opacity: 0;
   }
 }
 
-.animate-aurora {
-  animation: aurora-drift 30s ease-in-out infinite;
-}
+/* ===== TERMINAL SCANLINE ===== */
 
-/* Social icon micro-interactions */
-@keyframes icon-hover {
-  0% {
-    transform: scale(1) translateY(0);
-  }
-  50% {
-    transform: scale(1.15) translateY(-2px);
-  }
-  100% {
-    transform: scale(1.1) translateY(-2px);
-  }
-}
-
-/* Terminal scanline effect */
 @keyframes scanline {
   0% {
     transform: translateY(-100%);
@@ -218,15 +176,19 @@
   }
 }
 
-/* Cursor glow blink */
-@keyframes cursor-glow {
-  0%,
-  100% {
-    opacity: 1;
-    text-shadow: 0 0 8px oklch(0.7 0.2 140);
+/* ===== ROTATING BORDER GRADIENT ANGLE ===== */
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes border-rotate {
+  from {
+    --border-angle: 0deg;
   }
-  50% {
-    opacity: 0.4;
-    text-shadow: 0 0 4px oklch(0.7 0.2 140);
+  to {
+    --border-angle: 360deg;
   }
 }

@@ -1,3 +1,4 @@
+import { SectionLabel } from "@/components/shared/SectionLabel";
 import { siteConfig } from "@/data/site.config";
 import { SkillsTerminal } from "./SkillsTerminal";
 
@@ -7,7 +8,6 @@ export type Skill = {
   proficiency: number;
 };
 
-// Group skills by category
 function groupSkillsByCategory(
   skills: readonly Skill[],
 ): Record<string, Skill[]> {
@@ -20,14 +20,12 @@ function groupSkillsByCategory(
       grouped[skill.category] = [{ ...skill }];
     }
   }
-  // Sort by proficiency within each category
   for (const [, list] of Object.entries(grouped)) {
     list.sort((a, b) => b.proficiency - a.proficiency);
   }
   return grouped;
 }
 
-// Map proficiency to abstract level
 export function getProficiencyLevel(proficiency: number): {
   label: string;
   dots: number;
@@ -48,19 +46,28 @@ export function Skills() {
   const groupedSkills = groupSkillsByCategory(skills);
 
   return (
-    <section id="skills" className="container mx-auto px-4 py-20">
-      <div className="space-y-12">
-        {/* Section Header */}
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-display font-bold">Skills</h2>
-          <p className="text-foreground/60 max-w-2xl mx-auto">
-            Technical proficiency across languages, frameworks, databases, and
-            tools.
-          </p>
-        </div>
+    <>
+      {/* Gradient divider: page background → terminal black */}
+      <div
+        className="h-24"
+        style={{
+          background:
+            "linear-gradient(to bottom, var(--background), oklch(0.08 0 0))",
+        }}
+        aria-hidden="true"
+      />
 
-        <SkillsTerminal groupedSkills={groupedSkills} />
-      </div>
-    </section>
+      {/* Full-bleed dark section */}
+      <section
+        id="skills"
+        className="relative py-20"
+        style={{ background: "oklch(0.08 0 0)" }}
+      >
+        <div className="container mx-auto px-4">
+          <SectionLabel number="04" label="skills" variant="terminal" />
+          <SkillsTerminal groupedSkills={groupedSkills} />
+        </div>
+      </section>
+    </>
   );
 }

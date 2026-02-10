@@ -1,7 +1,8 @@
 ---
 import "@/styles/globals.css";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/space-grotesk";
+import "@fontsource/instrument-serif";
+import "@fontsource/geist-sans";
+import "@fontsource/geist-mono";
 import { ClientRouter } from "astro:transitions";
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
@@ -151,9 +152,8 @@ const websiteSchema = generateWebSiteSchema();
     ></script>
   </head>
   <body>
-    <!-- Aurora Background Effect -->
-    <div class="aurora-background"></div>
-    <div class="aurora-noise"></div>
+    <!-- Dot Grid Background -->
+    <div class="dot-grid-bg" aria-hidden="true"></div>
 
     <!-- Page Content -->
     <slot />
