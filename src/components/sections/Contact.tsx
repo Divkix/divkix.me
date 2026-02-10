@@ -21,6 +21,11 @@ function TypewriterSuccess() {
   const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayed(text);
+      return;
+    }
+
     let i = 0;
     const timer = setInterval(() => {
       if (i < text.length) {

@@ -1,5 +1,5 @@
 import { MenuIcon, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -19,6 +19,10 @@ export function Navbar() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [pathname, setPathname] = useState("");
+
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setPathname(window.location.pathname);
@@ -134,6 +138,56 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Auto-focus close button when menu opens
+    requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0] as HTMLElement | undefined;
+      const last = focusable[focusable.length - 1] as HTMLElement | undefined;
+      if (!first || !last) return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  // Restore focus to hamburger button when menu closes
+  const prevIsOpen = useRef(false);
+  useEffect(() => {
+    if (prevIsOpen.current && !isOpen) {
+      hamburgerRef.current?.focus();
+    }
+    prevIsOpen.current = isOpen;
+  }, [isOpen]);
+
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -245,10 +299,13 @@ export function Navbar() {
           <div className="flex md:hidden items-center gap-4">
             <ThemeToggle />
             <button
+              ref={hamburgerRef}
               type="button"
               onClick={() => setIsOpen(true)}
               className="p-2 text-foreground hover:text-primary transition-colors"
               aria-label="Open menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-dialog"
             >
               <MenuIcon className="h-5 w-5" />
             </button>
@@ -259,6 +316,8 @@ export function Navbar() {
       {/* Full-screen mobile overlay */}
       {isOpen && (
         <div
+          ref={dialogRef}
+          id="mobile-nav-dialog"
           className="fixed inset-0 z-[100] bg-[oklch(0.08_0_0)] flex flex-col"
           role="dialog"
           aria-modal="true"
@@ -267,6 +326,7 @@ export function Navbar() {
           <div className="flex items-center justify-between px-4 h-16">
             <img src="/transparent-text.webp" alt="divkix" className="h-7" />
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={() => setIsOpen(false)}
               className="p-2 text-[oklch(0.93_0.015_85)] hover:text-primary transition-colors"

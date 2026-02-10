@@ -175,20 +175,3 @@
     transform: translateY(100%);
   }
 }
-
-/* ===== ROTATING BORDER GRADIENT ANGLE ===== */
-
-@property --border-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes border-rotate {
-  from {
-    --border-angle: 0deg;
-  }
-  to {
-    --border-angle: 360deg;
-  }
-}

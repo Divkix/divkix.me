@@ -84,6 +84,13 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
     setShowOutput(false);
 
     const command = `$ divkix --list-skills --category=${category.toLowerCase()}`;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTypedCommand(command);
+      setShowOutput(true);
+      return;
+    }
+
     let i = 0;
 
     function typeChar() {
