@@ -112,6 +112,8 @@ function getAllPosts() {
       excerpt: frontmatter.excerpt || "",
       tags: frontmatter.tags || [],
       author: frontmatter.author || "Divanshu Chauhan",
+      seoTitle: frontmatter.seoTitle || null,
+      seoDescription: frontmatter.seoDescription || null,
       readingTime,
       wordCount,
       published: frontmatter.published !== false,

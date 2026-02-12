@@ -24,6 +24,8 @@ const blog = defineCollection({
     tags: z.array(z.string()),
     published: z.boolean().default(false),
     author: z.string().optional().default("Divanshu Chauhan"),
+    seoTitle: z.string().optional(),
+    seoDescription: z.string().optional(),
 
     // Extended SEO fields
     tldr: z.string().optional(),

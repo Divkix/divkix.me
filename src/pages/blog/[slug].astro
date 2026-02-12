@@ -63,10 +63,10 @@ const showToc = toc.length >= 3;
 const blogPostingSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": `${baseUrl}/blog/${post.slug}#article`,
+  "@id": `${baseUrl}/blog/${post.slug}/#article`,
   headline: post.data.title,
   description: post.data.excerpt,
-  url: `${baseUrl}/blog/${post.slug}`,
+  url: `${baseUrl}/blog/${post.slug}/`,
   datePublished: `${post.data.date}T00:00:00Z`,
   dateModified: post.data.dateModified
     ? `${post.data.dateModified}T00:00:00Z`
@@ -75,7 +75,7 @@ const blogPostingSchema = {
   publisher: generateBlogPublisherSchema(),
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": `${baseUrl}/blog/${post.slug}`,
+    "@id": `${baseUrl}/blog/${post.slug}/`,
   },
   image: `${baseUrl}/og/blog/${post.slug}.png`,
   keywords: post.data.tags?.join(", "),
@@ -98,13 +98,13 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 2,
       name: "Blog",
-      item: `${baseUrl}/blog`,
+      item: `${baseUrl}/blog/`,
     },
     {
       "@type": "ListItem",
       position: 3,
       name: post.data.title,
-      item: `${baseUrl}/blog/${post.slug}`,
+      item: `${baseUrl}/blog/${post.slug}/`,
     },
   ],
 };
@@ -143,10 +143,20 @@ const howtoSchema = post.data.howto
     }
   : null;
 
-// Generate page title and description
-const pageTitle = post.data.title;
-const pageDescription = post.data.excerpt;
+// Generate page title and description (SEO overrides for <title>/<meta>, visible h1 stays original)
+const pageTitle = post.data.seoTitle ?? post.data.title;
+const pageDescription = post.data.seoDescription ?? post.data.excerpt;
 const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
+
+// Article meta for og:type="article"
+const articleMeta = {
+  publishedTime: `${post.data.date}T00:00:00Z`,
+  author: post.data.author ?? "Divanshu Chauhan",
+  tags: post.data.tags,
+  ...(post.data.dateModified
+    ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
+    : {}),
+};
 ---
 
 <BlogLayout
@@ -155,6 +165,8 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
   ogImage={ogImage}
   showReadingProgress={true}
   readingTime={readingTimeMinutes}
+  ogType="article"
+  articleMeta={articleMeta}
 >
   <!-- JSON-LD Schemas -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
@@ -191,7 +203,7 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
     <div class="max-w-3xl mx-auto space-y-8">
       <!-- Back to Blog button -->
       <a
-        href="/blog"
+        href="/blog/"
         class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
       >
         <svg
@@ -316,33 +328,17 @@ const ogImage = `${baseUrl}/og/blog/${post.slug}.png`;
 
       <!-- FAQ Section -->
       {post.data.faq && post.data.faq.length > 0 && (
-        <div class="space-y-4">
-          <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
+        <section class="space-y-6" aria-labelledby="faq-heading">
+          <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
             {post.data.faq.map((faq: { q: string; a: string }) => (
-              <details class="glass-surface p-6 rounded-lg group">
-                <summary class="font-semibold cursor-pointer list-none flex items-center justify-between">
-                  {faq.q}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="group-open:rotate-180 transition-transform"
-                  >
-                    <path d="m6 9 6 6 6-6" />
-                  </svg>
-                </summary>
-                <p class="mt-4 text-foreground/70">{faq.a}</p>
-              </details>
+              <div class="glass-surface p-6 rounded-lg">
+                <h3 class="font-semibold text-lg">{faq.q}</h3>
+                <p class="mt-3 text-foreground/70">{faq.a}</p>
+              </div>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       <!-- HowTo Steps -->

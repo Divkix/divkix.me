@@ -1,5 +1,7 @@
 ---
 title: "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio"
+seoTitle: "Best LM Studio Models for M4 Mac (2026): Setup & Benchmarks"
+seoDescription: "Which LM Studio models run best on M4 Pro/Max with 32-48GB RAM? Tested guide with Qwen, Llama, and vision models — free, private, offline."
 date: "2025-10-31"
 excerpt: "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
 tags: ["AI", "LM Studio", "Privacy", "Mac", "Qwen", "Local AI", "M4 Pro", "Vision Models", "ChatGPT Alternative", "Offline AI"]
@@ -84,6 +86,19 @@ Not sure which model to run? Here's what works at different RAM levels:
 
 More RAM means bigger models. Bigger models mean better reasoning. It's that simple.
 
+### Best Models for Apple Silicon Macs (2026)
+
+| Mac Config | Best Model | Quant | VRAM Usage | Best For | Rating |
+|---|---|---|---|---|---|
+| M4 Pro 24GB | Qwen 2.5 Coder 14B | Q5_K_M | ~12GB | Coding, general chat | ⭐⭐⭐⭐⭐ |
+| M4 Pro 24GB | Llama 3.3 8B | Q8_0 | ~10GB | Fast general purpose | ⭐⭐⭐⭐ |
+| M4 Max 36GB | Qwen 2.5 32B | Q5_K_M | ~24GB | Best all-rounder | ⭐⭐⭐⭐⭐ |
+| M4 Max 48GB | Llama 3.3 70B | Q4_K_M | ~42GB | Maximum capability | ⭐⭐⭐⭐⭐ |
+| M4 Max 48GB | Qwen 2.5 VL 32B | Q5_K_M | ~24GB | Vision + text | ⭐⭐⭐⭐ |
+| Any Mac 16GB+ | Phi-4 Mini 3.8B | Q8_0 | ~5GB | Light tasks, testing | ⭐⭐⭐ |
+
+**My daily driver**: Qwen 2.5 Coder 14B at Q5_K_M on an M4 Pro 24GB. It handles coding tasks, document analysis, and general questions without breaking a sweat — and everything stays on my machine.
+
 ## Vision Models Changed Everything
 
 Qwen3-VL is a vision-language model. Feed it text, it responds. Feed it an image, it understands that too.
@@ -125,7 +140,7 @@ Every day looks different. Sometimes I'm researching a new library. I paste docu
 
 Other times I'm experimenting. Testing prompts. Trying different models. Seeing what works. LM Studio makes this easy. Switch models with one click.
 
-I've used it for code reviews. Explaining legacy code. Brainstorming architecture. Even writing. The AI isn't perfect. But it's always there. Always private.
+I've used it for code reviews. Explaining legacy code. Brainstorming architecture. Even writing. If you're curious how local models compare to cloud-based options for coding, I broke that down in my [AI coding tools comparison](/blog/ai-coding-tools-compared-2026/). The AI isn't perfect. But it's always there. Always private.
 
 Yesterday I analyzed a competitor's UI design. Screenshot → LM Studio → detailed breakdown of their layout choices. All offline. No one tracking what I'm researching.
 
@@ -153,7 +168,7 @@ Third, there's a learning curve. Which model for which task? What's the differen
 
 The interface is simpler than the web version of ChatGPT. No plugins. No browsing. Just you and the model.
 
-For some tasks, cloud AI still wins. Web search? Up-to-date info? Yeah, ChatGPT is better there.
+For some tasks, cloud AI still wins. Web search? Up-to-date info? Yeah, ChatGPT is better there. And when AI-generated code fails in production, running models locally gives you more control over the fallout — something I explored in [my take on vibe coding](/blog/vibe-coding-truth-ai-programming-2026/).
 
 ## Why I Keep Using It Anyway
 
@@ -200,3 +215,9 @@ Your data belongs to you. Not to some company's training dataset.
 Download LM Studio. Pick a model. See what local AI can do.
 
 You might not go back.
+
+## Related Posts
+
+- [AI Coding Tools Compared (2026)](/blog/ai-coding-tools-compared-2026/) — How local models stack up against cloud-based AI coding assistants
+- [The Truth About Vibe Coding](/blog/vibe-coding-truth-ai-programming-2026/) — Why running AI locally matters when AI-generated code fails in production
+- [My Side Project Stack in 2026](/blog/side-project-stack-2026-grad-student/) — The full toolkit I use alongside LM Studio for building projects

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { baseUrl } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 
 // Get all blog posts from content collections
@@ -36,12 +37,50 @@ const postsWithReadingTime: PostWithReadingTime[] = posts.map(
     readingTime: calculateReadingTime(post.body),
   }),
 );
+
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${baseUrl}/blog/`,
+  name: "Blog",
+  description:
+    "Thoughts on software development, technology, and building products.",
+  url: `${baseUrl}/blog/`,
+  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: posts.map(
+      (post: CollectionEntry<"blog">, index: number) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `${baseUrl}/blog/${post.slug}/`,
+        name: post.data.title,
+      }),
+    ),
+  },
+};
+
+const blogBreadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: `${baseUrl}/blog/`,
+    },
+  ],
+};
 ---
 
 <BlogLayout
   title="Blog"
   description="Thoughts on software development, technology, and building products."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(blogBreadcrumbSchema)} />
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-12">
       <div class="space-y-4">
@@ -57,7 +96,7 @@ const postsWithReadingTime: PostWithReadingTime[] = posts.map(
         <div class="space-y-6">
           {postsWithReadingTime.map((item: PostWithReadingTime) => (
             <a
-              href={`/blog/${item.post.slug}`}
+              href={`/blog/${item.post.slug}/`}
               class="block transition-all hover:scale-[1.01]"
             >
               <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">

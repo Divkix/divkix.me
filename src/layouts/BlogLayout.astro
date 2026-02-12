@@ -11,6 +11,13 @@ interface Props {
   ogImage?: string;
   showReadingProgress?: boolean;
   readingTime?: number; // in minutes
+  ogType?: "website" | "article";
+  articleMeta?: {
+    publishedTime: string;
+    modifiedTime?: string;
+    author: string;
+    tags?: string[];
+  };
 }
 
 const {
@@ -19,12 +26,24 @@ const {
   ogImage = `${baseUrl}/og-image.png`,
   showReadingProgress = false,
   readingTime = 5,
+  ogType,
+  articleMeta,
 } = Astro.props;
 
 const canonical = `${baseUrl}${Astro.url.pathname}`;
+
+// Spread pattern to avoid passing undefined with exactOptionalPropertyTypes
+const baseLayoutProps = {
+  title,
+  description,
+  ogImage,
+  canonical,
+  ...(ogType ? { ogType } : {}),
+  ...(articleMeta ? { articleMeta } : {}),
+};
 ---
 
-<BaseLayout title={title} description={description} ogImage={ogImage} canonical={canonical}>
+<BaseLayout {...baseLayoutProps}>
   <!-- Navbar - React island with client:load -->
   <Navbar client:load />
 

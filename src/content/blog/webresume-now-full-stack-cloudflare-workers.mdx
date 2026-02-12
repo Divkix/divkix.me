@@ -57,7 +57,7 @@ Before I get into the interesting parts, here's what powers the app:
 - **Gemini 2.5 Flash Lite** for resume parsing via service-bound utility workers
 - **Resend** for password reset emails
 
-If you've read my [Cloudflare portfolio post](/blog/zero-cost-portfolio-cloudflare-workers), this is the same platform — but instead of a static site, it's a full dynamic app with auth, file uploads, AI processing, real-time updates, and seven different resume templates. Every constraint I mentioned in that post? I hit all of them again, plus new ones.
+If you've read my [Cloudflare portfolio post](/blog/zero-cost-portfolio-cloudflare-workers/), this is the same platform — but instead of a static site, it's a full dynamic app with auth, file uploads, AI processing, real-time updates, and seven different resume templates. Every constraint I mentioned in that post? I hit all of them again, plus new ones.
 
 ## The Claim Check Pattern: Upload Before You Authenticate
 
@@ -164,7 +164,7 @@ The client still falls back to HTTP polling if WebSocket connection fails. Defen
 
 ## D1 + Drizzle: SQLite on the Edge (and Its Quirks)
 
-I've been vocal about [using Supabase for side projects](/blog/side-project-stack-2026-grad-student). webresume.now is the first project where I went all-in on D1 instead. Here's the honest assessment.
+I've been vocal about [using Supabase for side projects](/blog/side-project-stack-2026-grad-student/). webresume.now is the first project where I went all-in on D1 instead. Here's the honest assessment.
 
 **What works well:**
 - Drizzle ORM handles most SQLite weirdness transparently
@@ -328,7 +328,7 @@ If you want to try it: [webresume.now](https://webresume.now). Upload a PDF, pic
 
 ## Related Posts
 
-- [How I Host My Portfolio for $0/Month on Cloudflare](/blog/zero-cost-portfolio-cloudflare-workers) — The simpler version: static Next.js on Workers
-- [My 2026 Stack for Shipping Side Projects](/blog/side-project-stack-2026-grad-student) — Why I usually reach for Supabase (and why I didn't here)
-- [I Needed Logs, Not a PhD in Elasticsearch](/blog/logwell-self-hosted-logging-platform) — Another "build it yourself" project, with Claude Code
-- [Vibe Coding in 2026](/blog/vibe-coding-truth-ai-programming-2026) — The AI-assisted development philosophy behind this project
+- [How I Host My Portfolio for $0/Month on Cloudflare](/blog/zero-cost-portfolio-cloudflare-workers/) — The simpler version: static Next.js on Workers
+- [My 2026 Stack for Shipping Side Projects](/blog/side-project-stack-2026-grad-student/) — Why I usually reach for Supabase (and why I didn't here)
+- [I Needed Logs, Not a PhD in Elasticsearch](/blog/logwell-self-hosted-logging-platform/) — Another "build it yourself" project, with Claude Code
+- [Vibe Coding in 2026](/blog/vibe-coding-truth-ai-programming-2026/) — The AI-assisted development philosophy behind this project

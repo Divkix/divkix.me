@@ -33,6 +33,7 @@ try {
 export default defineConfig({
   site: "https://divkix.me",
   output: "static",
+  trailingSlash: "always",
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
@@ -82,6 +83,13 @@ export default defineConfig({
 Developer with 5+ years experience specializing in Go, Python, and TypeScript.
 Creator of Alita Robot (1M+ Telegram users) and PickMyClass (ASU class monitoring).
 Currently: MS Computer Science at Arizona State University.
+
+## Expertise & Topics
+- Local AI / LLM Deployment: LM Studio on Apple Silicon, model quantization, vision-language models, privacy-first AI
+- Telegram Bot Development: Scaling to 300K+ users, Go (gotgbot), open-source bot architecture
+- AI-Assisted Development: Claude Code, Cursor, GitHub Copilot, vibe coding analysis
+- Edge Computing: Cloudflare Workers, D1, Durable Objects, R2, zero-cost deployment
+- Full-Stack Development: Next.js, Astro, React, TypeScript, Supabase, PostgreSQL
 
 ## Contact
 - Email: divkix@divkix.me
