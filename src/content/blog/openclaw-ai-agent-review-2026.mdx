@@ -1,0 +1,148 @@
+---
+title: "I Gave OpenClaw 2 Weeks to Become My Jarvis. Here's Why It Matters Anyway."
+seoTitle: "OpenClaw Review 2026: The AI Agent That's Rough, Risky, and Revolutionary"
+seoDescription: "OpenClaw (formerly Clawdbot/Moltbot) hands-on review: setup, cost, security risks, and why this messy AI agent is building the infrastructure for the future."
+date: "2026-02-12"
+excerpt: "180K+ GitHub stars. Security researchers panicking. $10-25/day in API costs. I spent 2 weeks with OpenClaw trying to find the killer use case. The product isn't ready — but the paradigm it's building might define the next decade of AI."
+tags:
+  - AI
+  - OpenClaw
+  - AI Agents
+  - Moltbot
+  - Clawdbot
+  - Personal AI Assistant
+  - WhatsApp
+  - Telegram
+  - Productivity
+  - Security
+  - Open Source
+  - Developer Tools
+  - "2026"
+  - Peter Steinberger
+  - Moltbook
+published: true
+tldr: "OpenClaw — the open-source AI agent that went from Clawdbot to 180K+ GitHub stars in 3 months — is genuinely impressive as a concept and genuinely frustrating as a product. The voice calls work, WhatsApp integration is surreal, but it burns tokens like a furnace, has 512 documented vulnerabilities, and forgets what you told it yesterday. None of that matters as much as this: OpenClaw is building the infrastructure layer for persistent AI agents. The product will mature. The paradigm is already here."
+keyTakeaways:
+  - "OpenClaw is the fastest-growing open-source AI project of 2026 (180K+ stars), but 'popular' ≠ 'production-ready.'"
+  - "The voice call feature (via Twilio/ElevenLabs) is genuinely the most futuristic thing I've used this year."
+  - "Security is a nightmare: 512 vulnerabilities, CVE-2026-25253 (RCE), exposed API keys across 135K+ instances."
+  - "Running costs ($10-25/day with Claude Opus) make this an expensive experiment, not a daily driver."
+  - "The real story isn't the product — it's the infrastructure being built: persistent memory, multi-channel messaging, agent-to-agent networks (Moltbook)."
+  - "Give it 6 months. The paradigm of always-on AI agents that message you first is inevitable."
+faq:
+  - q: "Is OpenClaw safe to use with personal accounts?"
+    a: "Not yet. Security audits found 512 vulnerabilities (8 critical), including a high-severity RCE bug. Researchers have demonstrated access to API keys, chat histories, and the ability to send messages on behalf of users. Use throwaway accounts and API keys you can revoke."
+  - q: "How much does OpenClaw cost to run?"
+    a: "The software is free (MIT license), but LLM API costs add up fast. With Claude Opus, expect $10-25/day for active use. Using OpenRouter with cheaper models drops costs to $40-80/month but reduces quality significantly."
+  - q: "Is OpenClaw better than Siri or Google Assistant?"
+    a: "Different category. Siri/Google are voice-first, cloud-hosted, closed systems. OpenClaw is text-first, self-hosted, open-source, and can execute arbitrary tasks (code, email, file management). It's more powerful but requires technical setup and costs more."
+  - q: "What happened with the Anthropic trademark lawsuit?"
+    a: "The project started as 'Clawdbot' (named after Claude). Anthropic sent a trademark complaint in January 2026. It briefly became 'Moltbot' before settling on 'OpenClaw' three days later. The lobster theme stuck."
+  - q: "Should I wait to try OpenClaw?"
+    a: "If you're a developer comfortable with Node.js and disposable API keys — try it now, the learning is valuable. If you want a reliable daily assistant — wait 3-6 months for the security and stability to mature."
+howto:
+  name: "How to Set Up OpenClaw (Quick Start)"
+  totalTime: "PT15M"
+  steps:
+    - name: "Install OpenClaw CLI"
+      text: "Install Node.js 22+ and run: npm install -g openclaw@latest"
+    - name: "Run the onboarding wizard"
+      text: "Run: openclaw onboard --install-daemon — this installs the Gateway background service"
+    - name: "Configure your LLM provider"
+      text: "Edit ~/.openclaw/openclaw.json — set agent.model to anthropic/claude-opus-4-6 (or use OpenRouter for cheaper models)"
+    - name: "Connect a messaging channel"
+      text: "Follow the Gateway UI at http://127.0.0.1:18789 to link WhatsApp, Telegram, or Discord"
+    - name: "Send your first message"
+      text: "Send a message via the connected channel and verify the agent responds — start with simple tasks before granting broader permissions"
+---
+
+I spent two weeks looking for the moment OpenClaw would click.
+
+You know that moment with a new tool — the one where you stop evaluating and start depending on it. Where it shifts from "interesting experiment" to "I can't go back." I kept waiting for that with OpenClaw. Setting it up on WhatsApp and Telegram, wiring in Twilio for voice calls, routing through OpenRouter to avoid burning $25/day on Claude Opus directly.
+
+The voice call moment was surreal. I dialed a number, heard a voice that sounded almost human, and had a conversation with an AI agent that remembered what I'd told it on Telegram three hours earlier. It knew my project context. It asked follow-up questions. For about ninety seconds, I felt like I was living in a movie.
+
+Then I hung up and tried to find a workflow where it actually beat just using [Claude Code or Cursor](/blog/ai-coding-tools-compared-2026/) directly. I couldn't. Every task I threw at OpenClaw — summarize this, draft that, remind me about this — I could do faster by opening a terminal or a chat window. The persistent memory was cool. The multi-channel routing was impressive. But the overhead of managing an always-on agent didn't pay off for my actual workflows.
+
+Here's the thing though — that's not the point. OpenClaw isn't a better chatbot. It's infrastructure for a category of software that barely exists yet. And understanding that distinction is worth more than any individual use case.
+
+## What Is OpenClaw, Actually?
+
+The story starts with Peter Steinberger, an Austrian developer who founded **PSPDFKit** in 2010 — a PDF SDK used by Dropbox, Autodesk, and dozens of enterprise companies. He grew it to 70+ employees, then sold majority shares in October 2021 for roughly 100 million euros. Most people would retire. Steinberger started building AI agents.
+
+In November 2025, over a single weekend, he built the first version of what would become OpenClaw. It was called **Clawdbot** then — derived from "Clawd," his personal AI assistant. By January 2026, Anthropic sent a trademark notice. He renamed it to **Moltbot** on January 27. Three days later, on January 30, he renamed it again to **OpenClaw**. The fastest triple rebrand in open-source history.
+
+The numbers are staggering. OpenClaw hit 100K GitHub stars in roughly two days — peaking at 710 stars per hour. For context, React took about 8 years to reach 100K stars. Linux took 12 years. Kubernetes took 10. OpenClaw did it in a weekend. As of today, it sits at **180K+ stars** with 20K+ forks. Steinberger alone has made 6,600+ commits in January 2026. His own quote: "I ship code I don't read."
+
+Architecturally, it's a **Node.js Gateway** using a hub-and-spoke model. The Gateway runs as a background daemon on your machine, connects to messaging platforms (WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Google Chat, Mattermost, Microsoft Teams), and routes messages to LLM providers. It handles persistent memory, multi-agent routing, tool execution, and scheduled jobs. Think of it as a message broker that happens to have an AI brain.
+
+The MIT license means anyone can fork it, modify it, or build commercial products on top. That matters more than you'd think.
+
+## What Actually Works
+
+**Voice calls are the showstopper.** Wire up Twilio for telephony and ElevenLabs for text-to-speech, and you get an AI agent you can literally call on the phone. The latency is noticeable — maybe a second or two of delay — but the experience is uncanny. It's the closest thing to a Jarvis moment in consumer AI right now. I called mine from a coffee shop just to see if it worked. It did. The barista gave me a look.
+
+**WhatsApp as an interface is genius.** This is the insight most people miss. OpenClaw doesn't ask you to install a new app or learn a new interface. It meets you where you already are. Two billion people use WhatsApp. Your AI agent lives in the same app as your group chats. No context switching. No new muscle memory. You just text it like you'd text a friend. That's better UX than any dedicated AI app can offer.
+
+**Persistent memory across channels** is the differentiator from regular chatbots. Tell your agent something on Telegram in the morning, reference it in a WhatsApp message at lunch, and it remembers. This sounds trivial until you've used ChatGPT for the thousandth time and had to re-explain your project context because it forgot everything between sessions.
+
+**Multi-channel routing** means you can have different agents for different purposes, all managed through the same Gateway. A coding assistant on Discord. A personal scheduler on WhatsApp. A research agent on Telegram. Each with its own model, personality, and tool access.
+
+Then there's **Moltbook** — described as "the world's first social network for AI agents," created by Matt Schlicht. It claimed 1.4 million registered agents. The concept is genuinely fascinating — agents discovering and communicating with other agents, forming networks, delegating tasks. But Computerworld found that roughly 99% of those agents were fake. One researcher registered 500,000 agents using a single agent. An unsecured database allowed commandeering any registered agent. The vision is compelling. The execution, right now, is a mess.
+
+## The Honest Downsides
+
+Let's talk about what's actually broken.
+
+**The security situation is bad.** A formal audit found **512 vulnerabilities**, 8 of them critical. The worst — CVE-2026-25253 — was a one-click remote code execution vulnerability via auth token exfiltration, rated CVSS 8.8. It's been patched in v2026.1.29, but the fact that it shipped at all tells you about the maturity of the codebase. A Cornell research report found that 26% of OpenClaw's npm packages contained vulnerabilities, calling the security posture "an absolute nightmare." SecurityScorecard discovered **135,000+ internet-exposed OpenClaw instances**. Dan Guido, CEO of Trail of Bits, personally submitted security fixes.
+
+To put it bluntly: if you're running OpenClaw exposed to the internet right now, you are a target.
+
+**The cost burns are real.** Running Claude Opus as your agent's brain costs **$10-25 per day** in active use. That's $300-750/month if you're using it heavily. Even routing through OpenRouter for cheaper models, you're looking at $40-200/month for realistic usage. The software is free. The intelligence is not. This is a fundamentally different cost model than paying $20/month for ChatGPT — and most people don't realize it until they get their first API bill.
+
+| Cost Component | Monthly Estimate |
+|---|---|
+| **OpenClaw software** | $0 (MIT license) |
+| **Claude Opus (heavy use)** | $300-750 |
+| **Claude Opus (moderate use)** | $40-200 |
+| **Cheaper models via OpenRouter** | $15-80 |
+| **Twilio voice (optional)** | $5-30 |
+| **ElevenLabs TTS (optional)** | $5-22 |
+
+**Setup is a nightmare for non-developers.** You need Node.js 22+, a terminal, API keys from at least one LLM provider, platform-specific configuration for each messaging channel, and the patience to debug cryptic error messages when things don't connect. There's a bootstrap problem — the people who would benefit most from a persistent AI agent are the least equipped to set one up.
+
+**Memory is unreliable.** It remembers things — sometimes. Other times it forgets context that should have persisted, or worse, confuses context between different conversations. The persistent memory is OpenClaw's biggest selling point and its biggest source of frustration. When it works, it's magical. When it doesn't, you're re-explaining things to an agent that supposedly knows you.
+
+**Rapid updates break things constantly.** Steinberger's pace is both OpenClaw's greatest strength and its most annoying weakness. Updates ship daily. Configurations change. Plugins break between versions. If you set up OpenClaw today and don't touch it for two weeks, there's a real chance something stops working.
+
+The honest assessment: **it's not Jarvis. It's a capable but frustrating intern** who occasionally forgets what you told them, costs more than you expected, and might accidentally leave the front door unlocked.
+
+## The Infrastructure Thesis — Why None of That Matters Long-Term
+
+Here's why I still think OpenClaw is the most important open-source project of 2026, despite everything above.
+
+**Persistent agents are a new category.** Every AI tool I use today — [Claude Code](/blog/ai-coding-tools-compared-2026/), ChatGPT, [LM Studio](/blog/lm-studio-local-ai-mac/) — is reactive. I open them, I ask something, I close them. OpenClaw agents are always on. They can message *you* first. They run scheduled tasks. They monitor things. This is the difference between a calculator and a spreadsheet — same math, fundamentally different relationship.
+
+**Messaging is the universal interface.** OpenClaw's bet is that the right interface for AI isn't a new app — it's the messaging apps everyone already uses. WhatsApp. Telegram. Discord. This sidesteps the entire adoption problem. Nobody needs to download anything. Nobody needs to learn anything. The AI shows up where humans already communicate.
+
+**Agent-to-agent networks are inevitable.** Moltbook's execution was terrible, but the concept — agents that discover, communicate with, and delegate to other agents — is where this is heading. Your personal agent talks to your company's agent. Your scheduling agent coordinates with someone else's scheduling agent. OpenClaw is building the plumbing for this.
+
+**Multi-model orchestration matters.** OpenClaw doesn't lock you into one LLM provider. Route complex reasoning to Claude Opus. Route simple queries to a cheap model on OpenRouter. Route sensitive queries to a [local model](/blog/lm-studio-local-ai-mac/). This flexibility means OpenClaw improves automatically as models get cheaper and better.
+
+**The open-source moat is real.** With 180K+ stars, 20K+ forks, and MIT licensing, OpenClaw has the kind of community momentum that's almost impossible to compete with commercially. Think about Docker in 2014. It was rough, buggy, and had real security issues. It also became the foundation of modern deployment infrastructure. OpenClaw feels like the same inflection point for persistent AI agents.
+
+## Who Should Try It Now vs Wait
+
+**Try it now if:** You're a developer comfortable with Node.js and terminals. You have disposable API keys and don't mind burning $50-100 experimenting. You want to understand the persistent agent paradigm before it goes mainstream. You're the kind of person who ran Docker before Docker Compose existed.
+
+**Wait if:** You want reliability. You're concerned about security (reasonably). You don't want to troubleshoot broken configs every other week. You need something that "just works." You're not comfortable with your API bill being a function of how chatty your agent is.
+
+The honest recommendation: **set it up once, play with it for a weekend, then shelve it and check back in six months.** The experience of talking to a persistent AI agent across multiple channels — especially voice — will change how you think about AI interfaces. But the daily utility isn't there yet for most people.
+
+## Where This Goes
+
+I never found my killer use case for OpenClaw. I set it up, marveled at the voice calls, appreciated the WhatsApp integration, winced at the API bills, and went back to using [Claude Code in my terminal](/blog/ai-coding-tools-compared-2026/) for actual work.
+
+But I found something more valuable than a killer use case. I found a clear picture of what's coming. Persistent agents that live in your messaging apps. That remember everything. That talk to other agents. That cost pennies instead of dollars as models get cheaper. That run locally when you need privacy.
+
+[Coding agents defined 2025](/blog/vibe-coding-truth-ai-programming-2026/). Persistent agents will define 2026. OpenClaw — messy, insecure, expensive, and brilliant — is the clearest preview we have.
