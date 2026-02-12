@@ -1,7 +1,7 @@
 ---
 title: "I Built a Full-Stack AI App on Cloudflare Workers With D1, Durable Objects, and Queues — Here's What Actually Worked"
 date: "2026-01-26"
-excerpt: "Upload a PDF resume, get a live web portfolio. I built webresume.now entirely on Cloudflare's edge stack — D1 for data, R2 for files, Queues for async processing, Durable Objects for real-time WebSockets, and Gemini for AI parsing. Here's every technical decision, including the ones I regret."
+excerpt: "Upload a PDF resume, get a live web portfolio. I built clickfolio.me entirely on Cloudflare's edge stack — D1 for data, R2 for files, Queues for async processing, Durable Objects for real-time WebSockets, and Gemini for AI parsing. Here's every technical decision, including the ones I regret."
 tags:
   - Cloudflare Workers
   - D1
@@ -19,7 +19,7 @@ tags:
   - Better Auth
   - Resume Parser
 published: true
-tldr: "webresume.now runs entirely on Cloudflare's edge — D1 (SQLite), R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI via service bindings. The Claim Check Pattern lets anonymous users upload before auth. File hash deduplication prevents duplicate AI parsing. Privacy filtering happens at fetch time, not storage. It works, but D1's quirks and edge runtime constraints mean you're fighting the platform as often as you're building on it."
+tldr: "clickfolio.me runs entirely on Cloudflare's edge — D1 (SQLite), R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI via service bindings. The Claim Check Pattern lets anonymous users upload before auth. File hash deduplication prevents duplicate AI parsing. Privacy filtering happens at fetch time, not storage. It works, but D1's quirks and edge runtime constraints mean you're fighting the platform as often as you're building on it."
 keyTakeaways:
   - "D1 is SQLite on the edge — JSON stored as TEXT, booleans as integers, no row-level security. Drizzle ORM handles most pain, but you'll still JSON.parse() more than you'd like."
   - "The Claim Check Pattern (upload anonymously → authenticate → claim) reduces auth friction dramatically for new users."
@@ -40,7 +40,7 @@ faq:
 
 Nobody should need to know HTML to have a web portfolio in 2026.
 
-That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services — D1, R2, Queues, Durable Objects, Workers — without reaching for Supabase or Postgres or any external dependency. [webresume.now](https://webresume.now) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL.
+That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services — D1, R2, Queues, Durable Objects, Workers — without reaching for Supabase or Postgres or any external dependency. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL.
 
 Simple pitch. The architecture behind it? Less simple.
 
@@ -132,7 +132,7 @@ Model upgrades don't fix hallucination. I tested Gemini Pro — 25x the cost, ma
 
 The initial version polled `GET /api/resume/status` every 3 seconds while the AI was parsing. It worked. It also hammered D1 with unnecessary reads and felt sluggish — 3 seconds is an eternity when you're staring at a spinner.
 
-I replaced it with Durable Objects and WebSocket Hibernation. The [commit message](https://github.com/divkix/webresume.now) says `feat(realtime): replace HTTP polling with Durable Objects + WebSocket Hibernation` and that undersells how much this changed.
+I replaced it with Durable Objects and WebSocket Hibernation. The [commit message](https://github.com/divkix/clickfolio.me) says `feat(realtime): replace HTTP polling with Durable Objects + WebSocket Hibernation` and that undersells how much this changed.
 
 Here's how it works:
 
@@ -164,7 +164,7 @@ The client still falls back to HTTP polling if WebSocket connection fails. Defen
 
 ## D1 + Drizzle: SQLite on the Edge (and Its Quirks)
 
-I've been vocal about [using Supabase for side projects](/blog/side-project-stack-2026-grad-student/). webresume.now is the first project where I went all-in on D1 instead. Here's the honest assessment.
+I've been vocal about [using Supabase for side projects](/blog/side-project-stack-2026-grad-student/). clickfolio.me is the first project where I went all-in on D1 instead. Here's the honest assessment.
 
 **What works well:**
 - Drizzle ORM handles most SQLite weirdness transparently
@@ -322,7 +322,7 @@ I shipped this. It works. People use it. But here's what I'd warn you about:
 
 **Edge computing is real, but the edges are sharp.** Every constraint — no filesystem, no native modules, SQLite instead of Postgres, no ISR, middleware limitations — is manageable individually. Stacked together, they add up to a fundamentally different development experience. Know what you're signing up for.
 
-If you want to try it: [webresume.now](https://webresume.now). Upload a PDF, pick a template, get a URL. No code required.
+If you want to try it: [clickfolio.me](https://clickfolio.me). Upload a PDF, pick a template, get a URL. No code required.
 
 ---
 

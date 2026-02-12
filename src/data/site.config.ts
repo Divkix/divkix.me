@@ -246,12 +246,12 @@ export const siteConfig = {
       links: [{ label: "GitHub", href: "https://github.com/warpdl/warpdl" }],
     },
     {
-      name: "WebResume",
+      name: "Clickfolio",
       desc: "Modern resume builder that reimagines how resumes are created and shared.",
       tags: ["TypeScript", "Next.js"],
       period: "2024 – Present",
       links: [
-        { label: "GitHub", href: "https://github.com/Divkix/webresume.now" },
+        { label: "GitHub", href: "https://github.com/Divkix/clickfolio.me" },
       ],
     },
     {
