@@ -11,7 +11,7 @@
     "scripts/**/*.{js,ts}"
   ],
   "project": ["src/**/*.{ts,tsx,astro}"],
-  "ignore": ["**/*.test.{ts,tsx}"],
+  "ignore": [],
   "astro": {
     "entry": ["astro.config.mjs"]
   }
