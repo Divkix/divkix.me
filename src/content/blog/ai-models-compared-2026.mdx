@@ -54,7 +54,15 @@ Everyone wants to know "which AI is best" -- and it is the wrong question. There
 
 ## Meet the Contenders
 
-{/* Model introductions — Phase 3, STRC-03 */}
+**Claude Opus 4.6** is Anthropic's flagship reasoning and coding model, released February 5, 2026. Anthropic builds toward AI safety as a first principle, and that shows in Claude's tendency toward careful, methodical responses over confident-but-wrong guesses. Its standout capability is agentic coding -- 80.8% on SWE-bench Verified, native tool use for file systems and terminals, and the ability to run multi-step refactors across dozens of files without losing context. At $5/$25 per million tokens, it is the most expensive model here and often worth it for pure coding work.
+
+**GPT 5.2 Thinking** is OpenAI's universal assistant, designed to be the best model for the most people. Its defining feature is an internal router that auto-selects the right sub-model per request -- you never need to pick between reasoning modes or specialized variants. That router makes it consistently good across coding, writing, reasoning, and conversation without requiring manual configuration. At $1.75/$14 per million tokens, it offers the best price-to-breadth ratio in this lineup.
+
+**Codex 5.3 xHigh** is OpenAI's narrow-domain specialist, purpose-built for code generation and nothing else. It shares the GPT 5.2 pricing structure but trades general capability for raw coding throughput -- 89% on LiveCodeBench, the highest pure code generation score in this comparison. If your workflow is CI pipelines, automated code review, or batch generation, Codex is built for that. For anything outside coding -- writing, research, conversation -- you need a different model.
+
+**Gemini 3.1 Pro** is Google DeepMind's research and multimodal powerhouse, released February 19, 2026. Its philosophy is breadth of understanding: a 1M token context window, native processing of up to 900 images, 8.4 hours of audio, and 1 hour of video per prompt. On reasoning benchmarks it leads the field with 77.1% on ARC-AGI-2 and 94.3% on GPQA Diamond. At $2/$12 per million tokens, it delivers the strongest reasoning-per-dollar in this lineup.
+
+**Grok 4.20** is xAI's multi-agent system, launched in beta on February 17, 2026. Instead of a single model answering your query, four specialized agents -- Captain Grok, Harper, Benjamin, and Lucas -- debate each other internally before synthesizing a response. Harper pulls real-time data from the X Firehose, giving Grok access to breaking information no other model can match. Access requires a SuperGrok subscription ($30/month) or X Premium+; the API is not yet available. Treat all performance claims as beta and unverified until official benchmarks land in March 2026.
 
 ## Coding & Software Engineering
 
