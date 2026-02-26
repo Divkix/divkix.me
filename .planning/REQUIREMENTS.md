@@ -43,9 +43,9 @@
 ### Build Pipeline
 
 - [x] **BILD-01**: MDX file at `src/content/blog/ai-models-compared-2026.mdx` with valid Zod schema frontmatter
-- [ ] **BILD-02**: `bun run prebuild` passes (posts.json regenerated, content validated)
-- [ ] **BILD-03**: `bun run build` completes without errors
-- [ ] **BILD-04**: OG image generated for the post
+- [x] **BILD-02**: `bun run prebuild` passes (posts.json regenerated, content validated)
+- [x] **BILD-03**: `bun run build` completes without errors
+- [x] **BILD-04**: OG image generated for the post
 
 ## v2 Requirements
 
@@ -102,9 +102,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SEO-04 | Phase 1 | Complete |
 | SEO-05 | Phase 1 | Complete |
 | BILD-01 | Phase 1 | Complete |
-| BILD-02 | Phase 4 | Pending |
-| BILD-03 | Phase 4 | Pending |
-| BILD-04 | Phase 4 | Pending |
+| BILD-02 | Phase 4 | Complete |
+| BILD-03 | Phase 4 | Complete |
+| BILD-04 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 30 total
