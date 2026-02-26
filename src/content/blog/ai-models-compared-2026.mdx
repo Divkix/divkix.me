@@ -112,7 +112,15 @@ Gemini 3.1 Pro at $2/$12 per million tokens is also the cheapest option here -- 
 
 ## The Grok 4.20 Spotlight: AI That Argues With Itself
 
-{/* Grok spotlight — Phase 2, STRC-09 */}
+Every other model on this list is a single system answering your question. Grok 4.20, launched in beta on February 17, 2026, takes a fundamentally different approach: [four specialized agents](https://www.adwaitx.com/grok-4-20-agents-harper-benjamin-lucas/) that debate each other before you see a response.
+
+The architecture works like this. **Captain Grok** coordinates -- it analyzes your task, activates the relevant agents, and synthesizes the final answer. **Harper** is the research agent, pulling real-time data from the web and the X Firehose (approximately 68 million English-language posts per day) with millisecond-level sentiment analysis. **Benjamin** handles logic -- mathematical reasoning, code verification, and numerical calculations. **Lucas** is the creative agent, responsible for divergent thinking and UX optimization, though its exact capabilities are the [least documented of the four](https://www.nextbigfuture.com/2026/02/how-the-xai-grok-4-20-agents-work.html).
+
+In practice, a query triggers task decomposition, parallel analysis across agents, multiple rounds of internal cross-verification (Benjamin's math checked against Harper's facts), and then synthesis into a unified response. xAI claims this debate architecture reduces hallucinations by 65% -- from roughly 12% down to 4.2% -- though this figure is unverified and the measurement methodology has not been published. The estimated LMArena ELO of 1505-1535 is projected, not verified by official rankings.
+
+The real draw is real-time research: Harper's X Firehose access means Grok 4.20 can surface breaking information and public sentiment faster than any competitor, which makes it compelling for fact-checking, market analysis, and tasks requiring multiple perspectives.
+
+Access requires a SuperGrok subscription ($30/month) or X Premium+ membership as of February 2026. The API is not yet available. Official benchmarks are expected mid-to-late March 2026 when the beta concludes -- until then, treat every performance claim as estimated and unverified.
 
 ## Benchmark Scorecard: The Numbers Behind the Hype
 
