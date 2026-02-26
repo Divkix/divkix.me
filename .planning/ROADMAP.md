@@ -92,7 +92,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 05-01-PLAN.md — Apply four MDX corrections (dateModified, 10M->1M token fixes, trailing slash) and verify with full build
+- [x] 05-01-PLAN.md — Apply four MDX corrections (dateModified, 10M->1M token fixes, trailing slash) and verify with full build
 
 ## Progress
 
@@ -104,5 +104,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Skeleton & SEO Foundation | 1/1 | Complete | 2026-02-25 |
 | 2. Head-to-Head Comparisons & Data | 2/2 | Complete | 2026-02-26 |
 | 3. Opening, Introductions & Verdict | 1/1 | Complete | 2026-02-26 |
-| 4. Quality Audit & Build Validation | 0/1 | Not started | - |
-| 5. Integration Fixes & Content Corrections | 0/1 | Not started | - |
+| 4. Quality Audit & Build Validation | 1/1 | Complete | 2026-02-26 |
+| 5. Integration Fixes & Content Corrections | 1/1 | Complete | 2026-02-26 |
