@@ -34,15 +34,15 @@
 
 ### SEO & Frontmatter
 
-- [ ] **SEO-01**: Complete frontmatter with title, date, excerpt, tags, published, tldr, keyTakeaways (5+), faq (4-5 questions)
-- [ ] **SEO-02**: H2 headings target distinct search intents (category-specific long-tail queries)
-- [ ] **SEO-03**: Primary keyword appears in first 100 words and H1 title
-- [ ] **SEO-04**: FAQ questions match real search queries about AI model comparison
-- [ ] **SEO-05**: Slug follows URL-safe format: `ai-models-compared-2026`
+- [x] **SEO-01**: Complete frontmatter with title, date, excerpt, tags, published, tldr, keyTakeaways (5+), faq (4-5 questions)
+- [x] **SEO-02**: H2 headings target distinct search intents (category-specific long-tail queries)
+- [x] **SEO-03**: Primary keyword appears in first 100 words and H1 title
+- [x] **SEO-04**: FAQ questions match real search queries about AI model comparison
+- [x] **SEO-05**: Slug follows URL-safe format: `ai-models-compared-2026`
 
 ### Build Pipeline
 
-- [ ] **BILD-01**: MDX file at `src/content/blog/ai-models-compared-2026.mdx` with valid Zod schema frontmatter
+- [x] **BILD-01**: MDX file at `src/content/blog/ai-models-compared-2026.mdx` with valid Zod schema frontmatter
 - [ ] **BILD-02**: `bun run prebuild` passes (posts.json regenerated, content validated)
 - [ ] **BILD-03**: `bun run build` completes without errors
 - [ ] **BILD-04**: OG image generated for the post
@@ -96,12 +96,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-07 | Phase 2 | Pending |
 | QUAL-08 | Phase 2 | Pending |
 | QUAL-09 | Phase 2 | Pending |
-| SEO-01 | Phase 1 | Pending |
-| SEO-02 | Phase 1 | Pending |
-| SEO-03 | Phase 1 | Pending |
-| SEO-04 | Phase 1 | Pending |
-| SEO-05 | Phase 1 | Pending |
-| BILD-01 | Phase 1 | Pending |
+| SEO-01 | Phase 1 | Complete |
+| SEO-02 | Phase 1 | Complete |
+| SEO-03 | Phase 1 | Complete |
+| SEO-04 | Phase 1 | Complete |
+| SEO-05 | Phase 1 | Complete |
+| BILD-01 | Phase 1 | Complete |
 | BILD-02 | Phase 4 | Pending |
 | BILD-03 | Phase 4 | Pending |
 | BILD-04 | Phase 4 | Pending |
