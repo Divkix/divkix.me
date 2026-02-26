@@ -147,7 +147,17 @@ Codex 5.3 xHigh shows "--" for non-coding benchmarks because it is a specialized
 
 ## The Anti-Hype Check: What the Benchmarks Don't Tell You
 
-{/* Anti-features + benchmark gaming caveat — Phase 2, QUAL-02, QUAL-03 */}
+The scorecard above is useful, but it's also gamed. Singh et al.'s ["The Leaderboard Illusion"](https://arxiv.org/abs/2504.20879) (April 2025) documented how benchmark rankings get cooked: Meta tested 27 private variants before releasing Llama-4, Google and OpenAI each received roughly 20% of total arena evaluation data while 83 open-weight models split just 29.7%, and score inflation from this data access disparity reached up to 112%. Goodhart's Law applies perfectly here -- when a measure becomes a target, it ceases to be a good measure. Benchmarks designed to evaluate capability have become optimization targets.
+
+A few claims that deserve cold water:
+
+**The claim:** "AI agents work autonomously." **The reality:** Outside coding and narrowly defined workflows, agents still struggle in production. The gap between a polished demo and a reliable deployment remains wide -- ask anyone who has tried to ship an agent-driven customer support system.
+
+**The claim:** "95%+ benchmark scores mean real-world mastery." **The reality:** Models scoring 95% on medical licensing exams recommend dangerous drug interactions. Models acing the bar exam cannot assess whether a specific contract clause is enforceable. Benchmark performance and production reliability are different things.
+
+Full disclosure: Claude Opus 4.6 is my daily driver for coding, and it earned the most wins in this comparison. That said, its SWE-bench Verified score actually dropped from 80.9% (Opus 4.5) to 80.8% -- marginal, but a real regression, not an improvement. Its MCP Atlas score fell harder, from 62.3% to 59.5%. Multiple reviewers note its creative writing is slightly weaker than Opus 4.5. And at $5/$25 per million tokens, it is the most expensive API in this lineup by a wide margin. If I were optimizing for cost rather than personal preference, GPT 5.2 at $1.75/$14 would be the rational choice for most workflows.
+
+Benchmarks are a directional signal, not a verdict. They tell you which models are in the conversation for a given task. They do not tell you whether that model will solve your specific problem, in your codebase, with your constraints.
 
 ## The Verdict: Which AI Model Should You Actually Use?
 
