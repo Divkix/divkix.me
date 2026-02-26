@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Fix validate-content.ts for draft support + create MDX skeleton with complete SEO frontmatter and 11 H2 stub headings
+- [x] 01-01-PLAN.md — Fix validate-content.ts for draft support + create MDX skeleton with complete SEO frontmatter and 12 H2 stub headings
 
 ### Phase 2: Head-to-Head Comparisons & Data
 **Goal**: Readers can compare all five models across five use-case categories with benchmark evidence and honest personal experience
@@ -44,11 +44,11 @@ Plans:
   3. Benchmark scorecard table includes SWE-bench Verified, ARC-AGI-2, GPQA Diamond, LMArena ELO, and Terminal-Bench 2.0 with source URLs and methodology caveats
   4. Anti-features/hype-check section exists calling out overhyped capabilities, benchmark gaming caveat cites "Leaderboard Illusion" paper, and honest criticism of at least one preferred model is present
   5. All benchmark citations include source URL, date, and methodology caveat; temporal qualifiers and version numbers used throughout
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Write five head-to-head comparison sections (Coding, Reasoning, Agents, Creative Writing, Multimodal) and Grok 4.20 spotlight with benchmark data, first-person observations, and pricing context
+- [ ] 02-02-PLAN.md — Write benchmark scorecard table with footnotes and methodology caveats, plus anti-hype section with Leaderboard Illusion citation and honest Claude criticism
 
 ### Phase 3: Opening, Introductions & Verdict
 **Goal**: The post reads as a complete, coherent article from hook to verdict with proper framing around the comparison content
@@ -85,7 +85,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Skeleton & SEO Foundation | 0/1 | Not started | - |
+| 1. Skeleton & SEO Foundation | 1/1 | Complete | 2026-02-25 |
 | 2. Head-to-Head Comparisons & Data | 0/2 | Not started | - |
 | 3. Opening, Introductions & Verdict | 0/1 | Not started | - |
 | 4. Quality Audit & Build Validation | 0/1 | Not started | - |
