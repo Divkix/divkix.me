@@ -75,42 +75,42 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STRC-01 | - | Pending |
-| STRC-02 | - | Pending |
-| STRC-03 | - | Pending |
-| STRC-04 | - | Pending |
-| STRC-05 | - | Pending |
-| STRC-06 | - | Pending |
-| STRC-07 | - | Pending |
-| STRC-08 | - | Pending |
-| STRC-09 | - | Pending |
-| STRC-10 | - | Pending |
-| STRC-11 | - | Pending |
-| STRC-12 | - | Pending |
-| QUAL-01 | - | Pending |
-| QUAL-02 | - | Pending |
-| QUAL-03 | - | Pending |
-| QUAL-04 | - | Pending |
-| QUAL-05 | - | Pending |
-| QUAL-06 | - | Pending |
-| QUAL-07 | - | Pending |
-| QUAL-08 | - | Pending |
-| QUAL-09 | - | Pending |
-| SEO-01 | - | Pending |
-| SEO-02 | - | Pending |
-| SEO-03 | - | Pending |
-| SEO-04 | - | Pending |
-| SEO-05 | - | Pending |
-| BILD-01 | - | Pending |
-| BILD-02 | - | Pending |
-| BILD-03 | - | Pending |
-| BILD-04 | - | Pending |
+| STRC-01 | Phase 3 | Pending |
+| STRC-02 | Phase 3 | Pending |
+| STRC-03 | Phase 3 | Pending |
+| STRC-04 | Phase 2 | Pending |
+| STRC-05 | Phase 2 | Pending |
+| STRC-06 | Phase 2 | Pending |
+| STRC-07 | Phase 2 | Pending |
+| STRC-08 | Phase 2 | Pending |
+| STRC-09 | Phase 2 | Pending |
+| STRC-10 | Phase 2 | Pending |
+| STRC-11 | Phase 3 | Pending |
+| STRC-12 | Phase 3 | Pending |
+| QUAL-01 | Phase 2 | Pending |
+| QUAL-02 | Phase 2 | Pending |
+| QUAL-03 | Phase 2 | Pending |
+| QUAL-04 | Phase 3 | Pending |
+| QUAL-05 | Phase 2 | Pending |
+| QUAL-06 | Phase 2 | Pending |
+| QUAL-07 | Phase 2 | Pending |
+| QUAL-08 | Phase 2 | Pending |
+| QUAL-09 | Phase 2 | Pending |
+| SEO-01 | Phase 1 | Pending |
+| SEO-02 | Phase 1 | Pending |
+| SEO-03 | Phase 1 | Pending |
+| SEO-04 | Phase 1 | Pending |
+| SEO-05 | Phase 1 | Pending |
+| BILD-01 | Phase 1 | Pending |
+| BILD-02 | Phase 4 | Pending |
+| BILD-03 | Phase 4 | Pending |
+| BILD-04 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 30 total
-- Mapped to phases: 0
-- Unmapped: 30
+- Mapped to phases: 30
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-25*
-*Last updated: 2026-02-25 after initial definition*
+*Last updated: 2026-02-25 after roadmap creation*
