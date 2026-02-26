@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import matter from "gray-matter";
 
 interface PostMetadata {
   slug: string;
@@ -42,7 +43,18 @@ function validateContent(): void {
     process.exit(1);
   }
 
-  const mdxSlugs = mdxFiles.map((f) => f.replace(/\.mdx$/, "")).sort();
+  // Filter to only published posts (matches generate-posts-metadata.js behavior)
+  const publishedMdxFiles = mdxFiles.filter((f) => {
+    const content = readFileSync(join(CONTENT_DIR, f), "utf-8");
+    const { data } = matter(content);
+    return data.published !== false;
+  });
+
+  console.log(
+    `Found ${mdxFiles.length} MDX files (${publishedMdxFiles.length} published, ${mdxFiles.length - publishedMdxFiles.length} drafts)`,
+  );
+
+  const mdxSlugs = publishedMdxFiles.map((f) => f.replace(/\.mdx$/, "")).sort();
 
   // Parse posts.json with error handling
   let postsJson: PostsJson;
@@ -58,10 +70,10 @@ function validateContent(): void {
 
   const jsonSlugs = postsJson.posts.map((p) => p.slug).sort();
 
-  // Compare counts
-  if (mdxFiles.length !== postsJson.totalPosts) {
+  // Compare counts (published posts only — matches posts.json)
+  if (publishedMdxFiles.length !== postsJson.totalPosts) {
     console.error(
-      `❌ Mismatch: ${mdxFiles.length} MDX files but posts.json has ${postsJson.totalPosts}`,
+      `❌ Mismatch: ${publishedMdxFiles.length} published MDX files but posts.json has ${postsJson.totalPosts}`,
     );
     process.exit(1);
   }
@@ -82,13 +94,16 @@ function validateContent(): void {
     process.exit(1);
   }
 
-  // Validate slug format (URL-safe)
-  const invalidSlugs = mdxSlugs.filter((s) => !/^[a-z0-9-]+$/.test(s));
+  // Validate slug format (URL-safe) — check ALL files, including drafts
+  const allMdxSlugs = mdxFiles.map((f) => f.replace(/\.mdx$/, ""));
+  const invalidSlugs = allMdxSlugs.filter((s) => !/^[a-z0-9-]+$/.test(s));
   if (invalidSlugs.length > 0) {
     console.warn(`⚠️  Non-URL-safe slugs: ${invalidSlugs.join(", ")}`);
   }
 
-  console.log(`✅ Content validated: ${mdxFiles.length} posts in sync`);
+  console.log(
+    `✅ Content validated: ${publishedMdxFiles.length} published posts in sync (${mdxFiles.length} total, ${mdxFiles.length - publishedMdxFiles.length} drafts)`,
+  );
 }
 
 validateContent();
