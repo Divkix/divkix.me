@@ -16,6 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Head-to-Head Comparisons & Data** - Five category comparison sections, Grok spotlight, benchmark scorecard, quality signals
 - [ ] **Phase 3: Opening, Introductions & Verdict** - Hook, quick comparison table, model intros, verdict, cross-reference, word count
 - [ ] **Phase 4: Quality Audit & Build Validation** - Full build pipeline passes, OG image generated, content quality verified end-to-end
+- [ ] **Phase 5: Integration Fixes & Content Corrections** - Fix dateModified, trailing slash, and factual "10M→1M" errors from milestone audit
 
 ## Phase Details
 
@@ -78,6 +79,21 @@ Plans:
 Plans:
 - [ ] 04-01: TBD
 
+### Phase 5: Integration Fixes & Content Corrections
+**Goal**: All integration gaps and factual errors identified in the v1.0 milestone audit are resolved
+**Depends on**: Phase 4
+**Requirements**: SEO-01, QUAL-04 (integration hardening)
+**Gap Closure**: Closes INT-01, INT-02, FLOW-01 from v1.0-MILESTONE-AUDIT.md
+**Success Criteria** (what must be TRUE):
+  1. MDX frontmatter contains `dateModified: '2026-02-26'` and JSON-LD + `article:modified_time` meta tag emit the correct date after rebuild
+  2. Cross-reference link to `ai-coding-tools-compared-2026` includes trailing slash (no 301 redirect)
+  3. `keyTakeaways[2]` and FAQ answer[2] say "1M token" instead of "10M token"
+  4. `bun run build` passes cleanly after all fixes
+**Plans**: TBD
+
+Plans:
+- [ ] 05-01: TBD
+
 ## Progress
 
 **Execution Order:**
@@ -89,3 +105,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 2. Head-to-Head Comparisons & Data | 2/2 | Complete | 2026-02-26 |
 | 3. Opening, Introductions & Verdict | 1/1 | Complete | 2026-02-26 |
 | 4. Quality Audit & Build Validation | 0/1 | Not started | - |
+| 5. Integration Fixes & Content Corrections | 0/1 | Not started | - |

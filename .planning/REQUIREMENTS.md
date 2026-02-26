@@ -90,13 +90,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-01 | Phase 2 | Complete |
 | QUAL-02 | Phase 2 | Complete |
 | QUAL-03 | Phase 2 | Complete |
-| QUAL-04 | Phase 3 | Complete |
+| QUAL-04 | Phase 3, Phase 5 (INT-02 fix) | Complete |
 | QUAL-05 | Phase 2 | Complete |
 | QUAL-06 | Phase 2 | Complete |
 | QUAL-07 | Phase 2 | Complete |
 | QUAL-08 | Phase 2 | Complete |
 | QUAL-09 | Phase 2 | Complete |
-| SEO-01 | Phase 1 | Complete |
+| SEO-01 | Phase 1, Phase 5 (INT-01 fix) | Complete |
 | SEO-02 | Phase 1 | Complete |
 | SEO-03 | Phase 1 | Complete |
 | SEO-04 | Phase 1 | Complete |
@@ -113,4 +113,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-25*
-*Last updated: 2026-02-25 after roadmap creation*
+*Last updated: 2026-02-26 after gap closure phase creation*
