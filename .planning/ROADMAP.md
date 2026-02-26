@@ -29,10 +29,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. H2 headings are present for all planned sections and target distinct search intents
   4. Primary keyword "AI models compared 2026" appears in the title and first heading stub
   5. Slug is `ai-models-compared-2026` (URL-safe format confirmed)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Fix validate-content.ts for draft support + create MDX skeleton with complete SEO frontmatter and 11 H2 stub headings
 
 ### Phase 2: Head-to-Head Comparisons & Data
 **Goal**: Readers can compare all five models across five use-case categories with benchmark evidence and honest personal experience
