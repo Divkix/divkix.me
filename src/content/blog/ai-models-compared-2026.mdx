@@ -124,7 +124,26 @@ Access requires a SuperGrok subscription ($30/month) or X Premium+ membership as
 
 ## Benchmark Scorecard: The Numbers Behind the Hype
 
-{/* Scorecard table — Phase 2, STRC-10 */}
+Every number in this table is a snapshot, not gospel. Scores are self-reported by model providers unless noted otherwise, and agent scaffolds routinely add 10-20 percentage points on coding benchmarks -- the model alone is never the full story.
+
+| Benchmark | Claude Opus 4.6 | GPT 5.2 | Codex 5.3 xHigh | Gemini 3.1 Pro | Grok 4.20 Beta* |
+|-----------|:-:|:-:|:-:|:-:|:-:|
+| [SWE-bench Verified](https://www.swebench.com/) | **80.8%** | 80.0% | -- | 76.2%** | ~73.5%*** |
+| [ARC-AGI-2](https://arcprize.org/leaderboard) | 68.8% | 54.0% | -- | **77.1%** | N/A |
+| [GPQA Diamond](https://epoch.ai/benchmarks/gpqa-diamond) | 91.3% | 93.2%**** | -- | **94.3%** | ~88.4%*** |
+| [LMArena ELO](https://lmarena.ai/) | ~1466***** | 1465 | -- | **~1492***** | ~1505-1535 est. |
+| [Terminal-Bench 2.0](https://www.tbench.ai/leaderboard/terminal-bench/2.0) | 65.4% | 64.9% | **75.1%** | 74.8%****** | N/A |
+
+\*All Grok 4.20 data is beta/unverified -- official benchmarks expected March 2026.
+\*\*Gemini 3 Pro score; Gemini 3.1 Pro not yet separately benchmarked on SWE-bench.
+\*\*\*Grok 4 (predecessor) score, not Grok 4.20.
+\*\*\*\*GPT 5.2 Pro variant with high reasoning effort.
+\*\*\*\*\*Predecessor model scores (Opus 4.5 / Gemini 3 Pro); Opus 4.6 and 3.1 Pro not yet ranked.
+\*\*\*\*\*\*Via Terminus-KIRA agent scaffold, not raw model.
+
+Codex 5.3 xHigh shows "--" for non-coding benchmarks because it is a specialized coding model, not designed for general reasoning or science tasks.
+
+> **Methodology caveat:** Scores are self-reported by model providers unless noted. Agent scaffolds add 10-20 percentage points on coding benchmarks. LMArena rankings change daily. See ["The Leaderboard Illusion"](https://arxiv.org/abs/2504.20879) for systematic bias documentation. All data as of February 2026.
 
 ## The Anti-Hype Check: What the Benchmarks Don't Tell You
 
