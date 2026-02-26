@@ -89,10 +89,10 @@ Plans:
   2. Cross-reference link to `ai-coding-tools-compared-2026` includes trailing slash (no 301 redirect)
   3. `keyTakeaways[2]` and FAQ answer[2] say "1M token" instead of "10M token"
   4. `bun run build` passes cleanly after all fixes
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Apply four MDX corrections (dateModified, 10M->1M token fixes, trailing slash) and verify with full build
 
 ## Progress
 
