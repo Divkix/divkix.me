@@ -10,27 +10,27 @@
 - [ ] **STRC-01**: Post opens with a bold hook that challenges "which AI model is best" thinking (~100 words)
 - [ ] **STRC-02**: Quick comparison table appears within first 300 words (Model | Maker | Best For | Weakness | Verdict)
 - [ ] **STRC-03**: Each of the 5 models has a brief introduction (~120 words each) covering maker, philosophy, standout capability
-- [ ] **STRC-04**: Head-to-head "Coding & Software Engineering" category section with declared winner and benchmark citations (~300 words)
-- [ ] **STRC-05**: Head-to-head "Reasoning & Complex Problem Solving" category section with declared winner (~300 words)
-- [ ] **STRC-06**: Head-to-head "Agents & Tool Use" category section with declared winner (~300 words)
-- [ ] **STRC-07**: Head-to-head "Creative Writing & Communication" category section with declared winner (~250 words)
-- [ ] **STRC-08**: Head-to-head "Multimodal (Vision, Audio, Video)" category section with declared winner (~250 words)
-- [ ] **STRC-09**: Dedicated Grok 4.20 multi-agent spotlight section covering 4-agent architecture (Grok/Harper/Benjamin/Lucas), X firehose data, practical use cases (~250 words)
+- [x] **STRC-04**: Head-to-head "Coding & Software Engineering" category section with declared winner and benchmark citations (~300 words)
+- [x] **STRC-05**: Head-to-head "Reasoning & Complex Problem Solving" category section with declared winner (~300 words)
+- [x] **STRC-06**: Head-to-head "Agents & Tool Use" category section with declared winner (~300 words)
+- [x] **STRC-07**: Head-to-head "Creative Writing & Communication" category section with declared winner (~250 words)
+- [x] **STRC-08**: Head-to-head "Multimodal (Vision, Audio, Video)" category section with declared winner (~250 words)
+- [x] **STRC-09**: Dedicated Grok 4.20 multi-agent spotlight section covering 4-agent architecture (Grok/Harper/Benjamin/Lucas), X firehose data, practical use cases (~250 words)
 - [ ] **STRC-10**: Benchmark scorecard table with SWE-bench Verified, ARC-AGI-2, GPQA Diamond, LMArena ELO, Terminal-Bench 2.0
 - [ ] **STRC-11**: Segmented verdict section mapping each model to specific use cases (~300 words)
 - [ ] **STRC-12**: Total word count targets ~3000 words
 
 ### Content Quality
 
-- [ ] **QUAL-01**: Every head-to-head section includes at least one first-person experience observation (E-E-A-T requirement)
+- [x] **QUAL-01**: Every head-to-head section includes at least one first-person experience observation (E-E-A-T requirement)
 - [ ] **QUAL-02**: Anti-features / hype-check section calling out overhyped capabilities that don't deliver in practice
 - [ ] **QUAL-03**: Benchmark gaming caveat citing the "Leaderboard Illusion" paper (Singh et al.) and Goodhart's Law
 - [ ] **QUAL-04**: Cross-reference link to existing `ai-coding-tools-compared-2026` post with explicit scope differentiation
-- [ ] **QUAL-05**: Pricing context alongside capability claims for each model (brief, not deep-dive)
+- [x] **QUAL-05**: Pricing context alongside capability claims for each model (brief, not deep-dive)
 - [ ] **QUAL-06**: Honest criticism of at least one personally-preferred model (credibility signal)
-- [ ] **QUAL-07**: Grok 4.20 data explicitly flagged as beta/unverified where official benchmarks are missing
-- [ ] **QUAL-08**: All benchmark citations include source URL, date, and methodology caveat
-- [ ] **QUAL-09**: Temporal qualifiers and version numbers throughout ("as of Feb 2026", model version numbers)
+- [x] **QUAL-07**: Grok 4.20 data explicitly flagged as beta/unverified where official benchmarks are missing
+- [x] **QUAL-08**: All benchmark citations include source URL, date, and methodology caveat
+- [x] **QUAL-09**: Temporal qualifiers and version numbers throughout ("as of Feb 2026", model version numbers)
 
 ### SEO & Frontmatter
 
@@ -78,24 +78,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STRC-01 | Phase 3 | Pending |
 | STRC-02 | Phase 3 | Pending |
 | STRC-03 | Phase 3 | Pending |
-| STRC-04 | Phase 2 | Pending |
-| STRC-05 | Phase 2 | Pending |
-| STRC-06 | Phase 2 | Pending |
-| STRC-07 | Phase 2 | Pending |
-| STRC-08 | Phase 2 | Pending |
-| STRC-09 | Phase 2 | Pending |
+| STRC-04 | Phase 2 | Complete |
+| STRC-05 | Phase 2 | Complete |
+| STRC-06 | Phase 2 | Complete |
+| STRC-07 | Phase 2 | Complete |
+| STRC-08 | Phase 2 | Complete |
+| STRC-09 | Phase 2 | Complete |
 | STRC-10 | Phase 2 | Pending |
 | STRC-11 | Phase 3 | Pending |
 | STRC-12 | Phase 3 | Pending |
-| QUAL-01 | Phase 2 | Pending |
+| QUAL-01 | Phase 2 | Complete |
 | QUAL-02 | Phase 2 | Pending |
 | QUAL-03 | Phase 2 | Pending |
 | QUAL-04 | Phase 3 | Pending |
-| QUAL-05 | Phase 2 | Pending |
+| QUAL-05 | Phase 2 | Complete |
 | QUAL-06 | Phase 2 | Pending |
-| QUAL-07 | Phase 2 | Pending |
-| QUAL-08 | Phase 2 | Pending |
-| QUAL-09 | Phase 2 | Pending |
+| QUAL-07 | Phase 2 | Complete |
+| QUAL-08 | Phase 2 | Complete |
+| QUAL-09 | Phase 2 | Complete |
 | SEO-01 | Phase 1 | Complete |
 | SEO-02 | Phase 1 | Complete |
 | SEO-03 | Phase 1 | Complete |
