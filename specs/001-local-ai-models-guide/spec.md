@@ -90,7 +90,7 @@ A reader wants to understand SWE-ReBench (Multi-SWE-Bench) as a new coding bench
 
 ### Functional Requirements
 
-- **FR-001**: Blog post MUST be a valid MDX file conforming to the existing content schema (title, date, excerpt, tags, published, tldr, keyTakeaways, faq).
+- **FR-001**: Blog post MUST be a valid MDX file conforming to the existing content schema (title, date, excerpt, tags, published, seoTitle?, seoDescription?, tldr, keyTakeaways, faq).
 - **FR-002**: Post MUST include benchmark comparison tables covering at least 6 open source models across at least 4 standardized benchmarks.
 - **FR-003**: Post MUST explain SWE-ReBench (Multi-SWE-Bench) methodology and how it differs from SWE-Bench, including contamination concerns and multi-language coverage.
 - **FR-004**: Post MUST provide quantization recommendations by VRAM tier (8GB, 12GB, 16GB, 24GB, 48GB) with specific format recommendations and quality tradeoff analysis.
@@ -105,6 +105,10 @@ A reader wants to understand SWE-ReBench (Multi-SWE-Bench) as a new coding bench
 - **FR-013**: Post MUST include keyTakeaways with 4-6 bullet points summarizing the core insights.
 - **FR-014**: Post MUST pass the existing build pipeline (posts.json generation, content validation, Astro build).
 - **FR-015**: Post MUST use proper slug format (`/^[a-z0-9-]+$/`) and be URL-safe.
+- **FR-016**: Post MUST include `seoTitle` (keyword-optimized, distinct from display title) and `seoDescription` (≤160 characters) in frontmatter.
+- **FR-017**: Post MUST follow TLDR-first structure — first 200 words directly answer the primary query "Are open source AI models good enough in 2026?"
+- **FR-018**: Each major H2 section MUST open with a 50-word summary paragraph optimized for AI-assisted search extraction (AEO).
+- **FR-019**: Post MUST use strict H2→H3 heading hierarchy only (no H4+, no skipped levels).
 
 ### Key Entities
 
@@ -123,9 +127,9 @@ A reader wants to understand SWE-ReBench (Multi-SWE-Bench) as a new coding bench
 - **SC-003**: Post includes at least 3 comparison tables (model benchmarks, quantization formats, search tool comparison).
 - **SC-004**: Post provides actionable configuration for at least 2 inference engines (Ollama, llama.cpp) with specific parameter values.
 - **SC-005**: Post length falls between 3,000 and 6,000 words — comprehensive but not bloated.
-- **SC-006**: Post includes all required frontmatter fields (title, date, excerpt, tags, published, tldr, keyTakeaways, faq) conforming to the Zod schema.
+- **SC-006**: Post includes all required frontmatter fields (title, date, excerpt, tags, published, seoTitle?, seoDescription?, tldr, keyTakeaways, faq) conforming to the Zod schema.
 - **SC-007**: Post includes proper cross-linking to at least 2 related existing blog posts (e.g., "AI Models Compared 2026", "LM Studio Setup Guide").
-- **SC-008**: All benchmark data cited in the post is attributable to a named source (no unattributed claims). Data sourced via web research from Artificial Analysis, lmsys Chatbot Arena, Papers With Code, and official model release announcements.
+- **SC-008**: All benchmark data cited in the post is attributable to a named source (no unattributed claims). Data sourced via web research from Artificial Analysis, LMArena (formerly lmsys Chatbot Arena), Papers With Code, and official model release announcements.
 - **SC-009**: P1 (model comparison) and P2 (local optimization) sections each comprise at least 35% of total word count. P3 (search/RAG) and P4 (benchmarks) are summary-depth, each under 15% of total word count.
 
 ## Assumptions

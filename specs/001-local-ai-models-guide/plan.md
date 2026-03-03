@@ -122,7 +122,7 @@ No constitution violations. Table intentionally left empty.
 |--------|-----------------|-----|
 | Artificial Analysis | AAII scores, model benchmarks, pricing | artificialanalysis.ai |
 | Arena.ai (LMArena) | ELO rankings, human preference votes | arena.ai/leaderboard |
-| SWE-rebench | Decontaminated coding benchmark | swe-rebench.com |
+| SWE-ReBench | Decontaminated coding benchmark | swe-rebench.com |
 | Scale AI | HLE leaderboard | scale.com/leaderboard/humanitys_last_exam |
 | LiveCodeBench | Fresh coding problems | livecodebench.github.io |
 | HuggingFace | Model cards, weights, Unsloth quants | huggingface.co |

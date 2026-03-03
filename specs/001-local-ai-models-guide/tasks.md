@@ -21,7 +21,7 @@
 
 **Purpose**: Gather current data and create the MDX file skeleton
 
-- [ ] T001 [P] Web-research latest benchmark scores (March 2026) for 8 open source models (Kimi K2.5, GLM-5, MiniMax M2.5, DeepSeek V3.2, Qwen 3.5, Llama 4 Maverick, GPT-oss-120B, DeepSeek-R1) from Artificial Analysis, Arena.ai, SWE-rebench.com, Scale.com/leaderboard, and LiveCodeBench — document findings for use in content tasks
+- [ ] T001 [P] Web-research latest benchmark scores (March 2026) for 8 open source models (Kimi K2.5, GLM-5, MiniMax M2.5, DeepSeek V3.2, Qwen 3.5, Llama 4 Maverick, GPT-oss-120B, DeepSeek-R1) from Artificial Analysis, Arena.ai (LMArena), SWE-rebench.com, Scale.com/leaderboard, and LiveCodeBench — document findings for use in content tasks
 - [ ] T002 [P] Web-research latest API pricing, quantization availability (Unsloth Dynamic 2.0 GGUFs), Ollama/llama.cpp configuration updates, and search tool pricing (Exa.ai, Brave Search API) — document findings for use in content tasks
 - [ ] T003 Create MDX file with complete Zod-conforming frontmatter (title, seoTitle, seoDescription ≤160 chars, date "2026-03-03", excerpt, tags, published: true, author, tldr, keyTakeaways [4-6 bullets], faq [≥5 Q&A pairs]) in `src/content/blog/local-ai-models-guide-2026.mdx`
 
@@ -35,7 +35,7 @@
 
 **CRITICAL**: The opening hook sets the tone and GEO optimization for the entire post
 
-- [ ] T004 Write opening hook and TLDR-first section — first 200 words must directly answer "Are open source AI models good enough in 2026?" per GEO requirements, match blog tone (direct, cynical, data-backed), include a provocative one-liner opener in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T004 Write opening hook and TLDR-first section — first 200 words must directly answer "Are open source AI models good enough in 2026?" per GEO requirements, match blog tone (direct, cynical, data-backed), include a provocative one-liner opener, and include a "Last verified: March 2026" note below the opening to address benchmark data volatility (EC1) in `src/content/blog/local-ai-models-guide-2026.mdx`
 
 **Checkpoint**: Post has valid frontmatter and a strong opening — foundational structure ready for section writing
 
@@ -67,7 +67,7 @@
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Write quantization guide section — explain Unsloth Dynamic 2.0 methodology (layer-aware quantization, calibration data, KL divergence advantages per FR-008), include VRAM tier recommendation table (8/12/16/24/48 GB with specific format recommendations Q4_K_M/Q5_K_M/Q6_K/Q8_0 per FR-004), Apple Silicon unified memory note in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T010 [US2] Open section with 50-word AEO summary paragraph optimized for AI-assisted search extraction, write quantization guide section — explain Unsloth Dynamic 2.0 methodology (layer-aware quantization, calibration data, KL divergence advantages per FR-008), include VRAM tier recommendation table (8/12/16/24/48 GB with specific format recommendations Q4_K_M/Q5_K_M/Q6_K/Q8_0 per FR-004), Apple Silicon unified memory note, include a <8GB VRAM row recommending API alternatives (Groq, OpenRouter, Together AI) for underpowered hardware (EC3) in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T011 [US2] Write sampling parameters section — temperature + min_p as 2026 consensus, comparison table for 3 use cases (code: temp 0.1-0.4/min_p 0.05-0.1, general: temp 0.7-1.0/min_p 0.05-0.1, creative: temp 0.8-1.2/min_p 0.02-0.05) with repetition penalty values per FR-005 in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T012 [US2] Write Ollama and llama.cpp configuration section — OLLAMA_FLASH_ATTENTION, OLLAMA_KV_CACHE_TYPE, OLLAMA_NUM_PARALLEL, OLLAMA_MAX_LOADED_MODELS env vars, context length settings, Apple Silicon optimization, llama.cpp equivalent flags per FR-009 and SC-004 in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T013 [US2] Write "Making Models Think More" section — reasoning model recommendations by VRAM tier (DeepSeek-R1-Distill variants, QwQ-32B), CoT prompting techniques, extended thinking token usage, when to use reasoning models vs standard models per FR-007 in `src/content/blog/local-ai-models-guide-2026.mdx`
@@ -84,7 +84,7 @@
 
 ### Implementation for User Story 3
 
-- [ ] T014 [US3] Write search tool comparison table (Exa.ai vs SearXNG vs Brave Search API) covering: type, own index, self-hostable, free tier, cost/1K queries, latency, content extraction, privacy model, MCP server availability per FR-006 and SC-003 in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T014 [US3] Open section with 50-word AEO summary paragraph optimized for AI-assisted search extraction, write search tool comparison table (Exa.ai vs SearXNG vs Brave Search API) covering: type, own index, self-hostable, free tier, cost/1K queries, latency, content extraction, privacy model, MCP server availability per FR-006 and SC-003 in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T015 [US3] Write SearXNG setup section (JSON format config gotcha: `formats: [html, json]` in settings.yml) and "Local Perplexity" stack overview (Perplexica + SearXNG + Ollama architecture, fully self-hosted) with link to `lm-studio-local-ai-mac` for related setup guidance in `src/content/blog/local-ai-models-guide-2026.mdx`
 
 **Checkpoint**: US3 section complete — ≥3 search tools covered (FR-006), comparison table present (completes SC-003 with ≥3 total tables), integration patterns documented. Summary depth — links out for exhaustive coverage.
@@ -93,15 +93,15 @@
 
 ## Phase 6: User Story 4 — Reader Understands New Benchmarks (Priority: P4)
 
-**Goal**: Deliver benchmark literacy context — SWE-Bench Verified retirement, SWE-rebench methodology, Multi-SWE-Bench findings, and how to evaluate model claims critically (~10% of word count)
+**Goal**: Deliver benchmark literacy context — SWE-Bench Verified retirement, SWE-ReBench methodology, Multi-SWE-Bench findings, and how to evaluate model claims critically (~10% of word count)
 
-**Independent Test**: Post explains SWE-rebench methodology, SWE-Bench contamination story, Multi-SWE-Bench multi-language findings, and provides a framework for interpreting benchmark claims
+**Independent Test**: Post explains SWE-ReBench methodology, SWE-Bench contamination story, Multi-SWE-Bench multi-language findings, and provides a framework for interpreting benchmark claims
 
 ### Implementation for User Story 4
 
-- [ ] T016 [US4] Write benchmark literacy section — SWE-Bench Verified retirement (Feb 2026, 59.4% tasks flawed, contamination evidence per FR-003), SWE-rebench methodology (decontaminated, 5 runs, standardized scaffolding, scores 25-50pp lower), Multi-SWE-Bench (7 languages, Python overweighting), Artificial Analysis AAII v4.0, and "how to read benchmark claims" framework in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T016 [US4] Open section with 50-word AEO summary paragraph optimized for AI-assisted search extraction, write benchmark literacy section — SWE-Bench Verified retirement (Feb 2026, 59.4% tasks flawed, contamination evidence per FR-003), SWE-ReBench methodology (decontaminated, 5 runs, standardized scaffolding, scores 25-50pp lower), Multi-SWE-Bench (7 languages, Python overweighting), Artificial Analysis AAII v4.0, and "how to read benchmark claims" framework in `src/content/blog/local-ai-models-guide-2026.mdx`
 
-**Checkpoint**: US4 section complete — SWE-rebench explained (FR-003), contamination story told, benchmark evaluation framework provided. Summary depth per SC-009 (<15% word count).
+**Checkpoint**: US4 section complete — SWE-ReBench explained (FR-003), contamination story told, benchmark evaluation framework provided. Summary depth per SC-009 (<15% word count).
 
 ---
 
@@ -109,15 +109,15 @@
 
 **Purpose**: Finalize the post with verdict, cross-links, attribution verification, and full build pipeline validation
 
-- [ ] T017 Write "My Picks / Verdict" section with explicit top picks: best overall local model, best for coding, best for reasoning, best quantization per VRAM tier, best search tool by use case — each pick backed by specific benchmark data, in blog's declarative "Winner:" format in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T017 Write "My Picks / Verdict" section with explicit top picks: best overall local model, best for coding, best for reasoning, best quantization per VRAM tier, best search tool by use case — each pick backed by specific benchmark data, in blog's declarative "Winner:" format, include a 3-step framework for evaluating new models released after publication per EC5 in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T018 Add cross-links to ≥2 existing posts throughout content body — link to `ai-models-compared-2026` (frontier model deep-dive), `lm-studio-local-ai-mac` (hardware/LM Studio setup), and optionally `ai-coding-tools-compared-2026` (tool-level comparison) per SC-007 in `src/content/blog/local-ai-models-guide-2026.mdx`
-- [ ] T019 Verify all benchmark data citations — every claim must attribute a named source (Artificial Analysis, Arena.ai, SWE-rebench, official model releases), flag any self-reported vs independently verified distinction per SC-008 in `src/content/blog/local-ai-models-guide-2026.mdx`
+- [ ] T019 Verify all benchmark data citations — every claim must attribute a named source (Artificial Analysis, Arena.ai, SWE-ReBench, official model releases), flag any self-reported vs independently verified distinction per SC-008 in `src/content/blog/local-ai-models-guide-2026.mdx`
 - [ ] T020 Run `bun run prebuild` to regenerate `content/blog/posts.json` with new post metadata
 - [ ] T021 [P] Run `bun run lint` (biome check) — zero errors
 - [ ] T022 [P] Run `bun run type-check` (astro check) — zero TypeScript errors
 - [ ] T023 [P] Run `bunx knip` — zero unused exports/dependencies
 - [ ] T024 Run `bun run build` — full pipeline passes (prebuild → validate-content → astro build)
-- [ ] T025 Verify final content metrics: word count 3,000-6,000 (SC-005), content depth distribution P1+P2 ≥ 70% and P3+P4 ≤ 30% (SC-009), ≥3 comparison tables (SC-003), ≥6 models × ≥4 benchmarks (SC-002), frontmatter schema valid (SC-006)
+- [ ] T025 Verify final content metrics: word count 3,000-6,000 (SC-005), content depth distribution P1+P2 ≥ 70% and P3+P4 ≤ 30% (SC-009), ≥3 comparison tables (SC-003), ≥6 models × ≥4 benchmarks (SC-002), frontmatter schema valid (SC-006), verify strict H2→H3 heading hierarchy (no H4+, no skipped levels) per FR-019
 
 **Checkpoint**: Post is production-ready — all quality gates pass, all success criteria verified, ready for `bun run preview` and deployment.
 
@@ -160,7 +160,7 @@
 
 ```bash
 # Launch both research tasks together:
-Task T001: "Web-research benchmark scores from Artificial Analysis, Arena.ai, SWE-rebench"
+Task T001: "Web-research benchmark scores from Artificial Analysis, Arena.ai, SWE-ReBench"
 Task T002: "Web-research pricing, quantization availability, Ollama config updates"
 ```
 
