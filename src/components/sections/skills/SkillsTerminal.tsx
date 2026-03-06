@@ -48,12 +48,22 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<Category>("Languages");
   const [typedCommand, setTypedCommand] = useState("");
-  const [showOutput, setShowOutput] = useState(false);
+  // Default to true for SSR so skills are visible without JS
+  const [showOutput, setShowOutput] = useState(true);
   const [showFlicker, setShowFlicker] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const typingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // On hydration, reset showOutput so the typing animation can run
   useEffect(() => {
+    setIsHydrated(true);
+    setShowOutput(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -69,7 +79,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isHydrated]);
 
   // CRT flicker on initial load
   useEffect(() => {
@@ -209,7 +219,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
             }}
           />
 
-          <div className="relative space-y-4">
+          <div className="relative space-y-4" suppressHydrationWarning>
             {/* Typing command */}
             <div className="text-sm text-[oklch(0.7_0.2_140)]">
               <span>{typedCommand}</span>
@@ -252,47 +262,13 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
                   }}
                 >
                   <span className="text-[oklch(0.7_0.2_140)]">$ </span>
-                  <span
-                    className="text-[oklch(0.7_0.2_140)]"
-                    style={{
-                      animation: "cursor-glow 1s ease-in-out infinite",
-                      textShadow: "0 0 8px oklch(0.7 0.2 140)",
-                    }}
-                  >
-                    ▊
-                  </span>
+                  <span className="terminal-cursor-block" aria-hidden="true" />
                 </div>
               </>
             )}
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes terminal-flicker {
-          0% { opacity: 0.8; }
-          5% { opacity: 1; }
-          10% { opacity: 0.85; }
-          15% { opacity: 1; }
-          100% { opacity: 1; }
-        }
-
-        @keyframes terminal-fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes terminal-cursor-blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          [style*="terminal-flicker"] {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

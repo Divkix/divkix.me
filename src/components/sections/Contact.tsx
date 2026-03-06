@@ -254,64 +254,6 @@ export function Contact() {
         }}
         aria-hidden="true"
       />
-
-      <style>{`
-        .contact-prompt {
-          color: oklch(0.7 0.2 140);
-          font-size: 0.875rem;
-          font-family: var(--font-mono);
-          text-shadow: 0 0 2px currentColor;
-        }
-
-        .contact-input {
-          width: 100%;
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid oklch(1 0 0 / 0.2);
-          outline: none;
-          padding-bottom: 0.25rem;
-          font-family: var(--font-mono);
-          font-size: 0.875rem;
-          color: oklch(0.9 0 0);
-          text-shadow: 0 0 2px currentColor;
-          transition: border-color 0.2s;
-        }
-
-        .contact-input::placeholder {
-          color: oklch(1 0 0 / 0.3);
-        }
-
-        .contact-input:focus {
-          border-bottom-color: oklch(0.7 0.2 140);
-        }
-
-        .contact-input:disabled {
-          opacity: 0.5;
-        }
-
-        .terminal-cursor-block {
-          display: inline-block;
-          width: 0.5rem;
-          height: 1.25rem;
-          background: oklch(0.7 0.2 140);
-          vertical-align: middle;
-          margin-left: 0.25rem;
-          animation: contact-cursor-blink 1s steps(1) infinite;
-          box-shadow: 0 0 6px oklch(0.7 0.2 140);
-        }
-
-        @keyframes contact-cursor-blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .terminal-cursor-block {
-            animation: none;
-            opacity: 1;
-          }
-        }
-      `}</style>
     </section>
   );
 }
