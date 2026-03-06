@@ -48,22 +48,12 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<Category>("Languages");
   const [typedCommand, setTypedCommand] = useState("");
-  // Default to true for SSR so skills are visible without JS
-  const [showOutput, setShowOutput] = useState(true);
+  const [showOutput, setShowOutput] = useState(false);
   const [showFlicker, setShowFlicker] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const typingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // On hydration, reset showOutput so the typing animation can run
   useEffect(() => {
-    setIsHydrated(true);
-    setShowOutput(false);
-  }, []);
-
-  useEffect(() => {
-    if (!isHydrated) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -79,7 +69,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
     }
 
     return () => observer.disconnect();
-  }, [isHydrated]);
+  }, []);
 
   // CRT flicker on initial load
   useEffect(() => {
