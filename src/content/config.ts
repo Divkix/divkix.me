@@ -23,6 +23,7 @@ const blog = defineCollection({
     excerpt: z.string(),
     tags: z.array(z.string()),
     published: z.boolean().default(false),
+    featured: z.boolean().optional().default(false),
     author: z.string().optional().default("Divanshu Chauhan"),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),

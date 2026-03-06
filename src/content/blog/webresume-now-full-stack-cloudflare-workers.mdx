@@ -1,6 +1,9 @@
 ---
 title: "I Built a Full-Stack AI App on Cloudflare Workers With D1, Durable Objects, and Queues — Here's What Actually Worked"
+seoTitle: "Full-Stack App on Cloudflare Workers: D1, Durable Objects, Queues"
+seoDescription: "Built clickfolio.me on Cloudflare's edge — D1, R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI. Every technical decision explained."
 date: "2026-01-26"
+dateModified: "2026-03-06"
 excerpt: "Upload a PDF resume, get a live web portfolio. I built clickfolio.me entirely on Cloudflare's edge stack — D1 for data, R2 for files, Queues for async processing, Durable Objects for real-time WebSockets, and Gemini for AI parsing. Here's every technical decision, including the ones I regret."
 tags:
   - Cloudflare Workers
@@ -19,6 +22,7 @@ tags:
   - Better Auth
   - Resume Parser
 published: true
+featured: true
 tldr: "clickfolio.me runs entirely on Cloudflare's edge — D1 (SQLite), R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI via service bindings. The Claim Check Pattern lets anonymous users upload before auth. File hash deduplication prevents duplicate AI parsing. Privacy filtering happens at fetch time, not storage. It works, but D1's quirks and edge runtime constraints mean you're fighting the platform as often as you're building on it."
 keyTakeaways:
   - "D1 is SQLite on the edge — JSON stored as TEXT, booleans as integers, no row-level security. Drizzle ORM handles most pain, but you'll still JSON.parse() more than you'd like."

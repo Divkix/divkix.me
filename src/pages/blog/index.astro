@@ -8,13 +8,14 @@ import { formatDate } from "@/lib/utils";
 // Get all blog posts from content collections
 const allPosts = await getCollection("blog");
 
-// Filter published posts and sort by date (newest first)
+// Filter published posts and sort: featured first, then by date (newest first)
 const posts = allPosts
   .filter((post: CollectionEntry<"blog">) => post.data.published === true)
-  .sort(
-    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
+  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => {
+    if (a.data.featured && !b.data.featured) return -1;
+    if (!a.data.featured && b.data.featured) return 1;
+    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+  });
 
 // Calculate reading time (200 words per minute)
 function calculateReadingTime(content: string): string {
@@ -102,9 +103,16 @@ const blogBreadcrumbSchema = {
               <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
                 <div class="p-6 space-y-4">
                   <div class="flex items-center justify-between gap-4 flex-wrap">
-                    <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
-                      {item.readingTime}
-                    </span>
+                    <div class="flex items-center gap-2">
+                      {item.post.data.featured && (
+                        <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
+                          Featured
+                        </span>
+                      )}
+                      <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
+                        {item.readingTime}
+                      </span>
+                    </div>
                     <time
                       datetime={item.post.data.date}
                       class="text-sm text-foreground/60"

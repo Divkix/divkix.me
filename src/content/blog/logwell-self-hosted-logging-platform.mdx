@@ -1,7 +1,9 @@
 ---
 title: "I Needed Logs, Not a PhD in Elasticsearch — So I Built Logwell"
+seoTitle: "Logwell: Self-Hosted Logging With PostgreSQL, No Elasticsearch"
+seoDescription: "Built a self-hosted logging platform with PostgreSQL tsvector search, SSE streaming, one Docker Compose. Handles millions of logs on a $6 VPS."
 date: "2026-01-06"
-dateModified: "2026-01-08"
+dateModified: "2026-03-06"
 excerpt: "Every logging tool felt like overkill—ELK's operational complexity, Datadog's pricing, Loki's LogQL learning curve. So I built Logwell: one Docker Compose, PostgreSQL-native, real-time streaming. Here's what I learned."
 tags:
   - Logging
@@ -18,6 +20,7 @@ tags:
   - AI Coding Assistant
   - Observability
 published: true
+featured: true
 tldr: "Every logging tool felt like overkill for side projects—ELK needs a DevOps team, Datadog charges per-GB, Loki requires learning LogQL. So I built Logwell: PostgreSQL tsvector for search, SSE for real-time, one Docker Compose to deploy."
 keyTakeaways:
   - "ELK Stack operational overhead is insane for side projects—multiple components, capacity planning, JVM tuning."
@@ -36,6 +39,8 @@ faq:
   - q: "How does the real-time streaming work?"
     a: "In-memory event bus + Server-Sent Events. No database polling. Logs hit the DB and broadcast simultaneously."
 ---
+
+Logwell is a self-hosted logging platform built on PostgreSQL with tsvector full-text search, Server-Sent Events for real-time streaming, and a single Docker Compose deployment. It handles millions of logs on a $6 VPS — no Elasticsearch cluster, no LogQL, no per-GB billing.
 
 I wasted an entire Saturday trying to set up logging for a side project.
 
