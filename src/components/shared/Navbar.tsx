@@ -254,11 +254,15 @@ export function Navbar() {
             <img
               src="/transparent-text-dark.webp"
               alt="divkix"
+              width={82}
+              height={28}
               className="h-7 block dark:hidden"
             />
             <img
               src="/transparent-text.webp"
               alt="divkix"
+              width={82}
+              height={28}
               className="h-7 hidden dark:block"
             />
           </a>
@@ -324,7 +328,13 @@ export function Navbar() {
           aria-label="Navigation menu"
         >
           <div className="flex items-center justify-between px-4 h-16">
-            <img src="/transparent-text.webp" alt="divkix" className="h-7" />
+            <img
+              src="/transparent-text.webp"
+              alt="divkix"
+              width={82}
+              height={28}
+              className="h-7"
+            />
             <button
               ref={closeButtonRef}
               type="button"

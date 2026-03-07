@@ -109,40 +109,6 @@ const breadcrumbSchema = {
   ],
 };
 
-// FAQ Schema (if present)
-const faqSchema = post.data.faq
-  ? {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: post.data.faq.map((faq: { q: string; a: string }) => ({
-        "@type": "Question",
-        name: faq.q,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.a,
-        },
-      })),
-    }
-  : null;
-
-// HowTo Schema (if present)
-const howtoSchema = post.data.howto
-  ? {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: post.data.howto.name,
-      totalTime: post.data.howto.totalTime,
-      step: post.data.howto.steps.map(
-        (step: { name: string; text: string }, index: number) => ({
-          "@type": "HowToStep",
-          position: index + 1,
-          name: step.name,
-          text: step.text,
-        }),
-      ),
-    }
-  : null;
-
 // Generate page title and description (SEO overrides for <title>/<meta>, visible h1 stays original)
 const pageTitle = post.data.seoTitle ?? post.data.title;
 const pageDescription = post.data.seoDescription ?? post.data.excerpt;
@@ -171,8 +137,6 @@ const articleMeta = {
   <!-- JSON-LD Schemas -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  {faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
-  {howtoSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(howtoSchema)} />}
 
   <!-- Table of Contents - Fixed sidebar on xl screens -->
   {showToc && (
@@ -195,11 +159,7 @@ const articleMeta = {
     </aside>
   )}
 
-  <article
-    class="container mx-auto px-4 py-20"
-    itemscope
-    itemtype="https://schema.org/BlogPosting"
-  >
+  <article class="container mx-auto px-4 py-20">
     <div class="max-w-3xl mx-auto space-y-8">
       <!-- Back to Blog button -->
       <a
@@ -225,7 +185,7 @@ const articleMeta = {
 
       <!-- Article Header -->
       <header class="space-y-4">
-        <h1 class="text-5xl font-display font-bold" itemprop="headline">
+        <h1 class="text-5xl font-display font-bold">
           {post.data.title}
         </h1>
 
@@ -233,25 +193,19 @@ const articleMeta = {
           <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
             {readingTime}
           </span>
-          <time datetime={post.data.date} itemprop="datePublished">
+          <time datetime={post.data.date}>
             Published {formatDate(post.data.date)}
           </time>
           {post.data.dateModified && (
             <>
               <span>•</span>
-              <time datetime={post.data.dateModified} itemprop="dateModified">
+              <time datetime={post.data.dateModified}>
                 Updated {formatDate(post.data.dateModified)}
               </time>
             </>
           )}
-          <address
-            class="not-italic"
-            itemprop="author"
-            itemscope
-            itemtype="https://schema.org/Person"
-          >
-            by <a href="/divkix" itemprop="url" class="hover:text-primary"><span itemprop="name">{post.data.author || "Divanshu Chauhan"}</span></a>
-            <meta itemprop="alternateName" content={siteConfig.handle.toLowerCase()} />
+          <address class="not-italic">
+            by <a href="/divkix" class="hover:text-primary"><span>{post.data.author || "Divanshu Chauhan"}</span></a>
           </address>
         </div>
 
@@ -264,8 +218,6 @@ const articleMeta = {
             ))}
           </div>
         )}
-
-        <meta itemprop="description" content={post.data.excerpt} />
       </header>
 
       <!-- Hero Image -->
@@ -279,7 +231,6 @@ const articleMeta = {
         class="w-full rounded-lg"
         loading="eager"
         decoding="async"
-        itemprop="image"
       />
 
       <!-- TL;DR Summary -->
@@ -319,10 +270,7 @@ const articleMeta = {
       )}
 
       <!-- Article Content -->
-      <div
-        class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20"
-        itemprop="articleBody"
-      >
+      <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
         <Content />
       </div>
 
@@ -339,31 +287,6 @@ const articleMeta = {
             ))}
           </div>
         </section>
-      )}
-
-      <!-- HowTo Steps -->
-      {post.data.howto && (
-        <div class="space-y-4">
-          <h2 class="text-2xl font-bold">{post.data.howto.name}</h2>
-          <p class="text-foreground/60">
-            Total time: {post.data.howto.totalTime}
-          </p>
-          <ol class="space-y-4">
-            {post.data.howto.steps.map((step: { name: string; text: string }, index: number) => (
-              <li class="glass-surface p-6 rounded-lg">
-                <div class="flex gap-4">
-                  <span class="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
-                    {index + 1}
-                  </span>
-                  <div class="flex-1">
-                    <h3 class="font-semibold mb-2">{step.name}</h3>
-                    <p class="text-foreground/70">{step.text}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
       )}
 
       <!-- Author Bio -->

@@ -39,18 +39,6 @@ const blog = defineCollection({
         }),
       )
       .optional(),
-    howto: z
-      .object({
-        name: z.string(),
-        totalTime: z.string(),
-        steps: z.array(
-          z.object({
-            name: z.string(),
-            text: z.string(),
-          }),
-        ),
-      })
-      .optional(),
   }),
 });
 

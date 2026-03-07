@@ -64,11 +64,10 @@ export default defineConfig({
           };
         }
 
-        // Static pages - use build date
+        // Static pages - no lastmod (avoid lying about modification dates)
         const isHomepage = item.url === "https://divkix.me/";
         return {
           ...item,
-          lastmod: new Date().toISOString(),
           changefreq: isHomepage ? "weekly" : "monthly",
           priority: isHomepage ? 1.0 : 0.5,
         };

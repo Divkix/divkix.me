@@ -3,7 +3,6 @@ title: "How I Host My Portfolio for $0/Month on Cloudflare"
 seoTitle: "Host Next.js on Cloudflare Workers Free: $0/Month Guide"
 seoDescription: "Deploy Next.js 15 to Cloudflare Workers with OpenNext. Zero cold starts, unlimited bandwidth, global edge. Full Vercel migration guide."
 date: "2025-11-24"
-dateModified: "2026-03-06"
 excerpt: "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
 tags: ["Cloudflare Workers", "Next.js", "Edge Computing", "Serverless", "Free Hosting", "OpenNext", "Portfolio", "Web Development", "Cost Optimization", "2025"]
 published: true
@@ -23,18 +22,6 @@ faq:
     a: "Minimal changes. Main constraint is no filesystem access at runtime. Use prebuild scripts to generate JSON from MDX/markdown instead of reading files dynamically."
   - q: "How does performance compare to Vercel?"
     a: "Equal or better. Both use edge networks, but Cloudflare's V8 isolates have faster cold starts than Vercel's serverless functions. Real-world: 20-50ms response times globally."
-howto:
-  name: "How to Deploy Next.js to Cloudflare Workers"
-  totalTime: "PT20M"
-  steps:
-    - name: "Install OpenNext Cloudflare adapter"
-      text: "Run 'bun add -D @opennextjs/cloudflare' and create wrangler.jsonc config file with worker name and compatibility flags."
-    - name: "Add build scripts to package.json"
-      text: "Add 'preview' script for local testing and 'deploy' script that runs Next.js build followed by OpenNext build and Cloudflare deployment."
-    - name: "Configure edge-compatible code"
-      text: "Replace any Node.js filesystem calls with prebuild scripts. Generate static JSON files at build time instead of reading dynamically at runtime."
-    - name: "Deploy to Cloudflare"
-      text: "Run 'bun run deploy' to build and upload. Your site will be live on workers.dev subdomain immediately, then add custom domain in Cloudflare dashboard."
 ---
 
 I haven't paid for hosting in two years. Not because I'm using some sketchy free trial, but because my portfolio genuinely costs $0/month to run on Cloudflare Workers.

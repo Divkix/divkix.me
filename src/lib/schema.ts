@@ -27,21 +27,20 @@ export function generatePersonSchema() {
     sameAs: siteConfig.socials
       .filter((s) => s.label !== "Email")
       .map((s) => s.href),
-    alumniOf: siteConfig.education.map((edu) => ({
-      "@type": "CollegeOrUniversity",
-      name: edu.title.split(" — ")[1] || edu.title,
-    })),
+    alumniOf: siteConfig.education.map((edu) => {
+      const parts = edu.title.split(" — ");
+      return {
+        "@type": "CollegeOrUniversity",
+        name: parts[1] || edu.title,
+        ...(parts[0] && {
+          hasCredential: {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: parts[0],
+          },
+        }),
+      };
+    }),
     knowsAbout: siteConfig.skills.map((s) => s.name),
-    worksFor: {
-      "@type": "Organization",
-      name: siteConfig.experience[0].company,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: siteConfig.address.locality,
-        addressRegion: siteConfig.address.region,
-        addressCountry: siteConfig.address.country,
-      },
-    },
     address: {
       "@type": "PostalAddress",
       addressLocality: siteConfig.address.locality,
@@ -67,14 +66,6 @@ export function generateWebSiteSchema() {
       "@id": `${baseUrl}/#author`,
     },
     inLanguage: "en-US",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 

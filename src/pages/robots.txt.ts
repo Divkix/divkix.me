@@ -22,9 +22,6 @@ User-agent: Meta-ExternalAgent
 User-agent: cohere-ai
 Allow: /
 
-# Host
-Host: ${baseUrl}
-
 # Sitemap location
 Sitemap: ${baseUrl}/sitemap-index.xml
 `.trim();
