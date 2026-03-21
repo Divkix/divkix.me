@@ -122,7 +122,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
   const skills = groupedSkills[activeTab] || [];
 
   return (
-    <div ref={containerRef} className="max-w-3xl mx-auto">
+    <div ref={containerRef} className="w-full max-w-5xl mx-auto">
       <div
         className={`
           overflow-hidden rounded-lg

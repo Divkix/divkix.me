@@ -1,11 +1,11 @@
 import { ExternalLink, Globe } from "lucide-react";
 import {
+  type ComponentProps,
+  type CSSProperties,
   useCallback,
   useEffect,
   useRef,
   useState,
-  type ComponentProps,
-  type CSSProperties,
 } from "react";
 
 import { SectionLabel } from "@/components/shared/SectionLabel";
@@ -312,47 +312,49 @@ export function Projects() {
         </div>
 
         {/* Segmented control filter */}
-        <div
-          ref={containerRef}
-          className="relative inline-flex gap-0.5 p-1 bg-muted rounded-lg overflow-x-auto max-w-full"
-        >
+        <div className="flex w-full justify-start">
           <div
-            className="absolute top-1 h-[calc(100%-8px)] bg-background rounded-md shadow-sm transition-all duration-300 ease-out"
-            style={indicatorStyle}
-          />
-          <button
-            ref={(el) => {
-              if (el) filterRefs.current.set("all", el);
-            }}
-            type="button"
-            className={cn(
-              "relative z-10 px-4 py-1.5 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
-              selectedTag === null
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-            onClick={() => setSelectedTag(null)}
+            ref={containerRef}
+            className="relative inline-flex gap-0.5 p-1 bg-muted rounded-lg overflow-x-auto max-w-full"
           >
-            All
-          </button>
-          {allTags.map((tag: string) => (
+            <div
+              className="absolute top-1 h-[calc(100%-8px)] bg-background rounded-md shadow-sm transition-all duration-300 ease-out"
+              style={indicatorStyle}
+            />
             <button
-              key={tag}
               ref={(el) => {
-                if (el) filterRefs.current.set(tag, el);
+                if (el) filterRefs.current.set("all", el);
               }}
               type="button"
               className={cn(
                 "relative z-10 px-4 py-1.5 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
-                selectedTag === tag
+                selectedTag === null
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",
               )}
-              onClick={() => setSelectedTag(tag)}
+              onClick={() => setSelectedTag(null)}
             >
-              {tag}
+              All
             </button>
-          ))}
+            {allTags.map((tag: string) => (
+              <button
+                key={tag}
+                ref={(el) => {
+                  if (el) filterRefs.current.set(tag, el);
+                }}
+                type="button"
+                className={cn(
+                  "relative z-10 px-4 py-1.5 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
+                  selectedTag === tag
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+                onClick={() => setSelectedTag(tag)}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Featured projects — full-width hero cards */}

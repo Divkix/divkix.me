@@ -101,15 +101,18 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
 
           {/* Position progression — mini nested timeline */}
           <div className="relative pl-4 border-l-2 border-primary/20 space-y-4">
-            {company.positions.map((position: Position, pIndex: number) => (
-              <div key={`${position.title}-${pIndex}`} className="relative">
+            {company.positions.map((position: Position, idx: number) => (
+              <div
+                key={`${company.company}-${position.title}-${position.year}`}
+                className="relative"
+              >
                 <div className="absolute -left-[calc(0.5rem+1px)] top-1.5 w-2 h-2 rounded-full bg-primary/60" />
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-2">
                     <h5
                       className={cn(
                         "text-sm font-semibold",
-                        pIndex === 0 ? "text-primary" : "text-foreground",
+                        idx === 0 ? "text-primary" : "text-foreground",
                       )}
                     >
                       {position.title}

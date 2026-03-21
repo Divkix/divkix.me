@@ -72,7 +72,7 @@ function AnimatedStat({ value, label, variant }: StatProps) {
     return (
       <div ref={ref}>
         <div
-          className="text-7xl md:text-8xl font-mono font-bold text-foreground"
+          className="text-7xl md:text-8xl lg:text-9xl font-mono font-bold text-foreground"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {displayValue}
@@ -121,7 +121,7 @@ export function Highlights() {
       className="container mx-auto px-4 py-12 reveal-on-scroll"
     >
       <SectionLabel number="01" label="highlights" />
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-w-6xl">
         {/* Main stat: huge full-width treatment */}
         <div className="flex items-end">
           <AnimatedStat
