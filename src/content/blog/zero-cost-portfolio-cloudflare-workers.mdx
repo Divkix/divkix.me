@@ -41,23 +41,15 @@ The secret sauce is OpenNext. It's an open-source adapter that converts Next.js 
 
 ## Why Not Vercel? (The Real Reasons)
 
-Vercel hosts Next.js perfectly. But here's why I left:
+Vercel hosts Next.js perfectly. But here's why I left.
 
-**1. Free Tier Limits**
+The bandwidth limit hits in weird ways. 100GB sounds generous until you add images or get any kind of traffic spike. Cloudflare has no bandwidth cap — period.
 
-Vercel's free tier gives you 100GB bandwidth. That sounds like a lot until you add images, videos, or get a Reddit hug of death. Cloudflare? Unlimited bandwidth. Period.
+Vercel owns Next.js. That's fine for integration, but it means you're a captive customer. If pricing or terms change, your migration options are limited. Cloudflare Workers runs on open web standards.
 
-**2. Vendor Lock-In**
+Cold starts are the practical difference. Vercel's serverless functions use containers — 200-500ms on a cold start. Cloudflare Workers use V8 isolates, which are essentially lightweight JS contexts. Cold starts are 5ms. Not 5 seconds. 5 milliseconds.
 
-Vercel owns Next.js. Great for integration, terrible for negotiating power. If they change pricing or terms, you're stuck migrating. Cloudflare Workers runs on open web standards.
-
-**3. Cold Starts**
-
-Vercel's serverless functions use containers. Cold starts are 200-500ms. Cloudflare Workers use V8 isolates - basically lightweight JS contexts. Cold starts? 5ms. Not 5 seconds. 5 milliseconds.
-
-**4. Global Edge = Default**
-
-Vercel Edge Functions cost extra. Cloudflare Workers deploy to 330+ cities automatically. No configuration. No upcharge.
+And global edge is just the default on Cloudflare. Vercel charges extra for it. Workers deploy to 330+ cities automatically with no configuration.
 
 ## The Free Tier Reality Check
 
@@ -258,17 +250,9 @@ I migrated in 3 hours. Most of that was rewriting the blog system to use prebuil
 
 ## Should You Do This?
 
-**Yes, if:**
-- You want $0/month hosting with no asterisks
-- You're building a portfolio, blog, or low-traffic site
-- You're comfortable with edge runtime constraints
-- You value fast cold starts and global edge
+Worth it if you want $0/month with no asterisks, you're building a portfolio or blog or anything low-traffic, and you're comfortable with edge runtime constraints. The cold start speed and global edge are genuinely nice, not just marketing.
 
-**No, if:**
-- You need ISR (revalidate every X seconds)
-- You rely heavily on Node.js-specific libraries
-- You want zero-config deployment (Vercel is easier)
-- Your site uses database connections extensively (Workers have connection limits)
+Probably not worth it if you need ISR, rely on Node.js-specific libraries, want zero-config deployment (Vercel is much easier there), or have a site that makes heavy use of database connections — Workers have connection pooling limits that bite you at scale.
 
 For divkix.me, Cloudflare Workers is perfect. No hosting bills, global performance, and the constraints force better architecture decisions. I prebuild everything anyway. Why not make it official?
 

@@ -133,37 +133,25 @@ The bot runs on minimal infrastructure—single VPS, no load balancer. Go's perf
 
 ## Lessons from 250K+ Users
 
-**Lesson 1: Managed services beat custom infrastructure every time.**
+Self-hosting Postgres in Docker taught me that managed services save more time than they cost. I was spending weekends debugging "why is this container restarting" instead of building features. Supabase is free for most projects and handles everything I used to babysit. If you're optimizing cloud costs before you have real users, you're optimizing the wrong thing.
 
-I used to self-host Postgres in Docker. Spent more time on backups, updates, and "why is this container restarting" than building features. Supabase costs $0 for most projects and handles all of that.
+TypeScript catches half my bugs before they hit production. When users actually depend on your project — students trying to get into a class during registration week — silent runtime failures are not acceptable. Types are not optional at that point.
 
-Your time is worth more than $10/month. If you're optimizing cloud costs before you have users, you're optimizing the wrong thing.
+Deployment friction is a real project killer. If deploying takes more than 5 minutes, you do it less often. Less frequent deploys means bigger diffs, bigger diffs means more bugs. Cloudflare Workers and Vercel make deployment boring, which is exactly right.
 
-**Lesson 2: TypeScript saves you from yourself.**
+PickMyClass users care that they get notified when CS 101 has an open seat. They don't care whether it's Next.js or Rails. That sounds obvious until you've spent a week evaluating frameworks instead of shipping.
 
-Half the bugs I catch are type errors that would've been runtime crashes. When users depend on your project (like students trying to enroll in classes), silent failures aren't acceptable.
-
-**Lesson 3: Deployment friction kills projects.**
-
-If deploying takes more than 5 minutes, you'll do it less often. Smaller, frequent deploys mean fewer bugs. Cloudflare Workers and Vercel make deployment boring, which is exactly what you want.
-
-**Lesson 4: Users don't care about your stack.**
-
-PickMyClass users care that they get notified when CS 101 has seats. They don't care if it's built in Next.js or Ruby on Rails. Ship fast, iterate based on feedback, move on.
-
-**Lesson 5: Centralized logging beats scattered dashboards.**
-
-Cloudflare has observability. Supabase has logs. My VPS has journalctl. But when something breaks, I don't want to check three dashboards. I [built my own logging platform](/blog/logwell-self-hosted-logging-platform/) to aggregate everything in one place—self-hosted, PostgreSQL-backed, real-time streaming. One search across all my projects.
+The scattered dashboard problem hit me later than it should have: Cloudflare observability, Supabase logs, journalctl on the VPS — three different places to look when something breaks at 3 AM. I [built my own logging platform](/blog/logwell-self-hosted-logging-platform/) to fix that. One search across all my projects.
 
 ## The Stack Decisions I Regret
 
-**Using MongoDB for early projects.** I thought schemaless was "flexible." It was chaos. Every query was a gamble. Migrating to Postgres (via Supabase) fixed this. Schemas are good actually.
+MongoDB on early projects — I thought schemaless meant flexibility. It meant chaos. Every query was a gamble. Migrating to Postgres fixed it, but it was painful. Schemas are good actually.
 
-**Not using TypeScript from day one.** I have 5 projects in plain JavaScript that I'm scared to touch now. Adding types retroactively is painful. Just start with TypeScript.
+Not starting with TypeScript. I have 5 projects in plain JavaScript that I'm scared to touch now. Adding types retroactively is miserable. Just start with TypeScript.
 
-**Over-engineering before users.** I built elaborate caching layers and microservices before anyone used the product. Wasted weeks. Start with a monolith. Scale when you need to (you probably won't).
+Over-engineering before anyone used it. I built caching layers and microservices before I had a single real user. Wasted weeks. Start with a monolith. Scale when you actually need to, which is probably never.
 
-**Avoiding vendor lock-in too hard.** I spent days setting up self-hosted auth instead of using Supabase Auth. The self-hosted version broke three times. Supabase Auth has worked flawlessly for 2 years. Pragmatism beats purity.
+Fighting vendor lock-in harder than it deserved. I spent days setting up self-hosted auth instead of using Supabase Auth. The self-hosted version broke three times. Supabase Auth has worked without a problem for two years. Pragmatism beats purity.
 
 ## What I'd Tell Past Me
 

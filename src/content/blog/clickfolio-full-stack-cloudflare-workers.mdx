@@ -307,23 +307,23 @@ I shipped this. It works. People use it. But here's what I'd warn you about:
 
 ## What I'd Do Differently
 
-**Use Postgres (Neon or Supabase) instead of D1.** D1 is fine for simple CRUD. The moment you need JSON queries, complex transactions, or reliable row-level security, you're fighting SQLite semantics on every query. The global distribution isn't worth the limitations for this use case.
+I'd use Postgres (Neon or Supabase) instead of D1. D1 is fine for simple CRUD. The moment you need JSON queries, complex transactions, or reliable row-level security, you're fighting SQLite semantics on every query. The global distribution isn't worth those limitations for this use case.
 
-**Start with WebSockets, not polling.** The polling → Durable Objects migration was painful. If you know you'll need real-time updates, design for it from day one. The DO Hibernation API is cheap enough that there's no reason to start with polling.
+I'd also start with WebSockets, not polling. The polling-to-Durable-Objects migration was painful. If you know you'll need real-time updates, design for it from day one. The DO Hibernation API is cheap enough that there's no reason to start with polling.
 
-**Fewer templates at launch.** Seven templates meant seven components to keep responsive and consistent. Three would have been enough to validate the concept. I can always add more later.
+And fewer templates at launch. Seven meant seven components to keep responsive and consistent. Three would have been enough to validate the concept.
 
 ## Lessons Learned
 
-**Cloudflare's edge stack is production-viable for full apps** — but you're an early adopter. The docs are sparse for complex patterns (Queues + DO + D1 in one Worker). Expect to read source code and Discord threads.
+Cloudflare's edge stack is production-viable, but you're an early adopter. The docs are sparse for complex patterns (Queues + DO + D1 in one Worker). Expect to read source code and Discord threads.
 
-**The Claim Check Pattern is genuinely good UX.** Reducing auth friction at the upload step measurably improved conversion. Users who see their resume being processed are more likely to complete signup than users who hit a login wall first.
+The Claim Check Pattern genuinely moved conversion. Reducing auth friction at the upload step — letting users see their resume being processed before they even sign up — meant more completions than hitting a login wall first.
 
-**Deduplication saves more than you'd expect.** The file hash cache and waiting-for-cache pattern eliminated roughly 30% of Gemini API calls in the first month. Users reupload constantly.
+Deduplication saved more than I expected. The file hash cache and waiting-for-cache pattern eliminated roughly 30% of Gemini API calls in the first month. Users reupload constantly — same resume, different template, fixing a typo.
 
-**Privacy at fetch time, not storage time.** Storing full data and filtering on read is simpler, more flexible, and easier to reason about than trying to maintain multiple filtered copies.
+Filtering at fetch time rather than storage time is the right call. Storing full data and filtering on read is simpler, more flexible, and much easier to reason about than trying to maintain multiple filtered copies.
 
-**Edge computing is real, but the edges are sharp.** Every constraint — no filesystem, no native modules, SQLite instead of Postgres, no ISR, middleware limitations — is manageable individually. Stacked together, they add up to a fundamentally different development experience. Know what you're signing up for.
+Each edge computing constraint — no filesystem, no native modules, SQLite instead of Postgres, no ISR, middleware limitations — is manageable on its own. Stacked together, they add up to a fundamentally different development experience. Know what you're getting into before you're three sprints deep.
 
 If you want to try it: [clickfolio.me](https://clickfolio.me). Upload a PDF, pick a template, get a URL. No code required.
 

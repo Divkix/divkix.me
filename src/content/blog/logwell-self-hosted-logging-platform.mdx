@@ -114,9 +114,9 @@ The SSE endpoint batches logs (flush every 1.5s or when 50 logs accumulate, whic
 
 I used Claude Code for most of this project. Here's what actually happened, not the sanitized "AI helped me be 10x more productive" story.
 
-**Architecture discussions genuinely helped.** When I was deciding between `pg_notify` and an in-memory event bus, I described the tradeoffs and Claude walked through the implications. It correctly identified that for a single-server deployment, in-memory is simpler and the "doesn't survive restarts" limitation doesn't matter for my use case. I probably would've reached the same conclusion, but faster to talk it through.
+Architecture discussions genuinely helped. When I was deciding between `pg_notify` and an in-memory event bus, I described the tradeoffs and Claude walked through the implications. It correctly identified that for a single-server deployment, in-memory is simpler and the "doesn't survive restarts" limitation doesn't matter for my use case. I probably would've reached the same conclusion, but faster to talk it through.
 
-**Boilerplate generation is where it shines.** Drizzle schema definitions, SvelteKit API routes, the whole shadcn-svelte component setup. I described what I wanted, Claude generated it, I reviewed and tweaked. Saved hours of typing.
+Boilerplate generation is where it shines. Drizzle schema definitions, SvelteKit API routes, the whole shadcn-svelte component setup. I described what I wanted, Claude generated it, I reviewed and tweaked. Saved hours of typing.
 
 **But I caught real bugs that would've been painful in production.**
 
@@ -148,13 +148,13 @@ How did I catch these bugs? TDD with the Trophy testing strategy. Red-green-refa
 
 ## Stuff I Learned Building This
 
-**SSE is underrated for server-to-client streaming.** Everyone defaults to WebSockets, but SSE is simpler, works through proxies without special config, and has automatic reconnection built into the browser API. The only gotcha is you need heartbeat events every 30 seconds or proxies/load balancers will kill the connection.
+SSE is underrated for server-to-client streaming. Everyone defaults to WebSockets, but SSE is simpler, works through proxies without special config, and has automatic reconnection built into the browser API. The one thing to know: you need heartbeat events every 30 seconds or proxies and load balancers will kill the connection on you.
 
-**Postgres handles more than you think.** I keep reaching for specialized tools (Redis for caching, Elasticsearch for search, RabbitMQ for queues) and keep learning that Postgres can do 80% of what I need with less operational overhead. Generated columns compute the tsvector on insert. GIN indexes make search fast. It's not going to handle petabyte-scale logs, but my side projects will never have petabyte-scale logs.
+Postgres keeps surprising me. I keep reaching for specialized tools — Redis for caching, Elasticsearch for search, RabbitMQ for queues — and keep learning that Postgres can do 80% of what I need with less operational overhead. Generated columns compute the tsvector on insert. GIN indexes make search fast. It won't handle petabyte-scale logs, but my side projects will never have petabyte-scale logs.
 
-**Fail fast on configuration.** Logwell crashes on startup if `DATABASE_URL` is missing or `SSE_BATCH_WINDOW_MS` is outside valid bounds (100-10000ms). Annoying during development, but way better than mysterious failures in production when some code path finally reads an invalid env var.
+Fail fast on configuration. Logwell crashes on startup if `DATABASE_URL` is missing or `SSE_BATCH_WINDOW_MS` is outside valid bounds (100-10000ms). Annoying during development, but way better than mysterious failures in production when some code path finally reads an invalid env var three hours after deploy.
 
-**Cursor pagination is non-negotiable for real-time data.** Offset-based pagination (`LIMIT 100 OFFSET 200`) breaks when new logs are constantly being inserted. You get duplicates, you skip entries, it's a mess. Cursor-based ("give me 100 logs older than this timestamp+id") always works.
+Cursor pagination is the only sane choice for real-time data. Offset-based (`LIMIT 100 OFFSET 200`) breaks as soon as new logs come in — you get duplicates, skip entries, it's a mess. Cursor-based ("give me 100 logs older than this timestamp+id") always works.
 
 ## How I'm Actually Using It
 
