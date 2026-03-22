@@ -1,15 +1,11 @@
 {
-  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "$schema": "https://unpkg.com/knip@6/schema.json",
   "ignoreDependencies": [
     "@tailwindcss/typography",
     "tw-animate-css",
     "tailwindcss"
   ],
-  "entry": [
-    "src/pages/**/*.{astro,ts}",
-    "src/content/**/*.ts",
-    "scripts/**/*.{js,ts}"
-  ],
+  "entry": ["src/pages/**/*.{astro,ts}", "scripts/**/*.{js,ts}"],
   "project": ["src/**/*.{ts,tsx,astro}"],
   "ignore": [],
   "astro": {
