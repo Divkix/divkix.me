@@ -60,7 +60,7 @@
     "postcss": "^8.5.8",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-hook-form": "^7.71.2",
+    "react-hook-form": "^7.72.0",
     "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
@@ -70,14 +70,14 @@
   "devDependencies": {
     "@astrojs/check": "0.9.7",
     "@biomejs/biome": "2.4.6",
-    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "@types/mdast": "^4.0.4",
-    "@types/node": "^25.4.0",
+    "@types/node": "^25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "knip": "^5.86.0",
+    "knip": "^5.88.1",
     "png-to-ico": "^3.0.1",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3",
     "vfile": "^6.0.3"
   }
