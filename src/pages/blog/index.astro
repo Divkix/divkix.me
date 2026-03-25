@@ -54,7 +54,7 @@ const collectionPageSchema = {
       (post: CollectionEntry<"blog">, index: number) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${baseUrl}/blog/${post.slug}/`,
+        url: `${baseUrl}/blog/${post.id}/`,
         name: post.data.title,
       }),
     ),
@@ -97,7 +97,7 @@ const blogBreadcrumbSchema = {
         <div class="space-y-6">
           {postsWithReadingTime.map((item: PostWithReadingTime) => (
             <a
-              href={`/blog/${item.post.slug}/`}
+              href={`/blog/${item.post.id}/`}
               class="block transition-all hover:scale-[1.01]"
             >
               <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
