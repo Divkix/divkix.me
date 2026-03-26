@@ -1,5 +1,7 @@
 /// <reference types="astro/client" />
 
+declare module "@fontsource/*";
+
 interface ImportMetaEnv {
   readonly SITE: string;
 }
