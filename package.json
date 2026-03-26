@@ -37,7 +37,14 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write",
     "type-check": "astro check && tsc --noEmit",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "biome check --write",
+      "biome format --write"
+    ]
   },
   "dependencies": {
     "@4hse/astro-llms-txt": "^1.0.4",
@@ -75,7 +82,9 @@
     "@types/node": "^25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "husky": "^9.1.7",
     "knip": "^6.0.2",
+    "lint-staged": "^16.4.0",
     "png-to-ico": "^3.0.1",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3",
