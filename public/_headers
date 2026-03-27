@@ -55,9 +55,11 @@
 # Revalidation cache for HTML pages (1 hour)
 /
   Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: text/html; charset=utf-8
 
 /*.html
   Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: text/html; charset=utf-8
 
 # Cache blog posts (1 day, revalidate)
 /blog/*

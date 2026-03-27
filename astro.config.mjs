@@ -168,4 +168,27 @@ Currently: MS Computer Science at Arizona State University.
   prefetch: {
     prefetchAll: true,
   },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            "react-vendor": [
+              "react",
+              "react-dom",
+              "react-hook-form",
+              "@hookform/resolvers",
+            ],
+            "ui-vendor": [
+              "lucide-react",
+              "sonner",
+              "class-variance-authority",
+              "clsx",
+              "tailwind-merge",
+            ],
+          },
+        },
+      },
+    },
+  },
 });
