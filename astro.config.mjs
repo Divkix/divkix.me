@@ -168,5 +168,4 @@ Currently: MS Computer Science at Arizona State University.
   prefetch: {
     prefetchAll: true,
   },
-
 });

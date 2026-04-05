@@ -1,107 +1,125 @@
-# CLAUDE.md
+# Repository Guidelines
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance for AI assistants working with the divkix.me portfolio codebase.
 
 ## Project Overview
 
-Portfolio site built with Astro 5, TypeScript, Tailwind CSS v4, and React (islands). Static output deployed to Cloudflare Pages. Features a single-page homepage with sections (Hero, Highlights, Projects, Experience, Skills, Contact), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data.
+Portfolio and blog built with **Astro 5**, **TypeScript**, **Tailwind CSS v4**, and **React islands**. Deployed to Cloudflare Pages as static output. Features a single-page homepage with sections (Hero, Highlights, Projects, Experience, Skills, Contact), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data.
 
-## Build & Development Commands
+## Project Structure
+
+```
+/
+├── src/
+│   ├── components/           # React and Astro components
+│   │   ├── sections/         # Homepage sections (Hero, Projects, etc.)
+│   │   ├── shared/           # Shared UI components
+│   │   ├── blog/             # Blog-specific components
+│   │   ├── ui/               # shadcn/ui components
+│   │   └── providers/        # React context providers
+│   ├── layouts/              # Astro layouts (BaseLayout, BlogLayout)
+│   ├── pages/                # Astro routes
+│   ├── content/              # Blog posts (*.mdx)
+│   ├── data/
+│   │   └── site.config.ts    # Centralized content (skills, projects, experience)
+│   ├── lib/                  # Utilities, schema.ts for JSON-LD
+│   └── styles/
+│       └── globals.css       # Tailwind v4, OKLCH color system, custom utilities
+├── scripts/                  # Build pipeline scripts
+│   ├── generate-posts-metadata.js   # Extracts blog metadata → content/blog/posts.json
+│   ├── generate-og-images.js        # Creates OpenGraph images
+│   ├── validate-content.ts          # Validates MDX/posts.json sync
+│   └── submit-indexnow.ts           # Search engine submission (production only)
+├── content/
+│   └── blog/
+│       └── posts.json        # Generated metadata (consumed by astro.config.mjs)
+├── astro.config.mjs          # Astro config with sitemap serialization
+├── tsconfig.json             # Strict TypeScript (noUncheckedIndexedAccess, etc.)
+├── biome.json                # Linting and formatting rules
+└── postcss.config.mjs        # Tailwind v4 via @tailwindcss/postcss
+```
+
+## Build, Test, and Development Commands
 
 ```bash
-bun run dev           # Start dev server on localhost:4321
-bun run build         # Full production build (see Build Pipeline below)
-bun run preview       # Preview production build locally
-bun run lint          # Run Biome linter (biome check .)
-bun run lint:fix      # Auto-fix lint issues (biome check --write)
-bun run format        # Format code with Biome (biome format --write .)
-bun run type-check    # Run astro check for TypeScript errors
-bunx knip             # Detect unused exports, dependencies, and files
+bun run dev              # Start dev server on localhost:4321
+bun run build            # Full production build (5-step pipeline)
+bun run preview          # Preview production build locally
+bun run lint             # Run Biome linter
+bun run lint:fix         # Auto-fix lint issues
+bun run format           # Format with Biome
+bun run type-check       # Run astro check for TypeScript
+bunx knip                # Detect unused exports/dependencies
 ```
 
-## Build Pipeline
+**Build Pipeline (order matters):**
+1. `generate-posts-metadata.js` — Parses blog MDX → `content/blog/posts.json`
+2. `generate-og-images.js` — Generates OG images
+3. `validate-content.ts` — Validates MDX count matches posts.json
+4. `astro build` — Static build to `dist/`
+5. `submit-indexnow.ts` — Submits to search engines (production only)
 
-`bun run build` executes a multi-step chain — order matters:
+**Critical:** If you add/remove/rename a blog post, run `bun run prebuild` to regenerate `posts.json` or the build will fail at step 3.
 
-1. **`generate-posts-metadata.js`** — Parses all `src/content/blog/*.mdx` frontmatter, extracts TOC/reading time/related posts, and writes `content/blog/posts.json`. This JSON is consumed by `astro.config.mjs` for sitemap `lastmod` dates (content collections aren't available in astro config).
-2. **`generate-og-images.js`** — Generates OpenGraph images for blog posts.
-3. **`validate-content.ts`** — Ensures MDX files and `posts.json` are in sync (counts, slugs). Fails the build on mismatch.
-4. **`astro build`** — Astro static build to `dist/`.
-5. **`submit-indexnow.ts`** — Submits URLs to search engines via IndexNow. Only runs when `CF_PAGES_BRANCH=main` (Cloudflare Pages production deploy); skips on local builds and preview branches.
+## Coding Style and Conventions
 
-If you add/remove/rename a blog post, `posts.json` must be regenerated (`bun run prebuild`) or the build will fail at step 3.
+**Languages & Tools:**
+- TypeScript with strict flags (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noUnusedLocals`)
+- Biome for linting and formatting (2-space indentation, double quotes, trailing commas)
+- Tailwind CSS v4 via PostCSS (not `@astrojs/tailwind` which is v3-only)
 
-## Architecture
+**Component Architecture:**
+- **Static sections:** Use `.astro` files (zero client JS) — e.g., Hero, Footer
+- **Interactive components:** Use `.tsx` with client directives:
+  ```astro
+  <Highlights client:visible />  <!-- Hydrate on scroll into view -->
+  <Contact client:visible />
+  <Toaster client:load />        <!-- Hydrate immediately -->
+  ```
 
-### Astro Islands Pattern
+**Naming Patterns:**
+- Components: PascalCase (`HeroSection.astro`, `ContactForm.tsx`)
+- Utilities: camelCase (`remark-reading-time.ts`)
+- Blog slugs: kebab-case, URL-safe (`/^[a-z0-9-]+$/`)
 
-Components are either `.astro` (static, zero JS) or `.tsx` (React, client-hydrated). React components requiring interactivity use client directives:
+**Import Paths:**
+- Use `@/` alias for `src/*` (configured in tsconfig.json)
 
-```astro
-<Highlights client:visible />  <!-- Hydrate when scrolled into viewport -->
-<Contact client:visible />
-<Toaster client:load />        <!-- Hydrate immediately on page load -->
+## Blog Content Guidelines
+
+Blog posts are MDX files in `src/content/blog/` with frontmatter schema:
+
+```yaml
+---
+title: "Post Title"
+date: "2026-01-15"           # YYYY-MM-DD format required
+dateModified: "2026-01-20"   # Optional
+excerpt: "Brief description"
+tags: ["tag1", "tag2"]
+published: true              # Must be true to appear
+featured: true               # Optional, for highlighting
+tldr: "One-line summary"     # Optional
+keyTakeaways: ["point 1", "point 2"]  # Optional
+faq:
+  - q: "Question?"
+    a: "Answer."
+---
 ```
 
-Static sections (Hero, Footer, SocialIcons) are `.astro` files — no client JS shipped.
-
-### Content Pipeline
-
-The blog content flows through a non-obvious pipeline spanning multiple files:
-
-```
-src/content/blog/*.mdx          → Source of truth for blog posts
-    ↓ (prebuild)
-scripts/generate-posts-metadata.js → Extracts frontmatter, TOC, reading time, related posts
-    ↓
-content/blog/posts.json         → Consumed by astro.config.mjs for sitemap lastmod dates
-    ↓                             (content collections unavailable in config context)
-astro.config.mjs                → Uses posts.json in sitemap serialize()
-```
-
-Schema defined in `src/content/config.ts` (Zod):
-```
-title, date (YYYY-MM-DD), dateModified?, excerpt, tags[], published, author?
-tldr?, keyTakeaways[]?, faq[]?, howto?
-```
-
-### Site Configuration
-
-All content centralized in `src/data/site.config.ts`: personal info, skills (with categories and proficiency scores), projects (with tags, links, periods), experience (nested positions per company), education, and social links. Exported as `const` for type inference.
-
-### Styling
-
-- Tailwind CSS v4 via `@tailwindcss/postcss` in `postcss.config.mjs` (not `@astrojs/tailwind` — that's v3 only)
-- OKLCH color space with CSS variables in `src/styles/globals.css` (`:root` light, `.dark` dark mode)
-- View Transitions via `<ClientRouter />` in BaseLayout
-
-### Theme Handling
-
-Theme script in BaseLayout runs inline (no FOUC):
-1. Reads from localStorage or system preference
-2. MutationObserver syncs class changes back to localStorage
-3. View Transition hooks (`astro:before-swap`) apply theme to incoming document
-
-### SEO & Structured Data
-
-- JSON-LD schemas in `src/lib/schema.ts` (Person, WebSite, BlogPosting, BreadcrumbList, optional FAQ/HowTo)
-- OpenGraph and Twitter meta tags in BaseLayout
-- Sitemap via `@astrojs/sitemap` with custom serialization for blog dates
-- RSS feed at `/rss.xml`, LLMs.txt via `@4hse/astro-llms-txt`
-
-## TypeScript Strictness
-
-The `tsconfig.json` uses aggressive strictness flags that affect how code must be written:
-- `noUncheckedIndexedAccess`: Array/object bracket access returns `T | undefined`
-- `exactOptionalPropertyTypes`: Can't assign `undefined` to optional properties
-- `noUnusedLocals` / `noUnusedParameters`: No dead variables
+After adding/modifying blog posts, run `bun run prebuild` to regenerate metadata.
 
 ## Common Pitfalls
 
-1. **Tailwind v4**: No `@astrojs/tailwind` integration — use `@tailwindcss/postcss` in postcss config
-2. **Client Directives**: React components need `client:visible` or `client:load` to hydrate
-3. **Content Collections**: Only available in `.astro` files during build, not in `astro.config.mjs` — that's why `posts.json` exists
-4. **TypeScript Paths**: Use `@/` alias (maps to `./src/*`)
-5. **Biome, not ESLint/Prettier**: `.astro` files are excluded from Biome linting (only TS/TSX/JS)
-6. **posts.json sync**: Adding/removing blog posts requires `bun run prebuild` to regenerate metadata, otherwise build validation fails
-7. **Slug format**: Blog slugs must be URL-safe (`/^[a-z0-9-]+$/`), validated at build time
+1. **Tailwind v4:** Do not use `@astrojs/tailwind` — use `@tailwindcss/postcss` in `postcss.config.mjs`
+2. **Client Directives:** React components need `client:visible` or `client:load` to hydrate; without these they remain static
+3. **Content Collections:** Unavailable in `astro.config.mjs` — that's why `posts.json` exists for sitemap dates
+4. **TypeScript Strictness:** Bracket access returns `T | undefined` — handle undefined cases
+5. **Biome Exclusions:** `.astro` files are excluded from linting (only TS/TSX/JS is linted)
+6. **Slug Validation:** Blog slugs must match `/^[a-z0-9-]+$/` — validated at build time
+7. **Date Format:** All dates must be `YYYY-MM-DD` (validated by Zod schema)
+
+## Deployment
+
+- Platform: Cloudflare Pages
+- Output: Static (`output: "static"` in astro.config.mjs)
+- Environment variable: `CF_PAGES_BRANCH=main` triggers IndexNow submission
