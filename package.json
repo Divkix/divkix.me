@@ -85,7 +85,6 @@
     "husky": "^9.1.7",
     "knip": "^6.4.1",
     "lint-staged": "^16.4.0",
-    "png-to-ico": "^3.0.1",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
     "vfile": "^6.0.3"
