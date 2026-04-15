@@ -2,11 +2,7 @@ import { siteConfig } from "@/data/site.config";
 import { baseUrl } from "@/lib/seo";
 
 export function getJobTitle(): string {
-  return (
-    siteConfig.seo?.jobTitle ||
-    siteConfig.experience[0]?.positions[0]?.title ||
-    "Software Engineer"
-  );
+  return siteConfig.seo.jobTitle;
 }
 
 type BreadcrumbItem = { name: string; item?: string };
@@ -37,7 +33,7 @@ export function generatePersonSchema() {
     givenName: siteConfig.name.split(" ")[0],
     familyName: siteConfig.name.split(" ")[1],
     jobTitle: getJobTitle(),
-    description: siteConfig.seo?.metaDescription || siteConfig.about,
+    description: siteConfig.seo.metaDescription,
     url: baseUrl,
     email: siteConfig.email,
     image: `${baseUrl}${siteConfig.authorImage}`,
@@ -78,7 +74,7 @@ export function generateWebSiteSchema() {
     "@id": `${baseUrl}/#website`,
     name: siteConfig.name,
     alternateName: siteConfig.handle,
-    description: siteConfig.seo?.metaDescription || siteConfig.about,
+    description: siteConfig.seo.metaDescription,
     url: baseUrl,
     publisher: {
       "@id": `${baseUrl}/#author`,

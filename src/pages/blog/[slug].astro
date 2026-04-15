@@ -68,7 +68,7 @@ const blogPostingSchema = {
     "@id": `${baseUrl}/blog/${post.id}/`,
   },
   image: `${baseUrl}/og/blog/${post.id}.png`,
-  keywords: post.data.tags?.join(", "),
+  keywords: post.data.tags.join(", "),
   wordCount: wordCount,
   timeRequired: `PT${readingTimeMinutes}M`,
   inLanguage: "en-US",
@@ -88,7 +88,7 @@ const ogImage = `${baseUrl}/og/blog/${post.id}.png`;
 // Article meta for og:type="article"
 const articleMeta = {
   publishedTime: `${post.data.date}T00:00:00Z`,
-  author: post.data.author ?? "Divanshu Chauhan",
+  author: post.data.author,
   tags: post.data.tags,
   ...(post.data.dateModified
     ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
@@ -176,11 +176,11 @@ const articleMeta = {
             </>
           )}
           <address class="not-italic">
-            by <a href="/divkix" class="hover:text-primary"><span>{post.data.author || "Divanshu Chauhan"}</span></a>
+            by <a href="/divkix" class="hover:text-primary"><span>{post.data.author}</span></a>
           </address>
         </div>
 
-        {post.data.tags && post.data.tags.length > 0 && (
+        {post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2">
             {post.data.tags.map((tag: string) => (
               <span class="text-xs px-2 py-1 border border-border/60 rounded">
@@ -271,7 +271,7 @@ const articleMeta = {
           />
           <div>
             <h3 class="font-semibold">
-              {post.data.author || siteConfig.name}
+              {post.data.author}
               <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
             </h3>
             <p class="text-sm text-foreground/70 mt-1">

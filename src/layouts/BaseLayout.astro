@@ -22,7 +22,7 @@ interface Props {
 
 const {
   title = `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & AI Developer`,
-  description = siteConfig.seo?.metaDescription || siteConfig.about,
+  description = siteConfig.seo.metaDescription,
   ogImage = `${baseUrl}/og-image.png`,
   canonical = `${baseUrl}${Astro.url.pathname}`,
   ogType = "website",

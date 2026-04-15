@@ -17,17 +17,15 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: `${siteConfig.name} - Blog`,
-    description:
-      siteConfig.seo?.metaDescription ||
-      "Thoughts on software development, technology, and building products.",
+    description: siteConfig.seo.metaDescription,
     site: context.site || baseUrl,
     items: publishedPosts.map((post: CollectionEntry<"blog">) => ({
       title: post.data.title,
       description: post.data.excerpt,
       pubDate: new Date(post.data.date),
       link: `/blog/${post.id}/`,
-      categories: post.data.tags || [],
-      author: post.data.author || siteConfig.name,
+      categories: post.data.tags,
+      author: post.data.author,
       customData: post.data.dateModified
         ? `<lastModified>${new Date(post.data.dateModified).toUTCString()}</lastModified>`
         : undefined,

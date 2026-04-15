@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title = `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & AI Developer`,
-  description = siteConfig.seo?.metaDescription || siteConfig.about,
+  description = siteConfig.seo.metaDescription,
   showScrollProgress = false,
 } = Astro.props;
 ---

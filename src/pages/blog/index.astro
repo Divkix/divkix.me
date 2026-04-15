@@ -112,7 +112,7 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
                       {item.post.data.excerpt}
                     </p>
                   )}
-                  {item.post.data.tags && item.post.data.tags.length > 0 && (
+                  {item.post.data.tags.length > 0 && (
                     <div class="flex flex-wrap gap-2">
                       {item.post.data.tags.map((tag: string) => (
                         <span class="text-xs px-2 py-1 border border-border/60 rounded">
