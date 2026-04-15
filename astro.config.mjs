@@ -4,7 +4,6 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
-import { remarkReadingTime } from "./src/lib/remark-reading-time";
 
 // Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
 // No @astrojs/tailwind needed - it's only for Tailwind v3
@@ -155,7 +154,6 @@ Currently: MS Computer Science at Arizona State University.
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkReadingTime],
     shikiConfig: {
       theme: "github-dark-dimmed",
       wrap: true,
