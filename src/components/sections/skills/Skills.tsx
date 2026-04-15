@@ -22,7 +22,7 @@ function groupSkillsByCategory(
 }
 
 export function Skills() {
-  const skills = siteConfig.skills as unknown as Skill[];
+  const skills = siteConfig.skills;
   const groupedSkills = groupSkillsByCategory(skills);
 
   return (
