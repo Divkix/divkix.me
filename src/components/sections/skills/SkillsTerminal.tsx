@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getProficiencyLevel, type Skill } from "./Skills";
+import { getProficiencyLevel, type Skill } from "./skillsUtils";
 
 interface SkillsTerminalProps {
   groupedSkills: Record<string, Skill[]>;
