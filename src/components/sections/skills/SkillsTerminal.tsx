@@ -3,7 +3,8 @@ import {
   TerminalScanlines,
   TerminalTitleBar,
 } from "@/components/shared/TerminalWindow";
-import { getProficiencyLevel, type Skill } from "./Skills";
+import type { Skill } from "@/data/site.config";
+import { getProficiencyLevel } from "./skills-utils";
 
 interface SkillsTerminalProps {
   groupedSkills: Record<string, Skill[]>;

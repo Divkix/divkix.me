@@ -2,8 +2,6 @@ import { SectionLabel } from "@/components/shared/SectionLabel";
 import { type Skill, siteConfig } from "@/data/site.config";
 import { SkillsTerminal } from "./SkillsTerminal";
 
-export type { Skill };
-
 function groupSkillsByCategory(
   skills: readonly Skill[],
 ): Record<string, Skill[]> {
@@ -20,21 +18,6 @@ function groupSkillsByCategory(
     list.sort((a, b) => b.proficiency - a.proficiency);
   }
   return grouped;
-}
-
-export function getProficiencyLevel(proficiency: number): {
-  label: string;
-  dots: number;
-  blocks: string;
-} {
-  if (proficiency >= 90) return { label: "Expert", dots: 5, blocks: "█████░" };
-  if (proficiency >= 80)
-    return { label: "Advanced", dots: 4, blocks: "████░░" };
-  if (proficiency >= 70)
-    return { label: "Proficient", dots: 3, blocks: "███░░░" };
-  if (proficiency >= 60)
-    return { label: "Familiar", dots: 2, blocks: "██░░░░" };
-  return { label: "Learning", dots: 1, blocks: "█░░░░░" };
 }
 
 export function Skills() {
