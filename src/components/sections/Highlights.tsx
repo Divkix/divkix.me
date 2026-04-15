@@ -111,7 +111,6 @@ export function Highlights() {
     },
   ];
 
-  // First stat is the "hero" stat (largest), rest are compact and stacked right
   const heroStat = stats[0] as (typeof stats)[number];
   const secondaryStats = stats.slice(1);
 
@@ -122,7 +121,6 @@ export function Highlights() {
     >
       <SectionLabel number="01" label="highlights" />
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-w-6xl">
-        {/* Main stat: huge full-width treatment */}
         <div className="flex items-end">
           <AnimatedStat
             value={heroStat.value}
@@ -131,7 +129,6 @@ export function Highlights() {
           />
         </div>
 
-        {/* Secondary stats: stacked */}
         <div className="flex flex-col justify-between gap-6">
           {secondaryStats.map((stat) => (
             <AnimatedStat

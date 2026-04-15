@@ -181,20 +181,17 @@ function generatePostSvg(post) {
 async function generateOGImages() {
   console.log("Generating blog post OG images...");
 
-  // Check if posts.json exists
   if (!fs.existsSync(POSTS_JSON)) {
     console.log("posts.json not found. Run generate-posts-metadata.js first.");
     console.log("Skipping OG image generation.");
     return;
   }
 
-  // Create output directory
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     console.log(`Created directory: ${OUTPUT_DIR}`);
   }
 
-  // Read posts data
   const postsData = JSON.parse(fs.readFileSync(POSTS_JSON, "utf-8"));
   const posts = postsData.posts || [];
 
@@ -233,7 +230,6 @@ async function generateOGImages() {
         .webp({ quality: 80 })
         .toFile(webpOutputPath);
 
-      // Generate responsive sizes
       const responsiveSizes = [
         { width: 768, suffix: "-768" },
         { width: 480, suffix: "-480" },

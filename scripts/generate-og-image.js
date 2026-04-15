@@ -15,11 +15,9 @@ const OUTPUT_FILE = path.join(PUBLIC_DIR, "og-image.png");
 async function generateOGImage() {
   console.log("Generating static OG image...");
 
-  // OG image dimensions
   const width = 1200;
   const height = 630;
 
-  // Create gradient background with dark theme
   const svgBackground = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -69,16 +67,13 @@ async function generateOGImage() {
   `;
 
   try {
-    // Generate PNG (for OG meta tags - social platforms require it)
     await sharp(Buffer.from(svgBackground)).png().toFile(OUTPUT_FILE);
 
     console.log(`Generated: ${OUTPUT_FILE}`);
 
-    // Verify PNG file was created
     const stats = fs.statSync(OUTPUT_FILE);
     console.log(`File size: ${(stats.size / 1024).toFixed(2)} KB`);
 
-    // Generate WebP (for display in Image components - smaller file size)
     const WEBP_OUTPUT = OUTPUT_FILE.replace(".png", ".webp");
     await sharp(Buffer.from(svgBackground))
       .webp({ quality: 80 })
@@ -86,11 +81,9 @@ async function generateOGImage() {
 
     console.log(`Generated: ${WEBP_OUTPUT}`);
 
-    // Verify WebP file was created
     const webpStats = fs.statSync(WEBP_OUTPUT);
     console.log(`File size: ${(webpStats.size / 1024).toFixed(2)} KB`);
 
-    // Generate responsive sizes
     const responsiveSizes = [
       { width: 768, suffix: "-768" },
       { width: 480, suffix: "-480" },

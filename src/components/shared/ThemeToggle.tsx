@@ -20,7 +20,6 @@ export function ThemeToggle() {
 
     const newTheme = theme === "dark" ? "light" : "dark";
 
-    // Check for View Transitions API support and reduced motion preference
     const supportsViewTransitions =
       "startViewTransition" in document &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -35,12 +34,10 @@ export function ThemeToggle() {
 
     setIsTransitioning(true);
 
-    // Calculate button center coordinates
     const rect = buttonRef.current.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
-    // Calculate max radius to cover entire viewport
     const maxRadius = Math.hypot(
       Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y),
@@ -57,7 +54,6 @@ export function ThemeToggle() {
     try {
       await transition.ready;
 
-      // Animate the new view with expanding circle clip-path
       document.documentElement.animate(
         {
           clipPath: [

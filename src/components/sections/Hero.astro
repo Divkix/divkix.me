@@ -8,19 +8,16 @@ const lastName = siteConfig.name.split(" ")[1];
 
 <section id="hero" class="container mx-auto px-4 min-h-screen flex items-center relative py-20">
   <div class="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 w-full items-center">
-    <!-- Left: Main content -->
     <div class="flex flex-col items-start">
-      <!-- Section label -->
       <p class="mb-6 font-mono text-sm tracking-wider text-muted-foreground hero-label">
         // 00 — intro
       </p>
 
-      <!-- Handle with blinking cursor -->
       <p class="font-mono text-sm text-muted-foreground mb-4 hero-handle">
         @{siteConfig.handle.toLowerCase()}<span class="cursor-blink">_</span>
       </p>
 
-      <!-- Name: massive Instrument Serif -->
+      <!-- Name (Instrument Serif display font) -->
       <h1 class="font-display text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-[0.9] text-foreground hero-name">
         {firstName} <br />{lastName}
       </h1>
@@ -32,7 +29,6 @@ const lastName = siteConfig.name.split(" ")[1];
         </p>
       </div>
 
-      <!-- CTAs -->
       <div class="flex flex-wrap gap-4 mt-10 hero-cta">
         <a
           href="#projects"
@@ -52,16 +48,13 @@ const lastName = siteConfig.name.split(" ")[1];
         </a>
       </div>
 
-      <!-- Social icons: horizontal row below CTAs -->
       <div class="mt-8 hero-socials">
         <SocialIcons size="sm" />
       </div>
     </div>
 
-    <!-- Right: Terminal snippet -->
     <div class="hidden lg:block hero-terminal">
       <div class="overflow-hidden rounded-lg">
-        <!-- Title bar -->
         <div class="flex items-center bg-[oklch(0.12_0_0)] px-4 py-3">
           <div class="flex gap-2">
             <span class="size-3 rounded-full bg-[#ff5f57]"></span>
@@ -70,9 +63,8 @@ const lastName = siteConfig.name.split(" ")[1];
           </div>
           <span class="flex-1 text-center font-mono text-xs text-muted-foreground">~/.zshrc</span>
         </div>
-        <!-- Content -->
         <div class="relative bg-[oklch(0.08_0_0)] p-6 font-mono text-sm terminal-content" style="color: oklch(0.7 0.2 140); text-shadow: 0 0 2px currentColor; box-shadow: inset 0 0 60px rgba(0,0,0,0.3);">
-          <!-- Scanlines -->
+          <!-- CRT scanlines effect -->
           <div class="pointer-events-none absolute inset-0" style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px); opacity: 0.06;"></div>
           <div class="relative space-y-2">
             <p><span class="text-[oklch(0.7_0.15_55)]">$</span> whoami</p>

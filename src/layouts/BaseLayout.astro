@@ -9,7 +9,7 @@ import instrumentSerifFont from "@fontsource/instrument-serif/files/instrument-s
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
-import { baseUrl } from "@/lib/seo";
+import { type ArticleMeta, baseUrl } from "@/lib/seo";
 
 interface Props {
   title?: string;
@@ -17,17 +17,12 @@ interface Props {
   ogImage?: string;
   canonical?: string;
   ogType?: "website" | "article";
-  articleMeta?: {
-    publishedTime: string;
-    modifiedTime?: string;
-    author: string;
-    tags?: string[];
-  };
+  articleMeta?: ArticleMeta;
 }
 
 const {
   title = `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & AI Developer`,
-  description = siteConfig.seo?.metaDescription || siteConfig.about,
+  description = siteConfig.seo.metaDescription,
   ogImage = `${baseUrl}/og-image.png`,
   canonical = `${baseUrl}${Astro.url.pathname}`,
   ogType = "website",
@@ -54,10 +49,8 @@ const websiteSchema = generateWebSiteSchema();
     <meta name="title" content={title} />
     <meta name="description" content={description} />
 
-    <!-- Canonical URL -->
     <link rel="canonical" href={canonical} />
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
@@ -76,7 +69,6 @@ const websiteSchema = generateWebSiteSchema();
       </>
     )}
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonical} />
     <meta property="twitter:title" content={title} />
@@ -86,14 +78,12 @@ const websiteSchema = generateWebSiteSchema();
     <meta property="twitter:creator" content="@divkix" />
     <meta property="twitter:site" content="@divkix" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Sitemap & RSS Discovery -->
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name}'s Blog`} href="/rss.xml" />
 
@@ -105,17 +95,13 @@ const websiteSchema = generateWebSiteSchema();
       ))
     }
 
-    <!-- Author -->
     <meta name="author" content={siteConfig.name} />
 
-    <!-- Preconnect hints -->
     <link rel="dns-prefetch" href="https://analytics.divkix.me" />
     <link rel="preconnect" href="https://analytics.divkix.me" crossorigin />
 
-    <!-- View Transitions -->
     <ClientRouter />
 
-    <!-- Theme Script -->
     <script is:inline>
       // Get theme from localStorage or system preference
       function getThemePreference() {
@@ -135,10 +121,8 @@ const websiteSchema = generateWebSiteSchema();
         }
       }
 
-      // Apply theme on initial load
       applyTheme();
 
-      // Sync theme changes to localStorage via MutationObserver
       if (typeof localStorage !== 'undefined') {
         const observer = new MutationObserver(() => {
           const isDark = document.documentElement.classList.contains('dark');
@@ -163,11 +147,9 @@ const websiteSchema = generateWebSiteSchema();
       });
     </script>
 
-    <!-- JSON-LD Structured Data -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
-    <!-- Analytics -->
     <script
       is:inline
       async
@@ -176,14 +158,11 @@ const websiteSchema = generateWebSiteSchema();
     ></script>
   </head>
   <body>
-    <!-- Dot Grid Background -->
     <div class="dot-grid-bg" aria-hidden="true"></div>
     <div class="page-noise" aria-hidden="true"></div>
 
-    <!-- Page Content -->
     <slot />
 
-    <!-- Toast Notifications -->
     <Toaster client:idle />
   </body>
 </html>
