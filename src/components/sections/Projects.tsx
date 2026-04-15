@@ -11,6 +11,7 @@ import {
 import { SectionLabel } from "@/components/shared/SectionLabel";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site.config";
+import { useScrollReveal } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 type Project = (typeof siteConfig.projects)[number];
@@ -39,32 +40,6 @@ function getAccentColor(tags: readonly string[]): string {
 
 function isFeatured(project: Project): boolean {
   return project.links.some((link: ProjectLink) => link.label === "Live");
-}
-
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, isVisible };
 }
 
 function BrowserMockup({

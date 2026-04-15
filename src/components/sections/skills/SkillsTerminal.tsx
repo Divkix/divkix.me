@@ -1,4 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  TerminalScanlines,
+  TerminalTitleBar,
+} from "@/components/shared/TerminalWindow";
 import { getProficiencyLevel, type Skill } from "./Skills";
 
 interface SkillsTerminalProps {
@@ -139,11 +143,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
         {/* Title bar + tabs */}
         <div className="bg-[oklch(0.12_0_0)] px-4 pt-3 pb-0">
           <div className="flex items-center">
-            <div className="flex gap-2">
-              <span className="size-3 rounded-full bg-[#ff5f57]" />
-              <span className="size-3 rounded-full bg-[#febc2e]" />
-              <span className="size-3 rounded-full bg-[#28c840]" />
-            </div>
+            <TerminalTitleBar />
             <span className="ml-4 font-mono text-xs text-[oklch(0.78_0.17_65)]">
               skills@divkix
             </span>
@@ -198,16 +198,7 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
             boxShadow: "inset 0 0 60px rgba(0,0,0,0.3)",
           }}
         >
-          {/* Scanlines overlay */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden="true"
-            style={{
-              background:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)",
-              opacity: 0.07,
-            }}
-          />
+          <TerminalScanlines opacity={0.07} />
 
           <div className="relative space-y-4" suppressHydrationWarning>
             {/* Typing command */}

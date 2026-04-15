@@ -1,42 +1,16 @@
 import { Calendar, GraduationCap, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 import { SectionLabel } from "@/components/shared/SectionLabel";
 import { siteConfig } from "@/data/site.config";
+import { useScrollReveal } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 type Position = (typeof siteConfig.experience)[number]["positions"][number];
 type Company = (typeof siteConfig.experience)[number];
 type Education = (typeof siteConfig.education)[number];
 
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.15 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, isVisible };
-}
-
 function TimelineCard({ company, index }: { company: Company; index: number }) {
-  const { ref, isVisible } = useScrollReveal();
+  const { ref, isVisible } = useScrollReveal(0.15);
   const isCurrentRole = company.duration.includes("Present");
   const isEven = index % 2 === 0;
 

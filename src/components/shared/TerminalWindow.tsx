@@ -1,6 +1,37 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+export function TerminalTitleBar({ title }: { title?: string | undefined }) {
+  return (
+    <>
+      <div className="flex gap-2">
+        <span className="size-3 rounded-full bg-[#ff5f57]" />
+        <span className="size-3 rounded-full bg-[#febc2e]" />
+        <span className="size-3 rounded-full bg-[#28c840]" />
+      </div>
+      {title && (
+        <span className="flex-1 text-center font-mono text-xs text-muted-foreground">
+          {title}
+        </span>
+      )}
+    </>
+  );
+}
+
+export function TerminalScanlines({ opacity = 0.06 }: { opacity?: number }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0"
+      aria-hidden="true"
+      style={{
+        background:
+          "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)",
+        opacity,
+      }}
+    />
+  );
+}
+
 interface TerminalWindowProps {
   title?: string;
   children: ReactNode;
@@ -27,16 +58,7 @@ export function TerminalWindow({
     >
       {/* Title bar */}
       <div className="flex items-center bg-[oklch(0.12_0_0)] px-4 py-3">
-        <div className="flex gap-2">
-          <span className="size-3 rounded-full bg-[#ff5f57]" />
-          <span className="size-3 rounded-full bg-[#febc2e]" />
-          <span className="size-3 rounded-full bg-[#28c840]" />
-        </div>
-        {title && (
-          <span className="flex-1 text-center font-mono text-xs text-muted-foreground">
-            {title}
-          </span>
-        )}
+        <TerminalTitleBar title={title} />
       </div>
 
       {/* Content area */}
@@ -48,15 +70,7 @@ export function TerminalWindow({
           boxShadow: "inset 0 0 60px rgba(0,0,0,0.3)",
         }}
       >
-        {/* Scanlines overlay */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)",
-            opacity: 0.06,
-          }}
-        />
+        <TerminalScanlines />
 
         <div className="relative">{children}</div>
       </div>

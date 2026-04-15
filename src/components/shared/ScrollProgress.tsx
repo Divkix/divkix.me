@@ -1,49 +1,24 @@
 import { useEffect, useState } from "react";
+import { throttle } from "@/lib/hooks";
 
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    let lastExecutedTime = 0;
-    const wait = 50; // 50ms for smoother progress bar
-
-    const updateProgress = () => {
-      const now = Date.now();
-      const remaining = wait - (now - lastExecutedTime);
-
-      const calculate = () => {
-        const scrollTop = window.scrollY;
-        const docHeight =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        setProgress(progress);
-      };
-
-      if (remaining <= 0) {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-        lastExecutedTime = now;
-        calculate();
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(() => {
-          lastExecutedTime = Date.now();
-          timeoutId = null;
-          calculate();
-        }, remaining);
-      }
-    };
+    const updateProgress = throttle(() => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setProgress(progress);
+    }, 50);
 
     window.addEventListener("scroll", updateProgress, { passive: true });
     updateProgress();
 
     return () => {
       window.removeEventListener("scroll", updateProgress);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      updateProgress.cancel();
     };
   }, []);
 

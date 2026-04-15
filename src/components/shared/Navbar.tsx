@@ -1,5 +1,6 @@
 import { MenuIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { throttle } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -60,29 +61,9 @@ export function Navbar() {
   useEffect(() => {
     setPathname(window.location.pathname);
 
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    let lastExecutedTime = 0;
-    const wait = 100;
-
-    const handleScroll = () => {
-      const now = Date.now();
-      const remaining = wait - (now - lastExecutedTime);
-
-      if (remaining <= 0) {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-        lastExecutedTime = now;
-        setScrolled(window.scrollY > 50);
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(() => {
-          lastExecutedTime = Date.now();
-          timeoutId = null;
-          setScrolled(window.scrollY > 50);
-        }, remaining);
-      }
-    };
+    const handleScroll = throttle(() => {
+      setScrolled(window.scrollY > 50);
+    }, 100);
 
     const handlePageLoad = () => {
       setPathname(window.location.pathname);
@@ -95,9 +76,7 @@ export function Navbar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("astro:page-load", handlePageLoad);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      handleScroll.cancel();
     };
   }, []);
 

@@ -12,3 +12,12 @@ export function formatDate(date: string) {
     year: "numeric",
   });
 }
+
+export function calculateWordCount(content: string): number {
+  return content.trim().split(/\s+/).length;
+}
+
+export function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  return Math.ceil(calculateWordCount(content) / wordsPerMinute);
+}
