@@ -9,7 +9,7 @@ import instrumentSerifFont from "@fontsource/instrument-serif/files/instrument-s
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
-import { baseUrl } from "@/lib/seo";
+import { type ArticleMeta, baseUrl } from "@/lib/seo";
 
 interface Props {
   title?: string;
@@ -17,12 +17,7 @@ interface Props {
   ogImage?: string;
   canonical?: string;
   ogType?: "website" | "article";
-  articleMeta?: {
-    publishedTime: string;
-    modifiedTime?: string;
-    author: string;
-    tags?: string[];
-  };
+  articleMeta?: ArticleMeta;
 }
 
 const {

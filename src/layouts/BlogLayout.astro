@@ -2,7 +2,7 @@
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import Footer from "@/components/shared/Footer.astro";
 import { Navbar } from "@/components/shared/Navbar";
-import { baseUrl } from "@/lib/seo";
+import { type ArticleMeta, baseUrl } from "@/lib/seo";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
@@ -12,12 +12,7 @@ interface Props {
   showReadingProgress?: boolean;
   readingTime?: number; // in minutes
   ogType?: "website" | "article";
-  articleMeta?: {
-    publishedTime: string;
-    modifiedTime?: string;
-    author: string;
-    tags?: string[];
-  };
+  articleMeta?: ArticleMeta;
 }
 
 const {
