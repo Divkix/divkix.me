@@ -11,7 +11,6 @@ import {
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
-// Generate static paths for all blog posts
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts
@@ -39,17 +38,14 @@ const readingTimeMinutes = calculateReadingTime(post.body);
 const readingTime = `${readingTimeMinutes} min read`;
 const wordCount = post.body.trim().split(/\s+/).length;
 
-// Convert headings to TOC items
 const toc = headings.map((h: Heading) => ({
   id: h.slug,
   text: h.text,
   level: h.depth,
 }));
 
-// Show TOC if there are 3+ headings
 const showToc = toc.length >= 3;
 
-// Generate JSON-LD schemas for BlogPosting
 const blogPostingSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -80,12 +76,11 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: post.data.title, item: `${baseUrl}/blog/${post.id}/` },
 ]);
 
-// Generate page title and description (SEO overrides for <title>/<meta>, visible h1 stays original)
+// seoTitle/seoDescription allow per-post SEO overrides without changing the visible h1
 const pageTitle = post.data.seoTitle ?? post.data.title;
 const pageDescription = post.data.seoDescription ?? post.data.excerpt;
 const ogImage = `${baseUrl}/og/blog/${post.id}.png`;
 
-// Article meta for og:type="article"
 const articleMeta = {
   publishedTime: `${post.data.date}T00:00:00Z`,
   author: post.data.author,
@@ -105,7 +100,6 @@ const articleMeta = {
   ogType="article"
   articleMeta={articleMeta}
 >
-  <!-- JSON-LD Schemas -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
@@ -132,7 +126,6 @@ const articleMeta = {
 
   <article class="container mx-auto px-4 py-20">
     <div class="max-w-3xl mx-auto space-y-8">
-      <!-- Back to Blog button -->
       <a
         href="/blog/"
         class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
@@ -154,7 +147,6 @@ const articleMeta = {
         Back to Blog
       </a>
 
-      <!-- Article Header -->
       <header class="space-y-4">
         <h1 class="text-5xl font-display font-bold">
           {post.data.title}
@@ -191,7 +183,6 @@ const articleMeta = {
         )}
       </header>
 
-      <!-- Hero Image -->
       <img
         src={`/og/blog/${post.id}.webp`}
         srcset={`/og/blog/${post.id}-480.webp 480w, /og/blog/${post.id}-768.webp 768w, /og/blog/${post.id}.webp 1200w`}
@@ -204,7 +195,6 @@ const articleMeta = {
         decoding="async"
       />
 
-      <!-- TL;DR Summary -->
       {post.data.tldr && (
         <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
           <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
@@ -212,7 +202,6 @@ const articleMeta = {
         </div>
       )}
 
-      <!-- Key Takeaways -->
       {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
         <div class="key-takeaways glass-surface p-6 rounded-lg">
           <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
@@ -240,12 +229,10 @@ const articleMeta = {
         </div>
       )}
 
-      <!-- Article Content -->
       <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
         <Content />
       </div>
 
-      <!-- FAQ Section -->
       {post.data.faq && post.data.faq.length > 0 && (
         <section class="space-y-6" aria-labelledby="faq-heading">
           <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
@@ -260,7 +247,6 @@ const articleMeta = {
         </section>
       )}
 
-      <!-- Author Bio -->
       <div class="pt-8 border-t border-border/40">
         <div class="flex gap-4 items-start">
           <img

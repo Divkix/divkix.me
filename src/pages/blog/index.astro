@@ -6,10 +6,8 @@ import { generateBreadcrumbSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
-// Get all blog posts from content collections
 const allPosts = await getCollection("blog");
 
-// Filter published posts and sort: featured first, then by date (newest first)
 const posts = allPosts
   .filter((post: CollectionEntry<"blog">) => post.data.published === true)
   .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => {
@@ -18,13 +16,11 @@ const posts = allPosts
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
   });
 
-// Type for post with reading time
 type PostWithReadingTime = {
   post: CollectionEntry<"blog">;
   readingTime: string;
 };
 
-// Pre-calculate reading times for all posts
 const postsWithReadingTime: PostWithReadingTime[] = posts.map(
   (post: CollectionEntry<"blog">) => ({
     post,

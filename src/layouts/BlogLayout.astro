@@ -39,19 +39,15 @@ const baseLayoutProps = {
 ---
 
 <BaseLayout {...baseLayoutProps}>
-  <!-- Navbar - React island with client:load -->
   <Navbar client:load />
 
-  <!-- Reading Progress - React island (client-only, no SSR) -->
   {showReadingProgress && (
     <ReadingProgress client:only="react" readingTime={readingTime} />
   )}
 
-  <!-- Main Content -->
   <main id="main-content" class="min-h-screen pt-20">
     <slot />
   </main>
 
-  <!-- Footer - Astro component -->
   <Footer />
 </BaseLayout>

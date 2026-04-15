@@ -54,33 +54,27 @@ function calculateTagSimilarity(tags1 = [], tags2 = []) {
 function getAllPosts() {
   console.log("📚 Generating blog posts metadata...");
 
-  // Check if content directory exists
   if (!fs.existsSync(CONTENT_DIR)) {
     console.error(`❌ Blog directory not found: ${CONTENT_DIR}`);
     process.exit(1);
   }
 
-  // Get all MDX files
   const files = fs
     .readdirSync(CONTENT_DIR)
     .filter((file) => file.endsWith(".mdx"));
 
   console.log(`📝 Found ${files.length} blog posts`);
 
-  // Process each file
   const posts = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
     const filePath = path.join(CONTENT_DIR, file);
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
-    // Parse frontmatter
     const { data: frontmatter, content } = matter(fileContent);
 
-    // Calculate word count and reading time
     const wordCount = content.split(/\s+/g).length;
     const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
-    // Extract table of contents
     const toc = extractToc(content);
 
     return {
@@ -97,20 +91,16 @@ function getAllPosts() {
       wordCount,
       published: frontmatter.published !== false,
       toc,
-      // Extended frontmatter for GEO/AI optimization
       tldr: frontmatter.tldr || null,
       keyTakeaways: frontmatter.keyTakeaways || [],
       faq: frontmatter.faq || null,
     };
   });
 
-  // Sort posts by date (newest first)
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Filter out unpublished posts
   const publishedPosts = posts.filter((post) => post.published);
 
-  // Calculate related posts for each post based on tag similarity
   for (const post of publishedPosts) {
     const otherPosts = publishedPosts.filter((p) => p.slug !== post.slug);
 
@@ -126,14 +116,12 @@ function getAllPosts() {
       .map(({ slug, title, excerpt }) => ({ slug, title, excerpt }));
   }
 
-  // Create the output
   const output = {
     posts: publishedPosts,
     generatedAt: new Date().toISOString(),
     totalPosts: publishedPosts.length,
   };
 
-  // Ensure output directory exists and write to JSON file
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
 

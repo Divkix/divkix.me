@@ -37,7 +37,6 @@ export function Skills() {
         aria-hidden="true"
       />
 
-      {/* Full-bleed dark section */}
       <section
         id="skills"
         className="relative py-20"

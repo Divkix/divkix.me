@@ -127,7 +127,7 @@ export function Contact() {
               <TypewriterSuccess />
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name */}
+                {/* Name field */}
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="contact-prompt shrink-0">{">"}</span>
@@ -151,7 +151,7 @@ export function Contact() {
                   )}
                 </div>
 
-                {/* Email */}
+                {/* Email field */}
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="contact-prompt shrink-0">{">"}</span>
@@ -175,7 +175,7 @@ export function Contact() {
                   )}
                 </div>
 
-                {/* Message */}
+                {/* Message field */}
                 <div>
                   <div className="flex items-start gap-2">
                     <span className="contact-prompt shrink-0 mt-1">{">"}</span>
@@ -198,7 +198,6 @@ export function Contact() {
                   )}
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -218,7 +217,7 @@ export function Contact() {
             )}
           </TerminalWindow>
 
-          {/* Social links as terminal output */}
+          {/* Social links */}
           <div className="mt-8 font-mono text-sm space-y-2">
             <p
               className="text-[oklch(1_0_0/0.4)]"
@@ -245,7 +244,7 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Bottom gradient: terminal black → page background */}
+      {/* Gradient fade to page background */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
         style={{

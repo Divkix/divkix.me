@@ -6,7 +6,6 @@ import { siteConfig } from "@/data/site.config";
 import { baseUrl } from "@/lib/seo";
 
 export async function GET(context: APIContext) {
-  // Get all published blog posts
   const posts = await getCollection("blog");
   const publishedPosts = posts
     .filter((post: CollectionEntry<"blog">) => post.data.published === true)

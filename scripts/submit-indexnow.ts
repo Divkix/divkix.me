@@ -28,7 +28,6 @@ async function submitIndexNow(): Promise<void> {
     return; // Don't fail build
   }
 
-  // Extract URLs from sitemap using regex
   const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
 
   if (urls.length === 0) {

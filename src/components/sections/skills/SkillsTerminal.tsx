@@ -136,7 +136,6 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
               : undefined,
         }}
       >
-        {/* Title bar + tabs */}
         <div className="bg-[oklch(0.12_0_0)] px-4 pt-3 pb-0">
           <div className="flex items-center">
             <div className="flex gap-2">
@@ -149,7 +148,6 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
             </span>
           </div>
 
-          {/* Tab bar */}
           <div
             className="flex gap-1 mt-3 border-b border-[oklch(1_0_0/0.08)]"
             role="tablist"
@@ -187,7 +185,6 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
           </div>
         </div>
 
-        {/* Terminal content */}
         <div
           className="relative bg-[oklch(0.08_0_0)] p-6 font-mono min-h-[320px]"
           role="tabpanel"
@@ -210,7 +207,6 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
           />
 
           <div className="relative space-y-4" suppressHydrationWarning>
-            {/* Typing command */}
             <div className="text-sm text-[oklch(0.7_0.2_140)]">
               <span>{typedCommand}</span>
               <span
@@ -222,17 +218,14 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
               />
             </div>
 
-            {/* Output */}
             {showOutput && (
               <>
-                {/* Column headers */}
                 <div className="text-xs text-[oklch(1_0_0/0.3)] uppercase tracking-wider flex items-center gap-3 pt-2">
                   <span className="w-28">package</span>
                   <span className="w-20">level</span>
                   <span>mastery</span>
                 </div>
 
-                {/* Skills list */}
                 <div className="space-y-1.5">
                   {skills.map((skill, index) => (
                     <SkillRow
@@ -244,7 +237,6 @@ export function SkillsTerminal({ groupedSkills }: SkillsTerminalProps) {
                   ))}
                 </div>
 
-                {/* Cursor at bottom */}
                 <div
                   className="text-sm pt-3 opacity-0"
                   style={{

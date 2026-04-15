@@ -42,7 +42,6 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
 
   return (
     <div ref={ref} className="relative">
-      {/* Timeline node */}
       <div className="absolute left-0 md:left-1/2 -translate-x-1/2 top-6 z-10">
         {isCurrentRole ? (
           <span className="relative flex h-4 w-4">
@@ -54,7 +53,7 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
         )}
       </div>
 
-      {/* Horizontal connector — desktop only */}
+      {/* Horizontal connector (desktop only) */}
       <div
         className={cn(
           "hidden md:block absolute top-7.5 h-px bg-border w-6",
@@ -62,7 +61,6 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
         )}
       />
 
-      {/* Card */}
       <div
         className={cn(
           "pl-6 md:pl-0 transition-all duration-700",
@@ -78,7 +76,6 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
         )}
       >
         <div className="rounded-xl border border-border bg-card p-6 shadow-hard hover:border-primary/50 transition-colors">
-          {/* Company header */}
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <div className="flex items-center gap-2">
@@ -99,7 +96,6 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
             </span>
           </div>
 
-          {/* Position progression — mini nested timeline */}
           <div className="relative pl-4 border-l-2 border-primary/20 space-y-4">
             {company.positions.map((position: Position, idx: number) => (
               <div
@@ -157,7 +153,6 @@ export function ExperienceBento() {
         </div>
 
         <div className="max-w-5xl mx-auto space-y-12">
-          {/* Education banner — distinct treatment at top */}
           <div className="rounded-xl bg-muted/50 border border-border p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-primary/10">
@@ -191,9 +186,7 @@ export function ExperienceBento() {
             </div>
           </div>
 
-          {/* Work timeline */}
           <div className="relative">
-            {/* Vertical amber line */}
             <div className="absolute left-0 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[3px] bg-primary/30" />
 
             <div className="space-y-12">

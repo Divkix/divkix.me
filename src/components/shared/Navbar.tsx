@@ -140,7 +140,6 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  // Staggered entrance animation for mobile menu
   useEffect(() => {
     if (isOpen) {
       requestAnimationFrame(() => setMenuVisible(true));
@@ -149,7 +148,6 @@ export function Navbar() {
     }
   }, [isOpen]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -161,7 +159,6 @@ export function Navbar() {
     };
   }, [isOpen]);
 
-  // Close mobile menu on Escape key
   useEffect(() => {
     if (!isOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
@@ -171,11 +168,10 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
-  // Focus trap for mobile menu
+  // Focus trap for accessibility: keep focus within open mobile menu
   useEffect(() => {
     if (!isOpen) return;
 
-    // Auto-focus close button when menu opens
     requestAnimationFrame(() => {
       closeButtonRef.current?.focus();
     });
@@ -212,7 +208,7 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
-  // Restore focus to hamburger button when menu closes
+  // Restore focus to hamburger when menu closes
   const prevIsOpen = useRef(false);
   useEffect(() => {
     if (prevIsOpen.current && !isOpen) {
@@ -240,7 +236,7 @@ export function Navbar() {
   const getIsActive = (href: string) =>
     isNavItemActive(href, pathname, activeSection);
 
-  // Sliding underline for active desktop nav item
+  // Sliding underline indicator for active desktop nav item
   useEffect(() => {
     const updateIndicator = () => {
       const container = desktopNavRef.current;
