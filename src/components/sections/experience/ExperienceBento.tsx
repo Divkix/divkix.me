@@ -1,13 +1,14 @@
 import { Calendar, GraduationCap, MapPin } from "lucide-react";
 
 import { SectionLabel } from "@/components/shared/SectionLabel";
-import { siteConfig } from "@/data/site.config";
+import {
+  type Company,
+  type Education,
+  type Position,
+  siteConfig,
+} from "@/data/site.config";
 import { useScrollReveal } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
-
-type Position = (typeof siteConfig.experience)[number]["positions"][number];
-type Company = (typeof siteConfig.experience)[number];
-type Education = (typeof siteConfig.education)[number];
 
 function TimelineCard({ company, index }: { company: Company; index: number }) {
   const { ref, isVisible } = useScrollReveal(0.15);

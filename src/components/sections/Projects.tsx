@@ -10,12 +10,9 @@ import {
 
 import { SectionLabel } from "@/components/shared/SectionLabel";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/data/site.config";
+import { type Project, type ProjectLink, siteConfig } from "@/data/site.config";
 import { useScrollReveal } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
-
-type Project = (typeof siteConfig.projects)[number];
-type ProjectLink = Project["links"][number];
 
 const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),

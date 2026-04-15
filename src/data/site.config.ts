@@ -277,3 +277,16 @@ export const siteConfig = {
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],
 } as const;
+
+// Derived types from siteConfig for shared use across components
+export type Company = (typeof siteConfig.experience)[number];
+export type Position = Company["positions"][number];
+export type Education = (typeof siteConfig.education)[number];
+export type Project = (typeof siteConfig.projects)[number];
+export type ProjectLink = Project["links"][number];
+export type Social = (typeof siteConfig.socials)[number];
+export type Skill = {
+  name: string;
+  category: string;
+  proficiency: number;
+};

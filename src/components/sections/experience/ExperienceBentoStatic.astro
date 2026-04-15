@@ -1,9 +1,10 @@
 ---
-import { siteConfig } from "@/data/site.config";
-
-type Position = (typeof siteConfig.experience)[number]["positions"][number];
-type Company = (typeof siteConfig.experience)[number];
-type Education = (typeof siteConfig.education)[number];
+import {
+  type Company,
+  type Education,
+  type Position,
+  siteConfig,
+} from "@/data/site.config";
 
 // Determine card size based on number of positions and tenure
 function getCardSize(

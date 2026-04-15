@@ -1,12 +1,8 @@
 import { SectionLabel } from "@/components/shared/SectionLabel";
-import { siteConfig } from "@/data/site.config";
+import { type Skill, siteConfig } from "@/data/site.config";
 import { SkillsTerminal } from "./SkillsTerminal";
 
-export type Skill = {
-  name: string;
-  category: string;
-  proficiency: number;
-};
+export type { Skill };
 
 function groupSkillsByCategory(
   skills: readonly Skill[],
@@ -42,8 +38,7 @@ export function getProficiencyLevel(proficiency: number): {
 }
 
 export function Skills() {
-  const skills = siteConfig.skills as unknown as Skill[];
-  const groupedSkills = groupSkillsByCategory(skills);
+  const groupedSkills = groupSkillsByCategory(siteConfig.skills);
 
   return (
     <>
