@@ -5,9 +5,11 @@ import BlogLayout from "@/layouts/BlogLayout.astro";
 import {
   generateBlogAuthorSchema,
   generateBlogPublisherSchema,
+  generateBreadcrumbSchema,
+  getJobTitle,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { formatDate } from "@/lib/utils";
+import { calculateReadingTime, formatDate } from "@/lib/utils";
 
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
@@ -33,21 +35,9 @@ interface Heading {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 
-// Calculate reading time (200 words per minute)
-function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
-}
-
-// Calculate word count
-function calculateWordCount(content: string): number {
-  return content.trim().split(/\s+/).length;
-}
-
 const readingTimeMinutes = calculateReadingTime(post.body);
 const readingTime = `${readingTimeMinutes} min read`;
-const wordCount = calculateWordCount(post.body);
+const wordCount = post.body.trim().split(/\s+/).length;
 
 // Convert headings to TOC items
 const toc = headings.map((h: Heading) => ({
@@ -84,30 +74,11 @@ const blogPostingSchema = {
   inLanguage: "en-US",
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: baseUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Blog",
-      item: `${baseUrl}/blog/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: post.data.title,
-      item: `${baseUrl}/blog/${post.id}/`,
-    },
-  ],
-};
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Blog", item: `${baseUrl}/blog/` },
+  { name: post.data.title, item: `${baseUrl}/blog/${post.id}/` },
+]);
 
 // Generate page title and description (SEO overrides for <title>/<meta>, visible h1 stays original)
 const pageTitle = post.data.seoTitle ?? post.data.title;
@@ -304,7 +275,7 @@ const articleMeta = {
               <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
             </h3>
             <p class="text-sm text-foreground/70 mt-1">
-              {siteConfig.seo?.jobTitle || "Software Engineer"} based in {siteConfig.location}.
+              {getJobTitle()} based in {siteConfig.location}.
               <a href="/divkix" class="underline hover:text-primary ml-1">More about {siteConfig.handle.toLowerCase()}</a>
             </p>
           </div>

@@ -1,15 +1,33 @@
 import { siteConfig } from "@/data/site.config";
 import { baseUrl } from "@/lib/seo";
 
+export function getJobTitle(): string {
+  return (
+    siteConfig.seo?.jobTitle ||
+    siteConfig.experience[0]?.positions[0]?.title ||
+    "Software Engineer"
+  );
+}
+
+type BreadcrumbItem = { name: string; item?: string };
+
+export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      ...(crumb.item !== undefined ? { item: crumb.item } : {}),
+    })),
+  };
+}
+
 /**
  * Generate Person schema for E-E-A-T signals
  */
 export function generatePersonSchema() {
-  const jobTitle =
-    siteConfig.seo?.jobTitle ||
-    siteConfig.experience[0]?.positions[0]?.title ||
-    "Software Engineer";
-
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -18,7 +36,7 @@ export function generatePersonSchema() {
     alternateName: siteConfig.handle,
     givenName: siteConfig.name.split(" ")[0],
     familyName: siteConfig.name.split(" ")[1],
-    jobTitle: jobTitle,
+    jobTitle: getJobTitle(),
     description: siteConfig.seo?.metaDescription || siteConfig.about,
     url: baseUrl,
     email: siteConfig.email,
@@ -97,11 +115,5 @@ export function generateBlogAuthorSchema(authorName?: string) {
  * Always references the site owner
  */
 export function generateBlogPublisherSchema() {
-  return {
-    "@type": "Person",
-    "@id": `${baseUrl}/#author`,
-    name: siteConfig.name,
-    alternateName: siteConfig.handle,
-    url: baseUrl,
-  };
+  return generateBlogAuthorSchema();
 }

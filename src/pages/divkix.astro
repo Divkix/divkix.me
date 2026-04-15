@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { generateBreadcrumbSchema, getJobTitle } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 const profilePageSchema = {
@@ -15,24 +16,10 @@ const profilePageSchema = {
   url: `${baseUrl}/divkix`,
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: baseUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "divkix",
-      item: `${baseUrl}/divkix`,
-    },
-  ],
-};
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "divkix", item: `${baseUrl}/divkix` },
+]);
 
 // Top 3 projects for quick showcase
 const topProjects = siteConfig.projects.slice(0, 3);
@@ -185,7 +172,7 @@ const navLinks = [
           <strong class="text-foreground">divkix</strong> is the online handle of <strong class="text-foreground">{siteConfig.name}</strong>
         </p>
         <p class="text-xs">
-          {siteConfig.seo?.jobTitle || "Software Engineer"} | {siteConfig.location}
+          {getJobTitle()} | {siteConfig.location}
         </p>
       </div>
     </div>

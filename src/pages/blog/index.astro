@@ -2,8 +2,9 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { generateBreadcrumbSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { formatDate } from "@/lib/utils";
+import { calculateReadingTime, formatDate } from "@/lib/utils";
 
 // Get all blog posts from content collections
 const allPosts = await getCollection("blog");
@@ -17,14 +18,6 @@ const posts = allPosts
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
   });
 
-// Calculate reading time (200 words per minute)
-function calculateReadingTime(content: string): string {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / wordsPerMinute);
-  return `${minutes} min read`;
-}
-
 // Type for post with reading time
 type PostWithReadingTime = {
   post: CollectionEntry<"blog">;
@@ -35,7 +28,7 @@ type PostWithReadingTime = {
 const postsWithReadingTime: PostWithReadingTime[] = posts.map(
   (post: CollectionEntry<"blog">) => ({
     post,
-    readingTime: calculateReadingTime(post.body),
+    readingTime: `${calculateReadingTime(post.body)} min read`,
   }),
 );
 
@@ -61,19 +54,10 @@ const collectionPageSchema = {
   },
 };
 
-const blogBreadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Blog",
-      item: `${baseUrl}/blog/`,
-    },
-  ],
-};
+const blogBreadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Blog", item: `${baseUrl}/blog/` },
+]);
 ---
 
 <BlogLayout
