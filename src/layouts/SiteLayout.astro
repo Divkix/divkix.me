@@ -13,23 +13,19 @@ interface Props {
 
 const {
   title = `${siteConfig.name} (${siteConfig.handle.toLowerCase()}) | Software Engineer & AI Developer`,
-  description = siteConfig.seo?.metaDescription || siteConfig.about,
+  description = siteConfig.seo.metaDescription,
   showScrollProgress = false,
 } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
-  <!-- Navbar - React island with client:idle -->
   <Navbar client:idle />
 
-  <!-- Scroll Progress (optional, for homepage) -->
   {showScrollProgress && <ScrollProgress client:idle />}
 
-  <!-- Main Content -->
   <main id="main-content" class="min-h-screen">
     <slot />
   </main>
 
-  <!-- Footer - Astro component -->
   <Footer />
 </BaseLayout>

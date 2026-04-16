@@ -7,10 +7,7 @@ export const siteConfig = {
   about:
     "Grad student at ASU with a thing for business + coding. I like side projects, trekking, soccer, and shipping fast.",
   authorImage: "/divanshu-chauhan.jpeg",
-  yearsOfExperience: 5,
-  certifications: [],
   nationality: "Indian",
-  profileCreatedDate: "2024-01-01",
   address: {
     locality: "Tempe",
     region: "Arizona",

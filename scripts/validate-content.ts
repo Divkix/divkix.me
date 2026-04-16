@@ -19,20 +19,17 @@ const POSTS_JSON = join(process.cwd(), "content/blog/posts.json");
 function validateContent(): void {
   console.log("🔍 Validating content sync...");
 
-  // Check if content directory exists
   if (!existsSync(CONTENT_DIR)) {
     console.error(`❌ Content directory not found: ${CONTENT_DIR}`);
     console.error("   Make sure you have blog posts in src/content/blog/");
     process.exit(1);
   }
 
-  // Check if posts.json exists
   if (!existsSync(POSTS_JSON)) {
     console.error("❌ posts.json not found. Run prebuild first.");
     process.exit(1);
   }
 
-  // Get all MDX files with error handling
   let mdxFiles: string[];
   try {
     mdxFiles = readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
@@ -56,7 +53,6 @@ function validateContent(): void {
 
   const mdxSlugs = publishedMdxFiles.map((f) => f.replace(/\.mdx$/, "")).sort();
 
-  // Parse posts.json with error handling
   let postsJson: PostsJson;
   try {
     postsJson = JSON.parse(readFileSync(POSTS_JSON, "utf-8"));
@@ -70,7 +66,6 @@ function validateContent(): void {
 
   const jsonSlugs = postsJson.posts.map((p) => p.slug).sort();
 
-  // Compare counts (published posts only — matches posts.json)
   if (publishedMdxFiles.length !== postsJson.totalPosts) {
     console.error(
       `❌ Mismatch: ${publishedMdxFiles.length} published MDX files but posts.json has ${postsJson.totalPosts}`,
@@ -78,7 +73,6 @@ function validateContent(): void {
     process.exit(1);
   }
 
-  // Compare slugs
   const missingInJson = mdxSlugs.filter((s) => !jsonSlugs.includes(s));
   const extraInJson = jsonSlugs.filter((s) => !mdxSlugs.includes(s));
 

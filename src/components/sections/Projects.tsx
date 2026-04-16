@@ -311,7 +311,6 @@ export function Projects() {
           </p>
         </div>
 
-        {/* Segmented control filter */}
         <div className="flex w-full justify-start">
           <div
             ref={containerRef}
@@ -357,7 +356,6 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Featured projects — full-width hero cards */}
         {featured.length > 0 && (
           <div className="space-y-6">
             {featured.map((project: Project, index: number) => (
@@ -370,7 +368,6 @@ export function Projects() {
           </div>
         )}
 
-        {/* Regular projects — 2-column grid */}
         {regular.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {regular.map((project: Project, index: number) => (

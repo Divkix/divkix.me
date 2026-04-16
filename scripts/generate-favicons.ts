@@ -1,32 +1,9 @@
 /**
- * Favicon Generation Script
+ * Generates favicon PNGs, a multi-size favicon.ico, and site.webmanifest
+ * from public/full-logo.png.
  *
- * Generates all necessary favicon and icon files from the logo PNG.
- *
- * What it does:
- * 1. Generates multiple PNG favicon sizes (16x16, 32x32, 48x48) for various browser contexts
- * 2. Creates Apple Touch Icon (180x180) for iOS devices when adding site to home screen
- * 3. Creates Android Chrome icons (192x192, 512x512) for PWA installation
- * 4. Generates proper favicon.ico file for legacy browser support
- * 5. Creates site.webmanifest for Progressive Web App (PWA) support
- *
- * Usage:
- *   bun run scripts/generate-favicons.ts
- *
- * Requirements:
- *   - Source PNG must be at public/full-logo.png
- *   - Sharp package must be installed (bun add -d sharp)
- *   - png-to-ico package must be installed (bun add -d png-to-ico)
- *
- * Output files:
- *   - public/favicon-16x16.png
- *   - public/favicon-32x32.png
- *   - public/favicon-48x48.png
- *   - public/apple-touch-icon.png
- *   - public/android-chrome-192x192.png
- *   - public/android-chrome-512x512.png
- *   - public/favicon.ico
- *   - public/site.webmanifest
+ * Usage: bun run scripts/generate-favicons.ts
+ * Requires: sharp, png-to-ico
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -67,8 +44,7 @@ async function generateFavicons() {
       console.log(`Generated ${config.name}`);
     }
 
-    // Generate proper favicon.ico using png-to-ico
-    // ICO format supports multiple sizes embedded in one file
+    // ICO embeds 16, 32, and 48px sizes in one file
     const ico16 = await sharp(pngBuffer).resize(16, 16).png().toBuffer();
 
     const ico32 = await sharp(pngBuffer).resize(32, 32).png().toBuffer();
