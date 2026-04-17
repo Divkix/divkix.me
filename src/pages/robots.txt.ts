@@ -22,6 +22,12 @@ User-agent: Meta-ExternalAgent
 User-agent: cohere-ai
 Allow: /
 
+# Content Signals - AI content usage preferences per draft-romm-aipref-contentsignals
+# https://contentsignals.org/
+Content-Signal: ai-train=no, search=yes, ai-input=no
+Content-Signal: ai-search=yes
+Content-Signal: ai-synth=yes
+
 # Sitemap location
 Sitemap: ${baseUrl}/sitemap-index.xml
 `.trim();
