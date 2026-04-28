@@ -6,9 +6,22 @@ import { Highlights } from "@/components/sections/Highlights";
 import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/skills";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { baseUrl } from "@/lib/seo";
+import { siteConfig } from "@/data/site.config";
+
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${baseUrl}/`,
+  mainEntity: { "@id": `${baseUrl}/#author` },
+  name: `${siteConfig.name} (${siteConfig.handle}) — Portfolio`,
+  description: siteConfig.seo.metaDescription,
+  url: baseUrl,
+};
 ---
 
 <SiteLayout showScrollProgress={true}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <Hero />
   <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Highlights client:visible />
