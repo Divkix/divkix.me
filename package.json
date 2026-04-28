@@ -38,6 +38,7 @@
     "lint:fix": "biome check --write",
     "type-check": "astro check && tsc --noEmit",
     "format": "biome format --write .",
+    "check:citations": "bun run scripts/check-citation-density.ts",
     "prepare": "husky"
   },
   "lint-staged": {
