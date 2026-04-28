@@ -140,7 +140,10 @@ export function generateBlogPublisherSchema() {
  * Generate Speakable schema for AEO (Answer Engine Optimization)
  * Identifies content that can be spoken by voice assistants
  */
-export function generateSpeakableSchema(articleId: string, cssSelector: string) {
+export function generateSpeakableSchema(
+  articleId: string,
+  cssSelector: string,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -158,7 +161,7 @@ export function generateSpeakableSchema(articleId: string, cssSelector: string) 
  */
 export function generateFAQPageSchema(
   faqs: Array<{ q: string; a: string }>,
-  pageUrl: string
+  pageUrl: string,
 ) {
   return {
     "@context": "https://schema.org",

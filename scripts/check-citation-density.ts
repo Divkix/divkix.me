@@ -135,10 +135,17 @@ function checkCitationDensity(): void {
   let failCount = 0;
 
   for (const result of results) {
-    const statusIcon = result.status === "PASS" ? "✅" : result.status === "WARNING" ? "⚠️" : "❌";
+    const statusIcon =
+      result.status === "PASS"
+        ? "✅"
+        : result.status === "WARNING"
+          ? "⚠️"
+          : "❌";
     const densityStr = result.density.toFixed(2).padStart(5);
 
-    console.log(`│ ${statusIcon} ${result.slug.slice(0, 40).padEnd(40)} │ ${densityStr} │ ${result.citationsFound.toString().padStart(3)} cites │ ${result.wordCount.toString().padStart(4)} words │`);
+    console.log(
+      `│ ${statusIcon} ${result.slug.slice(0, 40).padEnd(40)} │ ${densityStr} │ ${result.citationsFound.toString().padStart(3)} cites │ ${result.wordCount.toString().padStart(4)} words │`,
+    );
 
     if (result.status === "PASS") passCount++;
     else if (result.status === "WARNING") warningCount++;
@@ -163,8 +170,12 @@ function checkCitationDensity(): void {
     for (const issue of issues) {
       console.log(`${issue.status === "FAIL" ? "❌" : "⚠️"} ${issue.title}`);
       console.log(`   Density: ${issue.density} (target: ${issue.target})`);
-      console.log(`   Citations: ${issue.citationsFound} in ${issue.wordCount} words`);
-      console.log(`   Missing: ~${Math.ceil((issue.wordCount / WORDS_PER_CITATION_TARGET) - issue.citationsFound)} more citations needed\n`);
+      console.log(
+        `   Citations: ${issue.citationsFound} in ${issue.wordCount} words`,
+      );
+      console.log(
+        `   Missing: ~${Math.ceil(issue.wordCount / WORDS_PER_CITATION_TARGET - issue.citationsFound)} more citations needed\n`,
+      );
     }
   }
 
@@ -185,7 +196,9 @@ function checkCitationDensity(): void {
     );
   }
 
-  console.log("\n✅ All posts meet citation density requirements for GEO optimization!");
+  console.log(
+    "\n✅ All posts meet citation density requirements for GEO optimization!",
+  );
 }
 
 checkCitationDensity();
