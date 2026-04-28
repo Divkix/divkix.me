@@ -1,7 +1,7 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { getJobTitle } from "@/lib/schema";
+import { generateBreadcrumbSchema, getJobTitle } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 // Map social labels to their descriptive action text for SEO
@@ -29,6 +29,11 @@ const collectionPageSchema = {
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   inLanguage: "en-US",
 };
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Connect", item: `${baseUrl}/socials/` },
+]);
 ---
 
 <SiteLayout
@@ -36,6 +41,7 @@ const collectionPageSchema = {
   description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto space-y-12">
       <!-- Header -->

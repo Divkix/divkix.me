@@ -82,7 +82,7 @@ const postUrl = `${baseUrl}/blog/${post.id}/`;
 const articleId = `${postUrl}#article`;
 
 // Speakable schema - references the article content for voice assistants
-const speakableSchema = generateSpeakableSchema(articleId, "article");
+const speakableSchema = generateSpeakableSchema(articleId, "#main-content");
 
 // FAQPage schema - only if post has FAQ data
 const faqPageSchema =
@@ -145,7 +145,7 @@ const articleMeta = {
     </aside>
   )}
 
-  <article class="container mx-auto px-4 py-20">
+  <article id="main-content" class="container mx-auto px-4 py-20">
     <div class="max-w-3xl mx-auto space-y-8">
       <a
         href="/blog/"
