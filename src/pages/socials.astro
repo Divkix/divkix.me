@@ -2,6 +2,7 @@
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import { getJobTitle } from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
 
 // Map social labels to their descriptive action text for SEO
 const socialActions: Record<string, string> = {
@@ -16,12 +17,25 @@ const socialActions: Record<string, string> = {
 // Filter out email for the main list (handled separately)
 const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 const emailSocial = siteConfig.socials.find((s) => s.label === "Email");
+
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${baseUrl}/socials/`,
+  mainEntity: { "@id": `${baseUrl}/#author` },
+  name: `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
+  description: "Official social media profiles and contact information",
+  url: `${baseUrl}/socials/`,
+  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+  inLanguage: "en-US",
+};
 ---
 
 <SiteLayout
   title="Connect"
   description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto space-y-12">
       <!-- Header -->
