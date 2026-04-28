@@ -17,6 +17,8 @@ const collectionPageSchema = {
   name: `${siteConfig.name} (${siteConfig.handle}) — Portfolio`,
   description: siteConfig.seo.metaDescription,
   url: baseUrl,
+  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+  inLanguage: "en-US",
 };
 ---
 
