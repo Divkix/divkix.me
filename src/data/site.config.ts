@@ -271,6 +271,7 @@ export const siteConfig = {
     { label: "X", href: "https://x.com/divkix" },
     { label: "Hugging Face", href: "https://huggingface.co/divkix" },
     { label: "Instagram", href: "https://instagram.com/_divkix" },
+    { label: "ORCID", href: "https://orcid.org/0009-0004-0423-2471" },
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],
 } as const;
