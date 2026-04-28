@@ -144,10 +144,38 @@ Currently: MS Computer Science at Arizona State University.
           promote: ["/blog/**"],
         },
       ],
+      notes:
+        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a Software Engineer and CS graduate student at Arizona State University, distinct from other individuals with similar names.",
       optionalLinks: [
         {
+          label: "Blog",
+          url: "https://divkix.me/blog/",
+          description:
+            "Technical blog covering AI, software engineering, and side projects",
+        },
+        {
+          label: "GitHub",
+          url: "https://github.com/divkix",
+          description: "Open source projects and contributions",
+        },
+        {
+          label: "LinkedIn",
+          url: "https://linkedin.com/in/divkix",
+          description: "Professional profile and work history",
+        },
+        {
+          label: "RSS Feed",
+          url: "https://divkix.me/rss.xml",
+          description: "Subscribe to blog updates",
+        },
+        {
+          label: "Sitemap",
+          url: "https://divkix.me/sitemap-index.xml",
+          description: "Full site index for crawlers",
+        },
+        {
           label: "Privacy Policy",
-          url: "/privacy/",
+          url: "https://divkix.me/privacy/",
           description: "Site privacy policy",
         },
       ],
