@@ -1,14 +1,23 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
 
 const lastUpdated = "December 25, 2025";
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Privacy", item: `${baseUrl}/privacy` },
+]);
 ---
 
 <SiteLayout
   title="Privacy Policy"
   description={`Privacy Policy for ${siteConfig.name}'s portfolio website`}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-8">
       <div class="space-y-4">
