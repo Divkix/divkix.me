@@ -54,6 +54,28 @@ export function generatePersonSchema() {
         }),
       };
     }),
+    hasCredential: siteConfig.education.map((edu) => {
+      const parts = edu.title.split(" — ");
+      const degreeParts = parts[0]?.split(", ") ?? ["", ""];
+      const degree = degreeParts[0] ?? "";
+      const field = degreeParts[1] ?? "";
+      const institution = parts[1] ?? "";
+      const level = degree.startsWith("MS")
+        ? "Master's"
+        : degree.startsWith("BS")
+          ? "Bachelor's"
+          : "Degree";
+      return {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "degree",
+        name: `${degree} in ${field}`,
+        educationalLevel: level,
+        recognizedBy: {
+          "@type": "CollegeOrUniversity",
+          name: institution,
+        },
+      };
+    }),
     knowsAbout: siteConfig.skills.map((s) => s.name),
     address: {
       "@type": "PostalAddress",
