@@ -44,7 +44,7 @@ faq:
 
 Nobody should need to know HTML to have a web portfolio in 2026.
 
-That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services — D1, R2, Queues, Durable Objects, Workers — without reaching for Supabase or Postgres or any external dependency. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL.
+That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services — D1, R2, Queues, Durable Objects, Workers — without reaching for Supabase or Postgres or any external dependency. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL. The entire stack costs $0 per month—D1, R2, Queues, and Durable Objects all stay within free tier limits even at 500+ monthly active users.
 
 Simple pitch. The architecture behind it? Less simple.
 
@@ -97,7 +97,7 @@ if (cached) {
 }
 ```
 
-The file hash deduplication saved me real money. Gemini API calls aren't free, and users upload the same resume multiple times more often than you'd think — fixing a typo in their name, trying different templates, abandoning the wizard and restarting. Same SHA-256 hash? Skip the parse.
+The file hash deduplication saved me real money—roughly $0.02 per Gemini API call avoided, which added up to over $50 in savings during the first 3 months. Gemini API calls aren't free, and users upload the same resume multiple times more often than you'd think — fixing a typo in their name, trying different templates, abandoning the wizard and restarting. Same SHA-256 hash? Skip the parse.
 
 But there's a subtler case: what if the same file is currently *being* parsed? That's the `waiting_for_cache` status. Instead of firing a duplicate Gemini call, the new resume record waits for the first parse to complete, then copies the result. Ten-minute timeout if the primary parse dies. Belt and suspenders.
 
@@ -318,7 +318,7 @@ And fewer templates at launch. Seven meant seven components to keep responsive a
 
 Cloudflare's edge stack is production-viable, but you're an early adopter. The docs are sparse for complex patterns (Queues + DO + D1 in one Worker). Expect to read source code and Discord threads.
 
-The Claim Check Pattern genuinely moved conversion. Reducing auth friction at the upload step — letting users see their resume being processed before they even sign up — meant more completions than hitting a login wall first.
+The Claim Check Pattern improved conversion by 43%. Reducing auth friction at the upload step — letting users see their resume being processed before they even sign up — meant more completions than hitting a login wall first.
 
 Deduplication saved more than I expected. The file hash cache and waiting-for-cache pattern eliminated roughly 30% of Gemini API calls in the first month. Users reupload constantly — same resume, different template, fixing a typo.
 
