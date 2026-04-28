@@ -6,6 +6,8 @@ import {
   generateBlogAuthorSchema,
   generateBlogPublisherSchema,
   generateBreadcrumbSchema,
+  generateSpeakableSchema,
+  generateFAQPageSchema,
   getJobTitle,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
@@ -76,6 +78,18 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: post.data.title, item: `${baseUrl}/blog/${post.id}/` },
 ]);
 
+const postUrl = `${baseUrl}/blog/${post.id}/`;
+const articleId = `${postUrl}#article`;
+
+// Speakable schema - references the article content for voice assistants
+const speakableSchema = generateSpeakableSchema(articleId, "article");
+
+// FAQPage schema - only if post has FAQ data
+const faqPageSchema =
+  post.data.faq && post.data.faq.length > 0
+    ? generateFAQPageSchema(post.data.faq, postUrl)
+    : null;
+
 // seoTitle/seoDescription allow per-post SEO overrides without changing the visible h1
 const pageTitle = post.data.seoTitle ?? post.data.title;
 const pageDescription = post.data.seoDescription ?? post.data.excerpt;
@@ -102,6 +116,13 @@ const articleMeta = {
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Speakable Schema - identifies content for voice assistants -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(speakableSchema)} />
+
+  {faqPageSchema && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
+  )}
 
   <!-- Table of Contents - Fixed sidebar on xl screens -->
   {showToc && (

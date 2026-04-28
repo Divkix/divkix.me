@@ -113,3 +113,42 @@ export function generateBlogAuthorSchema(authorName?: string) {
 export function generateBlogPublisherSchema() {
   return generateBlogAuthorSchema();
 }
+
+/**
+ * Generate Speakable schema for AEO (Answer Engine Optimization)
+ * Identifies content that can be spoken by voice assistants
+ */
+export function generateSpeakableSchema(articleId: string, cssSelector: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": articleId,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [cssSelector],
+    },
+  };
+}
+
+/**
+ * Generate FAQPage schema for posts with FAQ sections
+ * Enhances visibility in search results with rich FAQ snippets
+ */
+export function generateFAQPageSchema(
+  faqs: Array<{ q: string; a: string }>,
+  pageUrl: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+    url: pageUrl,
+  };
+}
