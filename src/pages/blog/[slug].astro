@@ -82,7 +82,7 @@ const postUrl = `${baseUrl}/blog/${post.id}/`;
 const articleId = `${postUrl}#article`;
 
 // Speakable schema - references the article content for voice assistants
-const speakableSchema = generateSpeakableSchema(articleId, "#main-content");
+const speakableSchema = generateSpeakableSchema(articleId, ".prose");
 
 // FAQPage schema - only if post has FAQ data
 const faqPageSchema =
@@ -196,9 +196,12 @@ const articleMeta = {
         {post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2">
             {post.data.tags.map((tag: string) => (
-              <span class="text-xs px-2 py-1 border border-border/60 rounded">
+              <a
+                href={`/blog/tags/${tag.toLowerCase()}/`}
+                class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
+              >
                 {tag}
-              </span>
+              </a>
             ))}
           </div>
         )}
@@ -271,7 +274,7 @@ const articleMeta = {
       <div class="pt-8 border-t border-border/40">
         <div class="flex gap-4 items-start">
           <img
-            src="/divanshu-chauhan.jpeg"
+            src="/divanshu-chauhan.webp"
             alt="Divanshu Chauhan"
             class="w-16 h-16 rounded-full"
             loading="lazy"

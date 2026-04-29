@@ -6,36 +6,61 @@ import { generateBreadcrumbSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
-const allPosts = await getCollection("blog");
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog");
+  const publishedPosts = allPosts.filter(
+    (post: CollectionEntry<"blog">) => post.data.published === true,
+  );
 
-const posts = allPosts
-  .filter((post: CollectionEntry<"blog">) => post.data.published === true)
-  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => {
-    if (a.data.featured && !b.data.featured) return -1;
-    if (!a.data.featured && b.data.featured) return 1;
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  });
+  // Get unique tags
+  const tags = new Set<string>();
+  for (const post of publishedPosts) {
+    for (const tag of post.data.tags) {
+      tags.add(tag.toLowerCase());
+    }
+  }
+
+  // Create paths for each tag
+  return Array.from(tags).map((tag) => ({
+    params: { tag: tag },
+    props: {
+      tag,
+      posts: publishedPosts.filter((p) =>
+        p.data.tags.some((t) => t.toLowerCase() === tag),
+      ),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { tag, posts } = Astro.props;
 
 type PostWithReadingTime = {
   post: CollectionEntry<"blog">;
   readingTime: string;
 };
 
-const postsWithReadingTime: PostWithReadingTime[] = posts.map(
-  (post: CollectionEntry<"blog">) => ({
+const postsWithReadingTime: PostWithReadingTime[] = posts
+  .sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  )
+  .map((post: CollectionEntry<"blog">) => ({
     post,
     readingTime: `${calculateReadingTime(post.body)} min read`,
-  }),
-);
+  }));
 
 const collectionPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "@id": `${baseUrl}/blog/`,
-  name: "Blog",
-  description:
-    "Thoughts on software development, technology, and building products.",
-  url: `${baseUrl}/blog/`,
+  "@id": `${baseUrl}/blog/tags/${tag}/`,
+  name: `Posts tagged "${tag}"`,
+  description: `Blog posts tagged with ${tag}.`,
+  url: `${baseUrl}/blog/tags/${tag}/`,
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   mainEntity: {
     "@type": "ItemList",
@@ -50,16 +75,18 @@ const collectionPageSchema = {
   },
 };
 
-const blogBreadcrumbSchema = generateBreadcrumbSchema([
+const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
   { name: "Blog", item: `${baseUrl}/blog/` },
+  { name: `"${tag}" Posts`, item: `${baseUrl}/blog/tags/${tag}/` },
 ]);
+
+const displayTag = tag.charAt(0).toUpperCase() + tag.slice(1);
+const pageTitle = `Posts tagged "${displayTag}" — Blog`;
+const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}". Articles about software development, AI, and engineering.`;
 ---
 
-<BlogLayout
-  title="Blog"
-  description="Thoughts on software development, technology, and building products."
->
+<BlogLayout title={pageTitle} description={pageDescription}>
   <script
     is:inline
     type="application/ld+json"
@@ -68,23 +95,49 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
   <script
     is:inline
     type="application/ld+json"
-    set:html={JSON.stringify(blogBreadcrumbSchema)}
+    set:html={JSON.stringify(breadcrumbSchema)}
   />
+
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-12">
       <div class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">Blog</h1>
+        <a
+          href="/blog/"
+          class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+          Back to Blog
+        </a>
+
+        <h1 class="text-5xl font-display font-bold">
+          <span class="text-foreground/60 text-3xl block mb-2">Posts tagged</span>
+          {displayTag}
+        </h1>
         <p class="text-xl text-foreground/70">
-          Thoughts on software development, technology, and building products.
+          {posts.length} {posts.length === 1 ? "post" : "posts"} tagged with
+          "{tag}"
         </p>
       </div>
 
-      {
-        posts.length === 0 ? (
-          <p class="text-foreground/60">No posts yet. Check back soon!</p>
-        ) : (
-          <div class="space-y-6">
-            {postsWithReadingTime.map((item: PostWithReadingTime) => (
+      {posts.length === 0 ? (
+        <p class="text-foreground/60">No posts found with this tag.</p>
+      ) : (
+        <div class="space-y-6">
+          {
+            postsWithReadingTime.map((item: PostWithReadingTime) => (
               <a
                 href={`/blog/${item.post.id}/`}
                 class="block transition-all hover:scale-[1.01]"
@@ -119,12 +172,16 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
                     )}
                     {item.post.data.tags.length > 0 && (
                       <div class="flex flex-wrap gap-2">
-                        {item.post.data.tags.map((tag: string) => (
+                        {item.post.data.tags.map((t: string) => (
                           <a
-                            href={`/blog/tags/${tag.toLowerCase()}/`}
-                            class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
+                            href={`/blog/tags/${t.toLowerCase()}/`}
+                            class={
+                              t.toLowerCase() === tag
+                                ? "text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
+                                : "text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60"
+                            }
                           >
-                            {tag}
+                            {t}
                           </a>
                         ))}
                       </div>
@@ -132,10 +189,10 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
                   </div>
                 </article>
               </a>
-            ))}
-          </div>
-        )
-      }
+            ))
+          }
+        </div>
+      )}
     </div>
   </div>
 </BlogLayout>

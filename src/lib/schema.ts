@@ -36,7 +36,7 @@ export function generatePersonSchema() {
     description: siteConfig.seo.metaDescription,
     url: baseUrl,
     email: siteConfig.email,
-    image: `${baseUrl}${siteConfig.authorImage}`,
+    image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
     sameAs: siteConfig.socials
       .filter((s) => s.label !== "Email")
