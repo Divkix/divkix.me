@@ -5,7 +5,14 @@ interface SkillsTerminalProps {
   groupedSkills: Record<string, Skill[]>;
 }
 
-const CATEGORIES = ["Languages", "Frameworks", "Databases", "Tools"] as const;
+const CATEGORIES = [
+  "Languages",
+  "Frontend",
+  "Backend",
+  "Cloud/Infra",
+  "Databases",
+  "AI/Tooling",
+] as const;
 type Category = (typeof CATEGORIES)[number];
 
 function SkillRow({
@@ -37,7 +44,11 @@ function SkillRow({
       <span className="text-[oklch(1_0_0/0.35)] w-20 text-xs">
         {label.toLowerCase()}
       </span>
-      <span className="text-[oklch(0.72_0.12_185)] tracking-wider">
+      <span
+        className="text-[oklch(0.72_0.12_185)] tracking-wider"
+        role="img"
+        aria-label={`${skill.name} proficiency: ${label.toLowerCase()}`}
+      >
         {blocks}
       </span>
     </div>

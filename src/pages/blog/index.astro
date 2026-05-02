@@ -8,6 +8,45 @@ import { calculateReadingTime, formatDate } from "@/lib/utils";
 
 const allPosts = await getCollection("blog");
 
+const featuredSlugs = [
+  {
+    slug: "clickfolio-full-stack-cloudflare-workers",
+    title: "Building Clickfolio — A Full-Stack App on Cloudflare Workers",
+    description:
+      "How I built an AI-powered portfolio generator using Workers, D1, R2, Queues, Durable Objects, and WebSockets.",
+  },
+  {
+    slug: "logwell-self-hosted-logging-platform",
+    title: "LogWell — Building a Self-Hosted Logging Platform",
+    description:
+      "Real-time log streaming, OTLP-compatible ingestion, and PostgreSQL full-text search — without running a giant observability stack.",
+  },
+  {
+    slug: "scaling-telegram-bot-300k-users",
+    title: "Scaling a Telegram Bot to 300K+ Users",
+    description:
+      "Lessons from building and scaling Alita Robot, a community automation bot used by large public Telegram groups.",
+  },
+  {
+    slug: "ai-models-compared-2026",
+    title: "AI Models Compared: 2026 Edition",
+    description:
+      "A practical comparison of current AI models — what's good, what's not, and what I'd actually use for real work. Last updated April 2026.",
+  },
+];
+
+const featuredPosts = featuredSlugs
+  .map((f) => {
+    const post = allPosts.find((p: CollectionEntry<"blog">) => p.id === f.slug);
+    if (!post) return null;
+    return {
+      ...f,
+      post,
+      readingTime: `${calculateReadingTime(post.body)} min read`,
+    };
+  })
+  .filter((f): f is NonNullable<typeof f> => f !== null);
+
 const posts = allPosts
   .filter((post: CollectionEntry<"blog">) => post.data.published === true)
   .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => {
@@ -80,59 +119,106 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
       </div>
 
       {
-        posts.length === 0 ? (
-          <p class="text-foreground/60">No posts yet. Check back soon!</p>
-        ) : (
-          <div class="space-y-6">
-            {postsWithReadingTime.map((item: PostWithReadingTime) => (
-              <a
-                href={`/blog/${item.post.id}/`}
-                class="block transition-all hover:scale-[1.01]"
-              >
-                <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
-                  <div class="p-6 space-y-4">
-                    <div class="flex items-center justify-between gap-4 flex-wrap">
-                      <div class="flex items-center gap-2">
-                        {item.post.data.featured && (
-                          <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
-                            Featured
-                          </span>
-                        )}
+        featuredPosts.length > 0 && (
+          <section class="space-y-6">
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Start here</h2>
+              <p class="text-muted-foreground">
+                The best posts if you want to understand how I think about
+                systems, product tradeoffs, and shipping real software.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {featuredPosts.map((item) => (
+                <a
+                  href={`/blog/${item.slug}/`}
+                  class="block transition-all hover:scale-[1.01]"
+                >
+                  <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 h-full">
+                    <div class="p-6 space-y-4">
+                      <div class="flex items-center justify-between gap-4 flex-wrap">
                         <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
                           {item.readingTime}
                         </span>
+                        <time
+                          datetime={item.post.data.date}
+                          class="text-sm text-foreground/60"
+                        >
+                          {formatDate(item.post.data.date)}
+                        </time>
                       </div>
-                      <time
-                        datetime={item.post.data.date}
-                        class="text-sm text-foreground/60"
-                      >
-                        {formatDate(item.post.data.date)}
-                      </time>
-                    </div>
-                    <h2 class="text-2xl font-bold hover:text-primary transition-colors">
-                      {item.post.data.title}
-                    </h2>
-                    {item.post.data.excerpt && (
+                      <h3 class="text-xl font-bold hover:text-primary transition-colors">
+                        {item.title}
+                      </h3>
                       <p class="text-base text-foreground/70">
-                        {item.post.data.excerpt}
+                        {item.description}
                       </p>
-                    )}
-                    {item.post.data.tags.length > 0 && (
-                      <div class="flex flex-wrap gap-2">
-                        {item.post.data.tags.map((tag: string) => (
-                          <a
-                            href={`/blog/tags/${tag.toLowerCase()}/`}
-                            class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
-                          >
-                            {tag}
-                          </a>
-                        ))}
+                    </div>
+                  </article>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        posts.length === 0 ? (
+          <p class="text-foreground/60">No posts yet. Check back soon!</p>
+        ) : (
+          <div>
+            <h2 class="text-2xl font-bold mb-6">All posts</h2>
+            <div class="space-y-6">
+              {postsWithReadingTime.map((item: PostWithReadingTime) => (
+                <a
+                  href={`/blog/${item.post.id}/`}
+                  class="block transition-all hover:scale-[1.01]"
+                >
+                  <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
+                    <div class="p-6 space-y-4">
+                      <div class="flex items-center justify-between gap-4 flex-wrap">
+                        <div class="flex items-center gap-2">
+                          {item.post.data.featured && (
+                            <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
+                              Featured
+                            </span>
+                          )}
+                          <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
+                            {item.readingTime}
+                          </span>
+                        </div>
+                        <time
+                          datetime={item.post.data.date}
+                          class="text-sm text-foreground/60"
+                        >
+                          {formatDate(item.post.data.date)}
+                        </time>
                       </div>
-                    )}
-                  </div>
-                </article>
-              </a>
-            ))}
+                      <h3 class="text-2xl font-bold hover:text-primary transition-colors">
+                        {item.post.data.title}
+                      </h3>
+                      {item.post.data.excerpt && (
+                        <p class="text-base text-foreground/70">
+                          {item.post.data.excerpt}
+                        </p>
+                      )}
+                      {item.post.data.tags.length > 0 && (
+                        <div class="flex flex-wrap gap-2">
+                          {item.post.data.tags.map((tag: string) => (
+                            <a
+                              href={`/blog/tags/${tag.toLowerCase()}/`}
+                              class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
+                            >
+                              {tag}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </a>
+              ))}
+            </div>
           </div>
         )
       }

@@ -123,6 +123,52 @@ export function Contact() {
 
         <div className="max-w-2xl mx-auto">
           <TerminalWindow title="mail@divkix — compose">
+            <h2 className="text-lg font-semibold text-[oklch(0.7_0.2_140)] mb-4">
+              Get in touch
+            </h2>
+
+            {/* Hiring CTA */}
+            <div className="mb-8 pb-6 border-b border-[oklch(1_0_0/0.1)]">
+              <p className="text-sm leading-relaxed opacity-70">
+                Looking for 2026 new-grad SWE roles in backend, infrastructure,
+                devtools, AI tooling, and platform engineering.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a
+                  href="mailto:divkix@divkix.me"
+                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
+                  style={{ textShadow: "0 0 2px currentColor" }}
+                >
+                  Email
+                </a>
+                <a
+                  href="https://github.com/divkix"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
+                  style={{ textShadow: "0 0 2px currentColor" }}
+                >
+                  GitHub
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/divkix/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
+                  style={{ textShadow: "0 0 2px currentColor" }}
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="/resume/"
+                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
+                  style={{ textShadow: "0 0 2px currentColor" }}
+                >
+                  Resume
+                </a>
+              </div>
+            </div>
+
             {isSuccess ? (
               <TypewriterSuccess />
             ) : (
@@ -130,7 +176,12 @@ export function Contact() {
                 {/* Name field */}
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="contact-prompt shrink-0">{">"}</span>
+                    <span
+                      className="contact-prompt shrink-0"
+                      aria-hidden="true"
+                    >
+                      {">"}
+                    </span>
                     <label htmlFor="contact-name" className="sr-only">
                       Name
                     </label>
@@ -140,12 +191,19 @@ export function Contact() {
                       placeholder="name"
                       autoComplete="name"
                       className="contact-input"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.name ? "contact-name-error" : undefined
+                      }
                       {...register("name")}
                       disabled={isSubmitting}
                     />
                   </div>
                   {errors.name && (
-                    <p className="text-xs text-red-400 mt-1 ml-5 font-mono">
+                    <p
+                      id="contact-name-error"
+                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
+                    >
                       error: {errors.name.message}
                     </p>
                   )}
@@ -154,7 +212,12 @@ export function Contact() {
                 {/* Email field */}
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="contact-prompt shrink-0">{">"}</span>
+                    <span
+                      className="contact-prompt shrink-0"
+                      aria-hidden="true"
+                    >
+                      {">"}
+                    </span>
                     <label htmlFor="contact-email" className="sr-only">
                       Email
                     </label>
@@ -164,12 +227,19 @@ export function Contact() {
                       placeholder="email"
                       autoComplete="email"
                       className="contact-input"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.email ? "contact-email-error" : undefined
+                      }
                       {...register("email")}
                       disabled={isSubmitting}
                     />
                   </div>
                   {errors.email && (
-                    <p className="text-xs text-red-400 mt-1 ml-5 font-mono">
+                    <p
+                      id="contact-email-error"
+                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
+                    >
                       error: {errors.email.message}
                     </p>
                   )}
@@ -178,7 +248,12 @@ export function Contact() {
                 {/* Message field */}
                 <div>
                   <div className="flex items-start gap-2">
-                    <span className="contact-prompt shrink-0 mt-1">{">"}</span>
+                    <span
+                      className="contact-prompt shrink-0 mt-1"
+                      aria-hidden="true"
+                    >
+                      {">"}
+                    </span>
                     <label htmlFor="contact-message" className="sr-only">
                       Message
                     </label>
@@ -187,12 +262,19 @@ export function Contact() {
                       placeholder="message"
                       rows={5}
                       className="contact-input resize-none"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.message ? "contact-message-error" : undefined
+                      }
                       {...register("message")}
                       disabled={isSubmitting}
                     />
                   </div>
                   {errors.message && (
-                    <p className="text-xs text-red-400 mt-1 ml-5 font-mono">
+                    <p
+                      id="contact-message-error"
+                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
+                    >
                       error: {errors.message.message}
                     </p>
                   )}
@@ -231,6 +313,7 @@ export function Contact() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${social.label} profile`}
                 className="block text-[oklch(0.72_0.12_185)] hover:text-[oklch(0.82_0.12_185)] transition-colors"
                 style={{ textShadow: "0 0 2px currentColor" }}
               >

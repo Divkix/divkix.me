@@ -11,6 +11,7 @@ const navItems = [
   { label: "Contact", href: "/#contact" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Resume", href: "/resume/" },
 ];
 
 function isNavItemActive(
@@ -31,6 +32,9 @@ function isNavItemActive(
   }
   if (href === "/about") {
     return pathname === "/about";
+  }
+  if (href.startsWith("/resume")) {
+    return pathname.startsWith("/resume");
   }
   if (href.startsWith("/#")) {
     const section = href.replace("/#", "");

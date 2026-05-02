@@ -99,11 +99,11 @@ export function Highlights() {
   const stats = [
     {
       value: siteConfig.facts.impact,
-      label: "Users Impacted",
+      label: "Users Reached",
     },
     {
       value: siteConfig.facts.projects,
-      label: "Projects Shipped",
+      label: "Projects Built",
     },
     {
       value: siteConfig.facts.oss,

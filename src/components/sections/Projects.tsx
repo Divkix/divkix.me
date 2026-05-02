@@ -1,4 +1,4 @@
-import { ExternalLink, Globe } from "lucide-react";
+import { BookOpen, ExternalLink, Globe } from "lucide-react";
 import {
   type ComponentProps,
   type CSSProperties,
@@ -37,8 +37,22 @@ function getAccentColor(tags: readonly string[]): string {
   return getTagColor(tags[0] || "");
 }
 
+const FEATURED_PROJECT_NAMES = new Set([
+  "LogWell",
+  "Clickfolio",
+  "Alita Robot",
+  "PickMyClass",
+]);
+
+const PROJECT_BLOG_MAP: Record<string, string> = {
+  LogWell: "/blog/logwell-self-hosted-logging-platform",
+  Clickfolio: "/blog/clickfolio-full-stack-cloudflare-workers",
+  "Alita Robot": "/blog/scaling-telegram-bot-300k-users",
+  PickMyClass: "/blog/pickmyclass-never-miss-your-dream-class",
+};
+
 function isFeatured(project: Project): boolean {
-  return project.links.some((link: ProjectLink) => link.label === "Live");
+  return FEATURED_PROJECT_NAMES.has(project.name);
 }
 
 function useScrollReveal() {
@@ -158,20 +172,42 @@ function FeaturedProjectCard({
           </div>
         </div>
         <div className="flex gap-2 mt-6">
-          {project.links.map((link: ProjectLink) => (
-            <Button key={link.label} variant="outline" size="sm" asChild>
-              <a href={link.href} target="_blank" rel="noopener noreferrer">
-                {link.label === "Live" ? (
-                  <Globe className="mr-1.5 h-3.5 w-3.5" />
-                ) : link.label === "GitHub" ? (
-                  <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
-                ) : (
-                  <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
-                )}
-                {link.label}
+          {project.links.map((link: ProjectLink) => {
+            const linkLabel = link.label;
+            const ariaLabel =
+              linkLabel === "Live"
+                ? `View ${project.name} live`
+                : linkLabel === "GitHub"
+                  ? `View ${project.name} on GitHub`
+                  : `${linkLabel} - ${project.name}`;
+            return (
+              <Button key={link.label} variant="outline" size="sm" asChild>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={ariaLabel}
+                >
+                  {linkLabel === "Live" ? (
+                    <Globe className="mr-1.5 h-3.5 w-3.5" />
+                  ) : linkLabel === "GitHub" ? (
+                    <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
+                  ) : (
+                    <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                  )}
+                  {linkLabel}
+                </a>
+              </Button>
+            );
+          })}
+          {PROJECT_BLOG_MAP[project.name] && (
+            <Button variant="ghost" size="sm" asChild>
+              <a href={PROJECT_BLOG_MAP[project.name]}>
+                <BookOpen className="mr-1.5 h-3.5 w-3.5" />
+                Read more
               </a>
             </Button>
-          ))}
+          )}
         </div>
       </div>
       <div className="p-6 flex items-center">
@@ -236,20 +272,34 @@ function RegularProjectCard({
         </div>
         {project.links.length > 0 && (
           <div className="flex gap-2 mt-4">
-            {project.links.map((link: ProjectLink) => (
-              <Button key={link.label} variant="outline" size="sm" asChild>
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.label === "GitHub" ? (
-                    <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
-                  ) : link.label === "Live" ? (
-                    <Globe className="mr-1.5 h-3.5 w-3.5" />
-                  ) : (
-                    <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
-                  )}
-                  {link.label}
-                </a>
-              </Button>
-            ))}
+            {project.links.map((link: ProjectLink) => {
+              const linkLabel = link.label;
+              const ariaLabel =
+                linkLabel === "Live"
+                  ? `View ${project.name} live`
+                  : linkLabel === "GitHub"
+                    ? `View ${project.name} on GitHub`
+                    : `${linkLabel} - ${project.name}`;
+              return (
+                <Button key={link.label} variant="outline" size="sm" asChild>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={ariaLabel}
+                  >
+                    {linkLabel === "GitHub" ? (
+                      <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
+                    ) : linkLabel === "Live" ? (
+                      <Globe className="mr-1.5 h-3.5 w-3.5" />
+                    ) : (
+                      <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                    )}
+                    {linkLabel}
+                  </a>
+                </Button>
+              );
+            })}
           </div>
         )}
       </div>
@@ -332,6 +382,7 @@ export function Projects() {
                   : "text-muted-foreground hover:text-foreground",
               )}
               onClick={() => setSelectedTag(null)}
+              aria-pressed={selectedTag === null}
             >
               All
             </button>
@@ -349,6 +400,7 @@ export function Projects() {
                     : "text-muted-foreground hover:text-foreground",
                 )}
                 onClick={() => setSelectedTag(tag)}
+                aria-pressed={selectedTag === tag}
               >
                 {tag}
               </button>
@@ -358,6 +410,9 @@ export function Projects() {
 
         {featured.length > 0 && (
           <div className="space-y-6">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
+              Featured Projects
+            </h3>
             {featured.map((project: Project, index: number) => (
               <FeaturedProjectCard
                 key={project.name}
@@ -369,14 +424,19 @@ export function Projects() {
         )}
 
         {regular.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {regular.map((project: Project, index: number) => (
-              <RegularProjectCard
-                key={project.name}
-                project={project}
-                index={index}
-              />
-            ))}
+          <div className="space-y-6">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
+              More Projects
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {regular.map((project: Project, index: number) => (
+                <RegularProjectCard
+                  key={project.name}
+                  project={project}
+                  index={index}
+                />
+              ))}
+            </div>
           </div>
         )}
 

@@ -22,12 +22,15 @@ const lastName = siteConfig.name.split(" ")[1];
         {firstName} <br />{lastName}
       </h1>
 
-      <!-- Tagline: offset right for visual tension -->
-      <div class="w-full flex justify-end mt-6 hero-tagline">
-        <p class="text-muted-foreground text-lg md:text-xl max-w-sm text-right">
-          {siteConfig.tagline}
-        </p>
-      </div>
+      <!-- Sub-headline -->
+      <p class="text-muted-foreground text-lg md:text-xl max-w-lg mt-6 hero-subheadline">
+        Software engineer building devtools, observability systems, and edge-native apps.
+      </p>
+
+      <!-- Credibility / context -->
+      <p class="text-muted-foreground text-sm max-w-lg mt-3 opacity-70 hero-context">
+        MS CS @ ASU. SWE Intern @ Cloudflare. I build infra-flavored products with TypeScript, Go, Python, React, Docker, and Cloudflare's developer platform.
+      </p>
 
       <div class="flex flex-wrap gap-4 mt-10 hero-cta">
         <a
@@ -44,6 +47,19 @@ const lastName = siteConfig.name.split(" ")[1];
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+        <a
+          href="/resume/"
+          class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-border hover:bg-accent hover:text-accent-foreground h-11 px-6 btn-snap-hover"
+        >
+          Resume
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
           </svg>
         </a>
       </div>
@@ -103,10 +119,16 @@ const lastName = siteConfig.name.split(" ")[1];
     animation: hero-name-enter 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
   }
 
-  /* Tagline: slide in from right */
-  .hero-tagline {
+  /* Sub-headline: slide in from right */
+  .hero-subheadline {
     opacity: 0;
-    animation: hero-slide-right 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.35s forwards;
+    animation: hero-slide-right 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  }
+
+  /* Context: slide up */
+  .hero-context {
+    opacity: 0;
+    animation: hero-slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
   }
 
   /* CTAs: slide up */
@@ -185,7 +207,8 @@ const lastName = siteConfig.name.split(" ")[1];
     .hero-label,
     .hero-handle,
     .hero-name,
-    .hero-tagline,
+    .hero-subheadline,
+    .hero-context,
     .hero-cta,
     .hero-socials,
     .hero-terminal {

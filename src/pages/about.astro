@@ -35,16 +35,13 @@ const breadcrumbSchema = generateBreadcrumbSchema([
     <div class="max-w-4xl mx-auto space-y-12">
       <!-- Header -->
       <div class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">About Me</h1>
+        <h1 class="text-5xl font-display font-bold">What I build</h1>
         <p class="text-xl text-foreground/70">
           {siteConfig.tagline}
         </p>
-        <p class="text-foreground/70">
-          I'm {siteConfig.name}, known online as <strong>@{siteConfig.handle.toLowerCase()}</strong>.
-        </p>
       </div>
 
-      <!-- Personal Info -->
+      <!-- Professional Positioning -->
       <div class="glass-surface p-8 rounded-lg space-y-6">
         <div class="flex gap-6 items-start flex-col md:flex-row">
           <img
@@ -58,9 +55,17 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               <h2 class="text-2xl font-bold">{siteConfig.name}</h2>
               <p class="text-foreground/70">@{siteConfig.handle.toLowerCase()}</p>
             </div>
-            <p class="text-foreground/80">
-              {siteConfig.about}
-            </p>
+            <div class="space-y-4">
+              <p class="text-foreground/80 leading-relaxed">
+                Software engineer and MS CS student at Arizona State University focused on developer tools, observability, backend systems, and edge-native apps.
+              </p>
+              <p class="text-foreground/80 leading-relaxed">
+                I build products that solve real problems: LogWell for self-hosted logging, PickMyClass for ASU class alerts, Clickfolio for fast portfolio generation, and Alita Robot for Telegram community automation.
+              </p>
+              <p class="text-foreground/80 leading-relaxed">
+                I care about clean APIs, boring reliability, useful abstractions, and software people actually use.
+              </p>
+            </div>
             <div class="flex flex-wrap gap-4 text-sm text-foreground/60">
               <div class="flex items-center gap-2">
                 <svg
@@ -73,6 +78,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                   <circle cx="12" cy="10" r="3" />
@@ -90,6 +96,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <rect width="20" height="16" x="2" y="4" rx="2" />
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -121,6 +128,14 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         </div>
       </div>
 
+      <!-- Personal Interests -->
+      <div class="border border-border/40 rounded-lg p-6 space-y-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-foreground/50">Outside of code</h3>
+        <p class="text-sm text-foreground/60 leading-relaxed">
+          When I'm not at a keyboard, I'm trekking through Arizona trails, playing soccer, or tinkering with side projects that may or may not ever see the light of day.
+        </p>
+      </div>
+
     </div>
 
     <!-- Experience & Education Bento Grid - wider container for 3-column layout -->
@@ -138,7 +153,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
             <div class="text-4xl font-bold text-primary mb-2">
               {siteConfig.facts.impact}
             </div>
-            <div class="text-foreground/70">Lives Impacted</div>
+            <div class="text-foreground/70">Users Reached</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-bold text-primary mb-2">
