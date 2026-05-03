@@ -22,10 +22,10 @@ tags:
   - Peter Steinberger
   - Moltbook
 published: true
-tldr: "OpenClaw — the open-source AI agent that went from Clawdbot to 180K+ GitHub stars in 3 months — is genuinely impressive as a concept and genuinely frustrating as a product. The voice calls work, WhatsApp integration is surreal, but it burns tokens like a furnace, has 512 documented vulnerabilities, and forgets what you told it yesterday. None of that matters as much as this: OpenClaw is building the infrastructure layer for persistent AI agents. The product will mature. The paradigm is already here."
+tldr: "OpenClaw — the open-source AI agent that went from Clawdbot to 180K+ GitHub stars in 3 months — is impressive as a concept and frustrating as a product. The voice calls work, WhatsApp integration is surreal, but it burns tokens like a furnace, has 512 documented vulnerabilities, and forgets what you told it yesterday. None of that matters as much as this: OpenClaw is building the infrastructure layer for persistent AI agents. The product will mature. The paradigm is already here."
 keyTakeaways:
   - "OpenClaw is the fastest-growing open-source AI project of 2026 (180K+ stars), but 'popular' ≠ 'production-ready.'"
-  - "The voice call feature (via Twilio/ElevenLabs) is genuinely the most futuristic thing I've used this year."
+  - "The voice call feature (via Twilio/ElevenLabs) is the most futuristic thing I've used this year."
   - "Security is a nightmare: 512 vulnerabilities, CVE-2026-25253 (RCE), exposed API keys across 135K+ instances."
   - "Running costs ($10-25/day with Claude Opus) make this an expensive experiment, not a daily driver."
   - "The real story isn't the product — it's the infrastructure being built: persistent memory, multi-channel messaging, agent-to-agent networks (Moltbook)."
@@ -45,7 +45,7 @@ faq:
 
 I spent two weeks looking for the moment OpenClaw would click.
 
-You know that moment with a new tool — the one where you stop evaluating and start depending on it. Where it shifts from "interesting experiment" to "I can't go back." I kept waiting for that with OpenClaw. Setting it up on WhatsApp and Telegram, wiring in Twilio for voice calls, routing through OpenRouter to avoid burning $25/day on Claude Opus directly.
+You know that moment with a new tool — the one where you stop evaluating and start depending on it. Where it shifts from "interesting experiment" to "I can't go back." I kept waiting for that with OpenClaw — setting it up on WhatsApp and Telegram, wiring in Twilio for voice calls, routing through OpenRouter to avoid burning $25/day on Claude Opus directly.
 
 The voice call moment was surreal. I dialed a number, heard a voice that sounded almost human, and had a conversation with an AI agent that remembered what I'd told it on Telegram three hours earlier. It knew my project context. It asked follow-up questions. For about ninety seconds, I felt like I was living in a movie.
 
@@ -59,7 +59,7 @@ The story starts with Peter Steinberger, an Austrian developer who founded **PSP
 
 In November 2025, over a single weekend, he built the first version of what would become OpenClaw. It was called **Clawdbot** then — derived from "Clawd," his personal AI assistant. By January 2026, Anthropic sent a trademark notice. He renamed it to **Moltbot** on January 27. Three days later, on January 30, he renamed it again to **OpenClaw**. The fastest triple rebrand in open-source history.
 
-The numbers are staggering. OpenClaw hit 100K GitHub stars in roughly two days — peaking at 710 stars per hour. For context, React took about 8 years to reach 100K stars. Linux took 12 years. Kubernetes took 10. OpenClaw did it in a weekend. As of today, it sits at **180K+ stars** with 20K+ forks. Steinberger alone has made 6,600+ commits in January 2026. His own quote: "I ship code I don't read."
+The numbers: OpenClaw hit 100K GitHub stars in roughly two days — peaking at 710 stars per hour. For context, React took about 8 years to reach 100K stars. Linux took 12 years. Kubernetes took 10. OpenClaw did it in a weekend. As of today, it sits at **180K+ stars** with 20K+ forks. Steinberger alone has made 6,600+ commits in January 2026. His own quote: "I ship code I don't read."
 
 Architecturally, it's a **Node.js Gateway** using a hub-and-spoke model. The Gateway runs as a background daemon on your machine, connects to messaging platforms (WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Google Chat, Mattermost, Microsoft Teams), and routes messages to LLM providers. It handles persistent memory, multi-agent routing, tool execution, and scheduled jobs. Think of it as a message broker that happens to have an AI brain.
 
@@ -75,13 +75,13 @@ Persistent memory across channels is what actually separates this from a regular
 
 Multi-channel routing means different agents for different purposes, all managed through the same Gateway — a coding assistant on Discord, a personal scheduler on WhatsApp, a research agent on Telegram. Each with its own model, personality, and tool access.
 
-Then there's Moltbook — described as "the world's first social network for AI agents," created by Matt Schlicht. It claimed 1.4 million registered agents. The concept is genuinely fascinating — agents discovering and communicating with other agents, forming networks, delegating tasks. But Computerworld found that roughly 99% of those agents were fake. One researcher registered 500,000 agents using a single agent. An unsecured database allowed commandeering any registered agent. The vision is compelling. The execution, right now, is a mess.
+Then there's Moltbook — described as "the world's first social network for AI agents," created by Matt Schlicht. It claimed 1.4 million registered agents. The concept is fascinating — agents discovering and communicating with other agents, forming networks, delegating tasks. But Computerworld found that roughly 99% of those agents were fake. One researcher registered 500,000 agents using a single agent. An unsecured database allowed commandeering any registered agent. The vision is compelling. The execution, right now, is a mess.
 
-## The Honest Downsides
+## What's Broken
 
 Let's talk about what's actually broken.
 
-**The security situation is bad.** A formal audit found **512 vulnerabilities**, 8 of them critical. The worst — CVE-2026-25253 — was a one-click remote code execution vulnerability via auth token exfiltration, rated CVSS 8.8. It's been patched in v2026.1.29, but the fact that it shipped at all tells you about the maturity of the codebase. A Cornell research report found that 26% of OpenClaw's npm packages contained vulnerabilities, calling the security posture "an absolute nightmare." SecurityScorecard discovered **135,000+ internet-exposed OpenClaw instances**. Dan Guido, CEO of Trail of Bits, personally submitted security fixes.
+The security situation is bad. A formal audit found **512 vulnerabilities**, 8 of them critical. The worst — CVE-2026-25253 — was a one-click remote code execution vulnerability via auth token exfiltration, rated CVSS 8.8. It's been patched in v2026.1.29, but the fact that it shipped at all tells you about the maturity of the codebase. A Cornell research report found that 26% of OpenClaw's npm packages contained vulnerabilities, calling the security posture "an absolute nightmare." SecurityScorecard discovered **135,000+ internet-exposed OpenClaw instances**. Dan Guido, CEO of Trail of Bits, personally submitted security fixes.
 
 To put it bluntly: if you're running OpenClaw exposed to the internet right now, you are a target.
 
@@ -102,15 +102,15 @@ Memory is unreliable. It remembers things — sometimes. Other times it forgets 
 
 Rapid updates break things constantly. Steinberger's pace is both OpenClaw's greatest strength and its most annoying weakness. Updates ship daily. Configurations change. Plugins break between versions. If you set up OpenClaw today and don't touch it for two weeks, there's a real chance something stops working.
 
-The honest assessment: **it's not Jarvis. It's a capable but frustrating intern** who occasionally forgets what you told them, costs more than you expected, and might accidentally leave the front door unlocked.
+The honest assessment: it's not Jarvis. It's a capable but frustrating intern who occasionally forgets what you told them, costs more than you expected, and might accidentally leave the front door unlocked.
 
 ## The Infrastructure Thesis — Why None of That Matters Long-Term
 
 Here's why I still think OpenClaw is the most important open-source project of 2026, despite everything above.
 
-Persistent agents are a genuinely different category. Every AI tool I use today — [Claude Code](/blog/ai-coding-tools-compared-2026/), ChatGPT, [LM Studio](/blog/lm-studio-local-ai-mac/) — is reactive. I open them, I ask something, I close them. OpenClaw agents are always on. They can message *you* first. They run scheduled tasks. They monitor things. The difference between a calculator and a spreadsheet is a useful analogy here — same underlying math, fundamentally different relationship with the user.
+Persistent agents work differently from chatbots. Every AI tool I use today — [Claude Code](/blog/ai-coding-tools-compared-2026/), ChatGPT, [LM Studio](/blog/lm-studio-local-ai-mac/) — is reactive. I open them, I ask something, I close them. OpenClaw agents are always on. They can message *you* first. They run scheduled tasks. They monitor things. The difference between a calculator and a spreadsheet is a useful analogy here — same underlying math, fundamentally different relationship with the user.
 
-OpenClaw's bet on messaging as the interface is smart. Instead of asking people to download a new app and build new habits, the AI shows up inside WhatsApp or Telegram or Discord — wherever people already communicate. Nobody needs to learn anything new. That sidesteps the adoption problem that kills most AI apps.
+Messaging as the interface avoids the adoption problem that kills most AI apps. Instead of asking people to download a new app and build new habits, the AI shows up inside WhatsApp or Telegram or Discord — wherever people already communicate. Nobody needs to learn anything new.
 
 Agent-to-agent networks are where this is heading regardless of whether OpenClaw specifically gets there. Moltbook's execution was a disaster, but the concept — agents that discover, communicate with, and delegate to each other — is real. Your personal agent talking to your company's agent. Scheduling agents coordinating across people. OpenClaw is building the plumbing for that category.
 

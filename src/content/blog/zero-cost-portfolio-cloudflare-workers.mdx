@@ -33,10 +33,10 @@ This isn't a flex post. It's the architecture breakdown of how divkix.me runs on
 
 Here's what powers this site:
 
-- **Next.js 15** (App Router, RSC)
-- **OpenNext** (`@opennextjs/cloudflare`) - the adapter that makes Next.js work on Workers
-- **Cloudflare Workers** - edge runtime using V8 isolates
-- **Wrangler** - Cloudflare's deployment CLI
+- Next.js 15 (App Router, RSC)
+- OpenNext (`@opennextjs/cloudflare`) - the adapter that makes Next.js work on Workers
+- Cloudflare Workers - edge runtime using V8 isolates
+- Wrangler - Cloudflare's deployment CLI
 
 The secret sauce is OpenNext. It's an open-source adapter that converts Next.js builds into formats that edge runtimes understand. You can't just deploy Next.js to Cloudflare Workers directly. OpenNext bridges the gap.
 
@@ -44,11 +44,11 @@ The secret sauce is OpenNext. It's an open-source adapter that converts Next.js 
 
 Vercel hosts Next.js perfectly. But here's why I left.
 
-The bandwidth limit hits in weird ways. 100GB sounds generous until you add images or get any kind of traffic spike. Cloudflare has no bandwidth cap — period.
+The bandwidth limit hits in weird ways. 100GB sounds generous until you add images or get any kind of traffic spike. Cloudflare has no bandwidth cap, period.
 
 Vercel owns Next.js. That's fine for integration, but it means you're a captive customer. If pricing or terms change, your migration options are limited. Cloudflare Workers runs on open web standards.
 
-Cold starts are the practical difference. Vercel's serverless functions use containers — 200-500ms on a cold start. Cloudflare Workers use V8 isolates, which are essentially lightweight JS contexts. Cold starts are 5ms. Not 5 seconds. 5 milliseconds.
+Cold starts are the practical difference. Vercel's serverless functions use containers, 200-500ms on a cold start. Cloudflare Workers use V8 isolates, which are lightweight JS contexts. Cold starts are 5ms. Not 5 seconds. 5 milliseconds.
 
 And global edge is just the default on Cloudflare. Vercel charges extra for it. Workers deploy to 330+ cities automatically with no configuration.
 
@@ -91,7 +91,7 @@ export function getBlogPosts() {
 }
 ```
 
-No `fs` module at runtime. The solution? **Prebuild everything.**
+No `fs` module at runtime. The solution? Prebuild everything.
 
 ### The Prebuild Pattern
 
@@ -203,23 +203,23 @@ First deploy took 2 minutes. Updates take 30-45 seconds.
 
 ## The Honest Downsides
 
-**1. Debugging Is Harder**
+1. Debugging Is Harder
 
 Local development uses Node.js. Production uses V8 isolates. Sometimes code works locally but breaks on Workers. You'll need to test with `wrangler pages dev` before deploying.
 
-**2. No Incremental Static Regeneration (ISR)**
+2. No Incremental Static Regeneration (ISR)
 
 Next.js ISR doesn't work on Workers. You get static or fully dynamic. No middle ground. For a portfolio, this doesn't matter. For a high-traffic blog, you'll need full SSR or static builds.
 
-**3. OpenNext Is Community-Maintained**
+3. OpenNext Is Community-Maintained
 
 Vercel isn't maintaining this. The community is. Updates lag behind Next.js releases. I'm on Next.js 15.0, OpenNext adapter works, but edge cases exist.
 
-**4. Limited Node.js APIs**
+4. Limited Node.js APIs
 
 `nodejs_compat` flag enables some APIs, but not everything. No child processes, no native modules, no complex crypto. Check compatibility before committing.
 
-**5. Build Times**
+5. Build Times
 
 OpenNext adds 10-15 seconds to build time. Not terrible, but noticeable. Vercel builds are faster because they control the entire stack.
 
@@ -231,7 +231,7 @@ Cloudflare charges after 100K requests/day. Let's math this out:
 - Next 10M requests = $5
 - 13M requests/month = $5 total
 
-Compare to Vercel Hobby (free) → Pro ($20/mo) jump. No middle ground.
+Compare to Vercel Hobby (free) to Pro ($20/mo) jump. No middle ground.
 
 For context, a site getting 13M requests/month is doing 430K requests/day. That's 180 requests/minute every minute of every day. Your portfolio won't hit this unless it's not a portfolio anymore.
 
@@ -253,7 +253,7 @@ I migrated in 3 hours. Most of that was rewriting the blog system to use prebuil
 
 Worth it if you want $0/month with no asterisks, you're building a portfolio or blog or anything low-traffic, and you're comfortable with edge runtime constraints. The cold start speed and global edge are genuinely nice, not just marketing.
 
-Probably not worth it if you need ISR, rely on Node.js-specific libraries, want zero-config deployment (Vercel is much easier there), or have a site that makes heavy use of database connections — Workers have connection pooling limits that bite you at scale.
+Probably not worth it if you need ISR, rely on Node.js-specific libraries, want zero-config deployment (Vercel is much easier there), or have a site that makes heavy use of database connections, Workers have connection pooling limits that bite you at scale.
 
 For divkix.me, Cloudflare Workers is perfect. No hosting bills, global performance, and the constraints force better architecture decisions. I prebuild everything anyway. Why not make it official?
 

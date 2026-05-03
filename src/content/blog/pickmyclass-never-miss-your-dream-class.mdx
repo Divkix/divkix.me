@@ -35,7 +35,7 @@ Sound familiar? It happened to me during my sophomore year.
 
 I needed CSE 310 with Professor Martinez. The class was full. I set phone alarms every hour. I checked between classes. I even woke up in the middle of the night to refresh the page. When a seat finally opened at 2:47 AM on a Tuesday, I was asleep. Someone else got it.
 
-That's when I remembered pickaclass.app—a tool that watched classes for you. It sent emails when seats opened up. Perfect solution, right? Except it shut down in 2023.
+That's when I remembered pickaclass.app, a tool that watched classes for you. It sent emails when seats opened up. Perfect solution, right? Except it shut down in 2023.
 
 So I built my own.
 
@@ -45,8 +45,8 @@ So I built my own.
 
 The system checks every 30 minutes for two things:
 
-- **Open seats** – Get notified the moment a full class has availability
-- **Instructor updates** – Know when "Staff" changes to an actual professor name
+- Open seats – Get notified the moment a full class has availability
+- Instructor updates – Know when "Staff" changes to an actual professor name
 
 No more constant refreshing. No more missed opportunities. Just an email when something changes.
 
@@ -133,7 +133,7 @@ Compare that to a traditional AWS setup that would run $200-500/month for the sa
 
 ## Working With (Not Against) ASU's Systems
 
-Web scraping has ethics. PickMyClass checks every 30 minutes — not every minute — and caps itself at 5 concurrent scraper instances. Failed requests use exponential backoff rather than hammering retry loops. The scraper identifies itself honestly instead of spoofing Googlebot. Circuit breakers kick in if ASU's systems are struggling, so the scraper backs off instead of piling on.
+Web scraping has ethics. PickMyClass checks every 30 minutes, not every minute, and caps itself at 5 concurrent scraper instances. Failed requests use exponential backoff rather than hammering retry loops. The scraper identifies itself honestly instead of spoofing Googlebot. Circuit breakers kick in if ASU's systems are struggling, so the scraper backs off instead of piling on.
 
 The goal is to be a good citizen. If everyone scraped irresponsibly, they'd block everyone.
 
@@ -141,17 +141,17 @@ The goal is to be a good citizen. If everyone scraped irresponsibly, they'd bloc
 
 Next.js 15 for the frontend, Cloudflare Workers for edge logic, Supabase for auth and real-time subscriptions, PostgreSQL with row-level security, Puppeteer for scraping, and Resend for emails.
 
-The dashboard updates live. Add a class watch and it appears instantly — when the cron job detects changes, your browser sees them without refreshing.
+The dashboard updates live. Add a class watch and it appears instantly, when the cron job detects changes, your browser sees them without refreshing.
 
 ## Why It Matters
 
-Getting the right class matters more than it probably should. The professor can make or break a subject. Timing affects whether you can hold a job or do an internship. And popular electives fill up in minutes — sometimes seconds.
+Getting the right class matters more than it probably should. The professor can make or break a subject. Timing affects whether you can hold a job or do an internship. And popular electives fill up in minutes, sometimes seconds.
 
 I missed a seat because I was asleep at 2:47 AM. That's a dumb reason to miss a class. PickMyClass fixes that specific problem: you watch your class, it watches the enrollment page, and you get an email the moment something opens. That's all it does.
 
 ## What I Learned
 
-The most useful thing was the 2,500x query optimization — not because the number is impressive, but because the fix was embarrassingly simple. I was just missing indexes. No architectural overhaul, no new infrastructure. Just a SQL query that fetched all watches at once instead of one at a time. I'd been taught "add indexes early" and somehow still forgot until real users made the slowness obvious.
+The most useful thing was the 2,500x query optimization, not because the number is impressive, but because the fix was embarrassingly simple. I was just missing indexes. No architectural overhaul, no new infrastructure. Just a SQL query that fetched all watches at once instead of one at a time. I'd been taught "add indexes early" and somehow still forgot until real users made the slowness obvious.
 
 The scraper work taught me something less obvious: Puppeteer is overkill most of the time, until it's the only thing that works. ASU's class search requires browser context to return real data. There's no way around it. Sometimes the annoying solution is just the right one.
 
@@ -161,6 +161,6 @@ I also learned to [instrument everything early](/blog/logwell-self-hosted-loggin
 
 [PickMyClass](https://pickmyclass.app) is running. 10,000+ users, $34/month, no serious outages.
 
-Extending it to other universities is theoretically straightforward — each school needs its own scraper config — but I haven't built that yet. ASU keeps me busy enough. If you're at another school and want to adapt it, the code is open to fork.
+Extending it to other universities is theoretically straightforward, each school needs its own scraper config, but I haven't built that yet. ASU keeps me busy enough. If you're at another school and want to adapt it, the code is open to fork.
 
 The thing I built to solve my own problem turns out to be the thing other people actually use. That's still a little surprising.
