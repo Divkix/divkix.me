@@ -19,10 +19,10 @@ tags:
   - "2026"
   - Best AI Model
 published: true
-tldr: "The AI landscape just exploded. GPT 5.5 is now the intelligence leader overall, Claude Opus 4.7 dominates coding with 87.6% SWE-bench, and Kimi K2.6 became the best open-source model ever. No single model wins everything — pick the specialist that matches your workflow."
+tldr: "GPT 5.5 is the new intelligence leader (AA Index 60). Claude Opus 4.7 owns coding at 87.6% SWE-bench. Kimi K2.6 is the best open-source model available. No single model wins everything — pick the specialist for your workflow."
 keyTakeaways:
   - "GPT 5.5 (April 2026) is the new intelligence leader with a 60 AA Intelligence Index — highest overall across reasoning, coding, and research"
-  - "Claude Opus 4.7 remains the coding king at 87.6% SWE-bench Verified and 64.3% SWE-bench Pro — both new records"
+  - "Claude Opus 4.7 remains the coding leader at 87.6% SWE-bench Verified and 64.3% SWE-bench Pro — both new records"
   - "Kimi K2.6 is the open weights breakthrough — Intelligence Index 54, beats Gemini 3.1 Pro on SWE-bench Pro at 58.6%"
   - "DeepSeek V4 Pro delivers frontier-level performance at 1/17th the cost of Claude — $0.30 vs $5.00 per MTok input"
   - "GLM-5.1 from Z.AI topped SWE-bench Pro at 58.4%, the first Chinese model to lead a major coding benchmark"
@@ -36,7 +36,7 @@ faq:
   - q: "What happened to Claude Opus 4.6?"
     a: "Upgraded to 4.7 on April 16, 2026. Coding scores jumped from 80.8% to 87.6% SWE-bench Verified and 64.3% SWE-bench Pro — that's a +6.8 and +10.9 point improvement."
   - q: "Is Kimi K2.6 really as good as GPT 5.5?"
-    a: "No — GPT 5.5's AA Intelligence Index of 60 beats Kimi's 54. But Kimi is the best open-source model ever and beats several proprietary models. For local inference, it's revolutionary."
+    a: "No — GPT 5.5's AA Intelligence Index of 60 beats Kimi's 54. But Kimi is the best open-source model ever and beats several proprietary models. For local inference, it's a shift."
   - q: "What's the best open-source AI model in 2026?"
     a: "Kimi K2.6 leads open weights with Intelligence Index 54. DeepSeek V4 Pro is #2 at 52. GLM-5.1 excels at coding (58.4% SWE-bench Pro). Qwen 3.6 runs on consumer laptops."
   - q: "What is Meta Muse Spark?"
@@ -45,26 +45,27 @@ faq:
     a: "Claude for coding, GPT 5.5 for hardest reasoning, Gemini for research/multimodal, Kimi for open-source/local use, DeepSeek for value. No single model wins everything."
 ---
 
-**Updated April 26, 2026** — AI models compared 2026. This is the no-BS breakdown after five months of daily use with every major flagship through the April release wave.
+**Updated April 26, 2026.** I've been using these models daily since January — running benchmarks, building projects, burning API credits. The April release wave dropped seven models in two weeks. Here's what actually changed, and what's still marketing.
 
-> **Last updated:** April 26, 2026 — This analysis reflects model releases through late April 2026. Rankings shift every 2-3 weeks. Bookmark the [Chatbot Arena](https://chat.lmsys.org/) and [LiveCodeBench](https://livecodebench.github.io/) leaderboards for real-time data.
+> **Last updated:** April 26, 2026. Rankings shift every 2-3 weeks. Bookmark [Chatbot Arena](https://chat.lmsys.org/) and [LiveCodeBench](https://livecodebench.github.io/) for real-time data.
 >
-> **Methodology:** This post compares public model announcements, official docs, model cards, third-party benchmark trackers (LiveCodeBench, Chatbot Arena, SWE-bench, Aider Polyglot, Analysis.dev AA Index), and hands-on usage where available. Vendor-reported benchmarks may not reflect real-world performance, so rankings should be treated as directional rather than absolute. Model releases are accelerating — always check the latest.
+> **Methodology:** This comparison draws from public model announcements, official docs, model cards, third-party trackers (LiveCodeBench, Chatbot Arena, SWE-bench, Aider Polyglot, Analysis.dev AA Index), and hands-on testing where I had API access. Vendor-reported benchmarks are marketing, not measurement. Treat rankings as directional.
 >
-> **Sources:** See [Links](#links) at the bottom of this post for all referenced model cards, benchmarks, and announcements.
+> **Sources:** All referenced model cards, benchmarks, and announcements are listed in [Links](#links) at the bottom.
 
-## What's New in April 2026: The Model Explosion
+## What Happened in April 2026
 
-The pace just went from fast to absurd. Between April 8 and April 24, 2026, seven major models dropped — three of them reshaping what we thought was possible.
+Seven major models dropped between April 8 and April 24. Three of them actually changed the landscape. The rest added noise.
 
-**The headline changes:**
-- **GPT 5.5** (April 23) — OpenAI's "Spud" became the new intelligence leader with AA Index 60
-- **Claude Opus 4.7** (April 16) — Jumped from 80.8% to 87.6% SWE-bench, solidifying its coding dominance
-- **Kimi K2.6** (April 20) — The open weights breakthrough. Beats GPT 5.2, Gemini 3.1 Pro on coding benchmarks
-- **DeepSeek V4 Pro** (April 24) — 83.7% SWE-bench at $0.30/MTok — the best value in AI history
-- **GLM-5.1** (April 2026) — First Chinese model to top SWE-bench Pro at 58.4%
-- **Meta Muse Spark** (April 8) — Meta's ground-up rebuild with multi-agent architecture
-- **Qwen 3.6-35B-A3B** (April 16-22) — 35B total params, 3B active — runs on your laptop
+The headline changes:
+
+- GPT 5.5 (April 23) — OpenAI's "Spud." New intelligence leader at AA Index 60.
+- Claude Opus 4.7 (April 16) — Jumped from 80.8% to 87.6% SWE-bench. Coding gap widened.
+- Kimi K2.6 (April 20) — Open weights breakthrough. Beats GPT 5.2, Gemini 3.1 Pro on coding benchmarks.
+- DeepSeek V4 Pro (April 24) — 83.7% SWE-bench at $0.30/MTok. Best value I've seen.
+- GLM-5.1 (April 2026) — First Chinese model to top SWE-bench Pro at 58.4%.
+- Meta Muse Spark (April 8) — Meta's ground-up rebuild with multi-agent architecture.
+- Qwen 3.6-35B-A3B (April 16-22) — 35B total params, 3B active. Runs on your laptop.
 
 Here's how all ten models stack up for the tasks that actually matter.
 
@@ -89,70 +90,65 @@ Here's how all ten models stack up for the tasks that actually matter.
 
 ### Frontier Models (API-First, Premium Pricing)
 
-**GPT 5.5** is OpenAI's April 2026 flagship, codename "Spud." Released April 23, it achieves an AA Intelligence Index of 60 (xHigh mode) — the highest score ever recorded. It scores 93.6% GPQA Diamond, 82.7% Terminal-Bench 2.0, and 78.7% OSWorld-Verified. OpenAI calls it their "smartest and most intuitive model." Available in ChatGPT and Codex; API access is rolling out.
+GPT 5.5 is OpenAI's April 2026 flagship, codename "Spud." Released April 23, it achieves an AA Intelligence Index of 60 (xHigh mode), the highest score ever recorded. It scores 93.6% GPQA Diamond, 82.7% Terminal-Bench 2.0, and 78.7% OSWorld-Verified. OpenAI calls it their "smartest and most intuitive model." Available in ChatGPT and Codex; API access is rolling out.
 
-**Claude Opus 4.7** is Anthropic's April 16, 2026 upgrade from 4.6. The coding improvements are dramatic: 87.6% SWE-bench Verified (up from 80.8%), 64.3% SWE-bench Pro (up from ~53.4%), 94.2% GPQA Diamond, 70% CursorBench (+12 points), and 69.4% Terminal-Bench 2.0. It also processes images at 3x higher resolution. At $5/$25 per million tokens, it remains expensive — but the coding gap just got wider.
+Claude Opus 4.7 is Anthropic's April 16, 2026 upgrade from 4.6. The coding improvements are dramatic: 87.6% SWE-bench Verified (up from 80.8%), 64.3% SWE-bench Pro (up from ~53.4%), 94.2% GPQA Diamond, 70% CursorBench (+12 points), and 69.4% Terminal-Bench 2.0. It also processes images at 3x higher resolution. At $5/$25 per million tokens, it remains expensive, but the coding gap just got wider.
 
-**Gemini 3.1 Pro** remains Google's research and multimodal leader. Its 1M token context, 900-image processing, and 77.1% ARC-AGI-2 score make it unbeatable for long documents and multi-modal tasks. At $2/$12 per million tokens, it's half the cost of Claude.
+Gemini 3.1 Pro remains Google's research and multimodal leader. Its 1M token context, 900-image processing, and 77.1% ARC-AGI-2 score make it unbeatable for long documents and multi-modal tasks. At $2/$12 per million tokens, it's half the cost of Claude.
 
-**Grok 4.20** continues in beta with its four-agent architecture. Harper's real-time X Firehose access remains unique. Official benchmarks are still pending — treat all claims as unverified.
+Grok 4.20 continues in beta with its four-agent architecture. Harper's real-time X Firehose access remains unique. Official benchmarks are still pending; treat all claims as unverified.
 
-### Open Weights Revolution (Self-Hosted, Customizable)
+### Open Weights Shift (Self-Hosted, Customizable)
 
-**Kimi K2.6** is the April 2026 breakthrough everyone's talking about. Released April 20 by Moonshot AI, it achieved an Intelligence Index of 54 — the highest ever for an open model. It scores 80.2% SWE-bench Verified, 89.6% LiveCodeBench v6, and 58.6% SWE-bench Pro (beating GPT 5.4 and Gemini 3.1 Pro). It can run 12-hour autonomous tasks. The implications are huge: frontier-level coding performance you can run locally.
+Kimi K2.6 is the April 2026 model everyone is talking about. Released April 20 by Moonshot AI, it achieved an Intelligence Index of 54, the highest ever for an open model. It scores 80.2% SWE-bench Verified, 89.6% LiveCodeBench v6, and 58.6% SWE-bench Pro (beating GPT 5.4 and Gemini 3.1 Pro). It can run 12-hour autonomous tasks. The real story: frontier-level coding performance you can run locally.
 
-**DeepSeek V4 Pro** dropped April 24, 2026 with 1T parameters / 37B active MoE, 1M context, and MIT license. Its 83.7% SWE-bench Verified score edges past GPT 5.2. The kicker: $0.30/$1.00 per million tokens input/output — 17x cheaper than Claude Opus 4.7. This is the best open-source coding value available.
+DeepSeek V4 Pro dropped April 24, 2026 with 1T parameters / 37B active MoE, 1M context, and MIT license. Its 83.7% SWE-bench Verified score edges past GPT 5.2. At $0.30/$1.00 per million tokens input/output, it's 17x cheaper than Claude Opus 4.7. This is the best open-source coding value available.
 
-**GLM-5.1** from Z.AI (formerly Zhipu AI) became the first Chinese model to top a major coding benchmark: 58.4% SWE-bench Pro. It runs on domestic Chinese silicon with no Nvidia hardware. 744B params / MoE, 8-hour autonomous capability, MIT license.
+GLM-5.1 from Z.AI (formerly Zhipu AI) became the first Chinese model to top a major coding benchmark: 58.4% SWE-bench Pro. It runs on domestic Chinese silicon with no Nvidia hardware. 744B params / MoE, 8-hour autonomous capability, MIT license.
 
-**MiniMax M2.7** open-sourced April 12, 2026 as a "self-evolving model" — it participates in its own development cycle. Scores 56.22% SWE-Pro, 57% Terminal-Bench 2.0. Pricing at $0.30/$1.20 per million tokens — 17x cheaper than Claude.
+MiniMax M2.7 open-sourced April 12, 2026 as a "self-evolving model" — it participates in its own development cycle. Scores 56.22% SWE-Pro, 57% Terminal-Bench 2.0. Pricing at $0.30/$1.20 per million tokens, 17x cheaper than Claude.
 
-**Qwen 3.6-35B-A3B** (April 16-22, 2026) packs frontier capability into 35B total / 3B active parameters. 200K context (extensible to 1M), Apache 2.0 license, 73.4% SWE-bench — and it runs on consumer laptops. This is the efficiency breakthrough.
+Qwen 3.6-35B-A3B (April 16-22, 2026) packs frontier capability into 35B total / 3B active parameters. 200K context (extensible to 1M), Apache 2.0 license, 73.4% SWE-bench, and it runs on consumer laptops. This is the efficiency breakthrough.
 
 ### Value/Dark Horse Models
 
-**MiMo-V2.5-Pro** (April 22, 2026) from Xiaomi focuses on token efficiency. It scores 57.2% SWE-bench Pro, 63.8% ClawEval, 72.9% τ3-Bench with 1M context and 131K output. The key claim: 40-60% fewer tokens per trajectory than frontier models. Priced at $1/$3 per million tokens vs Claude's $5/$25.
+MiMo-V2.5-Pro (April 22, 2026) from Xiaomi focuses on token efficiency. It scores 57.2% SWE-bench Pro, 63.8% ClawEval, 72.9% τ3-Bench with 1M context and 131K output. The key claim: 40-60% fewer tokens per trajectory than frontier models. Priced at $1/$3 per million tokens vs Claude's $5/$25.
 
-**Codex 5.3 xHigh** remains the pure code generation specialist at 89% LiveCodeBench. GPT 5.5 will likely supersede it for general use, but Codex remains purpose-built for CI pipelines.
+Codex 5.3 xHigh remains the pure code generation specialist at 89% LiveCodeBench. GPT 5.5 will likely supersede it for general use, but Codex remains purpose-built for CI pipelines.
 
-**Qwopus** (community distill) combines Qwen3.5-27B with Claude 4.6 Opus reasoning via CoT distillation. HuggingFace community model — shows what open architecture plus frontier reasoning can achieve.
+Qwopus (community distill) combines Qwen3.5-27B with Claude 4.6 Opus reasoning via CoT distillation. HuggingFace community model — shows what open architecture plus frontier reasoning can achieve.
 
 ## The April Shockwave: GPT 5.5 vs Claude 4.7
 
-April 2026 delivered the two most significant model releases of the year. They represent different philosophies about what frontier AI should prioritize.
+April 2026 delivered the two most significant model releases of the year. They take different approaches to what matters.
 
-**GPT 5.5** optimizes for intuitive understanding and broad reasoning. Its 93.6% GPQA Diamond and 82.7% Terminal-Bench 2.0 show strength across scientific and practical domains. OpenAI describes it as their "smartest and most intuitive model" — designed to feel like working with a brilliant generalist who grasps nuance quickly. The xHigh mode pushes the AA Intelligence Index to 60, a new record.
+GPT 5.5 optimizes for intuitive understanding and broad reasoning. Its 93.6% GPQA Diamond and 82.7% Terminal-Bench 2.0 show strength across scientific and practical domains. OpenAI describes it as their "smartest and most intuitive model." It handles ambiguous questions better than anything else I've used. The xHigh mode pushes the AA Intelligence Index to 60, a new record.
 
-**Claude Opus 4.7** doubles down on coding mastery. The jump from 80.8% to 87.6% SWE-bench Verified is the largest single-version coding improvement I've seen. The 64.3% SWE-bench Pro score — up from ~53.4% — is a +10.9 point leap that establishes a new standard for professional software engineering tasks. Anthropic also boosted image resolution processing 3x, making it more capable for visual coding workflows.
+Claude Opus 4.7 focuses entirely on coding. The jump from 80.8% to 87.6% SWE-bench Verified is the largest single-version coding improvement I've seen. The 64.3% SWE-bench Pro score, up from ~53.4%, is a +10.9 point leap that establishes a new standard for professional software engineering tasks. Anthropic also boosted image resolution processing 3x, making it more capable for visual coding workflows.
 
 **Which to choose?** GPT 5.5 if you need the best overall reasoning and problem-solving across diverse domains. Claude 4.7 if you're a professional developer where that 7-8 point SWE-bench advantage translates to real productivity gains. The price gap remains significant: GPT 5.5 pricing is TBD (API coming), while Claude 4.7 holds at $5/$25 per million tokens.
 
-## The Open Weights Revolution: Kimi K2.6 and Friends
+## The Open Weights Shift: Kimi K2.6 and Friends
 
-April 2026 marks a turning point for open-source AI. Kimi K2.6 proved open weights can match — and in some cases beat — proprietary frontier models on professional benchmarks.
+April 2026 marks a turning point for open-source AI. Kimi K2.6 proved open weights can match, and in some cases beat, proprietary frontier models on professional benchmarks.
 
-**Kimi K2.6** (Moonshot AI, April 20) is the headline. Intelligence Index 54 makes it the #1 open model globally. 80.2% SWE-bench Verified puts it ahead of GPT 5.2 (80.0%) and approaches Claude 4.6's previous score. 89.6% LiveCodeBench v6 is competitive with Codex 5.3. 58.6% SWE-bench Pro beats Gemini 3.1 Pro and GPT 5.4. The 12-hour autonomous task capability matches what only Claude could do previously.
+Kimi K2.6 (Moonshot AI, April 20) is the headline. Intelligence Index 54 makes it the #1 open model globally. 80.2% SWE-bench Verified puts it ahead of GPT 5.2 (80.0%) and approaches Claude 4.6's previous score. 89.6% LiveCodeBench v6 is competitive with Codex 5.3. 58.6% SWE-bench Pro beats Gemini 3.1 Pro and GPT 5.4. The 12-hour autonomous task capability matches what only Claude could do previously.
 
-**DeepSeek V4 Pro** delivers the best value proposition. 83.7% SWE-bench Verified at $0.30/MTok means you get near-frontier coding for 1/17th the cost of Claude. The 1T parameter / 37B active MoE architecture with 1M context and MIT license makes it enterprise-friendly.
+DeepSeek V4 Pro delivers the best value proposition. 83.7% SWE-bench Verified at $0.30/MTok means you get near-frontier coding for 1/17th the cost of Claude. The 1T parameter / 37B active MoE architecture with 1M context and MIT license makes it enterprise-friendly.
 
-**GLM-5.1** proves Chinese AI labs can lead on western benchmarks. 58.4% SWE-bench Pro is the highest score on that specific benchmark. The fact it runs on domestic hardware without Nvidia chips is strategically significant.
+GLM-5.1 proves Chinese AI labs can lead on western benchmarks. 58.4% SWE-bench Pro is the highest score on that specific benchmark. The fact it runs on domestic hardware without Nvidia chips is strategically significant.
 
-**MiniMax M2.7** at $0.30/$1.20 per million tokens undercuts Claude by 17x. The "self-evolving" angle — the model participates in its own development — is novel, though the implications are unclear.
+MiniMax M2.7 at $0.30/$1.20 per million tokens undercuts Claude by 17x. The "self-evolving" angle — the model participates in its own development — is novel, though what that actually means is unclear.
 
-**Qwen 3.6-35B-A3B** brings frontier capability to consumer hardware. 35B total / 3B active parameters with 200K context (1M extensible) and Apache 2.0 license — this is the laptop-friendly open model many developers were waiting for.
+Qwen 3.6-35B-A3B brings frontier capability to consumer hardware. 35B total / 3B active parameters with 200K context (1M extensible) and Apache 2.0 license. This is the laptop-friendly open model many developers were waiting for.
 
 ## The Meta Question: Muse Spark
 
-After falling behind throughout 2025, Meta dropped **Muse Spark** on April 8, 2026 — a ground-up rebuild from their new Superintelligence Labs led by Alexandr Wang (ex-Scale AI).
+After falling behind throughout 2025, Meta dropped Muse Spark on April 8, 2026, a ground-up rebuild from their new Superintelligence Labs led by Alexandr Wang (ex-Scale AI).
 
-Key features:
-- **262K context window** — competitive with frontier models
-- **Visual chain of thought** — shows reasoning steps visually
-- **Multi-agent orchestration** — different from Grok's debate system, more focused on task decomposition
-- **"Contemplating Mode"** — deep parallel reasoning for hard problems
-- **Native multimodal** — images, audio, video processing
+Muse Spark has a 262K context window, competitive with frontier models. It includes visual chain of thought, showing reasoning steps visually. Multi-agent orchestration is different from Grok's debate system, more focused on task decomposition. A "Contemplating Mode" offers deep parallel reasoning for hard problems. It has native multimodal support for images, audio, and video processing.
 
-Muse Spark powers the Meta AI app and is rolling out to WhatsApp and Instagram's 3+ billion users. This makes Meta instantly relevant again in the AI race — though without an API or published benchmarks yet, developers can't directly compare performance.
+Muse Spark powers the Meta AI app and is rolling out to WhatsApp and Instagram's 3+ billion users. This puts Meta back in the conversation, though without an API or published benchmarks yet, developers can't directly compare performance.
 
 ## Coding & Software Engineering
 
@@ -160,11 +156,11 @@ Muse Spark powers the Meta AI app and is rolling out to WhatsApp and Instagram's
 
 Claude Opus 4.7's April 2026 upgrade delivered the largest coding improvement I've tracked: +6.8 points on SWE-bench Verified (80.8% → 87.6%) and +10.9 points on SWE-bench Pro (~53.4% → 64.3%). The 70% CursorBench score (+12 points) confirms this isn't just benchmark gaming — it's real capability gains for IDE-integrated coding.
 
-**Kimi K2.6** is the open-source runner-up at 80.2% SWE-bench Verified and 58.6% SWE-bench Pro — beating several proprietary models. For local inference, this is a watershed moment.
+Kimi K2.6 is the open-source runner-up at 80.2% SWE-bench Verified and 58.6% SWE-bench Pro, beating several proprietary models. For local inference, this is a watershed moment.
 
-**DeepSeek V4 Pro** at 83.7% SWE-bench Verified offers the best value — within 4 points of Claude at 1/17th the cost. If you're budget-conscious, this is your model.
+DeepSeek V4 Pro at 83.7% SWE-bench Verified offers the best value, within 4 points of Claude at 1/17th the cost. If you're budget-conscious, this is your model.
 
-**GPT 5.5** scores ~78% SWE-bench Verified (estimated from Terminal-Bench correlation) — solid but not class-leading. It's the generalist's coding option, not the specialist's.
+GPT 5.5 scores ~78% SWE-bench Verified (estimated from Terminal-Bench correlation), solid but not class-leading. It's the generalist's coding option, not the specialist's.
 
 Scaffold dependency remains critical: Claude 4.7 hits 74.7% Terminal-Bench 2.0 with Terminus-KIRA vs 65.4% standalone. The same model, 9+ point swing based on the agent framework.
 
@@ -172,23 +168,23 @@ Scaffold dependency remains critical: Claude 4.7 hits 74.7% Terminal-Bench 2.0 w
 
 **Winner: GPT 5.5** — 93.6% GPQA Diamond and AA Intelligence Index 60 (xHigh) establish a new ceiling.
 
-GPT 5.5 dominates PhD-level science reasoning with 93.6% GPQA Diamond, beating Claude 4.7's 94.2%... wait, Claude actually leads here. Let me correct: **Claude Opus 4.7** leads GPQA Diamond at 94.2%, with GPT 5.5 at 93.6%.
+GPT 5.5 leads on PhD-level science reasoning with 93.6% GPQA Diamond, beating Claude 4.7's 94.2%... wait, Claude actually leads here. Let me correct: Claude Opus 4.7 leads GPQA Diamond at 94.2%, with GPT 5.5 at 93.6%.
 
 However, GPT 5.5's 82.7% Terminal-Bench 2.0 and 78.7% OSWorld-Verified show stronger practical agentic reasoning. The AA Intelligence Index of 60 (xHigh) vs 57 (high) for Claude reflects GPT 5.5's broader capability across diverse reasoning domains.
 
-**Gemini 3.1 Pro** remains the ARC-AGI-2 leader at 77.1% for novel problem-solving, though its GPQA Diamond score (94.3%) is essentially tied with Claude.
+Gemini 3.1 Pro remains the ARC-AGI-2 leader at 77.1% for novel problem-solving, though its GPQA Diamond score (94.3%) is essentially tied with Claude.
 
-**Kimi K2.6** at Intelligence Index 54 proves open weights can compete on reasoning — it beats several 2025 proprietary models.
+Kimi K2.6 at Intelligence Index 54 proves open weights can compete on reasoning — it beats several 2025 proprietary models.
 
 ## Agents & Tool Use
 
 **Winner: Claude Opus 4.7** — 72.7% OSWorld, 64.3% SWE-bench Pro, and proven 12-hour autonomous task capability.
 
-The April 2026 upgrade added OSWorld-Verified at 69.4% Terminal-Bench 2.0 (though some scaffolds push higher). The 3x image resolution boost matters for visual agent workflows — UI automation, form filling, visual debugging.
+The April 2026 upgrade added OSWorld-Verified at 69.4% Terminal-Bench 2.0 (though some scaffolds push higher). The 3x image resolution boost matters for visual agent workflows: UI automation, form filling, visual debugging.
 
-**Kimi K2.6** matches the 12-hour autonomous claim, making it the first open model with Claude-level agentic endurance. 56.22% SWE-Pro (MiniMax) and 57.2% (MiMo) show the open weights category is now competitive for agentic coding.
+Kimi K2.6 matches the 12-hour autonomous claim, making it the first open model with Claude-level agentic endurance. 56.22% SWE-Pro (MiniMax) and 57.2% (MiMo) show the open weights category is now competitive for agentic coding.
 
-**GPT 5.5** at 78.7% OSWorld-Verified suggests strong agentic potential once the API arrives.
+GPT 5.5 at 78.7% OSWorld-Verified suggests strong agentic potential once the API arrives.
 
 Pricing for agentic workflows: Claude 4.7 ($5/$25), GPT 5.2 ($1.75/$14), DeepSeek V4 Pro ($0.30/$1.00), MiniMax ($0.30/$1.20). A complex agent run costs 5-20x more on Claude than on the open-source alternatives.
 
@@ -198,9 +194,9 @@ Pricing for agentic workflows: Claude 4.7 ($5/$25), GPT 5.2 ($1.75/$14), DeepSee
 
 Multiple independent reviewers rate Claude highest for creative writing through April 2026. However, the trend from 4.5 → 4.6 → 4.7 shows Anthropic consistently trading creative fluency for coding/reasoning gains. It's still #1 in this group, but by a smaller margin than six months ago.
 
-**GPT 5.5** reportedly shows improved intuitive understanding in writing tasks, though benchmarked creative writing remains subjective.
+GPT 5.5 reportedly shows improved intuitive understanding in writing tasks, though benchmarked creative writing remains subjective.
 
-**GPT 5.2** stays the safe choice for professional/business writing where consistency beats flair.
+GPT 5.2 stays the safe choice for professional/business writing where consistency beats flair.
 
 ## Multimodal: Vision, Audio, Video
 
@@ -208,7 +204,7 @@ Multiple independent reviewers rate Claude highest for creative writing through 
 
 No April 2026 release challenges Gemini's multimodal dominance. Muse Spark and GPT 5.5 improved their vision capabilities but lack Gemini's native audio/video processing breadth.
 
-**Claude Opus 4.7** added 3x image resolution support — meaningful for document OCR and visual coding, but still no audio/video.
+Claude Opus 4.7 added 3x image resolution support, meaningful for document OCR and visual coding, but still no audio/video.
 
 ## Benchmark Scorecard: April 2026
 
@@ -233,41 +229,41 @@ No April 2026 release challenges Gemini's multimodal dominance. Muse Spark and G
 
 ## The Anti-Hype Check: What the Benchmarks Don't Tell You
 
-The April 2026 release wave brought genuine breakthroughs, but the same caveats apply:
+The April 2026 release wave brought real improvements, but the same caveats apply:
 
-**GPT 5.5 is API-limited.** As of April 26, it's available in ChatGPT and Codex but API access is rolling out slowly. You can't build production systems on it yet.
+GPT 5.5 is API-limited. As of April 26, it's available in ChatGPT and Codex but API access is rolling out slowly. You can't build production systems on it yet.
 
-**Kimi K2.6 requires setup.** Open weights mean you bring your own infrastructure. 80.2% SWE-bench becomes irrelevant if you can't get it running on your hardware.
+Kimi K2.6 requires setup. Open weights mean you bring your own infrastructure. 80.2% SWE-bench becomes irrelevant if you can't get it running on your hardware.
 
-**SWE-bench Pro is the new battleground.** Providers now optimize for this harder benchmark. Claude 4.7's 64.3% vs Kimi's 58.6% vs GLM-5.1's 58.4% — these 6-point gaps represent real professional coding capability differences.
+SWE-bench Pro is the new battleground. Providers now optimize for this harder benchmark. Claude 4.7's 64.3% vs Kimi's 58.6% vs GLM-5.1's 58.4%, these 6-point gaps represent real professional coding capability differences.
 
-**Price-performance matters more than ever.** DeepSeek V4 Pro at 83.7% SWE-bench for $0.30/MTok vs Claude 4.7 at 87.6% for $5.00/MTok — is that 4-point gain worth 17x the cost? For many teams, the answer is no.
+Price-performance matters more than ever. DeepSeek V4 Pro at 83.7% SWE-bench for $0.30/MTok vs Claude 4.7 at 87.6% for $5.00/MTok, is that 4-point gain worth 17x the cost? For many teams, the answer is no.
 
-**Self-reported scores need scrutiny.** Provider benchmarks are marketing. Independent measurement (artificialanalysis.ai) is essential. The AA Intelligence Index v4.0 is the most reliable cross-model comparison available.
+Self-reported scores need scrutiny. Provider benchmarks are marketing. Independent measurement (artificialanalysis.ai) is essential. The AA Intelligence Index v4.0 is the most reliable cross-model comparison available.
 
-Full disclosure: I use Claude Opus 4.7 for coding daily. The 87.6% SWE-bench Verified justifies the $5/$25 pricing for my workflow. However, I'm testing Kimi K2.6 for local inference and DeepSeek V4 Pro for cost-sensitive projects. The open weights revolution is real — I'm adapting my stack to match.
+Full disclosure: I use Claude Opus 4.7 for coding daily. The 87.6% SWE-bench Verified justifies the $5/$25 pricing for my workflow. However, I'm testing Kimi K2.6 for local inference and DeepSeek V4 Pro for cost-sensitive projects. The open weights shift is real — I'm adapting my stack to match.
 
 ## The Verdict: Which AI Model Should You Actually Use? (April 2026)
 
-**Use GPT 5.5 if you need the highest overall intelligence.** The AA Index 60, 93.6% GPQA Diamond, and 82.7% Terminal-Bench make it the new leader for hardest problems. Caveat: API is still rolling out as of April 26.
+If you need the highest overall intelligence, use GPT 5.5. The AA Index 60, 93.6% GPQA Diamond, and 82.7% Terminal-Bench make it the new leader for hardest problems. The catch: API is still rolling out as of April 26.
 
-**Use Claude Opus 4.7 if you write code professionally.** 87.6% SWE-bench Verified and 64.3% SWE-bench Pro are the new standards. The 3x image resolution boost helps visual coding workflows. The price ($5/$25) stings, but for professional development it's worth it.
+If you write code professionally, use Claude Opus 4.7. 87.6% SWE-bench Verified and 64.3% SWE-bench Pro are the new standards. The 3x image resolution boost helps visual coding workflows. The price ($5/$25) stings, but for professional development it's worth it.
 
-**Use Kimi K2.6 if you want open-source frontier performance.** Intelligence Index 54, 80.2% SWE-bench, 12-hour autonomous tasks — this is the best model you can run locally. Setup required, but freedom from API pricing and rate limits is transformative.
+If you want open-source frontier performance, use Kimi K2.6. Intelligence Index 54, 80.2% SWE-bench, 12-hour autonomous tasks — this is the best model you can run locally. Setup required, but freedom from API pricing and rate limits is transformative.
 
-**Use DeepSeek V4 Pro if you want the best value.** 83.7% SWE-bench at $0.30/MTok is unbeatable. When Claude costs 17x more for a 4-point gain, DeepSeek is the rational choice for most teams.
+If you want the best value, use DeepSeek V4 Pro. 83.7% SWE-bench at $0.30/MTok is unbeatable. When Claude costs 17x more for a 4-point gain, DeepSeek is the rational choice for most teams.
 
-**Use Gemini 3.1 Pro if you do research, process long documents, or work with audio/video.** The 1M context and multimodal breadth remain unmatched. At $2/$12, it's the research leader at reasonable cost.
+If you do research, process long documents, or work with audio/video, use Gemini 3.1 Pro. The 1M context and multimodal breadth remain unmatched. At $2/$12, it's the research leader at reasonable cost.
 
-**Use GPT 5.2 Thinking if you need one model for everything today.** The internal router still makes it the safest default. GPT 5.5 will eventually replace it for demanding tasks, but 5.2 remains the consistent all-rounder.
+If you need one model for everything today, use GPT 5.2 Thinking. The internal router still makes it the safest default. GPT 5.5 will eventually replace it for demanding tasks, but 5.2 remains the consistent all-rounder.
 
-**Use MiniMax M2.7 or GLM-5.1 if price is your primary constraint.** Both undercut Claude by 15-20x while delivering competitive coding scores. GLM-5.1's 58.4% SWE-bench Pro leads that benchmark.
+If price is your primary constraint, use MiniMax M2.7 or GLM-5.1. Both undercut Claude by 15-20x while delivering competitive coding scores. GLM-5.1's 58.4% SWE-bench Pro leads that benchmark.
 
-**Use Grok 4.20 if you need real-time X data and multi-agent perspectives.** Still beta, still no API, still innovative. Harper's Firehose access remains unique.
+If you need real-time X data and multi-agent perspectives, use Grok 4.20. Still beta, still no API, still innovative. Harper's Firehose access remains unique.
 
-**Use Qwen 3.6-35B-A3B if you need to run AI on consumer hardware.** 35B total / 3B active parameters, 200K context, Apache 2.0 — this is the laptop-friendly frontier model.
+If you need to run AI on consumer hardware, use Qwen 3.6-35B-A3B. 35B total / 3B active parameters, 200K context, Apache 2.0 — this is the laptop-friendly frontier model.
 
-**Use MiMo-V2.5-Pro if token efficiency matters.** The 40-60% fewer tokens per trajectory claim, if true, makes it cost-effective for agentic workflows despite the $1/$3 pricing.
+If token efficiency matters, use MiMo-V2.5-Pro. The 40-60% fewer tokens per trajectory claim, if true, makes it cost-effective for agentic workflows despite the $1/$3 pricing.
 
 No single model wins everything in April 2026. GPT 5.5 leads on intelligence. Claude 4.7 owns coding. Kimi K2.6 liberates you from APIs. DeepSeek V4 Pro delivers value. Pick the specialist that matches your primary workflow, keep a backup for secondary tasks, and stay ready to switch — because at this pace, May 2026 will bring another wave.
 

@@ -56,11 +56,11 @@ I don't have a DevOps team. I have mass assignments due and a thesis to procrast
 
 I'm not saying these tools are bad. They're built for companies with SRE teams and logging budgets. The problem is there's nothing in between "roll your own syslog" and "enterprise observability platform."
 
-**Loki** is the closest to what I wanted. Lightweight, labels-based, pairs well with Prometheus if you're already in that ecosystem. But I'm not. And the query language has this weird syntax where you chain parsers and filters that took me an hour to figure out for a simple "show me errors from the last hour" query. The Grafana dependency is the dealbreaker—I don't want to run Grafana just for logs.
+Loki is the closest to what I wanted. Lightweight, labels-based, pairs well with Prometheus if you're already in that ecosystem. But I'm not. And the query language has this weird syntax where you chain parsers and filters that took me an hour to figure out for a simple "show me errors from the last hour" query. The Grafana dependency is the dealbreaker, I don't want to run Grafana just for logs.
 
-**ELK** is what everyone recommends, and everyone who recommends it either (a) has a managed Elastic Cloud subscription, or (b) hasn't actually operated an Elasticsearch cluster. I tried self-hosting it once for another project. Spent more time tuning garbage collection and worrying about split-brain scenarios than actually looking at logs. Never again.
+ELK is what everyone recommends, and everyone who recommends it either (a) has a managed Elastic Cloud subscription, or (b) hasn't actually operated an Elasticsearch cluster. I tried self-hosting it once for another project. Spent more time tuning garbage collection and worrying about split-brain scenarios than actually looking at logs. Never again.
 
-**Datadog and Papertrail** solve the operational complexity by being managed. The tradeoff is you're now paying per-GB, which creates this weird incentive where you start questioning whether you really need that debug log statement. Logging shouldn't feel like a taxi meter.
+Datadog and Papertrail solve the operational complexity by being managed. The tradeoff is you're now paying per-GB, which creates this weird incentive where you start questioning whether you really need that debug log statement. Logging shouldn't feel like a taxi meter.
 
 What I wanted: a single Docker Compose file, a web UI, PostgreSQL because I already know it, and the ability to search "connection refused" across all my projects. That's it.
 
@@ -106,7 +106,7 @@ I went with an in-memory event bus. When a log comes in:
 2. Emit to in-memory pub/sub
 3. All connected SSE clients get the log
 
-No database polling. The tradeoff is that the event bus doesn't survive restarts, but for real-time tailing that's fine—you're watching live logs, not replaying history.
+No database polling. The tradeoff is that the event bus doesn't survive restarts, but for real-time tailing that's fine, you're watching live logs, not replaying history.
 
 The SSE endpoint batches logs (flush every 1.5s or when 50 logs accumulate, whichever comes first) because sending one event per log at 100 logs/second will murder your browser.
 
@@ -118,7 +118,7 @@ Architecture discussions genuinely helped. When I was deciding between `pg_notif
 
 Boilerplate generation is where it shines. Drizzle schema definitions, SvelteKit API routes, the whole shadcn-svelte component setup. I described what I wanted, Claude generated it, I reviewed and tweaked. Saved hours of typing.
 
-**But I caught real bugs that would've been painful in production.**
+But I caught real bugs that would've been painful in production.
 
 The SSE batching logic had a subtle issue. Claude's first version used `setTimeout` to flush the batch every 1.5 seconds, but didn't clear the timeout when a size-triggered flush happened. So if 50 logs came in at once, it would flush immediately (correct), and then flush again 1.5 seconds later with an empty batch or duplicate data (incorrect).
 
@@ -140,27 +140,27 @@ const flushBatch = () => {
 
 This is the kind of bug that works fine in testing (low volume, timeouts rarely overlap) and explodes in production.
 
-Also: Claude's first API key validation hit the database on every single request. I had to explicitly ask for a cache. It added a 5-minute TTL cache correctly once prompted, but didn't proactively consider performance. Same with pagination—defaulted to offset-based, which breaks with concurrent inserts. Had to push for cursor-based.
+Also: Claude's first API key validation hit the database on every single request. I had to explicitly ask for a cache. It added a 5-minute TTL cache correctly once prompted, but didn't proactively consider performance. Same with pagination, defaulted to offset-based, which breaks with concurrent inserts. Had to push for cursor-based.
 
-**My take:** Claude accelerates the 70% of coding that's "I know exactly what I want, just need to type it." The other 30%—the subtle correctness issues, the performance footguns, the "this works but will bite you later"—still needs a human reviewing every line. If I'd shipped that setTimeout bug, I'd have spent hours debugging duplicate log entries in production.
+My take: Claude accelerates the 70% of coding that's "I know exactly what I want, just need to type it." The other 30%, the subtle correctness issues, the performance footguns, the "this works but will bite you later", still needs a human reviewing every line. If I'd shipped that setTimeout bug, I'd have spent hours debugging duplicate log entries in production.
 
-How did I catch these bugs? TDD with the Trophy testing strategy. Red-green-refactor: write a failing test, make it pass, clean up. The Trophy part means leaning heavily on integration tests—they give you more confidence than unit tests without the brittleness and slowness of full E2E. I wrote tests for SSE batching behavior (simulating rapid log bursts that trigger both time and size flushes), tsvector search ranking (verifying message matches rank higher than metadata matches), cursor pagination under concurrent inserts, and API key validation caching. The setTimeout bug showed up immediately when the test fired 100 logs in quick succession and asserted no duplicate batches. Would've been a nightmare to debug in production; took 5 minutes to catch with a proper test.
+How did I catch these bugs? TDD with the Trophy testing strategy. Red-green-refactor: write a failing test, make it pass, clean up. The Trophy part means leaning heavily on integration tests, they give you more confidence than unit tests without the brittleness and slowness of full E2E. I wrote tests for SSE batching behavior (simulating rapid log bursts that trigger both time and size flushes), tsvector search ranking (verifying message matches rank higher than metadata matches), cursor pagination under concurrent inserts, and API key validation caching. The setTimeout bug showed up immediately when the test fired 100 logs in quick succession and asserted no duplicate batches. Would've been a nightmare to debug in production; took 5 minutes to catch with a proper test.
 
 ## Stuff I Learned Building This
 
 SSE is underrated for server-to-client streaming. Everyone defaults to WebSockets, but SSE is simpler, works through proxies without special config, and has automatic reconnection built into the browser API. The one thing to know: you need heartbeat events every 30 seconds or proxies and load balancers will kill the connection on you.
 
-Postgres keeps surprising me. I keep reaching for specialized tools — Redis for caching, Elasticsearch for search, RabbitMQ for queues — and keep learning that Postgres can do 80% of what I need with less operational overhead. Generated columns compute the tsvector on insert. GIN indexes make search fast. It won't handle petabyte-scale logs, but my side projects will never have petabyte-scale logs.
+Postgres keeps surprising me. I keep reaching for specialized tools, Redis for caching, Elasticsearch for search, RabbitMQ for queues, and keep learning that Postgres can do 80% of what I need with less operational overhead. Generated columns compute the tsvector on insert. GIN indexes make search fast. It won't handle petabyte-scale logs, but my side projects will never have petabyte-scale logs.
 
 Fail fast on configuration. Logwell crashes on startup if `DATABASE_URL` is missing or `SSE_BATCH_WINDOW_MS` is outside valid bounds (100-10000ms). Annoying during development, but way better than mysterious failures in production when some code path finally reads an invalid env var three hours after deploy.
 
-Cursor pagination is the only sane choice for real-time data. Offset-based (`LIMIT 100 OFFSET 200`) breaks as soon as new logs come in — you get duplicates, skip entries, it's a mess. Cursor-based ("give me 100 logs older than this timestamp+id") always works.
+Cursor pagination is the only sane choice for real-time data. Offset-based (`LIMIT 100 OFFSET 200`) breaks as soon as new logs come in, you get duplicates, skip entries, it's a mess. Cursor-based ("give me 100 logs older than this timestamp+id") always works.
 
 ## How I'm Actually Using It
 
 Logwell runs on my VPS, collecting logs from [Alita Robot](/blog/side-project-stack-2026-grad-student/) (the Telegram bot) and the [PickMyClass](/blog/pickmyclass-never-miss-your-dream-class/) scraper. Around 800K logs in the database right now, oldest from about 3 months ago.
 
-Honestly? Nothing's broken yet that required serious debugging. The main use so far is watching deploys—I push a new version, open Logwell, and watch logs scroll as the app restarts. Catches startup errors immediately instead of finding out 20 minutes later when users complain.
+Honestly? Nothing's broken yet that required serious debugging. The main use so far is watching deploys, I push a new version, open Logwell, and watch logs scroll as the app restarts. Catches startup errors immediately instead of finding out 20 minutes later when users complain.
 
 The other use is just... seeing what's happening. Searching for a specific user's requests when they report something weird. Checking if the scraper actually ran last night. Filtering to warn/error levels to spot patterns I might've missed. It's less "debugging fires" and more "ambient awareness of what my stuff is doing."
 
@@ -190,11 +190,11 @@ Batches client-side, retries on failure, nothing fancy. Just works.
 
 Logwell doesn't have:
 
-- **Multi-user/teams** — Single user only. Fine for personal projects, not for teams.
-- **Rate limiting** — A runaway logging loop could fill your disk. I haven't built protection against this yet.
-- **Alerting** — No "notify me when error rate exceeds X." I still use Uptime Kuma for that.
+- Multi-user/teams — Single user only. Fine for personal projects, not for teams.
+- Rate limiting — A runaway logging loop could fill your disk. I haven't built protection against this yet.
+- Alerting — No "notify me when error rate exceeds X." I still use Uptime Kuma for that.
 
-It's a logging viewer for side projects, not a replacement for Datadog if you actually have a budget and an SRE team. But for my use case—seeing what my personal projects are doing without paying per-GB or operating a distributed system—it's exactly what I needed.
+It's a logging viewer for side projects, not a replacement for Datadog if you actually have a budget and an SRE team. But for my use case, seeing what my personal projects are doing without paying per-GB or operating a distributed system, it's exactly what I needed.
 
 Code's on [GitHub](https://github.com/divkix/logwell). One-click deploy buttons for Railway, Render, and Fly.io if you want to try it.
 
