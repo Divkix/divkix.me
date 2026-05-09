@@ -39,6 +39,7 @@
     "type-check": "astro check && tsc --noEmit",
     "format": "biome format --write .",
     "check:citations": "bun run scripts/check-citation-density.ts",
+    "audit:seo": "bun run scripts/seo-production-audit.ts",
     "prepare": "husky"
   },
   "lint-staged": {

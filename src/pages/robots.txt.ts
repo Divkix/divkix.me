@@ -24,7 +24,7 @@ Allow: /
 
 # Content Signals - AI content usage preferences per draft-romm-aipref-contentsignals
 # https://contentsignals.org/
-Content-Signal: ai-train=no, search=yes, ai-input=no
+Content-Signal: ai-train=no, search=yes, ai-input=yes
 Content-Signal: ai-search=yes
 Content-Signal: ai-synth=yes
 

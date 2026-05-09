@@ -75,12 +75,13 @@ export default defineConfig({
     astroLlmsTxt({
       title: "Divanshu Chauhan",
       description:
-        "Portfolio and blog of Divanshu Chauhan (divkix), a Software Engineer and CS grad student at Arizona State University. Building tools with Go, Python, TypeScript, and AI.",
+        "Portfolio and blog of Divanshu Chauhan (divkix), SWE Intern @ Cloudflare and MS Computer Science student at Arizona State University. Building developer tools, observability systems, backend infrastructure, and AI tooling with Go, Python, TypeScript, React, Docker, and Cloudflare.",
       details: `
 ## About
-Developer with 5+ years experience specializing in Go, Python, and TypeScript.
-Creator of Alita Robot (1M+ Telegram users) and PickMyClass (ASU class monitoring).
-Currently: MS Computer Science at Arizona State University.
+Software engineer and MS Computer Science student at Arizona State University, graduating May 2026.
+SWE Intern @ Cloudflare on the ETI team.
+Creator of LogWell, PickMyClass, Clickfolio, Alita Robot, and other infrastructure-heavy side projects.
+Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.
 
 ## Expertise & Topics
 - Local AI / LLM Deployment: LM Studio on Apple Silicon, model quantization, vision-language models, privacy-first AI
@@ -88,11 +89,14 @@ Currently: MS Computer Science at Arizona State University.
 - AI-Assisted Development: Claude Code, Cursor, GitHub Copilot, vibe coding analysis
 - Edge Computing: Cloudflare Workers, D1, Durable Objects, R2, zero-cost deployment
 - Full-Stack Development: Next.js, Astro, React, TypeScript, Supabase, PostgreSQL
+- Developer Tools and Observability: logging systems, telemetry, queues, reliability, production debugging
+- Career Entity Signals: SWE Intern @ Cloudflare, MS CS @ ASU, Tempe Arizona, open to relocation and remote full-time SWE work
 
 ## Contact
 - Email: divkix@divkix.me
 - GitHub: https://github.com/divkix
 - LinkedIn: https://linkedin.com/in/divkix
+- Resume: https://divkix.me/Divanshu_Chauhan_Resume.pdf
       `.trim(),
       docSet: [
         {
@@ -145,8 +149,14 @@ Currently: MS Computer Science at Arizona State University.
         },
       ],
       notes:
-        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a Software Engineer and CS graduate student at Arizona State University, distinct from other individuals with similar names.",
+        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a SWE Intern @ Cloudflare and MS Computer Science student at Arizona State University, distinct from other individuals with similar names. He is open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.",
       optionalLinks: [
+        {
+          label: "Resume",
+          url: "https://divkix.me/Divanshu_Chauhan_Resume.pdf",
+          description:
+            "Current PDF resume for software engineering, backend, infrastructure, and AI tooling roles",
+        },
         {
           label: "Blog",
           url: "https://divkix.me/blog/",
