@@ -5,7 +5,7 @@ export const siteConfig = {
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
-    "Software engineer and MS CS student at Arizona State University. I build developer tools, observability systems, backend infrastructure, and edge-native apps. SWE Intern @ Cloudflare.",
+    "Software engineer with an MS in Computer Science from Arizona State University. I build developer tools, observability systems, backend infrastructure, and edge-native apps. SWE Intern @ Cloudflare.",
   authorImage: "/divanshu-chauhan.jpeg",
   nationality: "Indian",
   address: {
@@ -17,7 +17,7 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Software engineer and MS CS student at ASU. SWE Intern @ Cloudflare building developer tools, observability systems, backend infrastructure, and edge-native apps.",
+      "Software engineer with an MS in Computer Science from ASU. SWE Intern @ Cloudflare building developer tools, observability systems, backend infrastructure, and edge-native apps.",
   },
 
   facts: {
@@ -78,11 +78,11 @@ export const siteConfig = {
     {
       company: "Arizona State University",
       location: "Tempe, Arizona, USA",
-      duration: "Aug 2023 – Present",
+      duration: "Aug 2023 – May 2026",
       positions: [
         {
           title: "Engineering Tutor",
-          year: "May 2024 – Present",
+          year: "May 2024 – May 2026",
           highlights: [
             "Tutoring CSE courses including CSE205, CSE230, CSE240, CSE310, CSE330, CSE360",
           ],
