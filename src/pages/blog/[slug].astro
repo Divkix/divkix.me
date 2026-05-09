@@ -36,6 +36,16 @@ interface Heading {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 
+// Get all posts for related posts section
+const allPosts = await getCollection("blog");
+const relatedPosts = allPosts
+  .filter((p: CollectionEntry<"blog">) => 
+    p.id !== post.id && 
+    p.data.published === true &&
+    p.data.tags.some((tag: string) => post.data.tags.includes(tag))
+  )
+  .slice(0, 3);
+
 const readingTimeMinutes = calculateReadingTime(post.body);
 const readingTime = `${readingTimeMinutes} min read`;
 const wordCount = post.body.trim().split(/\s+/).length;
@@ -124,25 +134,54 @@ const articleMeta = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
   )}
 
-  <!-- Table of Contents - Fixed sidebar on xl screens -->
+  <!-- Table of Contents - Fixed sidebar on xl screens, mobile toggle below -->
   {showToc && (
-    <aside class="hidden xl:block fixed top-24 left-8 w-64 max-h-[calc(100vh-8rem)] overflow-y-auto">
-      <nav class="space-y-2 text-sm">
-        <h3 class="font-semibold mb-4">Table of Contents</h3>
-        <ul class="space-y-2">
-          {toc.map((item: { id: string; text: string; level: number }) => (
-            <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
-              <a
-                href={`#${item.id}`}
-                class="text-foreground/60 hover:text-primary transition-colors"
-              >
-                {item.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </aside>
+    <>
+      {/* Mobile TOC Toggle */}
+      <div class="xl:hidden container mx-auto px-4 pt-4">
+        <details class="glass-surface rounded-lg border border-border/40">
+          <summary class="p-4 cursor-pointer font-semibold flex items-center justify-between">
+            <span>Table of Contents</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </summary>
+          <nav class="p-4 pt-0 space-y-2 text-sm">
+            <ul class="space-y-2">
+              {toc.map((item: { id: string; text: string; level: number }) => (
+                <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
+                  <a
+                    href={`#${item.id}`}
+                    class="text-foreground/60 hover:text-primary transition-colors"
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </details>
+      </div>
+
+      {/* Desktop TOC - Fixed sidebar */}
+      <aside class="hidden xl:block fixed top-24 left-8 w-64 max-h-[calc(100vh-8rem)] overflow-y-auto">
+        <nav class="space-y-2 text-sm">
+          <h3 class="font-semibold mb-4">Table of Contents</h3>
+          <ul class="space-y-2">
+            {toc.map((item: { id: string; text: string; level: number }) => (
+              <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
+                <a
+                  href={`#${item.id}`}
+                  class="text-foreground/60 hover:text-primary transition-colors"
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    </>
   )}
 
   <article id="main-content" class="container mx-auto px-4 py-20">
@@ -183,8 +222,8 @@ const articleMeta = {
           </time>
           {post.data.dateModified && (
             <>
-              <span>•</span>
-              <time datetime={post.data.dateModified}>
+              <span class="text-primary" aria-hidden="true">•</span>
+              <time datetime={post.data.dateModified} class="text-primary font-medium">
                 Updated {formatDate(post.data.dateModified)}
               </time>
             </>
@@ -268,6 +307,27 @@ const articleMeta = {
                 <h3 class="font-semibold text-lg">{faq.q}</h3>
                 <p class="mt-3 text-foreground/70">{faq.a}</p>
               </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedPosts.length > 0 && (
+        <section class="pt-8 border-t border-border/40" aria-labelledby="related-posts-heading">
+          <h2 id="related-posts-heading" class="text-2xl font-bold mb-6">Related Posts</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedPosts.map((relatedPost: CollectionEntry<"blog">) => (
+              <a
+                href={`/blog/${relatedPost.id}/`}
+                class="block glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 p-4"
+              >
+                <h3 class="font-semibold hover:text-primary transition-colors mb-2">
+                  {relatedPost.data.title}
+                </h3>
+                <p class="text-sm text-foreground/60 line-clamp-2">
+                  {relatedPost.data.excerpt}
+                </p>
+              </a>
             ))}
           </div>
         </section>

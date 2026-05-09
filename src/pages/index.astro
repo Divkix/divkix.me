@@ -9,21 +9,28 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import { baseUrl } from "@/lib/seo";
 
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
 const collectionPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "@id": `${baseUrl}/`,
   mainEntity: { "@id": `${baseUrl}/#author` },
-  name: `${siteConfig.name} (${siteConfig.handle}) — Portfolio`,
+  name: `${siteConfig.name} (${siteConfig.handle}) — Software Engineer & DevTools Builder`,
   description: siteConfig.seo.metaDescription,
   url: baseUrl,
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   inLanguage: "en-US",
 };
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+]);
 ---
 
 <SiteLayout showScrollProgress={true}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <Hero />
   <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Highlights client:visible />

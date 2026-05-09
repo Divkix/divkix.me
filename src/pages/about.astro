@@ -25,8 +25,8 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 ---
 
 <SiteLayout
-  title={`About ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
-  description={`About ${siteConfig.name}, known online as ${siteConfig.handle.toLowerCase()}. ${siteConfig.tagline}`}
+  title={`About ${siteConfig.name} (${siteConfig.handle.toLowerCase()}) — Software Engineer & Cloudflare Intern`}
+  description={`${siteConfig.name} (divkix) is a Software Engineer and MS CS student at ASU, currently SWE Intern @ Cloudflare. Building developer tools, observability systems, and edge-native apps with TypeScript, Go, Python, and Cloudflare.`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -46,7 +46,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         <div class="flex gap-6 items-start flex-col md:flex-row">
           <img
             src={siteConfig.authorImage}
-            alt={siteConfig.name}
+            alt={`${siteConfig.name} - Software Engineer and MS CS student at Arizona State University`}
             class="w-32 h-32 rounded-full object-cover"
             loading="eager"
           />
@@ -57,13 +57,16 @@ const breadcrumbSchema = generateBreadcrumbSchema([
             </div>
             <div class="space-y-4">
               <p class="text-foreground/80 leading-relaxed">
-                Software engineer with an MS in Computer Science from Arizona State University. I focus on developer tools, observability, backend systems, and edge-native apps.
+                Software engineer with an MS in Computer Science from Arizona State University (graduating May 2026). Currently a SWE Intern at Cloudflare on the Engineering Tooling and Infrastructure (ETI) team, building developer tools, observability systems, and backend infrastructure.
               </p>
               <p class="text-foreground/80 leading-relaxed">
-                I build products that solve real problems: LogWell for self-hosted logging, PickMyClass for ASU class alerts, Clickfolio for fast portfolio generation, and Alita Robot for Telegram community automation.
+                I build products that solve real problems: <a href="https://github.com/Divkix/Logwell" class="text-primary hover:underline">LogWell</a> for self-hosted logging and observability, <a href="https://pickmyclass.app" class="text-primary hover:underline">PickMyClass</a> for ASU course availability tracking, <a href="https://clickfolio.me" class="text-primary hover:underline">Clickfolio</a> for AI-powered portfolio generation on Cloudflare Workers, and <a href="https://github.com/Divkix/Alita_Robot" class="text-primary hover:underline">Alita Robot</a> for Telegram community automation (300K+ users).
               </p>
               <p class="text-foreground/80 leading-relaxed">
-                I care about clean APIs, boring reliability, useful abstractions, and software people actually use.
+                Technical focus: TypeScript, Go, Python, React, Cloudflare Workers/D1/R2/Queues/Durable Objects, PostgreSQL, Docker, and edge-native architectures. I care about clean APIs, boring reliability, useful abstractions, and software people actually use.
+              </p>
+              <p class="text-foreground/80 leading-relaxed">
+                Open to full-time software engineering roles (backend, infrastructure, developer tools, AI tooling) starting May/June 2026. Open to relocation and remote opportunities.
               </p>
             </div>
             <div class="flex flex-wrap gap-4 text-sm text-foreground/60">
