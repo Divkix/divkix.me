@@ -46,9 +46,10 @@ function isNavItemActive(
 export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [pathname, setPathname] = useState("");
+  const [pathname, setPathname] = useState(() =>
+    typeof window !== "undefined" ? window.location.pathname : "",
+  );
   const [navIndicator, setNavIndicator] = useState<{
     left: number;
     width: number;
@@ -58,12 +59,19 @@ export function Navbar() {
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const desktopNavRef = useRef<HTMLDivElement>(null);
   const navLinkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
 
+  // Page load / navigation updates
   useEffect(() => {
-    setPathname(window.location.pathname);
+    const handlePageLoad = () => {
+      setPathname(window.location.pathname);
+    };
+    document.addEventListener("astro:page-load", handlePageLoad);
+    return () =>
+      document.removeEventListener("astro:page-load", handlePageLoad);
+  }, []);
 
+  // Scroll-based navbar styling
+  useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let lastExecutedTime = 0;
     const wait = 100;
@@ -71,6 +79,7 @@ export function Navbar() {
     const handleScroll = () => {
       const now = Date.now();
       const remaining = wait - (now - lastExecutedTime);
+      const nextScrolled = window.scrollY > 50;
 
       if (remaining <= 0) {
         if (timeoutId) {
@@ -78,7 +87,7 @@ export function Navbar() {
           timeoutId = null;
         }
         lastExecutedTime = now;
-        setScrolled(window.scrollY > 50);
+        setScrolled(nextScrolled);
       } else if (!timeoutId) {
         timeoutId = setTimeout(() => {
           lastExecutedTime = Date.now();
@@ -88,17 +97,11 @@ export function Navbar() {
       }
     };
 
-    const handlePageLoad = () => {
-      setPathname(window.location.pathname);
-    };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    document.addEventListener("astro:page-load", handlePageLoad);
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("astro:page-load", handlePageLoad);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
@@ -132,94 +135,13 @@ export function Navbar() {
       },
     );
 
-    const elements: Element[] = [];
     for (const id of sections) {
       const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-        elements.push(element);
-      }
+      if (element) observer.observe(element);
     }
 
     return () => observer.disconnect();
   }, [pathname]);
-
-  useEffect(() => {
-    if (isOpen) {
-      requestAnimationFrame(() => setMenuVisible(true));
-    } else {
-      setMenuVisible(false);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen]);
-
-  // Focus trap for accessibility: keep focus within open mobile menu
-  useEffect(() => {
-    if (!isOpen) return;
-
-    requestAnimationFrame(() => {
-      closeButtonRef.current?.focus();
-    });
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-
-      const dialog = dialogRef.current;
-      if (!dialog) return;
-
-      const focusable = dialog.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (focusable.length === 0) return;
-
-      const first = focusable[0] as HTMLElement | undefined;
-      const last = focusable[focusable.length - 1] as HTMLElement | undefined;
-      if (!first || !last) return;
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
-
-  // Restore focus to hamburger when menu closes
-  const prevIsOpen = useRef(false);
-  useEffect(() => {
-    if (prevIsOpen.current && !isOpen) {
-      hamburgerRef.current?.focus();
-    }
-    prevIsOpen.current = isOpen;
-  }, [isOpen]);
 
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -242,21 +164,17 @@ export function Navbar() {
 
   // Sliding underline indicator for active desktop nav item
   useEffect(() => {
-    const updateIndicator = () => {
-      const container = desktopNavRef.current;
-      if (!container) return;
+    const container = desktopNavRef.current;
+    if (!container) return;
 
+    const update = () => {
       const activeItem = navItems.find((item) =>
         isNavItemActive(item.href, pathname, activeSection),
       );
-      if (!activeItem) {
-        setNavIndicator((s) => ({ ...s, visible: false }));
-        return;
-      }
+      const el = activeItem ? navLinkRefs.current.get(activeItem.href) : null;
 
-      const el = navLinkRefs.current.get(activeItem.href);
-      if (!el) {
-        setNavIndicator((s) => ({ ...s, visible: false }));
+      if (!activeItem || !el) {
+        setNavIndicator({ left: 0, width: 0, visible: false });
         return;
       }
 
@@ -269,13 +187,12 @@ export function Navbar() {
       });
     };
 
-    const raf = requestAnimationFrame(updateIndicator);
-    window.addEventListener("resize", updateIndicator);
-    document.addEventListener("astro:page-load", updateIndicator);
+    update();
+    window.addEventListener("resize", update);
+    document.addEventListener("astro:page-load", update);
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", updateIndicator);
-      document.removeEventListener("astro:page-load", updateIndicator);
+      window.removeEventListener("resize", update);
+      document.removeEventListener("astro:page-load", update);
     };
   }, [pathname, activeSection]);
 
@@ -369,64 +286,180 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Full-screen mobile overlay */}
-      {isOpen && (
-        <div
-          ref={dialogRef}
-          id="mobile-nav-dialog"
-          className="fixed inset-0 z-[100] flex flex-col bg-background"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-        >
-          <div className="flex h-16 items-center justify-between border-b border-border px-4">
-            <span className="font-mono text-lg tracking-tight text-foreground">
-              divkix<span className="text-primary">_</span>
-            </span>
-            <button
-              ref={closeButtonRef}
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="p-2 text-foreground transition-colors hover:text-primary"
-              aria-label="Close menu"
-            >
-              <X className="size-6" />
-            </button>
-          </div>
-          <nav
-            className="flex flex-1 flex-col items-start justify-center gap-6 px-8"
-            aria-label="Mobile navigation menu"
-          >
-            {navItems.map((item, i) => {
-              const isActive = getIsActive(item.href);
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleAnchorClick(e, item.href)}
-                  className={cn(
-                    "font-mono text-3xl font-medium",
-                    isActive
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                  style={{
-                    opacity: menuVisible ? 1 : 0,
-                    transform: menuVisible
-                      ? "translateX(0)"
-                      : "translateX(30px)",
-                    transition: `opacity 0.4s ease-out ${i * 50}ms, transform 0.4s ease-out ${i * 50}ms`,
-                  }}
-                  aria-label={`Navigate to ${item.label}`}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
-          </nav>
-        </div>
-      )}
+      <MobileNavDialog
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        getIsActive={getIsActive}
+        onAnchorClick={handleAnchorClick}
+        onClosed={() => hamburgerRef.current?.focus()}
+      />
     </>
+  );
+}
+
+interface MobileNavDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  getIsActive: (href: string) => boolean;
+  onAnchorClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
+  onClosed: () => void;
+}
+
+function MobileNavDialog({
+  isOpen,
+  onClose,
+  getIsActive,
+  onAnchorClick,
+  onClosed,
+}: MobileNavDialogProps) {
+  const [menuVisible, setMenuVisible] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const prevIsOpen = useRef(false);
+
+  // Keep latest callbacks in refs so keyboard listeners don't re-subscribe
+  const onCloseRef = useRef(onClose);
+  const onClosedRef = useRef(onClosed);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+    onClosedRef.current = onClosed;
+  }, [onClose, onClosed]);
+
+  useEffect(() => {
+    let raf: number | undefined;
+    if (isOpen) {
+      raf = requestAnimationFrame(() => setMenuVisible(true));
+    } else {
+      setMenuVisible(false);
+    }
+    return () => {
+      if (raf !== undefined) cancelAnimationFrame(raf);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onCloseRef.current();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen]);
+
+  // Focus trap for accessibility: keep focus within open mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+
+    requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0] as HTMLElement | undefined;
+      const last = focusable[focusable.length - 1] as HTMLElement | undefined;
+      if (!first || !last) return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  // Restore focus to hamburger when menu closes
+  useEffect(() => {
+    if (prevIsOpen.current && !isOpen) {
+      onClosedRef.current();
+    }
+    prevIsOpen.current = isOpen;
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      ref={dialogRef}
+      id="mobile-nav-dialog"
+      className="fixed inset-0 z-[100] flex flex-col bg-background"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+    >
+      <div className="flex h-16 items-center justify-between border-b border-border px-4">
+        <span className="font-mono text-lg tracking-tight text-foreground">
+          divkix<span className="text-primary">_</span>
+        </span>
+        <button
+          ref={closeButtonRef}
+          type="button"
+          onClick={onClose}
+          className="p-2 text-foreground transition-colors hover:text-primary"
+          aria-label="Close menu"
+        >
+          <X className="size-6" />
+        </button>
+      </div>
+      <nav
+        className="flex flex-1 flex-col items-start justify-center gap-6 px-8"
+        aria-label="Mobile navigation menu"
+      >
+        {navItems.map((item, i) => {
+          const isActive = getIsActive(item.href);
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => onAnchorClick(e, item.href)}
+              className={cn(
+                "font-mono text-3xl font-medium",
+                isActive
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+              style={{
+                opacity: menuVisible ? 1 : 0,
+                transform: menuVisible ? "translateX(0)" : "translateX(30px)",
+                transition: `opacity 0.4s ease-out ${i * 50}ms, transform 0.4s ease-out ${i * 50}ms`,
+              }}
+              aria-label={`Navigate to ${item.label}`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
+    </div>
   );
 }

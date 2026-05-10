@@ -5,8 +5,10 @@ interface ReadingProgressProps {
 }
 
 export function ReadingProgress({ readingTime }: ReadingProgressProps) {
-  const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [state, setState] = useState({
+    progress: 0,
+    isVisible: false,
+  });
 
   useEffect(() => {
     const article = document.querySelector("article");
@@ -30,8 +32,10 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
           Math.max((scrolled / articleHeight) * 100, 0),
           100,
         );
-        setProgress(progress);
-        setIsVisible(window.scrollY > 200);
+        setState({
+          progress,
+          isVisible: window.scrollY > 200,
+        });
       };
 
       if (remaining <= 0) {
@@ -61,6 +65,7 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
     };
   }, []);
 
+  const { progress, isVisible } = state;
   const timeRemaining = Math.ceil(readingTime * (1 - progress / 100));
   const circumference = 2 * Math.PI * 18;
   const strokeDashoffset = circumference - (progress / 100) * circumference;

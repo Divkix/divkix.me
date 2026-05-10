@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioningRef = useRef(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function ThemeToggle() {
   }, []);
 
   const toggleTheme = useCallback(async () => {
-    if (isTransitioning) return;
+    if (isTransitioningRef.current) return;
 
     const newTheme = theme === "dark" ? "light" : "dark";
 
@@ -32,7 +32,7 @@ export function ThemeToggle() {
       return;
     }
 
-    setIsTransitioning(true);
+    isTransitioningRef.current = true;
 
     const rect = buttonRef.current.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
@@ -70,9 +70,9 @@ export function ThemeToggle() {
 
       await transition.finished;
     } finally {
-      setIsTransitioning(false);
+      isTransitioningRef.current = false;
     }
-  }, [theme, isTransitioning]);
+  }, [theme]);
 
   // Don't render anything until mounted to avoid hydration mismatch
   if (!mounted) {

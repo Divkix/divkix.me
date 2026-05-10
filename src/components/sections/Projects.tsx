@@ -340,15 +340,22 @@ export function Projects() {
     });
   }, []);
 
+  // Store the latest callback in a ref so the resize listener
+  // always calls the current version without re-subscribing.
+  const updateIndicatorRef = useRef(updateIndicator);
   useEffect(() => {
-    updateIndicator(selectedTag || "all");
-  }, [selectedTag, updateIndicator]);
+    updateIndicatorRef.current = updateIndicator;
+  }, [updateIndicator]);
 
   useEffect(() => {
-    const handleResize = () => updateIndicator(selectedTag || "all");
+    updateIndicatorRef.current(selectedTag || "all");
+  }, [selectedTag]);
+
+  useEffect(() => {
+    const handleResize = () => updateIndicatorRef.current(selectedTag || "all");
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [selectedTag, updateIndicator]);
+  }, [selectedTag]);
 
   return (
     <section
