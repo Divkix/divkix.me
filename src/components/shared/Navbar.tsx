@@ -363,7 +363,7 @@ export function Navbar() {
               aria-expanded={isOpen}
               aria-controls="mobile-nav-dialog"
             >
-              <MenuIcon className="h-5 w-5" />
+              <MenuIcon className="size-5" />
             </button>
           </div>
         </div>
@@ -390,7 +390,7 @@ export function Navbar() {
               className="p-2 text-foreground transition-colors hover:text-primary"
               aria-label="Close menu"
             >
-              <X className="h-6 w-6" />
+              <X className="size-6" />
             </button>
           </div>
           <nav

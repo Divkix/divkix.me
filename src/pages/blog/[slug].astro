@@ -39,10 +39,11 @@ const { Content, headings } = await render(post);
 // Get all posts for related posts section
 const allPosts = await getCollection("blog");
 const relatedPosts = allPosts
-  .filter((p: CollectionEntry<"blog">) => 
-    p.id !== post.id && 
-    p.data.published === true &&
-    p.data.tags.some((tag: string) => post.data.tags.includes(tag))
+  .filter(
+    (p: CollectionEntry<"blog">) =>
+      p.id !== post.id &&
+      p.data.published === true &&
+      p.data.tags.some((tag: string) => post.data.tags.includes(tag)),
   )
   .slice(0, 3);
 

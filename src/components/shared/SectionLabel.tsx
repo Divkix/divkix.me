@@ -24,7 +24,7 @@ export function SectionLabel({
       )}
     >
       {"// "}
-      {number} — {label}
+      {number} / {label}
     </p>
   );
 }

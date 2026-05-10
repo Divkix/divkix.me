@@ -34,22 +34,24 @@ async function generateFavicons() {
   try {
     const pngBuffer = readFileSync(SOURCE_PNG);
 
-    // Generate PNG files at various sizes
-    for (const config of configs) {
-      await sharp(pngBuffer)
-        .resize(config.size, config.size)
-        .png()
-        .toFile(path.join(PUBLIC_DIR, config.name));
+    // Generate PNG files at various sizes concurrently
+    await Promise.all(
+      configs.map(async (config) => {
+        await sharp(pngBuffer)
+          .resize(config.size, config.size)
+          .png()
+          .toFile(path.join(PUBLIC_DIR, config.name));
 
-      console.log(`Generated ${config.name}`);
-    }
+        console.log(`Generated ${config.name}`);
+      }),
+    );
 
     // ICO embeds 16, 32, and 48px sizes in one file
-    const ico16 = await sharp(pngBuffer).resize(16, 16).png().toBuffer();
-
-    const ico32 = await sharp(pngBuffer).resize(32, 32).png().toBuffer();
-
-    const ico48 = await sharp(pngBuffer).resize(48, 48).png().toBuffer();
+    const [ico16, ico32, ico48] = await Promise.all([
+      sharp(pngBuffer).resize(16, 16).png().toBuffer(),
+      sharp(pngBuffer).resize(32, 32).png().toBuffer(),
+      sharp(pngBuffer).resize(48, 48).png().toBuffer(),
+    ]);
 
     const icoBuffer = await pngToIco([ico16, ico32, ico48]);
     writeFileSync(path.join(PUBLIC_DIR, "favicon.ico"), icoBuffer);

@@ -38,9 +38,10 @@ export function generatePersonSchema() {
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
-    sameAs: siteConfig.socials
-      .filter((s) => s.label !== "Email")
-      .map((s) => s.href),
+    sameAs: siteConfig.socials.reduce<string[]>((acc, s) => {
+      if (s.label !== "Email") acc.push(s.href);
+      return acc;
+    }, []),
     alumniOf: siteConfig.education.map((edu) => {
       const parts = edu.title.split(" — ");
       return {

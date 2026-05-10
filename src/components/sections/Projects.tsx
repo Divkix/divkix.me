@@ -92,9 +92,9 @@ function BrowserMockup({
     <div className="w-full rounded-xl overflow-hidden border border-border shadow-sm">
       <div className="flex items-center gap-2 px-4 py-2.5 bg-muted/60 border-b border-border">
         <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-red-400/70" />
-          <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
-          <div className="w-3 h-3 rounded-full bg-green-400/70" />
+          <div className="size-3 rounded-full bg-red-400/70" />
+          <div className="size-3 rounded-full bg-yellow-400/70" />
+          <div className="size-3 rounded-full bg-green-400/70" />
         </div>
         <div className="flex-1 mx-2 px-3 py-1 text-xs font-mono text-muted-foreground bg-background/60 rounded-md truncate">
           {url}
@@ -151,7 +151,9 @@ function FeaturedProjectCard({
       <div className="p-8 flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-2xl font-display font-bold">{project.name}</h3>
+            <h3 className="text-2xl font-display font-semibold">
+              {project.name}
+            </h3>
             {"period" in project && project.period && (
               <span className="text-xs font-mono text-muted-foreground shrink-0">
                 {project.period}
@@ -189,11 +191,11 @@ function FeaturedProjectCard({
                   aria-label={ariaLabel}
                 >
                   {linkLabel === "Live" ? (
-                    <Globe className="mr-1.5 h-3.5 w-3.5" />
+                    <Globe className="mr-1.5 size-3.5" />
                   ) : linkLabel === "GitHub" ? (
-                    <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
+                    <GitHubIcon className="mr-1.5 size-3.5" />
                   ) : (
-                    <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                    <ExternalLink className="mr-1.5 size-3.5" />
                   )}
                   {linkLabel}
                 </a>
@@ -203,7 +205,7 @@ function FeaturedProjectCard({
           {PROJECT_BLOG_MAP[project.name] && (
             <Button variant="ghost" size="sm" asChild>
               <a href={PROJECT_BLOG_MAP[project.name]}>
-                <BookOpen className="mr-1.5 h-3.5 w-3.5" />
+                <BookOpen className="mr-1.5 size-3.5" />
                 Read more
               </a>
             </Button>
@@ -248,7 +250,9 @@ function RegularProjectCard({
       <div className="p-6 flex flex-col justify-between h-full min-h-[200px]">
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-xl font-display font-bold">{project.name}</h3>
+            <h3 className="text-xl font-display font-semibold">
+              {project.name}
+            </h3>
             {"period" in project && project.period && (
               <span className="text-xs font-mono text-muted-foreground shrink-0">
                 {project.period}
@@ -289,11 +293,11 @@ function RegularProjectCard({
                     aria-label={ariaLabel}
                   >
                     {linkLabel === "GitHub" ? (
-                      <GitHubIcon className="mr-1.5 h-3.5 w-3.5" />
+                      <GitHubIcon className="mr-1.5 size-3.5" />
                     ) : linkLabel === "Live" ? (
-                      <Globe className="mr-1.5 h-3.5 w-3.5" />
+                      <Globe className="mr-1.5 size-3.5" />
                     ) : (
-                      <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                      <ExternalLink className="mr-1.5 size-3.5" />
                     )}
                     {linkLabel}
                   </a>
@@ -354,7 +358,7 @@ export function Projects() {
       <div className="space-y-12">
         <div className="space-y-4">
           <SectionLabel number="02" label="projects" />
-          <h2 className="text-4xl font-display font-bold">Projects</h2>
+          <h2 className="text-4xl font-display font-semibold">Projects</h2>
           <p className="text-muted-foreground max-w-2xl">
             A selection of projects I&apos;ve built across different
             technologies.

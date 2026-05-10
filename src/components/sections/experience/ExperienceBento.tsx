@@ -44,12 +44,12 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
     <div ref={ref} className="relative">
       <div className="absolute left-0 md:left-1/2 -translate-x-1/2 top-6 z-10">
         {isCurrentRole ? (
-          <span className="relative flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-background" />
+          <span className="relative flex size-4">
+            <span className="animate-ping absolute inline-flex size-full rounded-full bg-green-500 opacity-75" />
+            <span className="relative inline-flex rounded-full size-4 bg-green-500 border-2 border-background" />
           </span>
         ) : (
-          <span className="inline-flex rounded-full h-4 w-4 bg-muted-foreground/40 border-2 border-background" />
+          <span className="inline-flex rounded-full size-4 bg-muted-foreground/40 border-2 border-background" />
         )}
       </div>
 
@@ -84,10 +84,10 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
                     Active
                   </span>
                 )}
-                <h4 className="font-bold text-lg">{company.company}</h4>
+                <h4 className="font-semibold text-lg">{company.company}</h4>
               </div>
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                <MapPin className="w-3.5 h-3.5 shrink-0" />
+                <MapPin className="size-3.5 shrink-0" />
                 {company.location}
               </div>
             </div>
@@ -102,7 +102,7 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
                 key={`${company.company}-${position.title}-${position.year}`}
                 className="relative"
               >
-                <div className="absolute -left-[calc(0.5rem+1px)] top-1.5 w-2 h-2 rounded-full bg-primary/60" />
+                <div className="absolute -left-[calc(0.5rem+1px)] top-1.5 size-2 rounded-full bg-primary/60" />
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-2">
                     <h5
@@ -149,14 +149,14 @@ export function ExperienceBento() {
       <div className="space-y-12">
         <div className="space-y-4">
           <SectionLabel number="03" label="experience" />
-          <h2 className="text-4xl font-display font-bold">Experience</h2>
+          <h2 className="text-4xl font-display font-semibold">Experience</h2>
         </div>
 
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="rounded-xl bg-muted/50 border border-border p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-primary/10">
-                <GraduationCap className="w-5 h-5 text-primary" />
+                <GraduationCap className="size-5 text-primary" />
               </div>
               <h3 className="text-lg font-display font-semibold">Education</h3>
             </div>
@@ -167,7 +167,7 @@ export function ExperienceBento() {
                   className="flex-1 rounded-lg bg-card border border-border p-4"
                 >
                   <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-2">
-                    <Calendar className="w-3.5 h-3.5" />
+                    <Calendar className="size-3.5" />
                     {edu.year}
                   </div>
                   <h4 className="font-semibold text-sm">{edu.title}</h4>

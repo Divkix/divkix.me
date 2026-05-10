@@ -89,23 +89,27 @@ async function generateOGImage() {
       { width: 480, suffix: "-480" },
     ];
 
-    for (const size of responsiveSizes) {
-      const height = Math.round(size.width * (630 / 1200));
-      const responsiveOutput = OUTPUT_FILE.replace(
-        ".png",
-        `${size.suffix}.webp`,
-      );
+    await Promise.all(
+      responsiveSizes.map(async (size) => {
+        const height = Math.round(size.width * (630 / 1200));
+        const responsiveOutput = OUTPUT_FILE.replace(
+          ".png",
+          `${size.suffix}.webp`,
+        );
 
-      await sharp(Buffer.from(svgBackground))
-        .resize(size.width, height)
-        .webp({ quality: 80 })
-        .toFile(responsiveOutput);
+        await sharp(Buffer.from(svgBackground))
+          .resize(size.width, height)
+          .webp({ quality: 80 })
+          .toFile(responsiveOutput);
 
-      console.log(`Generated: ${responsiveOutput}`);
+        console.log(`Generated: ${responsiveOutput}`);
 
-      const responsiveStats = fs.statSync(responsiveOutput);
-      console.log(`File size: ${(responsiveStats.size / 1024).toFixed(2)} KB`);
-    }
+        const responsiveStats = fs.statSync(responsiveOutput);
+        console.log(
+          `File size: ${(responsiveStats.size / 1024).toFixed(2)} KB`,
+        );
+      }),
+    );
   } catch (error) {
     console.error("Error generating OG image:", error.message);
     process.exit(1);
