@@ -38,10 +38,12 @@ export function generatePersonSchema() {
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
-    sameAs: siteConfig.socials.reduce<string[]>((acc, s) => {
-      if (s.label !== "Email") acc.push(s.href);
-      return acc;
-    }, []),
+    sameAs: siteConfig.socials
+      .reduce<string[]>((acc, s) => {
+        if (s.label !== "Email") acc.push(s.href);
+        return acc;
+      }, [])
+      .concat(`${baseUrl}/mentions`),
     alumniOf: siteConfig.education.map((edu) => {
       const parts = edu.title.split(" — ");
       return {
@@ -78,6 +80,11 @@ export function generatePersonSchema() {
       };
     }),
     knowsAbout: siteConfig.skills.map((s) => s.name),
+    worksFor: {
+      "@type": "Organization",
+      name: "Cloudflare",
+      url: "https://www.cloudflare.com",
+    },
     address: {
       "@type": "PostalAddress",
       addressLocality: siteConfig.address.locality,
@@ -176,5 +183,53 @@ export function generateFAQPageSchema(
       },
     })),
     url: pageUrl,
+  };
+}
+
+/**
+ * Generate reviewedBy schema for technical posts
+ * Signals editorial review process for E-E-A-T
+ */
+export function generateReviewedBySchema(
+  reviewerName: string,
+  reviewerCredentials?: string,
+) {
+  return {
+    "@type": "Person",
+    name: reviewerName,
+    ...(reviewerCredentials
+      ? {
+          hasCredential: {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: reviewerCredentials,
+          },
+        }
+      : {}),
+  };
+}
+
+/**
+ * Generate HowTo schema for tutorial posts
+ * Targets Google's HowTo rich results
+ */
+export function generateHowToSchema(
+  title: string,
+  description: string,
+  steps: Array<{ name: string; text: string; url?: string }>,
+  totalTime?: string,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: title,
+    description,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.url ? { url: step.url } : {}),
+    })),
+    ...(totalTime ? { totalTime } : {}),
   };
 }

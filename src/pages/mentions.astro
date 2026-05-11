@@ -1,0 +1,55 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
+
+const mentionsPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${baseUrl}/mentions`,
+  mainEntity: {
+    "@id": `${baseUrl}/#author`,
+  },
+  name: `Mentions & Press — ${siteConfig.name}`,
+  description: `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
+  url: `${baseUrl}/mentions`,
+};
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Mentions", item: `${baseUrl}/mentions` },
+]);
+---
+
+<SiteLayout
+  title={`Mentions & Press — ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
+  description={`External citations, podcast appearances, and conference talks featuring ${siteConfig.name} (divkix).`}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-3xl mx-auto space-y-12">
+      <div class="space-y-4">
+        <h1 class="text-5xl font-display font-bold">Mentions & Press</h1>
+        <p class="text-xl text-foreground/70">
+          External citations, podcast appearances, and conference talks.
+        </p>
+      </div>
+
+      <div class="glass-surface p-8 rounded-lg">
+        <p class="text-foreground/70 leading-relaxed">
+          This page tracks where {siteConfig.name} has been cited, referenced, or featured across the web.
+          As coverage grows, it will be updated with links to podcasts, conference talks, and external publications.
+        </p>
+      </div>
+
+      <div class="border border-border/40 rounded-lg p-8 text-center">
+        <p class="text-foreground/60">
+          No external mentions recorded yet. Check back for updates.
+        </p>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

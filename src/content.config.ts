@@ -41,6 +41,19 @@ const blog = defineCollection({
         }),
       )
       .optional(),
+
+    // E-E-A-T and GEO fields
+    reviewedBy: z.string().optional(),
+    sources: z.array(z.string().url()).optional(),
+    howToSteps: z
+      .array(
+        z.object({
+          name: z.string(),
+          text: z.string(),
+          url: z.string().url().optional(),
+        }),
+      )
+      .optional(),
   }),
 });
 

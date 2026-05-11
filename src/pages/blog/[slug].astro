@@ -7,6 +7,8 @@ import {
   generateBlogPublisherSchema,
   generateBreadcrumbSchema,
   generateFAQPageSchema,
+  generateHowToSchema,
+  generateReviewedBySchema,
   generateSpeakableSchema,
   getJobTitle,
 } from "@/lib/schema";
@@ -78,9 +80,15 @@ const blogPostingSchema = {
   },
   image: `${baseUrl}/og/blog/${post.id}.png`,
   keywords: post.data.tags.join(", "),
+  articleSection: post.data.tags[0] ?? "Technology",
   wordCount: wordCount,
   timeRequired: `PT${readingTimeMinutes}M`,
   inLanguage: "en-US",
+  ...(post.data.reviewedBy
+    ? {
+        reviewedBy: generateReviewedBySchema(post.data.reviewedBy),
+      }
+    : {}),
 };
 
 const breadcrumbSchema = generateBreadcrumbSchema([
@@ -92,8 +100,11 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 const postUrl = `${baseUrl}/blog/${post.id}/`;
 const articleId = `${postUrl}#article`;
 
-// Speakable schema - references the article content for voice assistants
-const speakableSchema = generateSpeakableSchema(articleId, ".prose");
+// Speakable schema - targets TL;DR and key takeaways for voice assistants
+const speakableSchema = generateSpeakableSchema(
+  articleId,
+  "#speakable-content",
+);
 
 // FAQPage schema - only if post has FAQ data
 const faqPageSchema =
@@ -110,10 +121,23 @@ const articleMeta = {
   publishedTime: `${post.data.date}T00:00:00Z`,
   author: post.data.author,
   tags: post.data.tags,
+  wordCount: wordCount,
+  articleSection: post.data.tags[0] ?? "Technology",
   ...(post.data.dateModified
     ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
     : {}),
 };
+
+// HowTo schema - only for posts with tutorial steps
+const howToSchema =
+  post.data.howToSteps && post.data.howToSteps.length > 0
+    ? generateHowToSchema(
+        post.data.title,
+        post.data.excerpt,
+        post.data.howToSteps,
+        `PT${readingTimeMinutes}M`,
+      )
+    : null;
 ---
 
 <BlogLayout
@@ -130,6 +154,10 @@ const articleMeta = {
 
   <!-- Speakable Schema - identifies content for voice assistants -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(speakableSchema)} />
+
+  {howToSchema && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  )}
 
   {faqPageSchema && (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
@@ -260,38 +288,42 @@ const articleMeta = {
         decoding="async"
       />
 
-      {post.data.tldr && (
-        <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
-          <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
-          <p class="text-foreground/70">{post.data.tldr}</p>
-        </div>
-      )}
+      {(post.data.tldr || (post.data.keyTakeaways && post.data.keyTakeaways.length > 0)) && (
+        <div id="speakable-content" class="space-y-6">
+          {post.data.tldr && (
+            <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
+              <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
+              <p class="text-foreground/70">{post.data.tldr}</p>
+            </div>
+          )}
 
-      {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
-        <div class="key-takeaways glass-surface p-6 rounded-lg">
-          <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
-          <ul class="space-y-2">
-            {post.data.keyTakeaways.map((takeaway: string) => (
-              <li class="flex items-start gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="text-primary shrink-0 mt-0.5"
-                  aria-hidden="true"
-                >
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-                <span class="text-foreground/70">{takeaway}</span>
-              </li>
-            ))}
-          </ul>
+          {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
+            <div class="key-takeaways glass-surface p-6 rounded-lg">
+              <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
+              <ul class="key-takeaways-list space-y-2">
+                {post.data.keyTakeaways.map((takeaway: string) => (
+                  <li class="flex items-start gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-primary shrink-0 mt-0.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    <span class="text-foreground/70">{takeaway}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
 
@@ -300,7 +332,7 @@ const articleMeta = {
       </div>
 
       {post.data.faq && post.data.faq.length > 0 && (
-        <section class="space-y-6" aria-labelledby="faq-heading">
+        <section id="faq" class="space-y-6" aria-labelledby="faq-heading">
           <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
             {post.data.faq.map((faq: { q: string; a: string }) => (
@@ -310,6 +342,26 @@ const articleMeta = {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {post.data.sources && post.data.sources.length > 0 && (
+        <section class="pt-8 border-t border-border/40" aria-labelledby="sources-heading">
+          <h2 id="sources-heading" class="text-2xl font-bold mb-4">Sources & References</h2>
+          <ul class="space-y-2">
+            {post.data.sources.map((source: string) => (
+              <li>
+                <a
+                  href={source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary hover:underline break-all"
+                >
+                  {source}
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -335,22 +387,28 @@ const articleMeta = {
       )}
 
       <div class="pt-8 border-t border-border/40">
-        <div class="flex gap-4 items-start">
-          <img
-            src="/divanshu-chauhan.webp"
-            alt="Divanshu Chauhan"
-            class="w-16 h-16 rounded-full"
-            loading="lazy"
-          />
-          <div>
-            <h3 class="font-semibold">
-              {post.data.author}
-              <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
-            </h3>
-            <p class="text-sm text-foreground/70 mt-1">
-              {getJobTitle()} based in {siteConfig.location}.
-              <a href="/divkix" class="underline hover:text-primary ml-1">More about {siteConfig.handle.toLowerCase()}</a>
-            </p>
+        <div class="glass-surface p-6 rounded-lg">
+          <div class="flex gap-4 items-start">
+            <img
+              src="/divanshu-chauhan.webp"
+              alt="Divanshu Chauhan"
+              class="w-16 h-16 rounded-full"
+              loading="lazy"
+            />
+            <div class="flex-1">
+              <h3 class="font-semibold">
+                {post.data.author}
+                <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
+              </h3>
+              <p class="text-sm text-foreground/70 mt-1">
+                {getJobTitle()} & MS CS @ Arizona State University. Currently SWE Intern @ Cloudflare. Based in {siteConfig.location}.
+              </p>
+              <p class="text-sm text-foreground/60 mt-2">
+                Expertise:
+                {post.data.tags.slice(0, 4).join(", ")}.
+                <a href="/about" class="underline hover:text-primary ml-1">More about {siteConfig.handle.toLowerCase()}</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
