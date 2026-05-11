@@ -5,4 +5,6 @@ export interface ArticleMeta {
   modifiedTime?: string;
   author: string;
   tags?: string[];
+  wordCount?: number;
+  articleSection?: string;
 }
