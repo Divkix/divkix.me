@@ -1,7 +1,8 @@
 ---
 title: "When to Use a VPS vs Cloudflare Workers in 2026"
-seoTitle: "When to Use a VPS vs Cloudflare Workers: 30+ Projects, 250K+ Users, Real Numbers"
-seoDescription: "I ship on Docker/VPS and Cloudflare Workers. Here's the real cost, DX, scaling, and debugging trade-offs from running Alita Robot (300K users), Clickfolio, PickMyClass, and Logwell — including the horror stories nobody talks about."
+seoTitle: "VPS vs Cloudflare Workers: 30+ Projects, Real Numbers (2026)"
+seoDescription: "Real cost, scaling, and debugging trade-offs from running Alita Robot (300K users), Clickfolio, and PickMyClass — including the $5K D1 horror story and when to pick each architecture."
+coverAlt: "Cost comparison chart showing Cloudflare Workers free tier at $0 vs Oracle VPS free tier at $0 vs traditional cloud hosting surprise bills reaching $104K"
 date: "2026-05-11"
 dateModified: "2026-05-11"
 excerpt: "Real numbers from 30+ projects: Alita Robot (300K users on Docker/Oracle free VPS) vs Clickfolio (Cloudflare Workers + D1 + R2 at $0). Cost comparison, database trade-offs, DDoS horror stories, and a decision framework for when to pick which architecture."
@@ -50,6 +51,8 @@ Here's the quick tour of what I'm comparing:
 
 Four projects. Three architectures. One conclusion: there's no universal answer — but there absolutely is a right answer for your specific project.
 
+> **What is Cloudflare Workers?** It's a serverless platform that runs JavaScript, TypeScript, or WebAssembly at the edge — 330+ cities worldwide — with zero cold starts and no infrastructure to manage. You write code, run `wrangler deploy`, and it runs everywhere.
+
 ## How It Started: Heroku, Python, and Why I Left
 
 Alita Robot started in 2021 as a fork of a Python Telegram bot called Mary. Someone had built Mary to manage Telegram groups, and a friend wanted a custom version. I forked it, renamed it, and threw it on Heroku's $7/mo Hobby dyno.
@@ -76,23 +79,9 @@ docker-compose.yml:
   - Dokploy for deployment UI
 ```
 
-**What works:**
+Oracle's free tier gave me full control — real Postgres with extensions, custom configs, and direct `psql` access. The Go binary had unlimited CPU time to process webhooks as fast as the CPU allowed. No cold starts, fixed billing with a hard cap, and 24/7 uptime for a bot that never sleeps.
 
-- Full control. Real Postgres with extensions, custom configs, and direct `psql` access
-- Unlimited CPU time — the Go binary can process webhooks as fast as the CPU allows
-- No cold starts. The container is always running
-- Fixed billing. Oracle doesn't charge you for overages — there's a hard cap on free resources
-- 24/7 uptime. Telegram bots never sleep, and neither does this setup
-
-**What hurts:**
-
-- Container restarts at 3 AM. Docker sometimes decides your Postgres container needs a restart, and you wake up to messages saying the bot is down
-- Debugging is `docker compose logs` and `journalctl` — fine when you're awake, miserable at 2 AM
-- Single region. Oracle's free tier ties you to one datacenter. Users in Southeast Asia get noticeable latency
-- DDoS protection is your problem. A spike in traffic doesn't just slow things down — it crashes the server
-- Maintenance never stops: Postgres backups, Redis memory policies, disk space monitoring, OS updates
-
-I've woken up to Telegram messages saying "bot not responding" more times than I can count. That has never happened on Workers.
+But I've woken up to "bot not responding" messages more times than I can count because Docker decided to restart Postgres at 3 AM. Debugging meant ssh-ing in and running `docker compose logs` while half asleep. The free tier ties you to one datacenter, so users in Southeast Asia got noticeable latency. And DDoS protection was entirely my problem — a traffic spike didn't just slow things down, it crashed the server. Maintenance never stopped: Postgres backups, Redis memory policies, disk space monitoring, OS updates. That has never happened on Workers.
 
 ## The Serverless Pivot: Cloudflare Workers
 
@@ -148,11 +137,11 @@ Here's what I actually pay, and what you'd pay at each tier:
 
 **The horror stories (verified, not sensationalized):**
 
-- A missing WHERE clause on D1 caused a $5,000 bill in under 10 seconds ([ofsecman.io postmortem](https://ofsecman.io), July 2025)
-- A static site on Netlify was hit with a DDoS attack — $104,000 bill ([dev.to](https://dev.to), January 2026)
-- Workers for Platforms zombie scripts racked up $2,500 in surprise charges (Cloudflare Discord, June 2025)
-- A Firebase project was DDoS'd to a $98,000 bill
-- Cloudflare Enterprise upsell demanded $120,000/year with a 24-hour ultimatum ([robindev.substack.com](https://robindev.substack.com), May 2024)
+- In July 2025, a missing WHERE clause on D1 caused a $5,000 bill in under 10 seconds ([ofsecman.io postmortem](https://ofsecman.io))
+- In January 2026, a static site on Netlify was hit with a DDoS attack — $104,000 bill ([dev.to](https://dev.to))
+- In June 2025, Workers for Platforms zombie scripts racked up $2,500 in surprise charges (Cloudflare Discord)
+- In 2024, a Firebase project was DDoS'd to a $98,000 bill
+- In May 2024, Cloudflare Enterprise upsell demanded $120,000/year with a 24-hour ultimatum ([robindev.substack.com](https://robindev.substack.com))
 
 The pattern across all these stories: **serverless bills can spike without warning.** Traditional VPS bills are fixed. You trade pricing predictability for operational convenience.
 
@@ -189,33 +178,29 @@ Supabase's free tier is generous (500MB database, 50K MAU), and if you outgrow i
 
 This is my default stack recommendation for 2026: Cloudflare Workers + Supabase. Fall back to self-hosted Docker only when the app needs to run continuously or has heavy database requirements that outgrow managed tiers.
 
+## Cloudflare Workers vs Vercel vs Netlify: Bandwidth and Billing Reality
+
+People ask me this constantly. The short answer: Workers wins for API-heavy apps because it has no bandwidth caps.
+
+Vercel and Netlify cap bandwidth. On their free tiers, you'll hit paywalls faster for API-heavy apps than you will on Workers. Workers charges $0.50 per million requests for overage — predictable and cheap for most side projects. Vercel's hobby tier starts throttling after 100GB bandwidth. Netlify's free tier caps at 100GB too.
+
+The difference matters when your project grows. A portfolio builder that serves AI-generated assets (like Clickfolio) can blow through 100GB of bandwidth quickly. On Workers, that's still $0. On Vercel or Netlify, you're forced onto a paid plan immediately.
+
+The counter-argument: Vercel and Netlify have better DX for frontend frameworks. Their deployment previews, automatic branch deployments, and Next.js optimization are genuinely great. If you're building a pure frontend site with minimal API calls, either platform is fine. But if your app talks to a database, processes files, or handles real-time features, Workers' pricing model is built for that scale.
+
 ## When to Pick What: A Decision Framework
 
-Here's how I decide:
+I don't actually use a checklist when I pick a stack. I ask one question: does this thing need to stay awake? Telegram bots, cron jobs, anything with a WebSocket — they can't sleep, so they go on a VPS. Everything else defaults to Workers + Supabase.
 
-### Use Cloudflare Workers (pure serverless) if:
-- You want **$0 hosting** with global edge distribution
-- Your write volume is **low** (under 100K D1 writes/day)
-- You don't need real Postgres features (JSON operators, RLS, extensions)
-- You're comfortable with edge runtime constraints (no filesystem, CPU limits)
-- You want **push-and-forget** deployment — no Docker, no reverse proxies, no maintenance
-- Your traffic patterns are **unpredictable** (Workers auto-scale to zero and to millions)
+The only time I reach for D1 is when I'm too lazy to spin up Supabase and I know the app will barely touch the database. That's the entire decision tree. Thirty projects and it really is that simple.
 
-### Use Workers + Supabase/PlanetScale (hybrid) if:
-- You need **real Postgres** but want serverless compute
-- You want managed auth, storage, and realtime in one platform
-- You have moderate write volume and need cost controls
-- Your project might grow beyond free tiers eventually
+Workers alone works when your write volume is low, you don't need real Postgres features, and you want push-and-forget deployment with zero maintenance. The free tier handles 100K requests per day and 5M D1 row reads — generous enough that most side projects never pay.
 
-### Use Docker/VPS (traditional) if:
-- Your app runs **24/7** — Telegram bots, cron-heavy services, WebSocket servers that can't hibernate
-- You need **unlimited CPU time** — background processing, video encoding, long-running computations
-- You want **full database control** — extensions, custom configs, direct `psql` access
-- Your traffic is **predictable and single-region**
-- You want **fixed pricing** with no overage surprises
-- You have time to maintain infrastructure (or enjoy doing it)
+Workers + Supabase is what I use for anything that needs real Postgres: JSON operators, row-level security, extensions, proper tooling. Supabase's free tier covers 500MB and 50K monthly active users. If you outgrow it, the $25/mo Pro plan is still cheaper than running your own VPS with equivalent reliability.
 
-**My default for 2026:** Workers + Supabase. I only reach for Docker when the project demands continuous uptime or has database needs that outgrow managed tiers.
+Docker on a VPS is for continuous uptime, unlimited CPU, and full database control. Oracle's free tier gives you 4 ARM cores and 24GB RAM for $0. Hetzner starts at ~$5/mo. The trade-off is you're on call forever — container restarts, disk filling up, DDoS protection, OS updates. They never stop.
+
+**My default for 2026:** Workers + Supabase. Docker only comes out for the bots and services that never sleep.
 
 ## The Things Nobody Warns You About
 
@@ -239,11 +224,9 @@ The trade-off isn't about features. It's about which class of problems you'd rat
 
 I've run projects at both extremes. Alita serves 300K+ users from a single Oracle VPS running Docker Compose. Clickfolio serves 500+ users from Cloudflare's free tier across 330 cities. Both cost $0. Both work.
 
-The real question isn't "which is better" — it's "which set of problems do you want?"
+The real question isn't "which is better" — it's which set of problems you want to deal with at 3 AM.
 
-Pick Workers if you want to deploy and forget. Pick a VPS if you want to control and understand. Pick Workers + Supabase if you want both.
-
-I default to Workers + Supabase for new projects. I keep Docker around for the bots and services that never sleep. Both have their place. Knowing which is which is what the 30+ projects taught me.
+I default to Workers + Supabase now. Docker only comes out for the things that can't sleep. Both have their place. Knowing which is which is what the 30+ projects taught me.
 
 ---
 

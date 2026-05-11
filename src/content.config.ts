@@ -31,6 +31,7 @@ const blog = defineCollection({
     seoDescription: z.string().optional(),
 
     // Extended SEO fields
+    coverAlt: z.string().optional(),
     tldr: z.string().optional(),
     keyTakeaways: z.array(z.string()).optional(),
     faq: z
