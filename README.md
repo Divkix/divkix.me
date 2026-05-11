@@ -1,160 +1,144 @@
 # divkix.me
 
-A modern, production-ready portfolio site built with Astro 5, TypeScript, Tailwind CSS v4, and React Islands. Static output deployed to Cloudflare Pages, featuring a single-page homepage with smooth scrolling sections, an MDX-powered blog with SEO optimization, and comprehensive structured data.
+My personal site. Built with Astro, TypeScript, Tailwind v4, and an embarrassing amount of coffee. It's a static portfolio + blog that lives on Cloudflare Pages.
 
 [![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Features
+## What's here
 
-- **Astro Islands Architecture**: Static-first with selective React hydration for interactivity
-- **Single-Page Experience**: Homepage with smooth scrolling sections (Hero, Highlights, Projects, Experience, Skills, Contact)
-- **Blog System**: MDX-powered blog with Astro Content Collections, reading time, and table of contents
-- **Modern Design**: Clean aesthetic with OKLCH color space, glass surfaces, and gradient effects
-- **Dark Mode**: System-aware theme toggle with no flash of unstyled content
-- **Responsive**: Mobile-first design that works on all devices
-- **SEO Optimized**: JSON-LD structured data, OpenGraph meta tags, sitemap, and RSS feed
-- **Type-Safe**: 100% TypeScript with strict mode enabled
-- **Fast**: Static output with minimal JavaScript, optimized for edge deployment
-- **LLMs.txt**: AI-friendly site documentation for LLM crawlers
+- **Homepage** — Single page with smooth-scrolling sections (Hero, Highlights, Projects, Experience, Skills, Contact)
+- **Blog** — MDX posts with reading time, table of contents, and OG images that get auto-generated at build time
+- **Dark mode** — Follows your system preference, no flash of unstyled content
+- **SEO stuff** — JSON-LD, OpenGraph, sitemap, RSS, all the usual suspects
+- **LLMs.txt** — For the AI crawlers that want a quick summary
 
-## Tech Stack
+## Tech stack
 
-| Category | Technology |
-|----------|------------|
-| **Framework** | Astro 5 with View Transitions |
-| **Language** | TypeScript 5 with strict mode |
-| **Styling** | Tailwind CSS v4 with PostCSS |
-| **UI Components** | shadcn/ui (Radix UI primitives) |
-| **Forms** | React Hook Form + Zod validation |
-| **Content** | MDX with gray-matter and Astro Content Collections |
-| **Icons** | Lucide React |
-| **Linting** | Biome (replaces ESLint + Prettier) |
-| **Package Manager** | Bun |
-| **Hosting** | Cloudflare Pages (or any static host) |
+| Thing | Choice |
+|-------|--------|
+| Framework | Astro 5 |
+| Language | TypeScript (strict mode, because why not) |
+| Styling | Tailwind CSS v4 via PostCSS |
+| UI | shadcn/ui primitives |
+| Forms | React Hook Form + Zod |
+| Icons | Lucide React |
+| Linting | Biome (one tool beats two tools) |
+| Package manager | Bun |
+| Hosting | Cloudflare Pages |
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ or Bun
-- Git
-
-### Installation
-
-1. Clone the repository:
+## Getting started
 
 ```bash
+# Clone it
 git clone https://github.com/divkix/divkix.me.git
 cd divkix.me
-```
 
-2. Install dependencies:
-
-```bash
+# Install deps
 bun install
-```
 
-3. Run the development server:
-
-```bash
+# Dev server
 bun run dev
+# → http://localhost:4321
 ```
-
-4. Open [http://localhost:4321](http://localhost:4321) in your browser.
 
 ## Scripts
 
-| Command | Description |
+| Command | What it does |
 |---------|-------------|
-| `bun run dev` | Start dev server on localhost:4321 |
-| `bun run build` | Production build (runs prebuild + astro build) |
-| `bun run preview` | Preview production build locally |
+| `bun run dev` | Start dev server |
+| `bun run build` | Full production build (regenerates metadata, validates content, builds static files, submits to search engines) |
+| `bun run preview` | Preview the production build locally |
 | `bun run lint` | Run Biome linter |
 | `bun run lint:fix` | Auto-fix lint issues |
-| `bun run format` | Format code with Biome |
-| `bun run type-check` | Run astro check for TypeScript errors |
+| `bun run format` | Format everything with Biome |
+| `bun run type-check` | TypeScript + Astro type checking |
+| `bun run check:citations` | Check blog post citation density |
+| `bun run audit:seo` | Run SEO production audit |
 
-### Utility Scripts
+### Build pipeline scripts (in `/scripts/`)
 
-Scripts in `/scripts` for asset generation (run automatically in prebuild):
+These run automatically during `bun run build`, but you can run them individually:
 
-| Script | Description |
+| Script | What it does |
 |--------|-------------|
-| `generate-posts-metadata.js` | Generates `posts.json` from MDX frontmatter |
-| `generate-og-images.js` | Generates OG images for blog posts |
-| `generate-og-image.js` | Generates site-wide OG image |
-| `generate-favicons.ts` | Generates favicons from SVG source |
+| `generate-posts-metadata.js` | Parse MDX frontmatter → `content/blog/posts.json` |
+| `generate-og-images.js` | Generate OG images for each blog post |
+| `generate-og-image.js` | Generate the site-wide OG image |
+| `generate-favicons.ts` | Generate favicons from the SVG source |
+| `validate-content.ts` | Make sure MDX files and `posts.json` are in sync |
+| `submit-indexnow.ts` | Tell search engines about new content (production only) |
+| `check-citation-density.ts` | Check how "citation-dense" blog posts are |
+| `seo-production-audit.ts` | Production SEO audit |
 
-## Project Structure
+**Note:** If you add, remove, or rename a blog post, run `bun run prebuild` to regenerate `posts.json` or the build will fail at the validation step.
+
+## Project structure
 
 ```
-├── src/
-│   ├── pages/              # File-based routing
-│   │   ├── index.astro     # Homepage
-│   │   ├── blog/           # Blog listing and posts
-│   │   ├── about.astro     # About page
-│   │   └── rss.xml.ts      # RSS feed generation
-│   ├── layouts/
-│   │   ├── BaseLayout.astro    # Root HTML, meta tags, View Transitions
-│   │   ├── SiteLayout.astro    # Navbar + Footer wrapper
-│   │   └── BlogLayout.astro    # Blog-specific layout
-│   ├── components/
-│   │   ├── sections/       # Page sections (Hero, Projects, etc.)
-│   │   ├── shared/         # Navbar, Footer, ThemeToggle
-│   │   ├── ui/             # shadcn-style primitives
-│   │   └── blog/           # Blog-specific components
-│   ├── content/
-│   │   ├── blog/*.mdx      # Blog post files
-│   │   └── config.ts       # Content collection schema
-│   ├── data/
-│   │   └── site.config.ts  # All site content (centralized)
-│   ├── lib/
-│   │   ├── utils.ts        # Helper functions
-│   │   ├── schema.ts       # JSON-LD structured data
-│   │   └── seo.ts          # SEO utilities
-│   └── styles/
-│       └── globals.css     # Tailwind imports, CSS variables
-├── scripts/                # Build and generation scripts
-├── public/                 # Static assets (favicons, images)
-├── astro.config.mjs        # Astro configuration
-├── postcss.config.mjs      # PostCSS with Tailwind v4
-└── wrangler.jsonc          # Cloudflare Pages configuration
+src/
+  pages/              # Astro routes
+    index.astro       # Homepage
+    blog/             # Blog listing + posts
+    about.astro       # About page
+    divkix.astro      # Quick links / bio page
+    privacy.astro     # Privacy policy
+    socials.astro     # Social links page
+    404.astro         # 404 page
+    robots.txt.ts     # Robots.txt generation
+    rss.xml.ts        # RSS feed
+  layouts/
+    BaseLayout.astro  # Root HTML, meta, View Transitions
+    SiteLayout.astro  # Navbar + Footer wrapper
+    BlogLayout.astro  # Blog-specific layout
+  components/
+    sections/         # Homepage sections (Hero, Projects, ExperienceBento, etc.)
+    shared/           # Navbar, Footer, ThemeToggle, Toaster, etc.
+    blog/             # Blog-specific components
+    ui/               # shadcn-style primitives
+    providers/        # React context providers
+  content/
+    blog/*.mdx        # Blog post files
+  data/
+    site.config.ts    # All site content (skills, projects, experience, etc.)
+  lib/
+    utils.ts          # Helper functions
+    schema.ts         # JSON-LD structured data
+    seo.ts            # SEO utilities
+    hooks/            # React hooks
+    examples/         # Code examples
+  styles/
+    globals.css       # Tailwind v4, OKLCH colors, custom utilities
+scripts/              # Build pipeline scripts
+public/               # Static assets (favicons, images)
+content/blog/
+  posts.json          # Generated metadata (consumed by astro.config.mjs)
 ```
 
-## Self-Hosting Guide
+## Want to fork this?
 
-This project is designed to be easily forked and customized. Follow these steps to deploy your own version:
+Go for it. It's MIT-licensed. Here's what you'll want to change:
 
-### 1. Fork & Clone
+### 1. Personal info
 
-```bash
-git clone https://github.com/YOUR_USERNAME/divkix.me.git
-cd divkix.me
-```
-
-### 2. Required Customizations
-
-#### Site Configuration (`src/data/site.config.ts`)
-
-Replace all personal information:
+Edit `src/data/site.config.ts`:
 
 ```typescript
 export const siteConfig = {
   name: "Your Name",
   handle: "yourhandle",
-  tagline: "Your tagline here",
+  tagline: "What you do",
   location: "Your Location",
   email: "your@email.com",
-  // Update: skills, projects, experience, education, socials
+  // ...update skills, projects, experience, etc.
 };
 ```
 
-#### Site URL (`astro.config.mjs`)
+### 2. Site URL
 
-Update the site URL:
+Update `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
@@ -163,24 +147,19 @@ export default defineConfig({
 });
 ```
 
-#### Contact Form (`src/components/sections/Contact.tsx`)
+### 3. Contact form
 
-Replace the Formspree endpoint with your own:
-
-1. Create a free account at [Formspree](https://formspree.io)
-2. Create a new form and get your form ID
-3. Update line ~39:
+The contact form uses Formspree. Replace the endpoint in `src/components/sections/Contact.tsx` (~line 71):
 
 ```typescript
 const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
 ```
 
-#### Analytics (Optional, `src/layouts/BaseLayout.astro`)
+### 4. Analytics
 
-Remove or replace the analytics script (lines 145-151):
+The analytics script is in `src/layouts/BaseLayout.astro` (~lines 153–158). Replace with your own or remove it:
 
 ```html
-<!-- Remove this block or replace with your analytics -->
 <script
   is:inline
   async
@@ -189,32 +168,25 @@ Remove or replace the analytics script (lines 145-151):
 ></script>
 ```
 
-Popular analytics alternatives:
-- [Umami](https://umami.is) (self-hosted, privacy-focused)
-- [Plausible](https://plausible.io) (privacy-focused)
-- [Google Analytics](https://analytics.google.com)
-- Remove entirely for no tracking
+Some privacy-friendly options: [Umami](https://umami.is), [Plausible](https://plausible.io), or just remove it entirely.
 
-#### Social Links & Twitter Handle
+### 5. Twitter handle
 
-Update Twitter handle in `src/layouts/BaseLayout.astro` (lines 62-63):
+Update the Twitter meta tags in `src/layouts/BaseLayout.astro` (~lines 78–79):
 
 ```html
-<meta property="twitter:creator" content="@yourhandle" />
-<meta property="twitter:site" content="@yourhandle" />
+<meta name="twitter:creator" content="@yourhandle" />
+<meta name="twitter:site" content="@yourhandle" />
 ```
 
-### 3. Content Updates
+### 6. Content
 
-#### Blog Posts
-
-1. Delete existing posts in `src/content/blog/`
-2. Create your own posts:
+**Blog posts:** Delete the existing ones in `src/content/blog/` and write your own. Frontmatter looks like:
 
 ```mdx
 ---
 title: "Your Post Title"
-date: "2025-01-15"
+date: "2026-01-15"
 excerpt: "Brief description"
 tags: ["tag1", "tag2"]
 published: true
@@ -223,150 +195,43 @@ published: true
 Your content here...
 ```
 
-#### Images
-
+**Images:**
 - Replace `/public/divanshu-chauhan.jpeg` with your photo
 - Update `/public/og-image.png` or regenerate with `node scripts/generate-og-image.js`
 - Regenerate favicons with `bun run scripts/generate-favicons.ts`
 
-### 4. Deployment Options
+### 7. Deploy
 
-#### Cloudflare Pages (Recommended)
-
+**Cloudflare Pages (what I use):**
 1. Push to GitHub
-2. Connect to [Cloudflare Pages](https://pages.cloudflare.com)
+2. Connect repo at [pages.cloudflare.com](https://pages.cloudflare.com)
 3. Build command: `bun run build`
 4. Output directory: `dist`
 
-The included `wrangler.jsonc` configures static asset serving.
+**Vercel:** Import at [vercel.com](https://vercel.com), framework preset: Astro, build command: `bun run build`, output: `dist`.
 
-#### Vercel
+**Netlify:** Import at [netlify.com](https://netlify.com), build command: `bun run build`, publish directory: `dist`.
 
-1. Import repository at [vercel.com](https://vercel.com)
-2. Framework preset: Astro
-3. Build command: `bun run build`
-4. Output directory: `dist`
+**GitHub Pages:** Add a workflow (see the README of any Astro template for the exact YAML).
 
-#### Netlify
+## Why I chose this stack
 
-1. Import repository at [netlify.com](https://netlify.com)
-2. Build command: `bun run build`
-3. Publish directory: `dist`
+**Cloudflare Pages:** Global edge network, zero cold starts, free tier, automatic HTTPS. Basically it just works and I don't have to think about it.
 
-#### GitHub Pages
+**Astro Islands:** Ships zero JS by default. Only the interactive bits (contact form, theme toggle) get hydrated. The site is fast without me having to do anything special.
 
-Add to `.github/workflows/deploy.yml`:
+**Tailwind v4:** Native CSS variables, smaller bundle, OKLCH colors, and it works with PostCSS without fighting me.
 
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-      - run: bun install
-      - run: bun run build
-      - uses: actions/upload-pages-artifact@v2
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v3
-        id: deployment
-```
-
-## Architecture Decisions
-
-### Why Cloudflare Pages?
-
-1. **Global Edge Network**: Static assets served from 300+ locations worldwide
-2. **Zero Cold Starts**: No serverless functions = instant response times
-3. **Free Tier**: Unlimited bandwidth, generous build limits
-4. **Automatic HTTPS**: Free SSL certificates with zero configuration
-5. **Git Integration**: Automatic deploys on push
-6. **Wrangler CLI**: Easy local development and preview deployments
-
-### Why Astro Islands?
-
-1. **Zero JS by Default**: Static components ship no JavaScript
-2. **Selective Hydration**: Only interactive components (forms, toggles) get JS
-3. **Framework Agnostic**: Use React where needed, vanilla elsewhere
-4. **Optimal Performance**: Ships 90% less JavaScript than typical React sites
-
-### Why Tailwind CSS v4?
-
-1. **Native CSS**: Uses CSS variables and `@layer` instead of JavaScript config
-2. **Smaller Bundle**: No purge step needed, native CSS cascade
-3. **OKLCH Colors**: Perceptually uniform color space for consistent theming
-4. **PostCSS Integration**: Works with standard tooling
-
-### Why Static Output?
-
-1. **No Server Required**: Deploy to any CDN or static host
-2. **Maximum Performance**: Pre-rendered HTML, no SSR overhead
-3. **Security**: No server-side vulnerabilities, no database
-4. **Cost**: Free hosting on most platforms
-5. **Simplicity**: No runtime dependencies, just files
-
-## Astro Islands Pattern
-
-Components are either `.astro` (static, zero JS) or `.tsx` (React, client-hydrated):
-
-```astro
-<!-- Static - no JavaScript shipped -->
-<Hero />
-<Skills />
-<Experience />
-
-<!-- Interactive - hydrated when visible in viewport -->
-<Highlights client:visible />
-<Projects client:visible />
-<Contact client:visible />
-
-<!-- Hydrated immediately on page load -->
-<Toaster client:idle />
-```
-
-## Styling
-
-- Tailwind CSS v4 via `@tailwindcss/postcss` (not @astrojs/tailwind)
-- OKLCH color space for perceptual uniformity
-- CSS variables for theming (`:root` light, `.dark` dark mode)
-- View Transitions for smooth page navigation
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+**Static output:** No server needed. Deploy anywhere. It's fast, secure, and hosting is free pretty much everywhere.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).
 
-## Acknowledgments
+## Credits
 
-- [Astro](https://astro.build) - The web framework for content-driven websites
-- [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
-- [shadcn/ui](https://ui.shadcn.com) - Beautifully designed components
-- [Lucide](https://lucide.dev) - Beautiful & consistent icons
-- [Formspree](https://formspree.io) - Form backend service
+- [Astro](https://astro.build) — The framework that made me stop hating static sites
+- [Tailwind CSS](https://tailwindcss.com) — The styling tool I complain about but keep using
+- [shadcn/ui](https://ui.shadcn.com) — Copy-paste components that actually look good
+- [Lucide](https://lucide.dev) — Clean icons without the bloat
+- [Formspree](https://formspree.io) — Handling contact forms so I don't have to build a backend
