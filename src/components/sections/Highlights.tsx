@@ -5,10 +5,9 @@ import { siteConfig } from "@/data/site.config";
 interface StatProps {
   value: string;
   label: string;
-  variant: "hero" | "compact";
 }
 
-function AnimatedStat({ value, label, variant }: StatProps) {
+function AnimatedStat({ value, label }: StatProps) {
   const [displayValue, setDisplayValue] = useState("0");
   const hasAnimatedRef = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,29 +67,15 @@ function AnimatedStat({ value, label, variant }: StatProps) {
     };
   }, [value]);
 
-  if (variant === "hero") {
-    return (
-      <div ref={ref}>
-        <div
-          className="text-7xl md:text-8xl lg:text-9xl font-mono font-bold text-foreground"
-          style={{ fontVariantNumeric: "tabular-nums" }}
-        >
-          {displayValue}
-        </div>
-        <p className="text-base text-muted-foreground mt-2">{label}</p>
-      </div>
-    );
-  }
-
   return (
-    <div ref={ref}>
+    <div ref={ref} className="text-center">
       <div
         className="text-4xl md:text-5xl font-mono font-bold text-foreground"
         style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {displayValue}
       </div>
-      <p className="text-sm text-muted-foreground mt-1">{label}</p>
+      <p className="text-sm text-muted-foreground mt-2">{label}</p>
     </div>
   );
 }
@@ -111,34 +96,20 @@ export function Highlights() {
     },
   ];
 
-  const heroStat = stats[0] as (typeof stats)[number];
-  const secondaryStats = stats.slice(1);
-
   return (
     <section
       id="highlights"
-      className="container mx-auto px-4 py-12 reveal-on-scroll"
+      className="container mx-auto px-4 py-16 reveal-on-scroll"
     >
       <SectionLabel number="01" label="highlights" />
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-w-6xl">
-        <div className="flex items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {stats.map((stat) => (
           <AnimatedStat
-            value={heroStat.value}
-            label={heroStat.label}
-            variant="hero"
+            key={stat.label}
+            value={stat.value}
+            label={stat.label}
           />
-        </div>
-
-        <div className="flex flex-col justify-between gap-6">
-          {secondaryStats.map((stat) => (
-            <AnimatedStat
-              key={stat.label}
-              value={stat.value}
-              label={stat.label}
-              variant="compact"
-            />
-          ))}
-        </div>
+        ))}
       </div>
     </section>
   );

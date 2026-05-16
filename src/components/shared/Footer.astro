@@ -1,61 +1,45 @@
 ---
+import { siteConfig } from "@/data/site.config";
+
 const currentYear = new Date().getFullYear();
 
 const footerLinks = [
-  { label: "home", href: "/" },
-  { label: "blog", href: "/blog" },
-  { label: "about", href: "/about" },
-  { label: "privacy", href: "/privacy" },
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Privacy", href: "/privacy" },
 ];
 ---
 
-<footer class="bg-[oklch(0.08_0_0)] border-t border-[oklch(1_0_0/10%)]">
-  <div class="container mx-auto px-4 py-3">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-3 font-mono">
-      {/* Left: Terminal prompt */}
-      <div class="flex items-center gap-1 text-xs text-[oklch(0.65_0.01_60)]">
-        <span>divkix@portfolio:~$</span>
-        <span
-          class="inline-block w-[0.5em] h-[1.1em] bg-[oklch(0.7_0.2_140)] align-middle"
-          style="animation: cursor-blink 1s step-end infinite; box-shadow: 0 0 6px oklch(0.7 0.2 140);"
-          aria-hidden="true"
-        ></span>
-      </div>
+<footer class="border-t border-border">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-muted-foreground">
+        &copy; {currentYear} {siteConfig.name}
+      </p>
 
-      {/* Center: Nav links as terminal commands */}
-      <nav class="flex items-center gap-4 text-xs" aria-label="Footer navigation">
+      <nav class="flex items-center gap-6" aria-label="Footer navigation">
         {footerLinks.map((link) => (
           <a
             href={link.href}
-            class="text-[oklch(0.65_0.01_60)] hover:text-[oklch(0.7_0.2_140)] transition-colors link-underline-grow"
+            class="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             {link.label}
           </a>
         ))}
-        <a
-          href="https://github.com/divkix/divkix.me"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View source code on GitHub"
-          class="text-[oklch(0.7_0.2_140)] hover:text-[oklch(0.8_0.2_140)] transition-colors border border-[oklch(0.7_0.2_140/30%)] px-1.5 py-0.5 rounded-sm"
-        >
-          [src]
-        </a>
       </nav>
 
-      {/* Right: Status */}
-      <div class="flex items-center gap-2 text-xs text-[oklch(0.65_0.01_60)]">
-        <span class="flex items-center gap-1.5">
-          status:
-          <span class="relative flex h-2 w-2">
-            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.7_0.2_140)] opacity-75"></span>
-            <span class="relative inline-flex h-2 w-2 rounded-full bg-[oklch(0.7_0.2_140)]"></span>
-          </span>
-          online
-        </span>
-        <span class="text-[oklch(1_0_0/20%)]">|</span>
-        <span>&copy; {currentYear}</span>
-      </div>
+      <a
+        href="https://github.com/divkix/divkix.me"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View source code on GitHub"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        Source
+      </a>
     </div>
   </div>
 </footer>
+
+
