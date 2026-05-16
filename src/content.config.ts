@@ -45,13 +45,40 @@ const blog = defineCollection({
 
     // E-E-A-T and GEO fields
     reviewedBy: z.string().optional(),
-    sources: z.array(z.string().url()).optional(),
+    sources: z
+      .array(
+        z.string().refine(
+          (val) => {
+            try {
+              new URL(val);
+              return true;
+            } catch {
+              return false;
+            }
+          },
+          { message: "Invalid URL" },
+        ),
+      )
+      .optional(),
     howToSteps: z
       .array(
         z.object({
           name: z.string(),
           text: z.string(),
-          url: z.string().url().optional(),
+          url: z
+            .string()
+            .refine(
+              (val) => {
+                try {
+                  new URL(val);
+                  return true;
+                } catch {
+                  return false;
+                }
+              },
+              { message: "Invalid URL" },
+            )
+            .optional(),
         }),
       )
       .optional(),
