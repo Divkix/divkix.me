@@ -20,23 +20,6 @@ const allTags = Array.from(
   new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),
 ) as string[];
 
-function getTagColor(tag: string): string {
-  const t = tag.toLowerCase();
-  if (t === "typescript" || t === "next.js") return "oklch(0.65 0.2 250)";
-  if (t === "go") return "oklch(0.65 0.2 185)";
-  if (t === "python") return "oklch(0.7 0.15 85)";
-  if (t.includes("ai") || t.includes("ml")) return "oklch(0.65 0.2 300)";
-  if (t === "mongodb") return "oklch(0.6 0.15 155)";
-  if (t === "telegram") return "oklch(0.6 0.15 220)";
-  if (t === "qdrant") return "oklch(0.65 0.2 300)";
-  if (t === "logging" || t === "otlp") return "oklch(0.7 0.15 55)";
-  return "oklch(0.6 0 0)";
-}
-
-function getAccentColor(tags: readonly string[]): string {
-  return getTagColor(tags[0] || "");
-}
-
 const FEATURED_PROJECT_NAMES = new Set([
   "LogWell",
   "Clickfolio",
@@ -81,35 +64,6 @@ function useScrollReveal() {
   return { ref, isVisible };
 }
 
-function BrowserMockup({
-  url,
-  accentColor,
-}: {
-  url: string;
-  accentColor: string;
-}) {
-  return (
-    <div className="w-full rounded-xl overflow-hidden border border-border shadow-sm">
-      <div className="flex items-center gap-2 px-4 py-2.5 bg-muted/60 border-b border-border">
-        <div className="flex gap-1.5">
-          <div className="size-3 rounded-full bg-red-400/70" />
-          <div className="size-3 rounded-full bg-yellow-400/70" />
-          <div className="size-3 rounded-full bg-green-400/70" />
-        </div>
-        <div className="flex-1 mx-2 px-3 py-1 text-xs font-mono text-muted-foreground bg-background/60 rounded-md truncate">
-          {url}
-        </div>
-      </div>
-      <div
-        className="h-32 md:h-40"
-        style={{
-          background: `linear-gradient(135deg, ${accentColor} 0%, oklch(0.25 0.02 60) 100%)`,
-        }}
-      />
-    </div>
-  );
-}
-
 function GitHubIcon(props: ComponentProps<"svg">) {
   return (
     <svg
@@ -136,90 +90,90 @@ function FeaturedProjectCard({
   index: number;
 }) {
   const { ref, isVisible } = useScrollReveal();
-  const accentColor = getAccentColor(project.tags);
-  const liveLink = project.links.find((l: ProjectLink) => l.label === "Live");
 
   return (
     <div
       ref={ref}
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 rounded-xl border border-border bg-card shadow-hard overflow-hidden transition-all duration-700",
+        "rounded-xl border border-border bg-card shadow-sm overflow-hidden transition-all duration-700",
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
       )}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
-      <div className="p-8 flex flex-col justify-between">
-        <div className="space-y-4">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-2xl font-display font-semibold">
-              {project.name}
-            </h3>
-            {"period" in project && project.period && (
-              <span className="text-xs font-mono text-muted-foreground shrink-0">
-                {project.period}
-              </span>
-            )}
-          </div>
-          <p className="text-foreground/70 leading-relaxed">{project.desc}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="px-1.5 py-0.5 text-xs font-mono rounded bg-muted"
-                style={{ color: getTagColor(tag) }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-0">
+        <div
+          className="h-48 md:h-auto bg-muted/50 flex items-center justify-center p-6"
+          style={{
+            background: `linear-gradient(135deg, var(--accent) 0%, var(--muted) 100%)`,
+          }}
+        >
+          <span className="font-display text-4xl font-bold text-foreground/20">
+            {project.name[0]}
+          </span>
         </div>
-        <div className="flex gap-2 mt-6">
-          {project.links.map((link: ProjectLink) => {
-            const linkLabel = link.label;
-            const ariaLabel =
-              linkLabel === "Live"
-                ? `View ${project.name} live`
-                : linkLabel === "GitHub"
-                  ? `View ${project.name} on GitHub`
-                  : `${linkLabel} - ${project.name}`;
-            return (
-              <Button key={link.label} variant="outline" size="sm" asChild>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={ariaLabel}
+        <div className="p-8 flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-2xl font-display font-semibold">
+                {project.name}
+              </h3>
+              {"period" in project && project.period && (
+                <span className="text-xs font-mono text-muted-foreground shrink-0">
+                  {project.period}
+                </span>
+              )}
+            </div>
+            <p className="text-foreground/70 leading-relaxed">{project.desc}</p>
+            <div className="flex flex-wrap gap-1.5">
+              {project.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 text-xs font-mono rounded bg-muted text-muted-foreground"
                 >
-                  {linkLabel === "Live" ? (
-                    <Globe className="mr-1.5 size-3.5" />
-                  ) : linkLabel === "GitHub" ? (
-                    <GitHubIcon className="mr-1.5 size-3.5" />
-                  ) : (
-                    <ExternalLink className="mr-1.5 size-3.5" />
-                  )}
-                  {linkLabel}
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex gap-2 mt-6">
+            {project.links.map((link: ProjectLink) => {
+              const linkLabel = link.label;
+              const ariaLabel =
+                linkLabel === "Live"
+                  ? `View ${project.name} live`
+                  : linkLabel === "GitHub"
+                    ? `View ${project.name} on GitHub`
+                    : `${linkLabel} - ${project.name}`;
+              return (
+                <Button key={link.label} variant="outline" size="sm" asChild>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={ariaLabel}
+                  >
+                    {linkLabel === "Live" ? (
+                      <Globe className="mr-1.5 size-3.5" />
+                    ) : linkLabel === "GitHub" ? (
+                      <GitHubIcon className="mr-1.5 size-3.5" />
+                    ) : (
+                      <ExternalLink className="mr-1.5 size-3.5" />
+                    )}
+                    {linkLabel}
+                  </a>
+                </Button>
+              );
+            })}
+            {PROJECT_BLOG_MAP[project.name] && (
+              <Button variant="ghost" size="sm" asChild>
+                <a href={PROJECT_BLOG_MAP[project.name]}>
+                  <BookOpen className="mr-1.5 size-3.5" />
+                  Read more
                 </a>
               </Button>
-            );
-          })}
-          {PROJECT_BLOG_MAP[project.name] && (
-            <Button variant="ghost" size="sm" asChild>
-              <a href={PROJECT_BLOG_MAP[project.name]}>
-                <BookOpen className="mr-1.5 size-3.5" />
-                Read more
-              </a>
-            </Button>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-      <div className="p-6 flex items-center">
-        <BrowserMockup
-          url={
-            liveLink?.href.replace("https://", "") ||
-            project.name.toLowerCase().replace(/\s+/g, "")
-          }
-          accentColor={accentColor}
-        />
       </div>
     </div>
   );
@@ -233,19 +187,15 @@ function RegularProjectCard({
   index: number;
 }) {
   const { ref, isVisible } = useScrollReveal();
-  const accentColor = getAccentColor(project.tags);
 
   return (
     <article
       ref={ref}
       className={cn(
-        "rounded-xl border border-border border-t-4 bg-card shadow-hard overflow-hidden transition-all duration-700 hover:-translate-y-0.5 hover:shadow-elevated",
+        "rounded-xl border border-border bg-card shadow-sm overflow-hidden transition-all duration-700 hover:-translate-y-0.5 hover:shadow-raised",
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
       )}
-      style={{
-        borderTopColor: accentColor,
-        transitionDelay: `${index * 100}ms`,
-      }}
+      style={{ transitionDelay: `${index * 100}ms` }}
     >
       <div className="p-6 flex flex-col justify-between h-full min-h-[200px]">
         <div className="space-y-3">
@@ -266,8 +216,7 @@ function RegularProjectCard({
             {project.tags.map((tag: string) => (
               <span
                 key={tag}
-                className="px-1.5 py-0.5 text-xs font-mono rounded bg-muted"
-                style={{ color: getTagColor(tag) }}
+                className="px-2 py-0.5 text-xs font-mono rounded bg-muted text-muted-foreground"
               >
                 {tag}
               </span>
@@ -340,8 +289,6 @@ export function Projects() {
     });
   }, []);
 
-  // Store the latest callback in a ref so the resize listener
-  // always calls the current version without re-subscribing.
   const updateIndicatorRef = useRef(updateIndicator);
   useEffect(() => {
     updateIndicatorRef.current = updateIndicator;
@@ -421,7 +368,7 @@ export function Projects() {
 
         {featured.length > 0 && (
           <div className="space-y-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/50">
               Featured Projects
             </h3>
             {featured.map((project: Project, index: number) => (
@@ -436,7 +383,7 @@ export function Projects() {
 
         {regular.length > 0 && (
           <div className="space-y-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/50">
               More Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

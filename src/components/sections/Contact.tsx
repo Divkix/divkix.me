@@ -1,11 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { SectionLabel } from "@/components/shared/SectionLabel";
-import { TerminalWindow } from "@/components/shared/TerminalWindow";
 import { siteConfig } from "@/data/site.config";
 
 const contactSchema = z.object({
@@ -15,41 +14,6 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
-
-function TypewriterSuccess() {
-  const text = "[OK] Message sent. Expect a response within 24h.";
-  const [displayed, setDisplayed] = useState("");
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayed(text);
-      return;
-    }
-
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        setDisplayed(text.slice(0, i + 1));
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 30);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="py-12 text-center">
-      <p
-        className="text-lg text-[oklch(0.7_0.2_140)]"
-        style={{ textShadow: "0 0 4px oklch(0.7 0.2 140)" }}
-      >
-        {displayed}
-        <span className="terminal-cursor-block" />
-      </p>
-    </div>
-  );
-}
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -115,227 +79,184 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-32"
-      style={{ background: "oklch(0.08 0 0)" }}
+      className="container mx-auto px-4 py-24 reveal-on-scroll"
     >
-      <div className="container mx-auto px-4">
-        <SectionLabel number="05" label="contact" />
+      <SectionLabel number="05" label="contact" />
 
-        <div className="max-w-2xl mx-auto">
-          <TerminalWindow title="mail@divkix — compose">
-            <h2 className="text-lg font-semibold text-[oklch(0.7_0.2_140)] mb-4">
-              Get in touch
-            </h2>
+      <div className="max-w-2xl mx-auto">
+        <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
+          <h2 className="text-2xl font-display font-semibold mb-2">
+            Get in touch
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            Looking for 2026 new-grad SWE roles in backend, infrastructure,
+            devtools, AI tooling, and platform engineering.
+          </p>
 
-            {/* Hiring CTA */}
-            <div className="mb-8 pb-6 border-b border-[oklch(1_0_0/0.1)]">
-              <p className="text-sm leading-relaxed opacity-70">
-                Looking for 2026 new-grad SWE roles in backend, infrastructure,
-                devtools, AI tooling, and platform engineering.
+          <div className="flex flex-wrap gap-3 mb-8 pb-8 border-b border-border">
+            <a
+              href="mailto:divkix@divkix.me"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              Email
+            </a>
+            <a
+              href="https://github.com/divkix"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/divkix/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="/resume/"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              Resume
+            </a>
+          </div>
+
+          {isSuccess ? (
+            <div className="py-8 text-center">
+              <p className="text-lg text-primary font-medium">
+                Message sent. Expect a response within 24h.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <a
-                  href="mailto:divkix@divkix.me"
-                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
-                  style={{ textShadow: "0 0 2px currentColor" }}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="contact-name"
+                  className="block text-sm font-medium mb-1.5"
+                >
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  placeholder="Your name"
+                  autoComplete="name"
+                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                  aria-required="true"
+                  aria-describedby={
+                    errors.name ? "contact-name-error" : undefined
+                  }
+                  {...register("name")}
+                  disabled={isSubmitting}
+                />
+                {errors.name && (
+                  <p
+                    id="contact-name-error"
+                    className="text-xs text-destructive mt-1"
+                  >
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="block text-sm font-medium mb-1.5"
                 >
                   Email
-                </a>
-                <a
-                  href="https://github.com/divkix"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
-                  style={{ textShadow: "0 0 2px currentColor" }}
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/divkix/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
-                  style={{ textShadow: "0 0 2px currentColor" }}
-                >
-                  LinkedIn
-                </a>
-                <a
-                  href="/resume/"
-                  className="font-mono text-xs border border-[oklch(0.7_0.2_140/0.3)] text-[oklch(0.7_0.2_140)] px-4 py-1.5 rounded cursor-pointer transition-colors hover:bg-[oklch(0.7_0.2_140/0.1)] hover:border-[oklch(0.7_0.2_140/0.5)]"
-                  style={{ textShadow: "0 0 2px currentColor" }}
-                >
-                  Resume
-                </a>
-              </div>
-            </div>
-
-            {isSuccess ? (
-              <TypewriterSuccess />
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name field */}
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="contact-prompt shrink-0"
-                      aria-hidden="true"
-                    >
-                      {">"}
-                    </span>
-                    <label htmlFor="contact-name" className="sr-only">
-                      Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      placeholder="name"
-                      autoComplete="name"
-                      className="contact-input"
-                      aria-required="true"
-                      aria-describedby={
-                        errors.name ? "contact-name-error" : undefined
-                      }
-                      {...register("name")}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  {errors.name && (
-                    <p
-                      id="contact-name-error"
-                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
-                    >
-                      error: {errors.name.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Email field */}
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="contact-prompt shrink-0"
-                      aria-hidden="true"
-                    >
-                      {">"}
-                    </span>
-                    <label htmlFor="contact-email" className="sr-only">
-                      Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      placeholder="email"
-                      autoComplete="email"
-                      className="contact-input"
-                      aria-required="true"
-                      aria-describedby={
-                        errors.email ? "contact-email-error" : undefined
-                      }
-                      {...register("email")}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  {errors.email && (
-                    <p
-                      id="contact-email-error"
-                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
-                    >
-                      error: {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Message field */}
-                <div>
-                  <div className="flex items-start gap-2">
-                    <span
-                      className="contact-prompt shrink-0 mt-1"
-                      aria-hidden="true"
-                    >
-                      {">"}
-                    </span>
-                    <label htmlFor="contact-message" className="sr-only">
-                      Message
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      placeholder="message"
-                      rows={5}
-                      className="contact-input resize-none"
-                      aria-required="true"
-                      aria-describedby={
-                        errors.message ? "contact-message-error" : undefined
-                      }
-                      {...register("message")}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  {errors.message && (
-                    <p
-                      id="contact-message-error"
-                      className="text-xs text-red-400 mt-1 ml-5 font-mono"
-                    >
-                      error: {errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                <button
-                  type="submit"
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  placeholder="your@email.com"
+                  autoComplete="email"
+                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                  aria-required="true"
+                  aria-describedby={
+                    errors.email ? "contact-email-error" : undefined
+                  }
+                  {...register("email")}
                   disabled={isSubmitting}
-                  className="font-mono text-sm border border-[oklch(0.7_0.2_140)] text-[oklch(0.7_0.2_140)] px-6 py-2.5 rounded cursor-pointer transition-all hover:bg-[oklch(0.7_0.2_140/0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{ textShadow: "0 0 2px currentColor" }}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <Loader2 className="size-4 animate-spin" />
-                      sending…
-                    </span>
-                  ) : (
-                    "$ send --message"
-                  )}
-                </button>
-              </form>
-            )}
-          </TerminalWindow>
+                />
+                {errors.email && (
+                  <p
+                    id="contact-email-error"
+                    className="text-xs text-destructive mt-1"
+                  >
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-          {/* Social links */}
-          <div className="mt-8 font-mono text-sm space-y-2">
-            <p
-              className="text-[oklch(1_0_0/0.4)]"
-              style={{ textShadow: "0 0 2px currentColor" }}
-            >
-              or reach me at:
-            </p>
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${social.label} profile`}
-                className="block text-[oklch(0.72_0.12_185)] hover:text-[oklch(0.82_0.12_185)] transition-colors"
-                style={{ textShadow: "0 0 2px currentColor" }}
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block text-sm font-medium mb-1.5"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  placeholder="Your message..."
+                  rows={5}
+                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                  aria-required="true"
+                  aria-describedby={
+                    errors.message ? "contact-message-error" : undefined
+                  }
+                  {...register("message")}
+                  disabled={isSubmitting}
+                />
+                {errors.message && (
+                  <p
+                    id="contact-message-error"
+                    className="text-xs text-destructive mt-1"
+                  >
+                    {errors.message.message}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {"-> "}
-                {social.href
-                  .replace(/^https?:\/\/(www\.)?/, "")
-                  .replace(/\/$/, "")}
-              </a>
-            ))}
-          </div>
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="size-4 animate-spin" />
+                    Sending...
+                  </span>
+                ) : (
+                  "Send Message"
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+
+        <div className="mt-8 text-sm text-muted-foreground space-y-1">
+          <p>Or reach me directly:</p>
+          {socialLinks.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${social.label} profile`}
+              className="block text-primary hover:text-primary/80 transition-colors"
+            >
+              {social.href
+                .replace(/^https?:\/\/(www\.)?/, "")
+                .replace(/\/$/, "")}
+            </a>
+          ))}
         </div>
       </div>
-
-      {/* Gradient fade to page background */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to bottom, oklch(0.08 0 0), var(--background))",
-        }}
-        aria-hidden="true"
-      />
     </section>
   );
 }
