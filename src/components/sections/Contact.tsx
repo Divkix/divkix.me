@@ -229,7 +229,7 @@ export function Contact() {
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
                     <Loader2 className="size-4 animate-spin" />
-                    Sending...
+                    Sending…
                   </span>
                 ) : (
                   "Send Message"

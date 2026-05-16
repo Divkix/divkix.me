@@ -14,7 +14,7 @@ export function SectionLabel({ number, label, className }: SectionLabelProps) {
         className,
       )}
     >
-      {number} — {label}
+      {number}: {label}
     </p>
   );
 }

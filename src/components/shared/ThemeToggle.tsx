@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
+
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
@@ -44,11 +44,9 @@ export function ThemeToggle() {
     );
 
     const transition = document.startViewTransition(() => {
-      flushSync(() => {
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        document.documentElement.classList.toggle("dark", newTheme === "dark");
-      });
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
     });
 
     try {
