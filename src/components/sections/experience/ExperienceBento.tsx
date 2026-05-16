@@ -44,12 +44,9 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
     <div ref={ref} className="relative">
       <div className="absolute left-0 md:left-1/2 -translate-x-1/2 top-6 z-10">
         {isCurrentRole ? (
-          <span className="relative flex size-4">
-            <span className="animate-ping absolute inline-flex size-full rounded-full bg-green-500 opacity-75" />
-            <span className="relative inline-flex rounded-full size-4 bg-green-500 border-2 border-background" />
-          </span>
+          <span className="inline-flex rounded-full size-3 bg-primary border-2 border-background" />
         ) : (
-          <span className="inline-flex rounded-full size-4 bg-muted-foreground/40 border-2 border-background" />
+          <span className="inline-flex rounded-full size-3 bg-muted-foreground/30 border-2 border-background" />
         )}
       </div>
 
@@ -75,7 +72,7 @@ function TimelineCard({ company, index }: { company: Company; index: number }) {
               ),
         )}
       >
-        <div className="rounded-xl border border-border bg-card p-6 shadow-hard hover:border-primary/50 transition-colors">
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/50 transition-colors">
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <div className="flex items-center gap-2">

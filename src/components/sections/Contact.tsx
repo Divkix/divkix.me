@@ -119,7 +119,7 @@ export function Contact() {
       style={{ background: "oklch(0.08 0 0)" }}
     >
       <div className="container mx-auto px-4">
-        <SectionLabel number="05" label="contact" variant="terminal" />
+        <SectionLabel number="05" label="contact" />
 
         <div className="max-w-2xl mx-auto">
           <TerminalWindow title="mail@divkix — compose">

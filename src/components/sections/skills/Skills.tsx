@@ -43,7 +43,7 @@ export function Skills() {
         style={{ background: "oklch(0.08 0 0)" }}
       >
         <div className="container mx-auto px-4">
-          <SectionLabel number="04" label="skills" variant="terminal" />
+          <SectionLabel number="04" label="skills" />
           <SkillsTerminal groupedSkills={groupedSkills} />
         </div>
       </section>

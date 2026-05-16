@@ -4,27 +4,17 @@ interface SectionLabelProps {
   number: string;
   label: string;
   className?: string;
-  variant?: "default" | "terminal";
 }
 
-export function SectionLabel({
-  number,
-  label,
-  className,
-  variant = "default",
-}: SectionLabelProps) {
+export function SectionLabel({ number, label, className }: SectionLabelProps) {
   return (
     <p
       className={cn(
-        "mb-4 font-mono text-sm tracking-wider",
-        variant === "terminal"
-          ? "text-[oklch(0.7_0.2_140)]"
-          : "text-muted-foreground",
+        "mb-4 font-mono text-xs tracking-widest uppercase text-muted-foreground/60",
         className,
       )}
     >
-      {"// "}
-      {number} / {label}
+      {number} — {label}
     </p>
   );
 }

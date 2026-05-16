@@ -1,0 +1,71 @@
+<h2>3 Design Directions for Your Portfolio</h2>
+<p class="subtitle">Click the card that feels right — or tell me in the terminal</p>
+
+<div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+
+  <!-- A. Premium Minimal -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="border: 2px solid transparent;">
+    <div style="padding: 1.5rem; background: #faf9f7; border-radius: 12px 12px 0 0; min-height: 200px; display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #999; letter-spacing: 0.1em; text-transform: uppercase;">Software Engineer</p>
+      <h3 style="font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; font-weight: 400; color: #1a1a1a; line-height: 1.1; margin: 0;">Divanshu<br>Chauhan</h3>
+      <p style="font-size: 13px; color: #666; line-height: 1.5; margin-top: 0.5rem;">Building devtools, observability systems, and edge-native apps. MS CS @ ASU. SWE Intern @ Cloudflare.</p>
+      <div style="display: flex; gap: 8px; margin-top: 1rem;">
+        <span style="padding: 4px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; color: #555;">View Projects</span>
+        <span style="padding: 4px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; color: #555;">Read Blog</span>
+      </div>
+    </div>
+    <div class="card-body" style="padding: 1rem 1.5rem; border-top: 1px solid #eee;">
+      <h3 style="margin: 0; font-size: 16px; font-weight: 600;">A. Premium Minimal</h3>
+      <p style="margin: 0.25rem 0 0; font-size: 13px; color: #666;">Clean, confident, lots of whitespace. Refined typography. Muted earth tones. Think Stripe, Linear, or a high-end agency portfolio.</p>
+    </div>
+  </div>
+
+  <!-- B. Editorial / Magazine -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)" style="border: 2px solid transparent;">
+    <div style="padding: 1.5rem; background: #0f0f0f; border-radius: 12px 12px 0 0; min-height: 200px; display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #888; letter-spacing: 0.15em; text-transform: uppercase;">Divanshu Chauhan — Profile</p>
+        <p style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #888;">2026</p>
+      </div>
+      <h3 style="font-family: 'Instrument Serif', Georgia, serif; font-size: 32px; font-weight: 400; color: #f5f5f5; line-height: 1.05; margin: 0;">DevTools &<br>Infrastructure</h3>
+      <p style="font-size: 13px; color: #aaa; line-height: 1.5; margin-top: 0.5rem;">From Telegram bots serving 300K users to logging platforms at the edge — a decade of shipping systems that scale.</p>
+      <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #333;">
+        <span style="font-size: 11px; color: #c9a96e;">Continue reading →</span>
+      </div>
+    </div>
+    <div class="card-body" style="padding: 1rem 1.5rem; border-top: 1px solid #eee;">
+      <h3 style="margin: 0; font-size: 16px; font-weight: 600;">B. Editorial / Magazine</h3>
+      <p style="margin: 0.25rem 0 0; font-size: 13px; color: #666;">Dark, sophisticated, story-forward. Strong contrast, editorial typography. Like a design studio or premium publication.</p>
+    </div>
+  </div>
+
+  <!-- C. Technical Authority -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)" style="border: 2px solid transparent;">
+    <div style="padding: 1.5rem; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px 12px 0 0; min-height: 200px; display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></div>
+        <p style="font-family: 'Geist Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.1em; text-transform: uppercase;">Available for roles</p>
+      </div>
+      <h3 style="font-family: 'Geist Sans', sans-serif; font-size: 26px; font-weight: 700; color: #111; line-height: 1.1; margin: 0; letter-spacing: -0.02em;">Divanshu Chauhan</h3>
+      <p style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #444; line-height: 1.6; margin-top: 0.5rem; background: #f5f5f5; padding: 8px 12px; border-radius: 6px;">
+        <span style="color: #2563eb;">$</span> whoami<br>
+        <span style="color: #666; margin-left: 12px;">swe-intern @ cloudflare</span><br>
+        <span style="color: #2563eb;">$</span> stack<br>
+        <span style="color: #666; margin-left: 12px;">ts · go · python · workers · d1</span>
+      </p>
+      <div style="display: flex; gap: 8px; margin-top: 0.5rem;">
+        <span style="padding: 4px 12px; background: #111; color: #fff; border-radius: 4px; font-size: 11px;">View Projects</span>
+        <span style="padding: 4px 12px; background: #f5f5f5; color: #333; border-radius: 4px; font-size: 11px;">GitHub</span>
+      </div>
+    </div>
+    <div class="card-body" style="padding: 1rem 1.5rem; border-top: 1px solid #eee;">
+      <h3 style="margin: 0; font-size: 16px; font-weight: 600;">C. Technical Authority</h3>
+      <p style="margin: 0.25rem 0 0; font-size: 13px; color: #666;">Precise, data-forward, code-aware. Clean structure with monospace accents. Like a systems engineer or researcher portfolio.</p>
+    </div>
+  </div>
+
+</div>
+
+<p style="margin-top: 2rem; text-align: center; color: #888; font-size: 14px;">
+  These are simplified hero-section mockups. The chosen direction would influence colors, layout, animations, and tone across the entire site.
+</p>

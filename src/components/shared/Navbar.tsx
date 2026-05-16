@@ -205,16 +205,10 @@ export function Navbar() {
         Skip to main content
       </a>
       <nav
-        className="sticky top-0 z-50 w-full bg-background transition-all duration-300"
-        style={
-          scrolled
-            ? {
-                borderBottom: "1px solid transparent",
-                borderImage:
-                  "linear-gradient(to right, var(--primary), var(--accent)) 1",
-              }
-            : undefined
-        }
+        className={cn(
+          "sticky top-0 z-50 w-full bg-background transition-all duration-300",
+          scrolled && "border-b border-border/40 shadow-sm",
+        )}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <a
