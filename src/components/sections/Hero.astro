@@ -1,100 +1,50 @@
 ---
 import SocialIcons from "@/components/shared/SocialIcons.astro";
 import { siteConfig } from "@/data/site.config";
+
+const currentYear = new Date().getFullYear();
 ---
 
-<section id="hero" class="container mx-auto px-4 py-16 md:py-20">
-  <div class="split-studio w-full max-w-6xl mx-auto">
-    <div class="split-studio-content space-y-6 min-w-0 max-w-prose">
-      <p class="font-display text-lg md:text-xl italic text-muted-foreground hero-lead">
-        Hello —
-      </p>
-
-      <h1 class="font-display text-[var(--text-display)] font-medium tracking-tight leading-[1.05] text-foreground hero-name min-w-0 overflow-wrap-anywhere">
-        I'm {siteConfig.name}.
-        <span class="sr-only"> — Software Engineer and Builder</span>
-      </h1>
-
-      <div class="accent-line" aria-hidden="true"></div>
-
-      <p class="text-lg md:text-xl text-muted-foreground leading-relaxed hero-subheadline">
-        {siteConfig.heroSummary}
-      </p>
-
-      <div class="flex flex-wrap gap-3 pt-2 hero-cta">
-        <a
-          href="#projects"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-input)] text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6"
-        >
-          See selected work
-        </a>
-        <a
-          href="#writing"
-          class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-[var(--radius-input)] text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-border hover:bg-accent hover:text-accent-foreground h-11 px-6 link-underline-grow"
-        >
-          Read recent writing
-        </a>
-      </div>
-
-      <div class="pt-4 hero-socials">
-        <SocialIcons size="sm" />
-      </div>
-    </div>
-
-    <figure class="split-studio-proof m-0 min-w-0">
-      <div class="border border-border p-2 md:p-3 bg-card">
-        <img
-          src={siteConfig.authorImage}
-          alt={`Portrait of ${siteConfig.name}`}
-          width="480"
-          height="480"
-          class="w-full aspect-square object-cover"
-          loading="eager"
-        />
-      </div>
-      <figcaption class="mt-3 text-sm text-muted-foreground text-center md:text-left">
-        {siteConfig.location}
-      </figcaption>
-    </figure>
-  </div>
+<section id="hero" class="photo-fold">
+  <figure class="m-0">
+    <img
+      src={siteConfig.authorImage}
+      alt={`Portrait of ${siteConfig.name}`}
+      width="1200"
+      height="800"
+      loading="eager"
+    />
+    <figcaption class="photo-caption">
+      {siteConfig.location} · {currentYear}
+    </figcaption>
+  </figure>
 </section>
 
-<style>
-  .hero-lead,
-  .hero-name,
-  .hero-subheadline,
-  .hero-cta,
-  .hero-socials {
-    opacity: 0;
-    animation: hero-fade-up var(--dur-medium) var(--ease-out) forwards;
-  }
+<section class="text-fold space-y-6 min-w-0" aria-labelledby="hero-heading">
+  <p class="mast-line">Software engineer · builder</p>
 
-  .hero-lead { animation-delay: 0.05s; }
-  .hero-name { animation-delay: 0.12s; }
-  .hero-subheadline { animation-delay: 0.22s; }
-  .hero-cta { animation-delay: 0.32s; }
-  .hero-socials { animation-delay: 0.4s; }
+  <h1
+    id="hero-heading"
+    class="font-display text-[length:var(--text-display)] leading-[1.0] text-foreground min-w-0 overflow-wrap-anywhere"
+  >
+    {siteConfig.name}
+    <span class="sr-only"> — Software Engineer and Builder</span>
+  </h1>
 
-  @keyframes hero-fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  <p class="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-prose">
+    {siteConfig.heroSummary}
+  </p>
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-lead,
-    .hero-name,
-    .hero-subheadline,
-    .hero-cta,
-    .hero-socials {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-  }
-</style>
+  <div class="flex flex-wrap gap-3 pt-2">
+    <a href="#projects" class="btn-primary">
+      See selected work
+    </a>
+    <a href="/blog" class="btn-secondary">
+      Read recent writing
+    </a>
+  </div>
+
+  <div class="pt-4">
+    <SocialIcons size="sm" />
+  </div>
+</section>

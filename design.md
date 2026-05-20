@@ -10,29 +10,30 @@ editorial
 
 ## Macrostructure family
 
-- Marketing homepage: Letter — first-person salutation, belief-led prose, portrait as quiet proof; sections follow POV → writing → signature work → contact
-- Marketing sections (projects): Split Studio diptychs where text/proof pairing helps
+- Marketing homepage: Photographic — portrait-led hero fold, narrow text bands, image edge as divider
+- Marketing sections (projects): border-top list rows with typographic proof links
 - Content pages: Long Document — continuous prose, inline section heads, generous measure
 
 ## Theme
 
-Salon — light paper · roman-serif display · warm terracotta accent
+Atelier layout · Atelier palette — cool near-white cream · Didone-serif display · muted slate-indigo accent
 
-- `--color-paper`   oklch(0.96 0.008 85)
-- `--color-paper-2` oklch(0.93 0.012 82)
-- `--color-ink`     oklch(0.22 0.02 55)
-- `--color-ink-2`   oklch(0.45 0.02 55)
-- `--color-rule`    oklch(0.86 0.015 80)
-- `--color-accent`  oklch(0.52 0.14 35)
-- `--color-focus`   oklch(0.52 0.14 35)
+- `--color-paper`   oklch(0.986 0.003 250) — smooth cool cream, near-white (no brown/yellow cast)
+- `--color-paper-2` oklch(0.968 0.004 248) — lifted cream for cards
+- `--color-ink`     oklch(0.29 0.02 260) — cool blue-gray charcoal
+- `--color-ink-2`   oklch(0.47 0.014 258)
+- `--color-rule`    oklch(0.92 0.004 260) — neutral cool hairline
+- `--color-accent`  oklch(0.44 0.09 265) — muted indigo on cream
+- `--color-focus`   oklch(0.44 0.09 265)
+- Dark `--color-paper` oklch(0.20 0.006 265) · `--color-ink` oklch(0.92 0.005 265) · `--color-accent` oklch(0.62 0.1 265)
 
 ## Typography
 
-- Display: Fraunces, weight 500, style normal
-- Body: Source Serif 4, weight 400
+- Display: Playfair Display, weight 900, style normal
+- Body: Geist Sans, weight 400
 - Mono: Geist Mono, weight 400 (data only — not section labels)
-- Display tracking: -0.02em
-- Type scale anchor: `--text-display` = clamp(2.75rem, 5vw + 1rem, 4.5rem)
+- Display tracking: -0.018em
+- Type scale anchor: `--text-display` = clamp(2.75rem, 5.5vw + 1rem, 4.75rem)
 
 ## Spacing
 
@@ -42,7 +43,7 @@ tokens (`var(--space-md)`), never raw values.
 ## Motion
 
 - Easings: `--ease-out` cubic-bezier(0.16, 1, 0.3, 1)
-- Reveal pattern: fade + subtle translate on scroll (view timeline)
+- Reveal pattern: none in fold (Atelier); opacity-only below-fold if needed
 - Reduced-motion fallback: opacity-only, ≤ 150 ms
 
 ## Microinteractions stance
@@ -53,17 +54,17 @@ tokens (`var(--space-md)`), never raw values.
 
 ## CTA voice
 
-- Primary CTA: filled, `--radius-input` (4px), verb-led copy
+- Primary CTA: filled, square corners (`--radius-input: 0`), verb-led copy
 - Secondary CTA: hairline outline, same radius
 
 ## Nav + Footer
 
-- Nav: N9 Edge-aligned minimal
-- Footer: Ft6 Letter close
+- Nav: N6 Newspaper masthead
+- Footer: Ft1 Mast-headed
 
 ## Per-page allowances
 
-- Marketing pages MAY use author photo in hero figure
+- Marketing pages MAY use author photo in hero figure (real portrait only)
 - Content pages: typography only, no enrichment
 
 ## What pages MUST share
@@ -76,7 +77,7 @@ tokens (`var(--space-md)`), never raw values.
 
 ## What pages MAY differ on
 
-- Split Studio column order (alternate left/right per section)
+- Photo fold vs prose fold rhythm on marketing pages
 - Blog list vs post prose width
 
 ## Exports
@@ -94,16 +95,16 @@ Mapped in [`src/styles/globals.css`](src/styles/globals.css) via shadcn semantic
 ```json
 {
   "color": {
-    "paper": { "$value": "oklch(0.96 0.008 85)", "$type": "color" },
-    "ink": { "$value": "oklch(0.22 0.02 55)", "$type": "color" },
-    "accent": { "$value": "oklch(0.52 0.14 35)", "$type": "color" }
+    "paper": { "$value": "oklch(0.986 0.003 250)", "$type": "color" },
+    "ink": { "$value": "oklch(0.29 0.02 260)", "$type": "color" },
+    "accent": { "$value": "oklch(0.44 0.09 265)", "$type": "color" }
   },
   "font": {
-    "display": { "$value": "Fraunces", "$type": "fontFamily" },
-    "body": { "$value": "Source Serif 4", "$type": "fontFamily" }
+    "display": { "$value": "Playfair Display", "$type": "fontFamily" },
+    "body": { "$value": "Geist Sans", "$type": "fontFamily" }
   },
   "space": {
-    "md": { "$value": "1.5rem", "$type": "dimension" }
+    "md": { "$value": "1rem", "$type": "dimension" }
   }
 }
 ```

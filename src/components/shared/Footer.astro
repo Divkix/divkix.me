@@ -7,52 +7,38 @@ const footerLinks = [
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
   { label: "Privacy", href: "/privacy" },
+  { label: "Contact", href: "/#contact" },
 ];
 ---
 
-<footer class="border-t border-border mt-16">
-  <div class="container mx-auto px-4 py-12 md:py-16 max-w-4xl">
-    <div class="space-y-8">
-      <div class="space-y-4">
-        <p class="font-display text-2xl md:text-3xl text-foreground leading-snug">
-          Thanks for stopping by.
-        </p>
-        <p class="text-muted-foreground text-lg leading-relaxed max-w-prose">
-          If something here clicked — a project, a post, whatever — I'd like to hear from you.
-        </p>
-      </div>
-
-      <div class="flex flex-wrap gap-x-6 gap-y-2">
-        {footerLinks.map((link) => (
+<footer class="border-t border-border mt-[var(--section-gap)]">
+  <div class="mx-auto px-[var(--page-gutter)] py-[var(--space-2xl)] max-w-4xl text-center space-y-[var(--space-md)]">
+    <p class="font-display text-2xl md:text-3xl text-foreground leading-[1.05] tracking-[var(--tracking-display)]">
+      {siteConfig.name}
+    </p>
+    <p class="text-muted-foreground text-base max-w-prose mx-auto leading-relaxed">
+      Software engineer, builder, writer. Based in {siteConfig.location}.
+    </p>
+    <p class="text-sm text-muted-foreground flex flex-wrap justify-center gap-x-4 gap-y-2">
+      {
+        footerLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm text-foreground link-underline-grow whitespace-nowrap"
+            class="text-foreground link-underline-grow whitespace-nowrap uppercase tracking-[0.06em]"
           >
             {link.label}
           </a>
-        ))}
-        <a
-          href="mailto:divkix@divkix.me"
-          class="text-sm text-foreground link-underline-grow whitespace-nowrap"
-        >
-          Email
-        </a>
-        <a
-          href="https://github.com/divkix/divkix.me"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View source code on GitHub"
-          class="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
-        >
-          Source
-        </a>
-      </div>
-
-      <hr class="hairline-rule" />
-
-      <p class="text-sm text-muted-foreground">
-        &copy; {currentYear} {siteConfig.name} · {siteConfig.location}
-      </p>
-    </div>
+        ))
+      }
+      <a
+        href="mailto:divkix@divkix.me"
+        class="text-foreground link-underline-grow whitespace-nowrap uppercase tracking-[0.06em]"
+      >
+        Email
+      </a>
+    </p>
+    <p class="text-xs text-muted-foreground tracking-[0.04em]">
+      &copy; {currentYear} · {siteConfig.location}
+    </p>
   </div>
 </footer>

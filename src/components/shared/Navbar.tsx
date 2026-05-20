@@ -6,7 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const primaryNavItems = [
   { label: "Work", href: "/#projects" },
-  { label: "Writing", href: "/#writing" },
+  { label: "Writing", href: "/blog" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
@@ -14,6 +14,8 @@ const primaryNavItems = [
 const secondaryNavItems = [{ label: "Resume", href: "/resume" }];
 
 const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+
+const mastLine = `${siteConfig.handle} · Portfolio · ${new Date().getFullYear()}`;
 
 function isNavItemActive(
   href: string,
@@ -39,7 +41,6 @@ function isNavItemActive(
 export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [pathname, setPathname] = useState(() =>
     typeof window !== "undefined" ? window.location.pathname : "",
   );
@@ -53,43 +54,6 @@ export function Navbar() {
     document.addEventListener("astro:page-load", handlePageLoad);
     return () =>
       document.removeEventListener("astro:page-load", handlePageLoad);
-  }, []);
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    let lastExecutedTime = 0;
-    const wait = 100;
-
-    const handleScroll = () => {
-      const now = Date.now();
-      const remaining = wait - (now - lastExecutedTime);
-      const nextScrolled = window.scrollY > 24;
-
-      if (remaining <= 0) {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-        lastExecutedTime = now;
-        setScrolled(nextScrolled);
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(() => {
-          lastExecutedTime = Date.now();
-          timeoutId = null;
-          setScrolled(window.scrollY > 24);
-        }, remaining);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
   }, []);
 
   useEffect(() => {
@@ -143,58 +107,59 @@ export function Navbar() {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-[var(--radius-input)]"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground"
       >
         Skip to main content
       </a>
-      <nav
-        className={cn(
-          "sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm transition-all duration-300",
-          scrolled && "border-b border-border",
-        )}
-        aria-label="Main navigation"
-      >
-        <div className="container mx-auto flex h-14 md:h-16 items-center justify-between px-4 max-w-6xl gap-4">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-transparent">
+        <div className="mx-auto max-w-6xl px-[var(--page-gutter)] pt-[var(--space-md)] pb-0 text-center">
+          <p className="mast-line mb-[var(--space-2xs)]">{mastLine}</p>
           <a
             href="/"
-            className="font-display text-base md:text-lg tracking-tight text-foreground transition-opacity hover:opacity-80 min-w-0 shrink"
+            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-[var(--tracking-display)] text-foreground transition-opacity hover:opacity-80 inline-block min-w-0"
             aria-label={`${siteConfig.name} home`}
           >
             {siteConfig.name}
           </a>
 
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center gap-6">
+          <nav
+            className="hidden md:block mt-[var(--space-sm)]"
+            aria-label="Main navigation"
+          >
+            <ul className="inline-flex flex-wrap items-center justify-center gap-x-[var(--space-lg)] gap-y-2 list-none m-0 p-0">
               {primaryNavItems.map((item) => {
                 const isActive = getIsActive(item.href);
                 return (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => handleAnchorClick(e, item.href)}
-                    className={cn(
-                      "text-sm link-underline-grow whitespace-nowrap transition-colors",
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleAnchorClick(e, item.href)}
+                      className={cn(
+                        "text-sm link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.06em]",
+                        isActive
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
                 );
               })}
-            </div>
-            <ThemeToggle />
-          </div>
+              <li>
+                <ThemeToggle />
+              </li>
+            </ul>
+          </nav>
 
-          <div className="flex md:hidden items-center gap-3">
+          <div className="flex md:hidden items-center justify-center gap-3 mt-[var(--space-sm)] pb-[var(--space-xs)]">
             <ThemeToggle />
             <button
               ref={hamburgerRef}
               type="button"
               onClick={() => setIsOpen(true)}
-              className="p-2 text-foreground hover:text-primary transition-colors"
+              className="p-2 text-foreground hover:text-primary transition-colors uppercase text-xs tracking-[0.08em]"
               aria-label="Open menu"
               aria-expanded={isOpen}
               aria-controls="mobile-nav-dialog"
@@ -202,8 +167,10 @@ export function Navbar() {
               <MenuIcon className="size-5" />
             </button>
           </div>
+
+          <hr className="double-rule mt-[var(--space-sm)] mb-0" />
         </div>
-      </nav>
+      </header>
 
       <MobileNavDialog
         isOpen={isOpen}
@@ -231,7 +198,6 @@ function MobileNavDialog({
   onAnchorClick,
   onClosed,
 }: MobileNavDialogProps) {
-  const [menuVisible, setMenuVisible] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const prevIsOpen = useRef(false);
@@ -242,18 +208,6 @@ function MobileNavDialog({
     onCloseRef.current = onClose;
     onClosedRef.current = onClosed;
   }, [onClose, onClosed]);
-
-  useEffect(() => {
-    let raf: number | undefined;
-    if (isOpen) {
-      raf = requestAnimationFrame(() => setMenuVisible(true));
-    } else {
-      setMenuVisible(false);
-    }
-    return () => {
-      if (raf !== undefined) cancelAnimationFrame(raf);
-    };
-  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -332,7 +286,7 @@ function MobileNavDialog({
       aria-modal="true"
       aria-label="Navigation menu"
     >
-      <div className="flex h-14 items-center justify-between border-b border-border px-4 gap-2">
+      <div className="flex h-14 items-center justify-between border-b border-border px-[var(--page-gutter)] gap-2">
         <span className="font-display text-base text-foreground truncate min-w-0">
           {siteConfig.name}
         </span>
@@ -347,10 +301,10 @@ function MobileNavDialog({
         </button>
       </div>
       <nav
-        className="flex flex-1 flex-col items-start justify-center gap-5 px-8"
+        className="flex flex-1 flex-col items-center justify-center gap-5 px-8"
         aria-label="Mobile navigation menu"
       >
-        {allNavItems.map((item, i) => {
+        {allNavItems.map((item) => {
           const isActive = getIsActive(item.href);
           return (
             <a
@@ -358,16 +312,11 @@ function MobileNavDialog({
               href={item.href}
               onClick={(e) => onAnchorClick(e, item.href)}
               className={cn(
-                "font-display text-2xl font-medium whitespace-nowrap",
+                "font-display text-2xl whitespace-nowrap uppercase tracking-[0.04em]",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground",
               )}
-              style={{
-                opacity: menuVisible ? 1 : 0,
-                transform: menuVisible ? "translateX(0)" : "translateX(20px)",
-                transition: `opacity var(--dur-medium) var(--ease-out) ${i * 40}ms, transform var(--dur-medium) var(--ease-out) ${i * 40}ms`,
-              }}
               aria-current={isActive ? "page" : undefined}
             >
               {item.label}

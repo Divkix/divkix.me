@@ -44,12 +44,8 @@ const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
   <Hero />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Highlights client:visible />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <RecentWriting posts={recentPosts} />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Projects client:visible />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Contact client:visible />
 </SiteLayout>

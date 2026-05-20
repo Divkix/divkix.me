@@ -1,31 +1,41 @@
-/* Hallmark · genre: editorial · theme: Salon · design-system: design.md · designed-as-app
- * macrostructure: Split Studio (marketing) · Long Document (content)
- * nav: N9 · footer: Ft6 · tone: editorial/warm
+/* Hallmark · genre: editorial · theme: Atelier layout · Atelier palette · design-system: design.md
+ * macrostructure: Photographic (marketing) · Long Document (content)
+ * nav: N6 · footer: Ft1 · tone: editorial/cool
+ * axes: light · Didone-serif · cool slate-indigo accent (Atelier)
  */
 
 :root {
-  --color-paper: oklch(0.96 0.008 85);
-  --color-paper-2: oklch(0.93 0.012 82);
-  --color-ink: oklch(0.22 0.02 55);
-  --color-ink-2: oklch(0.45 0.02 55);
-  --color-rule: oklch(0.86 0.015 80);
-  --color-accent: oklch(0.52 0.14 35);
-  --color-accent-ink: oklch(0.96 0.008 85);
-  --color-focus: oklch(0.52 0.14 35);
+  --color-paper: oklch(0.986 0.003 250);
+  --color-paper-2: oklch(0.968 0.004 248);
+  --color-paper-3: oklch(0.948 0.005 246);
+  --color-ink: oklch(0.29 0.02 260);
+  --color-ink-2: oklch(0.47 0.014 258);
+  --color-muted: oklch(0.47 0.014 258);
+  --color-rule: oklch(0.92 0.004 260);
+  --color-rule-2: oklch(0.87 0.005 258);
+  --color-accent: oklch(0.44 0.09 265);
+  --color-accent-ink: oklch(0.986 0.003 250);
+  --color-focus: oklch(0.44 0.09 265);
 
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-display:
+    "Playfair Display", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 
-  --space-3xs: 0.25rem;
-  --space-2xs: 0.5rem;
-  --space-xs: 0.75rem;
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
-  --space-2xl: 4.5rem;
-  --space-3xl: 7rem;
+  --display-weight: 900;
+  --display-style: normal;
+  --tracking-display: -0.018em;
+  --tracking-label: 0.24em;
+
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6.5rem;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -33,28 +43,35 @@
   --text-lg: 1.375rem;
   --text-xl: 1.75rem;
   --text-2xl: 2.25rem;
-  --text-display: clamp(2.75rem, 5vw + 1rem, 4.5rem);
+  --text-display: clamp(2.75rem, 5.5vw + 1rem, 4.75rem);
+  --text-display-s: clamp(2rem, 4vw + 0.5rem, 3.25rem);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-short: 220ms;
-  --dur-medium: 400ms;
+  --dur-short: 286ms;
+  --dur-medium: 520ms;
 
-  --radius-card: 0.25rem;
-  --radius-pill: 9999px;
-  --radius-input: 0.25rem;
+  --radius-card: 0;
+  --radius-pill: 0;
+  --radius-input: 0;
 
-  --rule-hairline: 1px solid var(--color-rule);
+  --rule-hairline: 0.5px solid var(--color-rule);
+  --page-gutter: clamp(1.25rem, 4vw, 3rem);
+  --measure: 65ch;
+  --section-gap: 6.5rem;
 }
 
 .dark {
-  --color-paper: oklch(0.16 0.015 55);
-  --color-paper-2: oklch(0.2 0.015 55);
-  --color-ink: oklch(0.9 0.01 85);
-  --color-ink-2: oklch(0.65 0.01 80);
-  --color-rule: oklch(1 0 0 / 12%);
-  --color-accent: oklch(0.62 0.12 40);
-  --color-accent-ink: oklch(0.16 0.015 55);
-  --color-focus: oklch(0.62 0.12 40);
+  --color-paper: oklch(0.2 0.004 260);
+  --color-paper-2: oklch(0.24 0.005 260);
+  --color-paper-3: oklch(0.28 0.006 260);
+  --color-ink: oklch(0.92 0.005 265);
+  --color-ink-2: oklch(0.72 0.008 262);
+  --color-muted: oklch(0.72 0.008 262);
+  --color-rule: oklch(0.32 0.005 260);
+  --color-rule-2: oklch(0.38 0.006 260);
+  --color-accent: oklch(0.62 0.1 265);
+  --color-accent-ink: oklch(0.2 0.004 260);
+  --color-focus: oklch(0.62 0.1 265);
 }

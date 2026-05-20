@@ -45,24 +45,24 @@ function GitHubIcon(props: ComponentProps<"svg">) {
 
 function FeaturedProjectCard({ project }: { project: Project }) {
   return (
-    <article className="border-t border-border pt-8 first:border-t-0 first:pt-0 min-w-0">
-      <div className="split-studio">
-        <div className="split-studio-content min-w-0 space-y-3">
+    <article className="border-t border-border pt-[var(--space-lg)] first:border-t-0 first:pt-0 min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-[var(--space-md)] md:gap-[var(--space-xl)] items-start">
+        <div className="min-w-0 space-y-2">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-2xl font-display font-medium">
+            <h3 className="text-xl md:text-2xl font-display leading-[1.1]">
               {project.name}
             </h3>
             {"period" in project && project.period && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs text-muted-foreground uppercase tracking-[0.06em]">
                 {project.period}
               </span>
             )}
           </div>
-          <p className="text-foreground/80 leading-relaxed max-w-prose">
+          <p className="text-foreground/80 leading-relaxed max-w-prose text-base">
             {project.desc}
           </p>
         </div>
-        <div className="split-studio-proof flex flex-wrap gap-2 items-start min-w-0">
+        <div className="flex flex-wrap gap-2 items-start min-w-0">
           {project.links.map((link: ProjectLink) => {
             const linkLabel = link.label;
             const ariaLabel =
@@ -78,6 +78,7 @@ function FeaturedProjectCard({ project }: { project: Project }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={ariaLabel}
+                  className="rounded-none uppercase tracking-[0.04em] text-xs"
                 >
                   {linkLabel === "Live" ? (
                     <Globe className="mr-1.5 size-3.5" />
@@ -93,7 +94,10 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           })}
           {PROJECT_BLOG_MAP[project.name] && (
             <Button variant="ghost" size="sm" asChild>
-              <a href={PROJECT_BLOG_MAP[project.name]}>
+              <a
+                href={PROJECT_BLOG_MAP[project.name]}
+                className="rounded-none uppercase tracking-[0.04em] text-xs"
+              >
                 <BookOpen className="mr-1.5 size-3.5" />
                 Read more
               </a>
@@ -111,29 +115,27 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="container mx-auto px-4 py-16 md:py-24 max-w-6xl"
+      className="text-band max-w-4xl space-y-[var(--space-xl)]"
     >
-      <div className="space-y-10 md:space-y-12">
-        <SectionHeading
-          title="Selected work"
-          description="Four products and tools I've built — edge platforms, logging, portfolios, and bots people actually use."
-        />
+      <SectionHeading
+        title="Selected work"
+        description="Four products and tools I've built — edge platforms, logging, portfolios, and bots people actually use."
+      />
 
-        <div className="space-y-0">
-          {featured.map((project: Project) => (
-            <FeaturedProjectCard key={project.name} project={project} />
-          ))}
-        </div>
-
-        <p className="text-muted-foreground">
-          <a
-            href="/about"
-            className="text-primary link-underline-grow whitespace-nowrap"
-          >
-            More projects and full résumé on About →
-          </a>
-        </p>
+      <div className="space-y-0">
+        {featured.map((project: Project) => (
+          <FeaturedProjectCard key={project.name} project={project} />
+        ))}
       </div>
+
+      <p className="text-muted-foreground">
+        <a
+          href="/about"
+          className="text-primary link-underline-grow whitespace-nowrap uppercase text-sm tracking-[0.06em]"
+        >
+          More projects and full résumé on About →
+        </a>
+      </p>
     </section>
   );
 }

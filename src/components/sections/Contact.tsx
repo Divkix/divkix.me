@@ -77,12 +77,9 @@ export function Contact() {
   const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 
   return (
-    <section
-      id="contact"
-      className="container mx-auto px-4 py-16 md:py-24 max-w-6xl"
-    >
-      <div className="split-studio">
-        <div className="split-studio-content min-w-0 space-y-6">
+    <section id="contact" className="text-band max-w-4xl min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-[var(--space-xl)] items-start">
+        <div className="min-w-0 space-y-6">
           <SectionHeading
             title="Say hello"
             description="Open to full-time software engineering roles starting May/June 2026 — backend, infrastructure, developer tools, and platform work."
@@ -92,7 +89,7 @@ export function Contact() {
             <p>
               <a
                 href="mailto:divkix@divkix.me"
-                className="text-primary link-underline-grow whitespace-nowrap"
+                className="text-primary link-underline-grow whitespace-nowrap uppercase text-sm tracking-[0.06em]"
               >
                 divkix@divkix.me
               </a>
@@ -100,7 +97,7 @@ export function Contact() {
             <p>
               <a
                 href="/resume"
-                className="text-primary link-underline-grow whitespace-nowrap"
+                className="text-primary link-underline-grow whitespace-nowrap uppercase text-sm tracking-[0.06em]"
               >
                 Download resume
               </a>
@@ -114,7 +111,7 @@ export function Contact() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.04em]"
                 >
                   {social.label}
                 </a>
@@ -123,7 +120,7 @@ export function Contact() {
           </ul>
         </div>
 
-        <div className="split-studio-proof min-w-0">
+        <div className="min-w-0">
           <div className="border border-border bg-card p-6 md:p-8">
             {isSuccess ? (
               <p className="text-lg text-primary font-medium py-8 text-center">
@@ -229,7 +226,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center justify-center rounded-[var(--radius-input)] bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 h-11 px-6 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
