@@ -112,11 +112,11 @@ export function Navbar() {
         Skip to main content
       </a>
       <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-transparent">
-        <div className="mx-auto max-w-6xl px-[var(--page-gutter)] pt-[var(--space-md)] pb-0 text-center">
+        <div className="content-rail pt-[var(--space-md)] pb-0">
           <p className="mast-line mb-[var(--space-2xs)]">{mastLine}</p>
           <a
             href="/"
-            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-[var(--tracking-display)] text-foreground transition-opacity hover:opacity-80 inline-block min-w-0"
+            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-[var(--tracking-display)] text-foreground transition-opacity hover:opacity-80 block min-w-0"
             aria-label={`${siteConfig.name} home`}
           >
             {siteConfig.name}
@@ -126,7 +126,7 @@ export function Navbar() {
             className="hidden md:block mt-[var(--space-sm)]"
             aria-label="Main navigation"
           >
-            <ul className="inline-flex flex-wrap items-center justify-center gap-x-[var(--space-lg)] gap-y-2 list-none m-0 p-0">
+            <ul className="flex flex-wrap items-center gap-x-[var(--space-lg)] gap-y-2 list-none m-0 p-0">
               {primaryNavItems.map((item) => {
                 const isActive = getIsActive(item.href);
                 return (
@@ -153,7 +153,7 @@ export function Navbar() {
             </ul>
           </nav>
 
-          <div className="flex md:hidden items-center justify-center gap-3 mt-[var(--space-sm)] pb-[var(--space-xs)]">
+          <div className="flex md:hidden items-center gap-3 mt-[var(--space-sm)] pb-[var(--space-xs)]">
             <ThemeToggle />
             <button
               ref={hamburgerRef}

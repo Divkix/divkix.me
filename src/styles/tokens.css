@@ -59,9 +59,9 @@
 
   --rule-hairline-height: 0.5px;
   --rule-hairline: var(--rule-hairline-height) solid var(--color-rule);
-  --page-gutter: clamp(1.25rem, 3vw, 1.75rem);
-  --measure: 38rem;
-  --content-rail: 44rem;
+  --page-gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --measure: min(38rem, 100%);
+  --content-rail: min(72rem, calc(100vw - 2 * var(--page-gutter)));
   --section-gap: 5.5rem;
 }
 
