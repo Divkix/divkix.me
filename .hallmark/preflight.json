@@ -1,9 +1,0 @@
-{
-  "scannedAt": "2026-05-20",
-  "fontStack": "Playfair Display 900 + Geist Sans (Atelier); previously Fraunces + Source Serif 4",
-  "palette": "OKLCH custom properties in src/styles/tokens.css",
-  "motion": "motion-cut (no framer-motion / gsap)",
-  "spacing": "4-pt named scale in tokens.css",
-  "framework": "Astro 6 + Tailwind v4 + React islands",
-  "designMd": true
-}
