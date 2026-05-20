@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { SectionLabel } from "@/components/shared/SectionLabel";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
 
 const contactSchema = z.object({
@@ -44,7 +44,7 @@ export function Contact() {
       if (response.ok) {
         setIsSuccess(true);
         reset();
-        toast.success("Message sent!", {
+        toast.success("Message sent", {
           description: "I'll get back to you soon.",
         });
         setTimeout(() => setIsSuccess(false), 5000);
@@ -79,182 +79,173 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="container mx-auto px-4 py-24 reveal-on-scroll"
+      className="container mx-auto px-4 py-16 md:py-24 max-w-6xl"
     >
-      <SectionLabel number="05" label="contact" />
+      <div className="split-studio">
+        <div className="split-studio-content min-w-0 space-y-6">
+          <SectionHeading
+            title="Say hello"
+            description="Open to full-time software engineering roles starting May/June 2026 — backend, infrastructure, developer tools, and platform work."
+          />
 
-      <div className="max-w-2xl mx-auto">
-        <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-          <h2 className="text-2xl font-display font-semibold mb-2">
-            Get in touch
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Looking for 2026 new-grad SWE roles in backend, infrastructure,
-            devtools, AI tooling, and platform engineering.
-          </p>
-
-          <div className="flex flex-wrap gap-3 mb-8 pb-8 border-b border-border">
-            <a
-              href="mailto:divkix@divkix.me"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Email
-            </a>
-            <a
-              href="https://github.com/divkix"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/divkix/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="/resume/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Resume
-            </a>
+          <div className="space-y-3 text-muted-foreground">
+            <p>
+              <a
+                href="mailto:divkix@divkix.me"
+                className="text-primary link-underline-grow whitespace-nowrap"
+              >
+                divkix@divkix.me
+              </a>
+            </p>
+            <p>
+              <a
+                href="/resume"
+                className="text-primary link-underline-grow whitespace-nowrap"
+              >
+                Download resume
+              </a>
+            </p>
           </div>
 
-          {isSuccess ? (
-            <div className="py-8 text-center">
-              <p className="text-lg text-primary font-medium">
-                Message sent. Expect a response within 24h.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="contact-name"
-                  className="block text-sm font-medium mb-1.5"
+          <ul className="space-y-2">
+            {socialLinks.map((social) => (
+              <li key={social.label}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors"
                 >
-                  Name
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  placeholder="Your name"
-                  autoComplete="name"
-                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
-                  aria-required="true"
-                  aria-describedby={
-                    errors.name ? "contact-name-error" : undefined
-                  }
-                  {...register("name")}
-                  disabled={isSubmitting}
-                />
-                {errors.name && (
-                  <p
-                    id="contact-name-error"
-                    className="text-xs text-destructive mt-1"
-                  >
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="contact-email"
-                  className="block text-sm font-medium mb-1.5"
-                >
-                  Email
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  placeholder="your@email.com"
-                  autoComplete="email"
-                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
-                  aria-required="true"
-                  aria-describedby={
-                    errors.email ? "contact-email-error" : undefined
-                  }
-                  {...register("email")}
-                  disabled={isSubmitting}
-                />
-                {errors.email && (
-                  <p
-                    id="contact-email-error"
-                    className="text-xs text-destructive mt-1"
-                  >
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="contact-message"
-                  className="block text-sm font-medium mb-1.5"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  placeholder="Your message..."
-                  rows={5}
-                  className="input-focus-ring w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
-                  aria-required="true"
-                  aria-describedby={
-                    errors.message ? "contact-message-error" : undefined
-                  }
-                  {...register("message")}
-                  disabled={isSubmitting}
-                />
-                {errors.message && (
-                  <p
-                    id="contact-message-error"
-                    className="text-xs text-destructive mt-1"
-                  >
-                    {errors.message.message}
-                  </p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="size-4 animate-spin" />
-                    Sending…
-                  </span>
-                ) : (
-                  "Send Message"
-                )}
-              </button>
-            </form>
-          )}
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="mt-8 text-sm text-muted-foreground space-y-1">
-          <p>Or reach me directly:</p>
-          {socialLinks.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${social.label} profile`}
-              className="block text-primary hover:text-primary/80 transition-colors"
-            >
-              {social.href
-                .replace(/^https?:\/\/(www\.)?/, "")
-                .replace(/\/$/, "")}
-            </a>
-          ))}
+        <div className="split-studio-proof min-w-0">
+          <div className="border border-border bg-card p-6 md:p-8">
+            {isSuccess ? (
+              <p className="text-lg text-primary font-medium py-8 text-center">
+                Message sent. I'll reply within a day or two.
+              </p>
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <div>
+                  <label
+                    htmlFor="contact-name"
+                    className="block text-sm font-medium mb-1.5"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    placeholder="Your name"
+                    autoComplete="name"
+                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                    aria-required="true"
+                    aria-describedby={
+                      errors.name ? "contact-name-error" : undefined
+                    }
+                    aria-invalid={errors.name ? true : undefined}
+                    {...register("name")}
+                    disabled={isSubmitting}
+                  />
+                  {errors.name && (
+                    <p
+                      id="contact-name-error"
+                      className="text-xs text-destructive mt-1"
+                      role="alert"
+                    >
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="block text-sm font-medium mb-1.5"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    placeholder="your@email.com"
+                    autoComplete="email"
+                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                    aria-required="true"
+                    aria-describedby={
+                      errors.email ? "contact-email-error" : undefined
+                    }
+                    aria-invalid={errors.email ? true : undefined}
+                    {...register("email")}
+                    disabled={isSubmitting}
+                  />
+                  {errors.email && (
+                    <p
+                      id="contact-email-error"
+                      className="text-xs text-destructive mt-1"
+                      role="alert"
+                    >
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-sm font-medium mb-1.5"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    placeholder="What's on your mind?"
+                    rows={5}
+                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                    aria-required="true"
+                    aria-describedby={
+                      errors.message ? "contact-message-error" : undefined
+                    }
+                    aria-invalid={errors.message ? true : undefined}
+                    {...register("message")}
+                    disabled={isSubmitting}
+                  />
+                  {errors.message && (
+                    <p
+                      id="contact-message-error"
+                      className="text-xs text-destructive mt-1"
+                      role="alert"
+                    >
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center justify-center rounded-[var(--radius-input)] bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 h-11 px-6 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2
+                        className="size-4 animate-spin"
+                        aria-hidden="true"
+                      />
+                      Sending…
+                    </span>
+                  ) : (
+                    "Send message"
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>

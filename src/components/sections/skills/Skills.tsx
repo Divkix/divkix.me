@@ -1,7 +1,6 @@
-import { SectionLabel } from "@/components/shared/SectionLabel";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
 import type { Skill } from "./skillsUtils";
-import { getProficiencyLevel } from "./skillsUtils";
 
 function groupSkillsByCategory(
   skills: readonly Skill[],
@@ -16,7 +15,7 @@ function groupSkillsByCategory(
     }
   }
   for (const [, list] of Object.entries(grouped)) {
-    list.sort((a, b) => b.proficiency - a.proficiency);
+    list.sort((a, b) => a.name.localeCompare(b.name));
   }
   return grouped;
 }
@@ -30,24 +29,6 @@ const CATEGORIES = [
   "AI/Tooling",
 ] as const;
 
-function SkillBar({ skill }: { skill: Skill }) {
-  const { label, blocks } = getProficiencyLevel(skill.proficiency);
-
-  return (
-    <div className="flex items-center gap-3 text-sm">
-      <span className="w-24 truncate text-foreground/80">{skill.name}</span>
-      <span className="w-16 text-xs text-muted-foreground">{label}</span>
-      <span
-        className="text-primary tracking-wider"
-        role="img"
-        aria-label={`${skill.name} proficiency: ${label}`}
-      >
-        {blocks}
-      </span>
-    </div>
-  );
-}
-
 export function Skills() {
   const skills = siteConfig.skills;
   const groupedSkills = groupSkillsByCategory(skills);
@@ -55,31 +36,37 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="container mx-auto px-4 py-24 reveal-on-scroll"
+      className="container mx-auto px-4 py-16 md:py-24 max-w-6xl"
     >
-      <SectionLabel number="04" label="skills" />
+      <div className="space-y-10">
+        <SectionHeading
+          title="Tools I reach for"
+          description="Technologies I use regularly — grouped by what they're for, not ranked by arbitrary scores."
+        />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
-        {CATEGORIES.map((category) => {
-          const categorySkills = groupedSkills[category];
-          if (!categorySkills || categorySkills.length === 0) return null;
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-0">
+          {CATEGORIES.map((category) => {
+            const categorySkills = groupedSkills[category];
+            if (!categorySkills || categorySkills.length === 0) return null;
 
-          return (
-            <div
-              key={category}
-              className="rounded-xl border border-border bg-card p-6 shadow-sm"
-            >
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/60 mb-4">
-                {category}
-              </h3>
-              <div className="space-y-2">
-                {categorySkills.map((skill) => (
-                  <SkillBar key={skill.name} skill={skill} />
-                ))}
+            return (
+              <div key={category} className="min-w-0 space-y-4">
+                <h3 className="font-display text-lg font-medium text-foreground border-b border-border pb-2">
+                  {category}
+                </h3>
+                <ul className="flex flex-wrap gap-2">
+                  {categorySkills.map((skill) => (
+                    <li key={skill.name}>
+                      <span className="inline-block px-3 py-1 text-sm border border-border text-foreground/80 rounded-[var(--radius-input)] whitespace-nowrap">
+                        {skill.name}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

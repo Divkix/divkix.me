@@ -1,177 +1,111 @@
 ---
 import ExperienceBentoStatic from "@/components/sections/experience/ExperienceBentoStatic.astro";
+import { Skills } from "@/components/sections/skills";
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import { generateBreadcrumbSchema, generateFAQPageSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
-// AboutPage schema for SEO - links to main Person entity
+const aboutUrl = `${baseUrl}/about`;
+
 const aboutPageSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  "@id": `${baseUrl}/about`,
+  "@id": aboutUrl,
   mainEntity: {
     "@id": `${baseUrl}/#author`,
   },
   name: `About ${siteConfig.name}`,
-  description: `About ${siteConfig.name}, known online as ${siteConfig.handle.toLowerCase()}. ${siteConfig.tagline}`,
-  url: `${baseUrl}/about`,
+  description: siteConfig.seo.metaDescription,
+  url: aboutUrl,
 };
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
-  { name: "About", item: `${baseUrl}/about` },
+  { name: "About", item: aboutUrl },
 ]);
+
+const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 ---
 
 <SiteLayout
-  title={`About ${siteConfig.name} (${siteConfig.handle.toLowerCase()}) — Software Engineer & Cloudflare Intern`}
-  description={`${siteConfig.name} (divkix) is a Software Engineer and MS CS student at ASU, currently SWE Intern @ Cloudflare. Building developer tools, observability systems, and edge-native apps with TypeScript, Go, Python, and Cloudflare.`}
+  title={`About ${siteConfig.name} — Software Engineer & Builder`}
+  description={siteConfig.seo.metaDescription}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutFaqSchema)} />
 
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-4xl mx-auto space-y-12">
-      <!-- Header -->
-      <div class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">What I build</h1>
-        <p class="text-xl text-foreground/70">
-          {siteConfig.tagline}
-        </p>
-      </div>
+  <article class="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
+    <header class="space-y-6 mb-12 max-w-3xl">
+      <h1 class="font-display text-4xl md:text-5xl font-medium tracking-tight leading-tight">
+        About me
+      </h1>
+      <p class="text-xl text-muted-foreground leading-relaxed">
+        {siteConfig.tagline}
+      </p>
+      <div class="accent-line" aria-hidden="true"></div>
+    </header>
 
-      <!-- Professional Positioning -->
-      <div class="glass-surface p-8 rounded-lg space-y-6">
-        <div class="flex gap-6 items-start flex-col md:flex-row">
-          <img
-            src={siteConfig.authorImage}
-            alt={`${siteConfig.name} - Software Engineer and MS CS student at Arizona State University`}
-            class="w-32 h-32 rounded-full object-cover"
-            loading="eager"
-          />
-          <div class="flex-1 space-y-4">
-            <div>
-              <h2 class="text-2xl font-bold">{siteConfig.name}</h2>
-              <p class="text-foreground/70">@{siteConfig.handle.toLowerCase()}</p>
-            </div>
-            <div class="space-y-4">
-              <p class="text-foreground/80 leading-relaxed">
-                Software engineer with an MS in Computer Science from Arizona State University (graduating May 2026). Currently a SWE Intern at Cloudflare on the Engineering Tooling and Infrastructure (ETI) team, building developer tools, observability systems, and backend infrastructure.
-              </p>
-              <p class="text-foreground/80 leading-relaxed">
-                I build products that solve real problems: <a href="https://github.com/Divkix/Logwell" class="text-primary hover:underline">LogWell</a> for self-hosted logging and observability, <a href="https://pickmyclass.app" class="text-primary hover:underline">PickMyClass</a> for ASU course availability tracking, <a href="https://clickfolio.me" class="text-primary hover:underline">Clickfolio</a> for AI-powered portfolio generation on Cloudflare Workers, and <a href="https://github.com/Divkix/Alita_Robot" class="text-primary hover:underline">Alita Robot</a> for Telegram community automation (300K+ users).
-              </p>
-              <p class="text-foreground/80 leading-relaxed">
-                Technical focus: TypeScript, Go, Python, React, Cloudflare Workers/D1/R2/Queues/Durable Objects, PostgreSQL, Docker, and edge-native architectures. I care about clean APIs, boring reliability, useful abstractions, and software people actually use.
-              </p>
-              <p class="text-foreground/80 leading-relaxed">
-                Open to full-time software engineering roles (backend, infrastructure, developer tools, AI tooling) starting May/June 2026. Open to relocation and remote opportunities.
-              </p>
-            </div>
-            <div class="flex flex-wrap gap-4 text-sm text-foreground/60">
-              <div class="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                {siteConfig.location}
-              </div>
-              <div class="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <rect width="20" height="16" x="2" y="4" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-                <a href={`mailto:${siteConfig.email}`} class="hover:text-primary">
-                  {siteConfig.email}
-                </a>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-3 pt-2">
-              {siteConfig.socials.map((social) => {
-                const isEmail = social.label === "Email";
-                const linkText = isEmail
-                  ? `Email ${siteConfig.name}`
-                  : `${siteConfig.name} on ${social.label}`;
-                return (
-                  <a
-                    href={social.href}
-                    target={isEmail ? undefined : "_blank"}
-                    rel={isEmail ? undefined : "me noopener noreferrer"}
-                    class="text-sm px-4 py-2 border border-border/60 rounded-lg hover:border-primary hover:text-primary transition-colors"
-                  >
-                    {linkText}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="max-w-3xl space-y-8 text-lg leading-relaxed text-foreground/85 mb-16">
+      <figure class="m-0 float-none md:float-right md:ml-8 md:mb-4 max-w-[200px] border border-border p-2 bg-card">
+        <img
+          src={siteConfig.authorImage}
+          alt={`Portrait of ${siteConfig.name}`}
+          class="w-full aspect-square object-cover"
+          loading="eager"
+        />
+      </figure>
 
-      <!-- Personal Interests -->
-      <div class="border border-border/40 rounded-lg p-6 space-y-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-foreground/50">Outside of code</h3>
-        <p class="text-sm text-foreground/60 leading-relaxed">
-          When I'm not at a keyboard, I'm trekking through Arizona trails, playing soccer, or tinkering with side projects that may or may not ever see the light of day.
-        </p>
-      </div>
+      <p>
+        {siteConfig.about}
+      </p>
 
-    </div>
+      <p>
+        Recent work includes <a href="https://github.com/cloudflare/vinext" class="text-primary link-underline-grow">Vinext</a> at Cloudflare (Next.js on Vite for Workers), <a href="https://github.com/Divkix/Logwell" class="text-primary link-underline-grow">LogWell</a> for self-hosted logging, <a href="https://pickmyclass.app" class="text-primary link-underline-grow">PickMyClass</a> for ASU course tracking, <a href="https://clickfolio.me" class="text-primary link-underline-grow">Clickfolio</a> for AI portfolios on Workers, and <a href="https://github.com/Divkix/Alita_Robot" class="text-primary link-underline-grow">Alita Robot</a> for Telegram communities ({siteConfig.facts.impact} users).
+      </p>
 
-    <!-- Experience & Education Bento Grid - wider container for 3-column layout -->
-    <div class="max-w-6xl mx-auto mt-12">
-      <ExperienceBentoStatic />
-    </div>
+      <p>
+        I mostly work in TypeScript, Go, and Python. Cloudflare Workers, PostgreSQL, Docker, edge-native architectures. I like clean APIs, boring reliability, and software people actually use.
+      </p>
 
-    <div class="max-w-4xl mx-auto space-y-12 mt-12">
+      <h2 class="font-display text-2xl font-medium text-foreground pt-4">Outside of code</h2>
+      <p class="text-base text-muted-foreground">
+        {siteConfig.interests}
+      </p>
 
-      <!-- Stats -->
-      <div class="glass-surface p-8 rounded-lg">
-        <h2 class="text-3xl font-display font-bold mb-6">Impact</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="text-center">
-            <div class="text-4xl font-bold text-primary mb-2">
-              {siteConfig.facts.impact}
-            </div>
-            <div class="text-foreground/70">Users Reached</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold text-primary mb-2">
-              {siteConfig.facts.projects}
-            </div>
-            <div class="text-foreground/70">Projects Built</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold text-primary mb-2">
-              {siteConfig.facts.oss}
-            </div>
-            <div class="text-foreground/70">OSS Contributions</div>
-          </div>
-        </div>
+      <h2 class="font-display text-2xl font-medium text-foreground pt-4">Open to work</h2>
+      <p class="text-base">
+        Full-time software engineering roles (backend, infrastructure, developer tools, AI tooling) starting May/June 2026. Open to relocation and remote.
+      </p>
+
+      <p class="text-base text-muted-foreground">
+        {siteConfig.location} · <a href={`mailto:${siteConfig.email}`} class="text-primary link-underline-grow">{siteConfig.email}</a>
+      </p>
+
+      <div class="flex flex-wrap gap-3 pt-2 not-prose">
+        {siteConfig.socials.map((social) => {
+          const isEmail = social.label === "Email";
+          return (
+            <a
+              href={social.href}
+              target={isEmail ? undefined : "_blank"}
+              rel={isEmail ? undefined : "me noopener noreferrer"}
+              class="text-sm px-4 py-2 border border-border rounded-[var(--radius-input)] hover:border-primary hover:text-primary transition-colors whitespace-nowrap"
+            >
+              {social.label}
+            </a>
+          );
+        })}
       </div>
     </div>
-  </div>
+
+    <hr class="hairline-rule mb-16" />
+
+    <ExperienceBentoStatic />
+
+    <div class="mt-16">
+      <Skills client:visible />
+    </div>
+  </article>
 </SiteLayout>

@@ -1,11 +1,12 @@
 ---
 import "@/styles/globals.css";
-import "@fontsource/instrument-serif";
-import "@fontsource/geist-sans";
+import "@fontsource/fraunces/500.css";
+import "@fontsource/source-serif-4/400.css";
+import "@fontsource/source-serif-4/600.css";
 import "@fontsource/geist-mono";
 import { ClientRouter } from "astro:transitions";
-import geistSansFont from "@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url";
-import instrumentSerifFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import frauncesFont from "@fontsource/fraunces/files/fraunces-latin-500-normal.woff2?url";
+import sourceSerifFont from "@fontsource/source-serif-4/files/source-serif-4-latin-400-normal.woff2?url";
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
@@ -21,7 +22,7 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.name} | Software Engineer, DevTools & Infrastructure`,
+  title = `${siteConfig.name} | Software Engineer & Builder`,
   description = siteConfig.seo.metaDescription,
   ogImage = `${baseUrl}/og-image.webp`,
   canonical = `${baseUrl}${Astro.url.pathname}`,
@@ -40,8 +41,8 @@ const websiteSchema = generateWebSiteSchema();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Font Preloads -->
-    <link rel="preload" href={instrumentSerifFont} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={geistSansFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sourceSerifFont} as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary Meta Tags -->

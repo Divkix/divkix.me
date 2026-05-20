@@ -21,18 +21,18 @@ const emailSocial = siteConfig.socials.find((s) => s.label === "Email");
 const collectionPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "@id": `${baseUrl}/socials/`,
+  "@id": `${baseUrl}/socials`,
   mainEntity: { "@id": `${baseUrl}/#author` },
   name: `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
   description: "Official social media profiles and contact information",
-  url: `${baseUrl}/socials/`,
+  url: `${baseUrl}/socials`,
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   inLanguage: "en-US",
 };
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
-  { name: "Connect", item: `${baseUrl}/socials/` },
+  { name: "Connect", item: `${baseUrl}/socials` },
 ]);
 ---
 
@@ -61,7 +61,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               href={social.href}
               target="_blank"
               rel="me noopener noreferrer"
-              class="glass-surface p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -100,7 +100,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         {emailSocial && (
           <a
             href={emailSocial.href}
-            class="glass-surface p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div class="flex items-center gap-4">
               <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">

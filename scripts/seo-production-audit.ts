@@ -20,14 +20,17 @@ const robots = read("src/pages/robots.txt.ts");
 const astroConfig = read("astro.config.mjs");
 
 assert(
-  !hero.includes('href="/resume/"') ||
+  (!hero.includes('href="/resume"') && !hero.includes('href="/resume/"')) ||
+    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
     redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-  "Hero resume CTA should either point directly to the PDF or have a deployed /resume/ redirect.",
+  "Hero resume CTA should either point directly to the PDF or have a deployed /resume redirect.",
 );
 assert(
-  !contact.includes('href="/resume/"') ||
+  (!contact.includes('href="/resume"') &&
+    !contact.includes('href="/resume/"')) ||
+    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
     redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-  "Contact resume CTA should either point directly to the PDF or have a deployed /resume/ redirect.",
+  "Contact resume CTA should either point directly to the PDF or have a deployed /resume redirect.",
 );
 assert(
   headers.includes("https://formspree.io"),

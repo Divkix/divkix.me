@@ -1,11 +1,18 @@
 export const siteConfig = {
   name: "Divanshu Chauhan",
   handle: "Divkix",
-  tagline: "Backend, devtools, and edge systems engineer.",
+  tagline:
+    "Software engineer at Cloudflare, MS CS from ASU (GPA 3.889), builder of side projects that actually ship.",
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
-    "Software engineer with an MS in Computer Science from Arizona State University. I build developer tools, observability systems, backend infrastructure, and edge-native apps. SWE Intern @ Cloudflare.",
+    "I'm Divanshu — I finished my MS in Computer Science at Arizona State University in May 2026 (GPA 3.889) and intern on Cloudflare's ETI team as a software engineer. I build tools people rely on: a Telegram bot used by 250,000+ users, a self-hosted logging platform, and trackers for stressed college students. I also contribute to Vinext, Cloudflare's open-source take on running Next.js apps through Vite. I tutored eight CS courses at ASU, which keeps me honest about explaining hard ideas in plain language.",
+  heroSummary:
+    "MS in Computer Science from ASU (GPA 3.889). SWE Intern at Cloudflare and Vinext contributor. I ship side projects — Telegram bots, logging tools, class trackers — that real people use.",
+  founderPov:
+    "I build tools because I want software to feel obvious when you're stressed at 2am — not impressive in a slide deck. Cloudflare taught me how edge platforms should behave; side projects taught me what people actually open every day. I'm heading toward founding something small and durable; until then I'm shipping in public and writing down what I learn.",
+  interests:
+    "When I'm not coding, I'm usually on a road trip, exploring somewhere new with friends, or planning the next drive when I should probably be asleep.",
   authorImage: "/divanshu-chauhan.jpeg",
   nationality: "Indian",
   address: {
@@ -17,8 +24,31 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Software engineer with an MS in Computer Science from ASU. SWE Intern @ Cloudflare building developer tools, observability systems, backend infrastructure, and edge-native apps.",
+      "Divanshu Chauhan (divkix) — software engineer at Cloudflare, Vinext contributor, MS CS from ASU (GPA 3.889). Builds LogWell, Clickfolio, Alita Robot, and tools used by 250,000+ people. Writes about edge computing, developer tools, and shipping side projects.",
   },
+
+  faq: [
+    {
+      q: "Who is Divanshu Chauhan?",
+      a: "Divanshu Chauhan (divkix) is a software engineer at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
+    },
+    {
+      q: "What is Divanshu Chauhan's education?",
+      a: "Divanshu earned an MS in Computer Science from Arizona State University in May 2026 with a 3.889 GPA, focused on AI/ML and data science. He also holds a BS in Computer Science from ASU (Magna Cum Laude, May 2025).",
+    },
+    {
+      q: "What is Divanshu Chauhan working on at Cloudflare?",
+      a: "Divanshu is a software engineer intern on Cloudflare's ETI team and an open-source contributor to Vinext, Cloudflare's Vite-based reimplementation of the Next.js API surface for deployment on Workers and other runtimes.",
+    },
+    {
+      q: "What is Vinext?",
+      a: "Vinext is Cloudflare's open-source Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. Divanshu Chauhan contributes to App Router rendering, ISR caching, image optimization, and server action forwarding.",
+    },
+    {
+      q: "What projects has Divanshu Chauhan built?",
+      a: "Notable projects include Alita Robot (Telegram community bot used by 250,000+ users), LogWell (self-hosted logging platform), Clickfolio (AI portfolio builder on Cloudflare Workers), PickMyClass (ASU class availability tracker), and contributions to Cloudflare Vinext.",
+    },
+  ] as const,
 
   facts: {
     impact: "250000+",
@@ -214,6 +244,7 @@ export const siteConfig = {
       title: "MS, Computer Science — Arizona State University",
       year: "Aug 2025 – May 2026",
       focus: "AI/ML/Data Science",
+      honors: "GPA 3.889",
     },
     {
       title: "BS, Computer Science — Arizona State University",
@@ -224,6 +255,23 @@ export const siteConfig = {
 
   projects: [
     {
+      name: "Vinext",
+      desc: "Open-source contributor to Cloudflare Vinext — a Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. Work spans App Router rendering, ISR caching, image optimization, and server action forwarding.",
+      image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
+      tags: [
+        "TypeScript",
+        "Vite",
+        "Next.js",
+        "Cloudflare Workers",
+        "Open Source",
+      ],
+      period: "2025 – Present",
+      links: [
+        { label: "GitHub", href: "https://github.com/cloudflare/vinext" },
+        { label: "Docs", href: "https://vinext.dev" },
+      ],
+    },
+    {
       name: "LogWell",
       desc: "Self-hosted logging and observability platform with real-time streaming, structured search, and OTLP-compatible ingestion.",
       image: "/og/blog/logwell-self-hosted-logging-platform.webp",
@@ -233,7 +281,7 @@ export const siteConfig = {
     },
     {
       name: "Clickfolio",
-      desc: "AI-powered portfolio generator built on Cloudflare's full-stack platform. Uses Workers, D1, R2, Queues, Durable Objects, WebSockets, Drizzle, and Gemini to parse uploads and stream job status.",
+      desc: "AI-powered portfolio generator on Cloudflare's full-stack platform. Uses Workers, D1, R2, Queues, Durable Objects, WebSockets, Drizzle, and Gemini to parse uploads and stream job status.",
       image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
       tags: [
         "Cloudflare Workers",

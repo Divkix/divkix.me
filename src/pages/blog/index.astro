@@ -2,50 +2,11 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import { generateBreadcrumbSchema, generateFAQPageSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
 const allPosts = await getCollection("blog");
-
-const featuredSlugs = [
-  {
-    slug: "clickfolio-full-stack-cloudflare-workers",
-    title: "Building Clickfolio — A Full-Stack App on Cloudflare Workers",
-    description:
-      "How I built an AI-powered portfolio generator using Workers, D1, R2, Queues, Durable Objects, and WebSockets.",
-  },
-  {
-    slug: "logwell-self-hosted-logging-platform",
-    title: "LogWell — Building a Self-Hosted Logging Platform",
-    description:
-      "Real-time log streaming, OTLP-compatible ingestion, and PostgreSQL full-text search — without running a giant observability stack.",
-  },
-  {
-    slug: "scaling-telegram-bot-300k-users",
-    title: "Scaling a Telegram Bot to 300K+ Users",
-    description:
-      "Lessons from building and scaling Alita Robot, a community automation bot used by large public Telegram groups.",
-  },
-  {
-    slug: "ai-models-compared-2026",
-    title: "AI Models Compared: 2026 Edition",
-    description:
-      "A practical comparison of current AI models — what's good, what's not, and what I'd actually use for real work. Last updated April 2026.",
-  },
-];
-
-const featuredPosts = featuredSlugs
-  .map((f) => {
-    const post = allPosts.find((p: CollectionEntry<"blog">) => p.id === f.slug);
-    if (!post) return null;
-    return {
-      ...f,
-      post,
-      readingTime: `${calculateReadingTime(post.body)} min read`,
-    };
-  })
-  .filter((f): f is NonNullable<typeof f> => f !== null);
 
 const posts = allPosts
   .filter((post: CollectionEntry<"blog">) => post.data.published === true)
@@ -67,14 +28,16 @@ const postsWithReadingTime: PostWithReadingTime[] = posts.map(
   }),
 );
 
+const blogUrl = `${baseUrl}/blog`;
+
 const collectionPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "@id": `${baseUrl}/blog/`,
-  name: "Blog | Divanshu Chauhan — Software Engineering, AI & DevTools",
+  "@id": blogUrl,
+  name: "Blog | Divanshu Chauhan — Software Engineering & Building in Public",
   description:
     "Technical blog on software engineering, AI tooling, Cloudflare Workers, developer tools, and building production systems.",
-  url: `${baseUrl}/blog/`,
+  url: blogUrl,
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   mainEntity: {
     "@type": "ItemList",
@@ -82,7 +45,7 @@ const collectionPageSchema = {
       (post: CollectionEntry<"blog">, index: number) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${baseUrl}/blog/${post.id}/`,
+        url: `${baseUrl}/blog/${post.id}`,
         name: post.data.title,
       }),
     ),
@@ -91,13 +54,27 @@ const collectionPageSchema = {
 
 const blogBreadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
-  { name: "Blog", item: `${baseUrl}/blog/` },
+  { name: "Blog", item: blogUrl },
 ]);
+
+const blogFaqSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What does Divanshu Chauhan write about?",
+      a: "Posts cover software engineering, Cloudflare Workers, developer tools, AI-assisted development, observability, Telegram bot scaling, and lessons from shipping side projects.",
+    },
+    {
+      q: "Who writes the divkix.me blog?",
+      a: "All posts are written by Divanshu Chauhan (divkix), a software engineer at Cloudflare with an MS in Computer Science from ASU (GPA 3.889). He contributes to Vinext and builds tools like LogWell and Clickfolio.",
+    },
+  ],
+  blogUrl,
+);
 ---
 
 <BlogLayout
-  title="Blog | Divanshu Chauhan — Software Engineering, AI & DevTools"
-  description="Technical blog on software engineering, AI tooling, Cloudflare Workers, developer tools, and building production systems. Written by Divanshu Chauhan (divkix), SWE Intern @ Cloudflare."
+  title="Blog | Divanshu Chauhan — Software Engineering & Building in Public"
+  description="Notes on building products, scaling systems, and the tools I actually use. By Divanshu Chauhan (divkix), Cloudflare engineer and Vinext contributor."
 >
   <script
     is:inline
@@ -109,117 +86,63 @@ const blogBreadcrumbSchema = generateBreadcrumbSchema([
     type="application/ld+json"
     set:html={JSON.stringify(blogBreadcrumbSchema)}
   />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(blogFaqSchema)}
+  />
   <div class="container mx-auto px-4 py-20">
-    <div class="max-w-4xl mx-auto space-y-12">
-      <div class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">Blog</h1>
-        <p class="text-xl text-foreground/70">
-          Software engineering, AI tooling, Cloudflare Workers, developer tools, and building production systems.
+    <div class="max-w-3xl mx-auto space-y-12">
+      <header class="space-y-4 border-b border-border pb-10">
+        <h1 class="font-display text-4xl md:text-5xl font-medium tracking-tight">Writing</h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-prose">
+          Notes on building products, scaling systems, and the tools I reach for when something breaks at 2am.
         </p>
-      </div>
-
-      {
-        featuredPosts.length > 0 && (
-          <section class="space-y-6">
-            <div>
-              <h2 class="text-2xl font-bold mb-2">Start here</h2>
-              <p class="text-muted-foreground">
-                The best posts if you want to understand how I think about
-                systems, product tradeoffs, and shipping real software.
-              </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {featuredPosts.map((item) => (
-                <a
-                  href={`/blog/${item.slug}/`}
-                  class="block transition-all hover:scale-[1.01]"
-                >
-                  <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 h-full">
-                    <div class="p-6 space-y-4">
-                      <div class="flex items-center justify-between gap-4 flex-wrap">
-                        <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
-                          {item.readingTime}
-                        </span>
-                        <time
-                          datetime={item.post.data.date}
-                          class="text-sm text-foreground/60"
-                        >
-                          {formatDate(item.post.data.date)}
-                        </time>
-                      </div>
-                      <h3 class="text-xl font-bold hover:text-primary transition-colors">
-                        {item.title}
-                      </h3>
-                      <p class="text-base text-foreground/70">
-                        {item.description}
-                      </p>
-                    </div>
-                  </article>
-                </a>
-              ))}
-            </div>
-          </section>
-        )
-      }
+      </header>
 
       {
         posts.length === 0 ? (
-          <p class="text-foreground/60">No posts yet. Check back soon!</p>
+          <p class="text-muted-foreground">No posts yet. Check back soon.</p>
         ) : (
-          <div>
-            <h2 class="text-2xl font-bold mb-6">All posts</h2>
-            <div class="space-y-6">
-              {postsWithReadingTime.map((item: PostWithReadingTime) => (
-                <a
-                  href={`/blog/${item.post.id}/`}
-                  class="block transition-all hover:scale-[1.01]"
-                >
-                  <article class="glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40">
-                    <div class="p-6 space-y-4">
-                      <div class="flex items-center justify-between gap-4 flex-wrap">
-                        <div class="flex items-center gap-2">
-                          {item.post.data.featured && (
-                            <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
-                              Featured
-                            </span>
-                          )}
-                          <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
-                            {item.readingTime}
-                          </span>
-                        </div>
-                        <time
-                          datetime={item.post.data.date}
-                          class="text-sm text-foreground/60"
+          <ol class="list-none m-0 p-0 space-y-0">
+            {postsWithReadingTime.map((item: PostWithReadingTime) => (
+              <li class="border-t border-border py-8 first:border-t-0 first:pt-0">
+                <article class="space-y-3">
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                    <time datetime={item.post.data.date} class="tabular-nums">
+                      {formatDate(item.post.data.date)}
+                    </time>
+                    <span>{item.readingTime}</span>
+                  </div>
+                  <h2 class="font-display text-2xl md:text-3xl font-medium leading-snug">
+                    <a
+                      href={`/blog/${item.post.id}`}
+                      class="text-foreground hover:text-primary transition-colors link-underline-grow"
+                    >
+                      {item.post.data.title}
+                    </a>
+                  </h2>
+                  {item.post.data.excerpt && (
+                    <p class="text-base text-muted-foreground leading-relaxed">
+                      {item.post.data.excerpt}
+                    </p>
+                  )}
+                  {item.post.data.tags.length > 0 && (
+                    <p class="text-sm text-muted-foreground">
+                      {item.post.data.tags.map((tag: string) => (
+                        <a
+                          href={`/blog/tags/${tag.toLowerCase()}`}
+                          class="hover:text-primary transition-colors link-underline-grow mr-2 last:mr-0"
                         >
-                          {formatDate(item.post.data.date)}
-                        </time>
-                      </div>
-                      <h3 class="text-2xl font-bold hover:text-primary transition-colors">
-                        {item.post.data.title}
-                      </h3>
-                      {item.post.data.excerpt && (
-                        <p class="text-base text-foreground/70">
-                          {item.post.data.excerpt}
-                        </p>
-                      )}
-                      {item.post.data.tags.length > 0 && (
-                        <div class="flex flex-wrap gap-2">
-                          {item.post.data.tags.map((tag: string) => (
-                            <a
-                              href={`/blog/tags/${tag.toLowerCase()}/`}
-                              class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
-                            >
-                              {tag}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </article>
-                </a>
-              ))}
-            </div>
-          </div>
+                          {tag}
+                        </a>
+                      ))}
+                    </p>
+                  )}
+                </article>
+              </li>
+            ))}
+          </ol>
         )
       }
     </div>
