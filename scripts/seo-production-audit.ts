@@ -69,6 +69,20 @@ assert(
     astroConfig.includes("full-time SWE"),
   "LLM discovery metadata should reflect current Cloudflare role and full-time SWE search.",
 );
+assert(
+  astroConfig.includes('trailingSlash: "always"'),
+  'astro.config.mjs should keep trailingSlash: "always" for canonical URLs.',
+);
+for (const path of ["/blog/", "/about/", "/privacy/", "/socials/"]) {
+  const stripTrailingSlashRule = new RegExp(
+    `^${path.replace(/\//g, "\\/")}\\s+\\S+\\s+30[12]`,
+    "m",
+  );
+  assert(
+    !stripTrailingSlashRule.test(redirects),
+    `public/_redirects must not strip trailing slashes from ${path} while trailingSlash is "always" (causes redirect loops with Astro).`,
+  );
+}
 
 if (failures.length > 0) {
   console.error(
