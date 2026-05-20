@@ -1,21 +1,31 @@
 ---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { Contact } from "@/components/sections/Contact";
-import { ExperienceBento } from "@/components/sections/experience/ExperienceBento";
 import Hero from "@/components/sections/Hero.astro";
 import { Highlights } from "@/components/sections/Highlights";
 import { Projects } from "@/components/sections/Projects";
-import { Skills } from "@/components/sections/skills";
+import RecentWriting from "@/components/sections/RecentWriting.astro";
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import { generateBreadcrumbSchema, generateFAQPageSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const allPosts = await getCollection("blog");
+const recentPosts = allPosts
+  .filter((post: CollectionEntry<"blog">) => post.data.published === true)
+  .sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  )
+  .slice(0, 3);
 
 const collectionPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "@id": `${baseUrl}/`,
+  "@id": baseUrl,
   mainEntity: { "@id": `${baseUrl}/#author` },
-  name: `${siteConfig.name} (${siteConfig.handle}) — Software Engineer & DevTools Builder`,
+  name: `${siteConfig.name} — Software Engineer & Builder`,
   description: siteConfig.seo.metaDescription,
   url: baseUrl,
   isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
@@ -25,18 +35,17 @@ const collectionPageSchema = {
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
 ]);
+
+const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
 ---
 
 <SiteLayout showScrollProgress={true}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
   <Hero />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
   <Highlights client:visible />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
+  <RecentWriting posts={recentPosts} />
   <Projects client:visible />
-  <div class="section-divider mx-auto max-w-4xl" aria-hidden="true" />
-  <ExperienceBento client:visible />
-  <Skills client:visible />
   <Contact client:visible />
 </SiteLayout>

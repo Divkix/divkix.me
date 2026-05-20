@@ -1,11 +1,12 @@
 ---
 import "@/styles/globals.css";
-import "@fontsource/instrument-serif";
-import "@fontsource/geist-sans";
+import "@fontsource/playfair-display/900.css";
+import "@fontsource/geist-sans/400.css";
+import "@fontsource/geist-sans/500.css";
 import "@fontsource/geist-mono";
 import { ClientRouter } from "astro:transitions";
 import geistSansFont from "@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url";
-import instrumentSerifFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import playfairFont from "@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2?url";
 import { Toaster } from "@/components/shared/Toaster";
 import { siteConfig } from "@/data/site.config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
@@ -21,7 +22,7 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.name} | Software Engineer, DevTools & Infrastructure`,
+  title = `${siteConfig.name} — Software engineer at Cloudflare, Vinext contributor`,
   description = siteConfig.seo.metaDescription,
   ogImage = `${baseUrl}/og-image.webp`,
   canonical = `${baseUrl}${Astro.url.pathname}`,
@@ -40,7 +41,7 @@ const websiteSchema = generateWebSiteSchema();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Font Preloads -->
-    <link rel="preload" href={instrumentSerifFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={playfairFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={geistSansFont} as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
 

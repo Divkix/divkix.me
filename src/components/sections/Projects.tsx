@@ -1,409 +1,111 @@
-import { BookOpen, ExternalLink, Globe } from "lucide-react";
-import {
-  type ComponentProps,
-  type CSSProperties,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
-import { SectionLabel } from "@/components/shared/SectionLabel";
-import { Button } from "@/components/ui/button";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
-import { cn } from "@/lib/utils";
 
 type Project = (typeof siteConfig.projects)[number];
 type ProjectLink = Project["links"][number];
 
-const allTags = Array.from(
-  new Set(siteConfig.projects.flatMap((p: Project) => p.tags)),
-) as string[];
-
 const FEATURED_PROJECT_NAMES = new Set([
+  "Vinext",
   "LogWell",
   "Clickfolio",
   "Alita Robot",
-  "PickMyClass",
 ]);
 
 const PROJECT_BLOG_MAP: Record<string, string> = {
   LogWell: "/blog/logwell-self-hosted-logging-platform",
   Clickfolio: "/blog/clickfolio-full-stack-cloudflare-workers",
   "Alita Robot": "/blog/scaling-telegram-bot-300k-users",
-  PickMyClass: "/blog/pickmyclass-never-miss-your-dream-class",
 };
 
 function isFeatured(project: Project): boolean {
   return FEATURED_PROJECT_NAMES.has(project.name);
 }
 
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, isVisible };
+function linkLabel(label: ProjectLink["label"]): string {
+  if (label === "Live") return "Visit site";
+  if (label === "GitHub") return "Source";
+  return label;
 }
 
-function GitHubIcon(props: ComponentProps<"svg">) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-      <path d="M9 18c-4.51 2-5-2-7-2" />
-    </svg>
-  );
-}
-
-function FeaturedProjectCard({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  const { ref, isVisible } = useScrollReveal();
+function ProjectEntry({ project }: { project: Project }) {
+  const blogHref = PROJECT_BLOG_MAP[project.name];
+  const hasTags = "tags" in project && project.tags && project.tags.length > 0;
+  const hasPeriod = "period" in project && project.period;
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "rounded-xl border border-border bg-card shadow-sm overflow-hidden transition-all duration-700",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-      )}
-      style={{ transitionDelay: `${index * 150}ms` }}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-0">
-        <div
-          className="h-48 md:h-auto bg-muted/50 flex items-center justify-center p-6"
-          style={{
-            background: `linear-gradient(135deg, var(--accent) 0%, var(--muted) 100%)`,
-          }}
-        >
-          <span className="font-display text-4xl font-bold text-foreground/20">
-            {project.name[0]}
+    <article className="border-t border-border py-[var(--space-xl)] first:border-t-0 first:pt-0">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-[var(--space-md)] gap-y-[var(--space-xs)]">
+        <h3 className="font-display text-2xl md:text-[1.75rem] leading-[1.05] m-0">
+          {project.name}
+        </h3>
+        {hasPeriod && (
+          <span className="text-xs text-muted-foreground uppercase tracking-[0.18em] tabular-nums whitespace-nowrap">
+            {project.period}
           </span>
-        </div>
-        <div className="p-8 flex flex-col justify-between">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="text-2xl font-display font-semibold">
-                {project.name}
-              </h3>
-              {"period" in project && project.period && (
-                <span className="text-xs font-mono text-muted-foreground shrink-0">
-                  {project.period}
-                </span>
-              )}
-            </div>
-            <p className="text-foreground/70 leading-relaxed">{project.desc}</p>
-            <div className="flex flex-wrap gap-1.5">
-              {project.tags.map((tag: string) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 text-xs font-mono rounded bg-muted text-muted-foreground"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="flex gap-2 mt-6">
-            {project.links.map((link: ProjectLink) => {
-              const linkLabel = link.label;
-              const ariaLabel =
-                linkLabel === "Live"
-                  ? `View ${project.name} live`
-                  : linkLabel === "GitHub"
-                    ? `View ${project.name} on GitHub`
-                    : `${linkLabel} - ${project.name}`;
-              return (
-                <Button key={link.label} variant="outline" size="sm" asChild>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={ariaLabel}
-                  >
-                    {linkLabel === "Live" ? (
-                      <Globe className="mr-1.5 size-3.5" />
-                    ) : linkLabel === "GitHub" ? (
-                      <GitHubIcon className="mr-1.5 size-3.5" />
-                    ) : (
-                      <ExternalLink className="mr-1.5 size-3.5" />
-                    )}
-                    {linkLabel}
-                  </a>
-                </Button>
-              );
-            })}
-            {PROJECT_BLOG_MAP[project.name] && (
-              <Button variant="ghost" size="sm" asChild>
-                <a href={PROJECT_BLOG_MAP[project.name]}>
-                  <BookOpen className="mr-1.5 size-3.5" />
-                  Read more
-                </a>
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function RegularProjectCard({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  const { ref, isVisible } = useScrollReveal();
-
-  return (
-    <article
-      ref={ref}
-      className={cn(
-        "rounded-xl border border-border bg-card shadow-sm overflow-hidden transition-all duration-700 hover:-translate-y-0.5 hover:shadow-raised",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-      )}
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      <div className="p-6 flex flex-col justify-between h-full min-h-[200px]">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-xl font-display font-semibold">
-              {project.name}
-            </h3>
-            {"period" in project && project.period && (
-              <span className="text-xs font-mono text-muted-foreground shrink-0">
-                {project.period}
-              </span>
-            )}
-          </div>
-          <p className="text-sm text-foreground/70 leading-relaxed line-clamp-2">
-            {project.desc}
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="px-2 py-0.5 text-xs font-mono rounded bg-muted text-muted-foreground"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-        {project.links.length > 0 && (
-          <div className="flex gap-2 mt-4">
-            {project.links.map((link: ProjectLink) => {
-              const linkLabel = link.label;
-              const ariaLabel =
-                linkLabel === "Live"
-                  ? `View ${project.name} live`
-                  : linkLabel === "GitHub"
-                    ? `View ${project.name} on GitHub`
-                    : `${linkLabel} - ${project.name}`;
-              return (
-                <Button key={link.label} variant="outline" size="sm" asChild>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={ariaLabel}
-                  >
-                    {linkLabel === "GitHub" ? (
-                      <GitHubIcon className="mr-1.5 size-3.5" />
-                    ) : linkLabel === "Live" ? (
-                      <Globe className="mr-1.5 size-3.5" />
-                    ) : (
-                      <ExternalLink className="mr-1.5 size-3.5" />
-                    )}
-                    {linkLabel}
-                  </a>
-                </Button>
-              );
-            })}
-          </div>
         )}
       </div>
+
+      {hasTags && (
+        <p className="mt-[var(--space-sm)] text-xs text-muted-foreground leading-relaxed">
+          {project.tags.join(" · ")}
+        </p>
+      )}
+
+      <p className="mt-[var(--space-md)] text-base text-foreground/85 leading-relaxed max-w-prose">
+        {project.desc}
+      </p>
+
+      <p className="mt-[var(--space-md)] flex flex-wrap items-center gap-x-[var(--space-lg)] gap-y-[var(--space-xs)] text-xs">
+        {project.links.map((link: ProjectLink) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${linkLabel(link.label)} — ${project.name}`}
+            className="text-foreground link-underline-grow uppercase tracking-[0.18em]"
+          >
+            {linkLabel(link.label)} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        {blogHref && (
+          <a
+            href={blogHref}
+            aria-label={`Case study — ${project.name}`}
+            className="text-primary link-underline-grow uppercase tracking-[0.18em]"
+          >
+            Case study <span aria-hidden="true">→</span>
+          </a>
+        )}
+      </p>
     </article>
   );
 }
 
 export function Projects() {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>({});
-  const filterRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const filteredProjects = selectedTag
-    ? siteConfig.projects.filter((p: Project) =>
-        (p.tags as readonly string[]).includes(selectedTag),
-      )
-    : siteConfig.projects;
-
-  const featured = filteredProjects.filter(isFeatured);
-  const regular = filteredProjects.filter((p) => !isFeatured(p));
-
-  const updateIndicator = useCallback((key: string) => {
-    const el = filterRefs.current.get(key);
-    const container = containerRef.current;
-    if (!el || !container) return;
-
-    const containerRect = container.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-
-    setIndicatorStyle({
-      width: elRect.width,
-      transform: `translateX(${elRect.left - containerRect.left}px)`,
-    });
-  }, []);
-
-  const updateIndicatorRef = useRef(updateIndicator);
-  useEffect(() => {
-    updateIndicatorRef.current = updateIndicator;
-  }, [updateIndicator]);
-
-  useEffect(() => {
-    updateIndicatorRef.current(selectedTag || "all");
-  }, [selectedTag]);
-
-  useEffect(() => {
-    const handleResize = () => updateIndicatorRef.current(selectedTag || "all");
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [selectedTag]);
+  const featured = siteConfig.projects.filter(isFeatured);
 
   return (
-    <section
-      id="projects"
-      className="container mx-auto px-4 py-24 reveal-on-scroll"
-    >
-      <div className="space-y-12">
-        <div className="space-y-4">
-          <SectionLabel number="02" label="projects" />
-          <h2 className="text-4xl font-display font-semibold">Projects</h2>
-          <p className="text-muted-foreground max-w-2xl">
-            A selection of projects I&apos;ve built across different
-            technologies.
-          </p>
-        </div>
+    <section id="projects" className="text-band min-w-0">
+      <SectionHeading
+        title="Selected work"
+        description="Four projects I keep coming back to. Edge infrastructure at Cloudflare, a logging tool I built because Datadog priced me out, an AI portfolio generator, and the Telegram bot that taught me what shipping at scale really means."
+      />
 
-        <div className="flex w-full justify-start">
-          <div
-            ref={containerRef}
-            className="relative inline-flex gap-0.5 p-1 bg-muted rounded-lg overflow-x-auto max-w-full"
-          >
-            <div
-              className="absolute top-1 h-[calc(100%-8px)] bg-background rounded-md shadow-sm transition-all duration-300 ease-out"
-              style={indicatorStyle}
-            />
-            <button
-              ref={(el) => {
-                if (el) filterRefs.current.set("all", el);
-              }}
-              type="button"
-              className={cn(
-                "relative z-10 px-4 py-1.5 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
-                selectedTag === null
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-              onClick={() => setSelectedTag(null)}
-              aria-pressed={selectedTag === null}
-            >
-              All
-            </button>
-            {allTags.map((tag: string) => (
-              <button
-                key={tag}
-                ref={(el) => {
-                  if (el) filterRefs.current.set(tag, el);
-                }}
-                type="button"
-                className={cn(
-                  "relative z-10 px-4 py-1.5 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
-                  selectedTag === tag
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-                onClick={() => setSelectedTag(tag)}
-                aria-pressed={selectedTag === tag}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {featured.length > 0 && (
-          <div className="space-y-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/50">
-              Featured Projects
-            </h3>
-            {featured.map((project: Project, index: number) => (
-              <FeaturedProjectCard
-                key={project.name}
-                project={project}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
-
-        {regular.length > 0 && (
-          <div className="space-y-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/50">
-              More Projects
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {regular.map((project: Project, index: number) => (
-                <RegularProjectCard
-                  key={project.name}
-                  project={project}
-                  index={index}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {filteredProjects.length === 0 && (
-          <p className="text-muted-foreground">
-            No projects found with this tag.
-          </p>
-        )}
+      <div className="mt-[var(--space-lg)]">
+        {featured.map((project: Project) => (
+          <ProjectEntry key={project.name} project={project} />
+        ))}
       </div>
+
+      <p className="mt-[var(--space-lg)]">
+        <a
+          href="/about"
+          className="text-xs text-primary link-underline-grow whitespace-nowrap uppercase tracking-[0.18em]"
+        >
+          More projects and full résumé on About →
+        </a>
+      </p>
     </section>
   );
 }

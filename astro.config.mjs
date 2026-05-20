@@ -17,7 +17,7 @@ try {
   );
   for (const post of postsData.posts) {
     if (post.published) {
-      const url = `https://divkix.me/blog/${post.slug}/`;
+      const url = `https://divkix.me/blog/${post.slug}`;
       // Use dateModified if available, otherwise use date
       blogDateMap.set(url, post.dateModified || post.date);
     }
@@ -32,7 +32,7 @@ try {
 export default defineConfig({
   site: "https://divkix.me",
   output: "static",
-  trailingSlash: "always",
+  trailingSlash: "never",
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
@@ -75,21 +75,23 @@ export default defineConfig({
     astroLlmsTxt({
       title: "Divanshu Chauhan",
       description:
-        "Portfolio and blog of Divanshu Chauhan (divkix), SWE Intern @ Cloudflare and MS Computer Science student at Arizona State University. Building developer tools, observability systems, backend infrastructure, and AI tooling with Go, Python, TypeScript, React, Docker, and Cloudflare.",
+        "Portfolio and blog of Divanshu Chauhan (divkix), a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 250,000+ people, and writes about Cloudflare Workers, Go, TypeScript, and Python.",
       details: `
 ## About
-Software engineer and MS Computer Science student at Arizona State University, graduating May 2026.
+Software engineer with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026).
 SWE Intern @ Cloudflare on the ETI team.
-Creator of LogWell, PickMyClass, Clickfolio, Alita Robot, and other infrastructure-heavy side projects.
+Open-source contributor to Cloudflare Vinext (Next.js API on Vite for Workers).
+Creator of LogWell, PickMyClass, Clickfolio, Alita Robot (250,000+ users), and other side projects.
 Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.
 
 ## Expertise & Topics
-- Local AI / LLM Deployment: LM Studio on Apple Silicon, model quantization, vision-language models, privacy-first AI
+- Cloudflare Vinext: Next.js compatibility on Vite, App Router, ISR, server actions, Workers deployment
+- Local AI / LLM Deployment: LM Studio on Apple Silicon, model quantization, privacy-first AI
 - Telegram Bot Development: Scaling to 300K+ users, Go (gotgbot), open-source bot architecture
-- AI-Assisted Development: Claude Code, Cursor, GitHub Copilot, vibe coding analysis
+- AI-Assisted Development: Claude Code, Cursor, GitHub Copilot
 - Edge Computing: Cloudflare Workers, D1, Durable Objects, R2, zero-cost deployment
-- Full-Stack Development: Next.js, Astro, React, TypeScript, Supabase, PostgreSQL
-- Developer Tools and Observability: logging systems, telemetry, queues, reliability, production debugging
+- Full-Stack Development: Next.js, Astro, React, TypeScript, PostgreSQL
+- Developer Tools and Observability: logging systems, telemetry, queues, production debugging
 - Career Entity Signals: SWE Intern @ Cloudflare, MS CS @ ASU, Tempe Arizona, open to relocation and remote full-time SWE work
 
 ## Contact
@@ -149,7 +151,7 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
         },
       ],
       notes:
-        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a SWE Intern @ Cloudflare and MS Computer Science student at Arizona State University, distinct from other individuals with similar names. He is open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.",
+        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a SWE Intern @ Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889), distinct from other individuals with similar names. He is open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.",
       optionalLinks: [
         {
           label: "Resume",
@@ -159,7 +161,7 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
         },
         {
           label: "Blog",
-          url: "https://divkix.me/blog/",
+          url: "https://divkix.me/blog",
           description:
             "Technical blog covering AI, software engineering, and side projects",
         },
@@ -185,7 +187,7 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
         },
         {
           label: "Privacy Policy",
-          url: "https://divkix.me/privacy/",
+          url: "https://divkix.me/privacy",
           description: "Site privacy policy",
         },
       ],

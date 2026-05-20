@@ -22,7 +22,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       description: post.data.excerpt,
       pubDate: new Date(post.data.date),
-      link: `/blog/${post.id}/`,
+      link: `/blog/${post.id}`,
       categories: post.data.tags,
       author: post.data.author,
       customData: post.data.dateModified

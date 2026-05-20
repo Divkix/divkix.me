@@ -64,10 +64,10 @@ const showToc = toc.length >= 3;
 const blogPostingSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": `${baseUrl}/blog/${post.id}/#article`,
+  "@id": `${baseUrl}/blog/${post.id}#article`,
   headline: post.data.title,
   description: post.data.excerpt,
-  url: `${baseUrl}/blog/${post.id}/`,
+  url: `${baseUrl}/blog/${post.id}`,
   datePublished: `${post.data.date}T00:00:00Z`,
   dateModified: post.data.dateModified
     ? `${post.data.dateModified}T00:00:00Z`
@@ -76,7 +76,7 @@ const blogPostingSchema = {
   publisher: generateBlogPublisherSchema(),
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": `${baseUrl}/blog/${post.id}/`,
+    "@id": `${baseUrl}/blog/${post.id}`,
   },
   image: `${baseUrl}/og/blog/${post.id}.png`,
   keywords: post.data.tags.join(", "),
@@ -93,11 +93,11 @@ const blogPostingSchema = {
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
-  { name: "Blog", item: `${baseUrl}/blog/` },
-  { name: post.data.title, item: `${baseUrl}/blog/${post.id}/` },
+  { name: "Blog", item: `${baseUrl}/blog` },
+  { name: post.data.title, item: `${baseUrl}/blog/${post.id}` },
 ]);
 
-const postUrl = `${baseUrl}/blog/${post.id}/`;
+const postUrl = `${baseUrl}/blog/${post.id}`;
 const articleId = `${postUrl}#article`;
 
 // Speakable schema - targets TL;DR and key takeaways for voice assistants
@@ -168,7 +168,7 @@ const howToSchema =
     <>
       {/* Mobile TOC Toggle */}
       <div class="xl:hidden container mx-auto px-4 pt-4">
-        <details class="glass-surface rounded-lg border border-border/40">
+        <details class="surface-raised rounded-lg border border-border/40">
           <summary class="p-4 cursor-pointer font-semibold flex items-center justify-between">
             <span>Table of Contents</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform">
@@ -213,10 +213,10 @@ const howToSchema =
     </>
   )}
 
-  <article id="main-content" class="container mx-auto px-4 py-20">
-    <div class="max-w-3xl mx-auto space-y-8">
+  <article id="main-content" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0">
+    <div class="space-y-[var(--space-lg)] min-w-0">
       <a
-        href="/blog/"
+        href="/blog"
         class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
       >
         <svg
@@ -266,7 +266,7 @@ const howToSchema =
           <div class="flex flex-wrap gap-2">
             {post.data.tags.map((tag: string) => (
               <a
-                href={`/blog/tags/${tag.toLowerCase()}/`}
+                href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
                 class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
               >
                 {tag}
@@ -291,14 +291,14 @@ const howToSchema =
       {(post.data.tldr || (post.data.keyTakeaways && post.data.keyTakeaways.length > 0)) && (
         <div id="speakable-content" class="space-y-6">
           {post.data.tldr && (
-            <div class="tldr-summary glass-surface p-6 rounded-lg border-l-4 border-primary">
+            <div class="tldr-summary surface-raised p-6 rounded-lg border-l-4 border-primary">
               <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
               <p class="text-foreground/70">{post.data.tldr}</p>
             </div>
           )}
 
           {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
-            <div class="key-takeaways glass-surface p-6 rounded-lg">
+            <div class="key-takeaways surface-raised p-6 rounded-lg">
               <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
               <ul class="key-takeaways-list space-y-2">
                 {post.data.keyTakeaways.map((takeaway: string) => (
@@ -336,7 +336,7 @@ const howToSchema =
           <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
             {post.data.faq.map((faq: { q: string; a: string }) => (
-              <div class="glass-surface p-6 rounded-lg">
+              <div class="surface-raised p-6 rounded-lg">
                 <h3 class="font-semibold text-lg">{faq.q}</h3>
                 <p class="mt-3 text-foreground/70">{faq.a}</p>
               </div>
@@ -371,8 +371,8 @@ const howToSchema =
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             {relatedPosts.map((relatedPost: CollectionEntry<"blog">) => (
               <a
-                href={`/blog/${relatedPost.id}/`}
-                class="block glass-surface hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 p-4"
+                href={`/blog/${relatedPost.id}`}
+                class="block surface-raised hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 p-4"
               >
                 <h3 class="font-semibold hover:text-primary transition-colors mb-2">
                   {relatedPost.data.title}
@@ -387,7 +387,7 @@ const howToSchema =
       )}
 
       <div class="pt-8 border-t border-border/40">
-        <div class="glass-surface p-6 rounded-lg">
+        <div class="surface-raised p-6 rounded-lg">
           <div class="flex gap-4 items-start">
             <img
               src="/divanshu-chauhan.webp"

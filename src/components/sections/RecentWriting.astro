@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { calculateReadingTime, formatDate } from "@/lib/utils";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section id="writing" class="text-band min-w-0">
+  <header class="space-y-[var(--space-sm)] mb-[var(--space-lg)]">
+    <p class="mast-line">Writing</p>
+    <h2 class="font-display text-[length:var(--text-display-s)] leading-[1.05] tracking-[var(--tracking-display)] m-0">
+      Recent posts
+    </h2>
+    <p class="prose-measure text-muted-foreground leading-relaxed text-base">
+      Notes I wrote down so I'd stop forgetting them: shipping, edge platforms, and the tools I reach for when something breaks at 2am.
+    </p>
+  </header>
+
+  {
+    posts.length === 0 ? (
+      <p class="text-muted-foreground">No posts yet.</p>
+    ) : (
+      <ol class="list-none m-0 p-0">
+        {posts.map((post) => (
+          <li class="border-t border-border py-[var(--space-md)] first:border-t-0 first:pt-0">
+            <article class="space-y-[var(--space-2xs)] min-w-0">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                <time
+                  datetime={post.data.date}
+                  class="tabular-nums uppercase tracking-[0.18em]"
+                >
+                  {formatDate(post.data.date)}
+                </time>
+                <span class="tabular-nums uppercase tracking-[0.18em]">
+                  {calculateReadingTime(post.body)} min read
+                </span>
+              </div>
+              <h3 class="font-display text-xl md:text-2xl leading-[1.1] m-0">
+                <a
+                  href={`/blog/${post.id}`}
+                  class="text-foreground hover:text-primary transition-colors link-underline-grow"
+                >
+                  {post.data.title}
+                </a>
+              </h3>
+              {post.data.excerpt && (
+                <p class="text-base text-muted-foreground leading-relaxed line-clamp-2">
+                  {post.data.excerpt}
+                </p>
+              )}
+            </article>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  <p class="mt-[var(--space-lg)]">
+    <a
+      href="/blog"
+      class="text-xs text-primary link-underline-grow whitespace-nowrap uppercase tracking-[0.18em]"
+    >
+      All posts →
+    </a>
+  </p>
+</section>

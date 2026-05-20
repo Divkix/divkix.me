@@ -1,37 +1,32 @@
 import { MenuIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { siteConfig } from "@/data/site.config";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Contact", href: "/#contact" },
-  { label: "Blog", href: "/blog" },
+const primaryNavItems = [
+  { label: "Work", href: "/#projects" },
+  { label: "Writing", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Resume", href: "/resume/" },
+  { label: "Contact", href: "/#contact" },
 ];
+
+const secondaryNavItems = [{ label: "Resume", href: "/resume" }];
+
+const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+
+const mastLine = `${siteConfig.handle} · Portfolio · ${new Date().getFullYear()}`;
 
 function isNavItemActive(
   href: string,
   pathname: string,
   activeSection: string,
 ): boolean {
-  if (href === "/") {
-    return (
-      pathname === "/" &&
-      (!activeSection ||
-        activeSection === "hero" ||
-        activeSection === "highlights")
-    );
+  if (href === "/about") {
+    return pathname === "/about";
   }
   if (href === "/blog") {
     return pathname.startsWith("/blog");
-  }
-  if (href === "/about") {
-    return pathname === "/about";
   }
   if (href.startsWith("/resume")) {
     return pathname.startsWith("/resume");
@@ -46,21 +41,12 @@ function isNavItemActive(
 export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [pathname, setPathname] = useState(() =>
     typeof window !== "undefined" ? window.location.pathname : "",
   );
-  const [navIndicator, setNavIndicator] = useState<{
-    left: number;
-    width: number;
-    visible: boolean;
-  }>({ left: 0, width: 0, visible: false });
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
-  const desktopNavRef = useRef<HTMLDivElement>(null);
-  const navLinkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
-  // Page load / navigation updates
   useEffect(() => {
     const handlePageLoad = () => {
       setPathname(window.location.pathname);
@@ -70,55 +56,10 @@ export function Navbar() {
       document.removeEventListener("astro:page-load", handlePageLoad);
   }, []);
 
-  // Scroll-based navbar styling
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    let lastExecutedTime = 0;
-    const wait = 100;
-
-    const handleScroll = () => {
-      const now = Date.now();
-      const remaining = wait - (now - lastExecutedTime);
-      const nextScrolled = window.scrollY > 50;
-
-      if (remaining <= 0) {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-        lastExecutedTime = now;
-        setScrolled(nextScrolled);
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(() => {
-          lastExecutedTime = Date.now();
-          timeoutId = null;
-          setScrolled(window.scrollY > 50);
-        }, remaining);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, []);
-
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sections = [
-      "hero",
-      "highlights",
-      "projects",
-      "experience",
-      "skills",
-      "contact",
-    ];
+    const sections = ["hero", "highlights", "writing", "projects", "contact"];
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -162,114 +103,63 @@ export function Navbar() {
   const getIsActive = (href: string) =>
     isNavItemActive(href, pathname, activeSection);
 
-  // Sliding underline indicator for active desktop nav item
-  useEffect(() => {
-    const container = desktopNavRef.current;
-    if (!container) return;
-
-    const update = () => {
-      const activeItem = navItems.find((item) =>
-        isNavItemActive(item.href, pathname, activeSection),
-      );
-      const el = activeItem ? navLinkRefs.current.get(activeItem.href) : null;
-
-      if (!activeItem || !el) {
-        setNavIndicator({ left: 0, width: 0, visible: false });
-        return;
-      }
-
-      const cr = container.getBoundingClientRect();
-      const er = el.getBoundingClientRect();
-      setNavIndicator({
-        left: er.left - cr.left,
-        width: er.width,
-        visible: true,
-      });
-    };
-
-    update();
-    window.addEventListener("resize", update);
-    document.addEventListener("astro:page-load", update);
-    return () => {
-      window.removeEventListener("resize", update);
-      document.removeEventListener("astro:page-load", update);
-    };
-  }, [pathname, activeSection]);
-
   return (
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground"
       >
         Skip to main content
       </a>
-      <nav
-        className={cn(
-          "sticky top-0 z-50 w-full bg-background transition-all duration-300",
-          scrolled && "border-b border-border/40 shadow-sm",
-        )}
-      >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-transparent">
+        <div className="content-rail pt-[var(--space-md)] pb-0">
+          <p className="mast-line mb-[var(--space-2xs)]">{mastLine}</p>
           <a
             href="/"
-            className="font-mono text-base tracking-tight text-foreground transition-opacity hover:opacity-80"
-            aria-label="divkix home"
+            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-[var(--tracking-display)] text-foreground transition-opacity hover:opacity-80 block min-w-0"
+            aria-label={`${siteConfig.name} home`}
           >
-            divkix<span className="text-primary">_</span>
+            {siteConfig.name}
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
-            <div
-              ref={desktopNavRef}
-              className="relative flex items-center gap-1"
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary transition-all duration-300 ease-out"
-                style={{
-                  width: navIndicator.visible ? navIndicator.width : 0,
-                  transform: `translateX(${navIndicator.left}px)`,
-                  opacity: navIndicator.visible ? 1 : 0,
-                }}
-              />
-              {navItems.map((item) => {
+          <nav
+            className="hidden md:block mt-[var(--space-sm)]"
+            aria-label="Main navigation"
+          >
+            <ul className="flex flex-wrap items-center gap-x-[var(--space-lg)] gap-y-2 list-none m-0 p-0">
+              {primaryNavItems.map((item) => {
                 const isActive = getIsActive(item.href);
                 return (
-                  <a
-                    key={item.href}
-                    ref={(el) => {
-                      if (el) navLinkRefs.current.set(item.href, el);
-                      else navLinkRefs.current.delete(item.href);
-                    }}
-                    href={item.href}
-                    onClick={(e) => handleAnchorClick(e, item.href)}
-                    className={cn(
-                      "relative z-10 px-3 py-2 text-sm font-mono transition-colors",
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                    aria-label={`Navigate to ${item.label}`}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleAnchorClick(e, item.href)}
+                      className={cn(
+                        "text-sm link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.06em]",
+                        isActive
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
                 );
               })}
-            </div>
-            <ThemeToggle />
-          </div>
+              <li>
+                <ThemeToggle />
+              </li>
+            </ul>
+          </nav>
 
-          {/* Mobile Navigation */}
-          <div className="flex md:hidden items-center gap-4">
+          <div className="flex md:hidden items-center gap-3 mt-[var(--space-sm)] pb-[var(--space-xs)]">
             <ThemeToggle />
             <button
               ref={hamburgerRef}
               type="button"
               onClick={() => setIsOpen(true)}
-              className="p-2 text-foreground hover:text-primary transition-colors"
+              className="p-2 text-foreground hover:text-primary transition-colors uppercase text-xs tracking-[0.08em]"
               aria-label="Open menu"
               aria-expanded={isOpen}
               aria-controls="mobile-nav-dialog"
@@ -277,8 +167,10 @@ export function Navbar() {
               <MenuIcon className="size-5" />
             </button>
           </div>
+
+          <hr className="double-rule mt-[var(--space-sm)] mb-0" />
         </div>
-      </nav>
+      </header>
 
       <MobileNavDialog
         isOpen={isOpen}
@@ -306,30 +198,16 @@ function MobileNavDialog({
   onAnchorClick,
   onClosed,
 }: MobileNavDialogProps) {
-  const [menuVisible, setMenuVisible] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const prevIsOpen = useRef(false);
 
-  // Keep latest callbacks in refs so keyboard listeners don't re-subscribe
   const onCloseRef = useRef(onClose);
   const onClosedRef = useRef(onClosed);
   useEffect(() => {
     onCloseRef.current = onClose;
     onClosedRef.current = onClosed;
   }, [onClose, onClosed]);
-
-  useEffect(() => {
-    let raf: number | undefined;
-    if (isOpen) {
-      raf = requestAnimationFrame(() => setMenuVisible(true));
-    } else {
-      setMenuVisible(false);
-    }
-    return () => {
-      if (raf !== undefined) cancelAnimationFrame(raf);
-    };
-  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -351,7 +229,6 @@ function MobileNavDialog({
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
-  // Focus trap for accessibility: keep focus within open mobile menu
   useEffect(() => {
     if (!isOpen) return;
 
@@ -391,7 +268,6 @@ function MobileNavDialog({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
-  // Restore focus to hamburger when menu closes
   useEffect(() => {
     if (prevIsOpen.current && !isOpen) {
       onClosedRef.current();
@@ -410,25 +286,25 @@ function MobileNavDialog({
       aria-modal="true"
       aria-label="Navigation menu"
     >
-      <div className="flex h-16 items-center justify-between border-b border-border px-4">
-        <span className="font-mono text-lg tracking-tight text-foreground">
-          divkix<span className="text-primary">_</span>
+      <div className="flex h-14 items-center justify-between border-b border-border px-[var(--page-gutter)] gap-2">
+        <span className="font-display text-base text-foreground truncate min-w-0">
+          {siteConfig.name}
         </span>
         <button
           ref={closeButtonRef}
           type="button"
           onClick={onClose}
-          className="p-2 text-foreground transition-colors hover:text-primary"
+          className="p-2 text-foreground transition-colors hover:text-primary shrink-0"
           aria-label="Close menu"
         >
           <X className="size-6" />
         </button>
       </div>
       <nav
-        className="flex flex-1 flex-col items-start justify-center gap-6 px-8"
+        className="flex flex-1 flex-col items-center justify-center gap-5 px-8"
         aria-label="Mobile navigation menu"
       >
-        {navItems.map((item, i) => {
+        {allNavItems.map((item) => {
           const isActive = getIsActive(item.href);
           return (
             <a
@@ -436,17 +312,11 @@ function MobileNavDialog({
               href={item.href}
               onClick={(e) => onAnchorClick(e, item.href)}
               className={cn(
-                "font-mono text-3xl font-medium",
+                "font-display text-2xl whitespace-nowrap uppercase tracking-[0.04em]",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground",
               )}
-              style={{
-                opacity: menuVisible ? 1 : 0,
-                transform: menuVisible ? "translateX(0)" : "translateX(30px)",
-                transition: `opacity 0.4s ease-out ${i * 50}ms, transform 0.4s ease-out ${i * 50}ms`,
-              }}
-              aria-label={`Navigate to ${item.label}`}
               aria-current={isActive ? "page" : undefined}
             >
               {item.label}

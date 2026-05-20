@@ -1,31 +1,31 @@
 ---
-title: "My 2025 Stack for Shipping 30+ Side Projects While Getting My Master's"
-seoTitle: "My 2025 Stack for Shipping 30+ Side Projects While Getting My Master's"
-seoDescription: "I shipped 30+ projects at ASU using Next.js, Supabase, and Cloudflare. Real lessons from serving 250K+ users. The stack that lets you sleep at night."
+title: "My 2026 Stack for Shipping 30+ Side Projects After Grad School"
+seoTitle: "My 2026 Stack for Shipping 30+ Side Projects (MS CS, 250K+ Users)"
+seoDescription: "I shipped 30+ projects while finishing my MS at ASU. Next.js, Supabase, Cloudflare — real lessons from tools serving 250K+ users."
 date: "2025-11-24"
-dateModified: "2026-04-05"
-excerpt: "How I shipped 30+ projects while getting my MS in Computer Science at ASU. The stack choices that let me build fast, deploy faster, and actually sleep at night. Real lessons from PickMyClass, Alita Robot, and projects serving 250K+ users."
-tags: ["Side Projects", "Tech Stack", "Grad Student", "Next.js", "Supabase", "Cloudflare", "TypeScript", "Building in Public", "Productivity", "2025"]
+dateModified: "2026-05-20"
+excerpt: "I shipped 30+ side projects while finishing my MS in Computer Science at ASU. Here's the stack that let me build fast, deploy faster, and still sleep."
+tags: ["Side Projects", "Tech Stack", "Next.js", "Supabase", "Cloudflare", "TypeScript", "Building in Public", "Productivity", "2026"]
 published: true
-tldr: "Time-starved grad student's battle-tested stack: Next.js 15 + TypeScript + Supabase + Cloudflare Workers. Optimized for shipping fast, not resume padding."
+tldr: "Next.js 15, TypeScript, Supabase, and Cloudflare Workers. Managed services over self-hosting, copy-paste UI over custom design, deploy in 30 seconds. Built for a student schedule, not a resume."
 keyTakeaways:
-  - "Use managed services (Supabase, Cloudflare) to eliminate ops work - your time is more valuable than $5/month"
-  - "TypeScript is non-negotiable for side projects you'll touch 6 months later"
-  - "Copy-paste UI components (shadcn/ui) beats building from scratch every time"
-  - "Deployment should be boring - Cloudflare Workers deploy in 30 seconds and cost $0"
-  - "Optimize for iteration speed over architectural purity when shipping under time pressure"
+  - "Supabase and Cloudflare eliminate ops work — your time beats saving $5/month"
+  - "TypeScript catches bugs before users do; non-negotiable for projects you revisit months later"
+  - "shadcn/ui beats building components from scratch every time"
+  - "Cloudflare Workers deploy in ~30 seconds and stay on the free tier for most side projects"
+  - "Ship fast, refactor later — architectural purity can wait until something has users"
 faq:
   - q: "Why not just use Python/Django for everything?"
     a: "I tried. TypeScript catches so many bugs before deployment that I stopped fighting it. Plus Next.js gives you SSR, API routes, and deployment in one package."
   - q: "Isn't Supabase vendor lock-in?"
     a: "Yes, and I don't care. For side projects, the alternative is spending weekends debugging Postgres connections. Supabase's free tier is ridiculously generous and I can always migrate if a project actually makes money."
   - q: "What about costs at scale?"
-    a: "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (1M+ users) runs on minimal infra. Most projects never hit paid tiers. If they do, you've got bigger problems to solve (good problems)."
+    a: "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (250K+ users) runs on minimal infra. Most projects never hit paid tiers."
   - q: "Why Biome over ESLint + Prettier?"
-    a: "20x faster, one config file, zero conflicts between linter and formatter. Migrated all my projects in 2024 and never looked back. Time saved adds up."
+    a: "20x faster, one config file, zero conflicts between linter and formatter. Migrated all my projects in 2024 and never looked back."
 ---
 
-I've shipped 30+ projects while getting my master's degree in Computer Science at ASU. None of them are perfect. Most serve specific needs. A few have actually scaled to real users—PickMyClass helps thousands of ASU students grab classes, Alita Robot serves over 1 million Telegram users.
+I've shipped 30+ projects while getting my master's degree in Computer Science at ASU. None of them are perfect. Most serve specific needs. A few have actually scaled to real users—PickMyClass helps thousands of ASU students grab classes, Alita Robot serves 250K+ Telegram users.
 
 Here's the thing nobody tells you about side projects in grad school: you don't have time. Between CS courses, TA work, and pretending to have a social life, every tech decision is a time trade-off. Pick the wrong stack and you'll spend weekends debugging CORS errors instead of shipping features.
 
@@ -123,7 +123,7 @@ Supabase's query analyzer showed me exactly which queries were slow. Fixed in an
 
 ### Alita Robot: Go for High Traffic
 
-Alita is a Telegram bot serving 1M+ users. I wrote it in Go, not TypeScript.
+Alita is a Telegram bot serving 250K+ users. I wrote it in Go, not TypeScript.
 
 **Why Go here?** Telegram bots need to handle webhooks fast. Go's concurrency model (goroutines) makes this trivial. The bot handles thousands of concurrent requests without breaking a sweat.
 

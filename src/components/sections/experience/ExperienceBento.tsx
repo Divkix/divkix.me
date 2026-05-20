@@ -1,7 +1,6 @@
-import { Calendar, GraduationCap, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { SectionLabel } from "@/components/shared/SectionLabel";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
 import { cn } from "@/lib/utils";
 
@@ -35,105 +34,67 @@ function useScrollReveal() {
   return { ref, isVisible };
 }
 
-function TimelineCard({ company, index }: { company: Company; index: number }) {
+function ExperienceEntry({
+  company,
+  index,
+}: {
+  company: Company;
+  index: number;
+}) {
   const { ref, isVisible } = useScrollReveal();
   const isCurrentRole = company.duration.includes("Present");
-  const isEven = index % 2 === 0;
 
   return (
-    <div ref={ref} className="relative">
-      <div className="absolute left-0 md:left-1/2 -translate-x-1/2 top-6 z-10">
-        {isCurrentRole ? (
-          <span className="inline-flex rounded-full size-3 bg-primary border-2 border-background" />
-        ) : (
-          <span className="inline-flex rounded-full size-3 bg-muted-foreground/30 border-2 border-background" />
-        )}
-      </div>
+    <article
+      ref={ref}
+      className={cn(
+        "border-t border-border pt-8 transition-all duration-700 min-w-0",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+      )}
+      style={{ transitionDelay: `${index * 80}ms` }}
+    >
+      <div className="split-studio">
+        <div className="split-studio-content min-w-0 space-y-2">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 className="font-display text-xl md:text-2xl font-medium">
+              {company.company}
+            </h3>
+            {isCurrentRole && (
+              <span className="text-xs uppercase tracking-wide text-primary">
+                Current
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground">{company.location}</p>
+          <p className="text-sm text-muted-foreground">{company.duration}</p>
+        </div>
 
-      {/* Horizontal connector (desktop only) */}
-      <div
-        className={cn(
-          "hidden md:block absolute top-7.5 h-px bg-border w-6",
-          isEven ? "left-[calc(50%+8px)]" : "right-[calc(50%+8px)]",
-        )}
-      />
-
-      <div
-        className={cn(
-          "pl-6 md:pl-0 transition-all duration-700",
-          isEven
-            ? "md:w-[calc(50%-2rem)] md:ml-[calc(50%+2rem)]"
-            : "md:w-[calc(50%-2rem)]",
-          isVisible
-            ? "opacity-100 translate-x-0"
-            : cn(
-                "opacity-0",
-                isEven ? "translate-x-8" : "translate-x-8 md:-translate-x-8",
-              ),
-        )}
-      >
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/50 transition-colors">
-          <div className="flex items-start justify-between gap-3 mb-4">
-            <div>
-              <div className="flex items-center gap-2">
-                {isCurrentRole && (
-                  <span className="text-xs font-mono font-semibold text-green-500 uppercase tracking-wider">
-                    Active
-                  </span>
-                )}
-                <h4 className="font-semibold text-lg">{company.company}</h4>
+        <div className="split-studio-proof space-y-6 min-w-0">
+          {company.positions.map((position: Position) => (
+            <div key={`${company.company}-${position.title}-${position.year}`}>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1 mb-2">
+                <h4 className="font-medium text-foreground">
+                  {position.title}
+                </h4>
+                <span className="text-sm text-muted-foreground">
+                  {position.year}
+                </span>
               </div>
-              <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                <MapPin className="size-3.5 shrink-0" />
-                {company.location}
-              </div>
+              <ul className="space-y-2">
+                {position.highlights.map((highlight: string) => (
+                  <li
+                    key={highlight}
+                    className="text-sm text-foreground/75 leading-relaxed pl-4 border-l border-border"
+                  >
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <span className="px-3 py-1 text-xs font-mono bg-secondary text-secondary-foreground rounded-full shrink-0">
-              {company.duration}
-            </span>
-          </div>
-
-          <div className="relative pl-4 border-l-2 border-primary/20 space-y-4">
-            {company.positions.map((position: Position, idx: number) => (
-              <div
-                key={`${company.company}-${position.title}-${position.year}`}
-                className="relative"
-              >
-                <div className="absolute -left-[calc(0.5rem+1px)] top-1.5 size-2 rounded-full bg-primary/60" />
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-                    <h5
-                      className={cn(
-                        "text-sm font-semibold",
-                        idx === 0 ? "text-primary" : "text-foreground",
-                      )}
-                    >
-                      {position.title}
-                    </h5>
-                    <span className="text-xs font-mono text-muted-foreground">
-                      {position.year}
-                    </span>
-                  </div>
-                  <ul className="space-y-1">
-                    {position.highlights.map((highlight: string) => (
-                      <li
-                        key={highlight}
-                        className="text-sm text-foreground/70 leading-relaxed flex gap-2"
-                      >
-                        <span className="text-primary shrink-0">
-                          {"\u2022"}
-                        </span>
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -141,61 +102,52 @@ export function ExperienceBento() {
   return (
     <section
       id="experience"
-      className="container mx-auto px-4 py-16 reveal-on-scroll overflow-x-hidden"
+      className="container mx-auto px-4 py-16 md:py-24 reveal-on-scroll max-w-6xl"
     >
       <div className="space-y-12">
-        <div className="space-y-4">
-          <SectionLabel number="03" label="experience" />
-          <h2 className="text-4xl font-display font-semibold">Experience</h2>
-        </div>
+        <SectionHeading
+          title="Where I've worked"
+          description="Engineering roles, teaching, and the occasional internship that shaped how I build."
+        />
 
-        <div className="max-w-5xl mx-auto space-y-12">
-          <div className="rounded-xl bg-muted/50 border border-border p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <GraduationCap className="size-5 text-primary" />
-              </div>
-              <h3 className="text-lg font-display font-semibold">Education</h3>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+        <div className="split-studio">
+          <div className="split-studio-content min-w-0">
+            <h3 className="font-display text-xl font-medium mb-4">Education</h3>
+            <div className="space-y-4">
               {siteConfig.education.map((edu: Education) => (
-                <div
-                  key={edu.title}
-                  className="flex-1 rounded-lg bg-card border border-border p-4"
-                >
-                  <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-2">
-                    <Calendar className="size-3.5" />
-                    {edu.year}
-                  </div>
-                  <h4 className="font-semibold text-sm">{edu.title}</h4>
+                <div key={edu.title} className="space-y-1">
+                  <p className="font-medium text-foreground">{edu.title}</p>
+                  <p className="text-sm text-muted-foreground">{edu.year}</p>
                   {"focus" in edu && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground">
                       Focus: {edu.focus}
                     </p>
                   )}
                   {"honors" in edu && (
-                    <span className="inline-block mt-2 px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded">
-                      {edu.honors}
-                    </span>
+                    <p className="text-sm text-primary">{edu.honors}</p>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute left-0 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[3px] bg-primary/30" />
-
-            <div className="space-y-12">
-              {siteConfig.experience.map((company: Company, index: number) => (
-                <TimelineCard
-                  key={company.company}
-                  company={company}
-                  index={index}
-                />
-              ))}
-            </div>
+          <div className="split-studio-proof min-w-0">
+            <p className="text-muted-foreground leading-relaxed">
+              MS (GPA 3.889) and BS in Computer Science from Arizona State
+              University. I've also spent years teaching programming, which
+              taught me as much about explaining ideas as writing code.
+            </p>
           </div>
+        </div>
+
+        <div className="space-y-0">
+          {siteConfig.experience.map((company: Company, index: number) => (
+            <ExperienceEntry
+              key={company.company}
+              company={company}
+              index={index}
+            />
+          ))}
         </div>
       </div>
     </section>

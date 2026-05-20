@@ -23,7 +23,7 @@ tags:
   - Resume Parser
 published: true
 featured: true
-tldr: "clickfolio.me runs entirely on Cloudflare's edge, D1 (SQLite), R2, Queues, Durable Objects with WebSocket Hibernation, and Gemini AI via service bindings. The Claim Check Pattern lets anonymous users upload before auth. File hash deduplication prevents duplicate AI parsing. Privacy filtering happens at fetch time, not storage. It works, but D1's quirks and edge runtime constraints mean you're fighting the platform as often as you're building on it."
+tldr: "clickfolio.me runs on Cloudflare's edge stack: D1, R2, Queues, Durable Objects, and Gemini. Claim-check uploads, hash dedup, and WebSocket status updates. It works, but D1's SQLite quirks mean you fight the platform as often as you build on it."
 keyTakeaways:
   - "D1 is SQLite on the edge, JSON stored as TEXT, booleans as integers, no row-level security. Drizzle ORM handles most pain, but you'll still JSON.parse() more than you'd like."
   - "The Claim Check Pattern (upload anonymously → authenticate → claim) reduces auth friction dramatically for new users."

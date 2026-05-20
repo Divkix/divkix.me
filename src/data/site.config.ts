@@ -1,11 +1,18 @@
 export const siteConfig = {
   name: "Divanshu Chauhan",
   handle: "Divkix",
-  tagline: "Backend, devtools, and edge systems engineer.",
+  tagline:
+    "Software engineer at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
-    "Software engineer with an MS in Computer Science from Arizona State University. I build developer tools, observability systems, backend infrastructure, and edge-native apps. SWE Intern @ Cloudflare.",
+    "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 250,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
+  heroSummary:
+    "MS in Computer Science from ASU, GPA 3.889. SWE intern at Cloudflare and Vinext contributor. I write code on the edge during the day and ship side projects at night: a Telegram bot used by 250k people, a self-hosted logging tool, a class tracker for ASU.",
+  founderPov:
+    "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I'm heading toward founding something small and durable. Until then I'm shipping in public and writing down what I learn along the way.",
+  interests:
+    "When I'm not coding, I'm usually on a road trip with friends, exploring somewhere I haven't been, or planning the next drive when I should probably be asleep.",
   authorImage: "/divanshu-chauhan.jpeg",
   nationality: "Indian",
   address: {
@@ -17,8 +24,31 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Software engineer with an MS in Computer Science from ASU. SWE Intern @ Cloudflare building developer tools, observability systems, backend infrastructure, and edge-native apps.",
+      "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 250,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
   },
+
+  faq: [
+    {
+      q: "Who is Divanshu Chauhan?",
+      a: "Divanshu Chauhan (divkix) is a software engineer at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
+    },
+    {
+      q: "What is Divanshu Chauhan's education?",
+      a: "Divanshu earned an MS in Computer Science from Arizona State University in May 2026 with a 3.889 GPA, focused on AI/ML and data science. He also holds a BS in Computer Science from ASU (Magna Cum Laude, May 2025).",
+    },
+    {
+      q: "What is Divanshu Chauhan working on at Cloudflare?",
+      a: "Divanshu is a software engineer intern on Cloudflare's ETI team and an open-source contributor to Vinext, Cloudflare's Vite-based reimplementation of the Next.js API surface for deployment on Workers and other runtimes.",
+    },
+    {
+      q: "What is Vinext?",
+      a: "Vinext is Cloudflare's open-source Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. Divanshu Chauhan contributes to App Router rendering, ISR caching, image optimization, and server action forwarding.",
+    },
+    {
+      q: "What projects has Divanshu Chauhan built?",
+      a: "Notable projects include Alita Robot (Telegram community bot used by 250,000+ users), LogWell (self-hosted logging platform), Clickfolio (AI portfolio builder on Cloudflare Workers), PickMyClass (ASU class availability tracker), and contributions to Cloudflare Vinext.",
+    },
+  ] as const,
 
   facts: {
     impact: "250000+",
@@ -214,6 +244,7 @@ export const siteConfig = {
       title: "MS, Computer Science — Arizona State University",
       year: "Aug 2025 – May 2026",
       focus: "AI/ML/Data Science",
+      honors: "GPA 3.889",
     },
     {
       title: "BS, Computer Science — Arizona State University",
@@ -224,8 +255,25 @@ export const siteConfig = {
 
   projects: [
     {
+      name: "Vinext",
+      desc: "Open-source contributor to Cloudflare Vinext, a Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. My work touches App Router rendering, ISR caching, image optimization, and server-action forwarding.",
+      image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
+      tags: [
+        "TypeScript",
+        "Vite",
+        "Next.js",
+        "Cloudflare Workers",
+        "Open Source",
+      ],
+      period: "2025 – Present",
+      links: [
+        { label: "GitHub", href: "https://github.com/cloudflare/vinext" },
+        { label: "Docs", href: "https://vinext.dev" },
+      ],
+    },
+    {
       name: "LogWell",
-      desc: "Self-hosted logging and observability platform with real-time streaming, structured search, and OTLP-compatible ingestion.",
+      desc: "A self-hosted logging tool I wrote because Datadog priced me out and the open-source alternatives wanted a PhD in Elasticsearch. PostgreSQL-backed, OTLP-compatible, real-time streaming, one Docker Compose file.",
       image: "/og/blog/logwell-self-hosted-logging-platform.webp",
       tags: ["TypeScript", "PostgreSQL", "Docker", "SSE", "OTLP", "Node.js"],
       period: "2024 – Present",
@@ -233,7 +281,7 @@ export const siteConfig = {
     },
     {
       name: "Clickfolio",
-      desc: "AI-powered portfolio generator built on Cloudflare's full-stack platform. Uses Workers, D1, R2, Queues, Durable Objects, WebSockets, Drizzle, and Gemini to parse uploads and stream job status.",
+      desc: "Upload a PDF resume, get a live portfolio site. Built end-to-end on Cloudflare's stack: Workers, D1, R2, Queues, Durable Objects for live WebSocket status, Drizzle for the schema, Gemini for parsing.",
       image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
       tags: [
         "Cloudflare Workers",
@@ -254,7 +302,7 @@ export const siteConfig = {
     },
     {
       name: "Alita Robot",
-      desc: "Telegram community automation bot with 300K+ users reached. Built moderation, automation, and group-management features for real-world Telegram communities.",
+      desc: "Open-source Telegram moderation bot I've maintained since 2020. Currently serving 250,000+ users across real communities, with the boring features people actually need: anti-spam, scheduling, role management, locale support, and a self-hostable Go binary.",
       image: "/og/blog/scaling-telegram-bot-300k-users.webp",
       tags: ["Go", "MongoDB", "Telegram Bot API", "Docker"],
       period: "Feb 2020 – Present",
@@ -264,7 +312,7 @@ export const siteConfig = {
     },
     {
       name: "PickMyClass",
-      desc: "ASU class availability tracker that monitors seat openings and sends alerts when spots free up. Built to solve the class-registration scramble for ASU students.",
+      desc: "Class availability tracker for ASU. It watches the registrar for open seats and pings you when one frees up. I built it because I was personally tired of refreshing the page at 11:59pm during registration week.",
       image: "/og/blog/pickmyclass-never-miss-your-dream-class.webp",
       tags: ["TypeScript", "React", "Node.js", "Automation"],
       period: "2024 – Present",
@@ -275,7 +323,7 @@ export const siteConfig = {
     },
     {
       name: "ASU Capstone",
-      desc: "Full-stack platform for managing and showcasing Arizona State University capstone projects.",
+      desc: "Full-stack platform for managing and showcasing Arizona State University senior capstone projects. Built with the capstone team for actual classes.",
       image: "/og-image.webp",
       tags: ["Next.js", "TypeScript", "Python", "Go"],
       period: "Aug 2024 – Present",
@@ -286,14 +334,14 @@ export const siteConfig = {
     },
     {
       name: "WarpDL",
-      desc: "Cross-platform download manager built with Go for high-throughput concurrent downloads.",
+      desc: "Cross-platform download manager written in Go. Handles high-throughput concurrent downloads. Started as a weekend project, kept it alive because people kept opening issues.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Present",
       links: [{ label: "GitHub", href: "https://github.com/warpdl/warpdl" }],
     },
     {
       name: "AI Code Improvement Platform",
-      desc: "Code analysis platform using Voyage AI embeddings, Qdrant vector search, and Claude for automated code review and refactoring.",
+      desc: "Research-grade code analysis platform. Voyage AI embeddings, Qdrant for vector search, Claude for the review pass and refactor suggestions.",
       tags: ["Go", "AI/ML", "Qdrant", "MongoDB"],
       period: "2024 – Present",
       links: [

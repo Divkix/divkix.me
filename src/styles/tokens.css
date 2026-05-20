@@ -1,0 +1,81 @@
+/* Hallmark · genre: editorial · theme: Atelier layout · Atelier palette · design-system: design.md
+ * macrostructure: Photographic (marketing) · Long Document (content)
+ * nav: N6 · footer: Ft1 · tone: editorial/cool
+ * axes: light · Didone-serif · cool slate-indigo accent (Atelier)
+ */
+
+:root {
+  --color-paper: oklch(0.986 0.003 250);
+  --color-paper-2: oklch(0.968 0.004 248);
+  --color-paper-3: oklch(0.948 0.005 246);
+  --color-ink: oklch(0.29 0.02 260);
+  --color-ink-2: oklch(0.47 0.014 258);
+  --color-muted: oklch(0.47 0.014 258);
+  --color-rule: oklch(0.92 0.004 260);
+  --color-rule-2: oklch(0.87 0.005 258);
+  --color-accent: oklch(0.44 0.09 265);
+  --color-accent-ink: oklch(0.986 0.003 250);
+  --color-focus: oklch(0.44 0.09 265);
+
+  --font-display:
+    "Playfair Display", "Cormorant Garamond", "Georgia", "Times New Roman",
+    serif;
+  --font-body: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  --display-weight: 900;
+  --display-style: normal;
+  --tracking-display: -0.018em;
+  --tracking-label: 0.24em;
+
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6.5rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2.75rem, 5.5vw + 1rem, 4.75rem);
+  --text-display-s: clamp(2rem, 4vw + 0.5rem, 3.25rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 286ms;
+  --dur-medium: 520ms;
+
+  --radius-card: 0;
+  /* Button radius intentionally 0 (square corners) for the Atelier theme */
+  --radius-button: 0;
+  --radius-input: 0;
+
+  --rule-hairline-height: 0.5px;
+  --rule-hairline: var(--rule-hairline-height) solid var(--color-rule);
+  --page-gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --measure: min(38rem, 100%);
+  --content-rail: min(72rem, calc(100vw - 2 * var(--page-gutter)));
+  --section-gap: 5.5rem;
+}
+
+.dark {
+  --color-paper: oklch(0.2 0.004 260);
+  --color-paper-2: oklch(0.24 0.005 260);
+  --color-paper-3: oklch(0.28 0.006 260);
+  --color-ink: oklch(0.92 0.005 265);
+  --color-ink-2: oklch(0.72 0.008 262);
+  --color-muted: oklch(0.72 0.008 262);
+  --color-rule: oklch(0.32 0.005 260);
+  --color-rule-2: oklch(0.38 0.006 260);
+  --color-accent: oklch(0.62 0.1 265);
+  --color-accent-ink: oklch(0.2 0.004 260);
+  --color-focus: oklch(0.62 0.1 265);
+}
