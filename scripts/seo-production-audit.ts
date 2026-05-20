@@ -19,19 +19,39 @@ const redirects = read("public/_redirects");
 const robots = read("src/pages/robots.txt.ts");
 const astroConfig = read("astro.config.mjs");
 
+const hasHeroCta =
+  hero.includes('href="/Divanshu_Chauhan_Resume.pdf"') ||
+  hero.includes('href="/resume"') ||
+  hero.includes('href="/resume/"');
 assert(
-  (!hero.includes('href="/resume"') && !hero.includes('href="/resume/"')) ||
-    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
-    redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-  "Hero resume CTA should either point directly to the PDF or have a deployed /resume redirect.",
+  hasHeroCta,
+  "Hero should contain a resume CTA pointing to the PDF or a /resume path.",
 );
+
+if (hero.includes('href="/resume"') || hero.includes('href="/resume/"')) {
+  assert(
+    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
+      redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
+    "Hero CTA references a redirect path, but the redirect is missing or misconfigured in _redirects.",
+  );
+}
+
+const hasContactCta =
+  contact.includes('href="/Divanshu_Chauhan_Resume.pdf"') ||
+  contact.includes('href="/resume"') ||
+  contact.includes('href="/resume/"');
 assert(
-  (!contact.includes('href="/resume"') &&
-    !contact.includes('href="/resume/"')) ||
-    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
-    redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-  "Contact resume CTA should either point directly to the PDF or have a deployed /resume redirect.",
+  hasContactCta,
+  "Contact should contain a resume CTA pointing to the PDF or a /resume path.",
 );
+
+if (contact.includes('href="/resume"') || contact.includes('href="/resume/"')) {
+  assert(
+    redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
+      redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
+    "Contact CTA references a redirect path, but the redirect is missing or misconfigured in _redirects.",
+  );
+}
 assert(
   headers.includes("https://formspree.io"),
   "Content-Security-Policy should allow the Formspree contact endpoint.",

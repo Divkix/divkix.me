@@ -53,10 +53,12 @@
   --dur-medium: 520ms;
 
   --radius-card: 0;
-  --radius-pill: 0;
+  /* Button radius intentionally 0 (square corners) for the Atelier theme */
+  --radius-button: 0;
   --radius-input: 0;
 
-  --rule-hairline: 0.5px solid var(--color-rule);
+  --rule-hairline-height: 0.5px;
+  --rule-hairline: var(--rule-hairline-height) solid var(--color-rule);
   --page-gutter: clamp(1.25rem, 3vw, 1.75rem);
   --measure: 38rem;
   --content-rail: 44rem;

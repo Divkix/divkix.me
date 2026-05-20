@@ -124,7 +124,11 @@ export function Contact() {
         <div className="min-w-0">
           <div className="border border-border bg-card p-[var(--space-md)] md:p-[var(--space-lg)]">
             {isSuccess ? (
-              <p className="text-base text-primary font-medium py-[var(--space-lg)] text-center">
+              <p
+                role="status"
+                aria-live="polite"
+                className="text-base text-primary font-medium py-[var(--space-lg)] text-center"
+              >
                 Message sent. I'll reply within a day or two.
               </p>
             ) : (

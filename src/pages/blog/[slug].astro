@@ -266,7 +266,7 @@ const howToSchema =
           <div class="flex flex-wrap gap-2">
             {post.data.tags.map((tag: string) => (
               <a
-                href={`/blog/tags/${tag.toLowerCase()}`}
+                href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
                 class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
               >
                 {tag}

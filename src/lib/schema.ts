@@ -74,9 +74,15 @@ export function generatePersonSchema() {
         credentialCategory: "degree",
         name: `${degree} in ${field}`,
         educationalLevel: level,
-        ...("honors" in edu && edu.honors?.startsWith("GPA")
-          ? { grade: edu.honors.replace("GPA ", "") }
-          : {}),
+        ...(() => {
+          if ("honors" in edu && edu.honors) {
+            const match = edu.honors.match(/\bGPA[:\s]+(.+)/i);
+            if (match && match[1]) {
+              return { grade: match[1].trim() };
+            }
+          }
+          return {};
+        })(),
         recognizedBy: {
           "@type": "CollegeOrUniversity",
           name: institution,
@@ -84,16 +90,11 @@ export function generatePersonSchema() {
       };
     }),
     knowsAbout: [
-      "Cloudflare Workers",
+      ...siteConfig.skills.map((s) => s.name),
       "Cloudflare Vinext",
-      "Next.js",
-      "Vite",
-      "TypeScript",
-      "Go",
       "Telegram Bot Development",
       "Edge Computing",
       "Developer Tools",
-      "Observability",
       "Self-Hosted Logging",
       "AI-Assisted Development",
       "Software Engineering",

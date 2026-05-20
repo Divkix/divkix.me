@@ -131,7 +131,7 @@ const blogFaqSchema = generateFAQPageSchema(
                     <p class="text-xs text-muted-foreground pt-[var(--space-2xs)]">
                       {item.post.data.tags.map((tag: string) => (
                         <a
-                          href={`/blog/tags/${tag.toLowerCase()}`}
+                          href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
                           class="hover:text-primary transition-colors link-underline-grow mr-[var(--space-sm)] last:mr-0 uppercase tracking-[0.1em]"
                         >
                           {tag}
