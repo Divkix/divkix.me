@@ -52,7 +52,7 @@ assert(
 );
 for (const path of ["/blog/", "/about/", "/privacy/", "/socials/"]) {
   const stripTrailingSlashRule = new RegExp(
-    `^${path.replace(/\//g, "\\/")} \\S+ 30[12]`,
+    `^${path.replace(/\//g, "\\/")}\\s+\\S+\\s+30[12]`,
     "m",
   );
   assert(
