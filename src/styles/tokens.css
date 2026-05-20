@@ -57,9 +57,10 @@
   --radius-input: 0;
 
   --rule-hairline: 0.5px solid var(--color-rule);
-  --page-gutter: clamp(1.25rem, 4vw, 3rem);
-  --measure: 65ch;
-  --section-gap: 6.5rem;
+  --page-gutter: clamp(1.25rem, 3vw, 1.75rem);
+  --measure: 38rem;
+  --content-rail: 44rem;
+  --section-gap: 5.5rem;
 }
 
 .dark {

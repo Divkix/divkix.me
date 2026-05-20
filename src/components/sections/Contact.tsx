@@ -77,19 +77,20 @@ export function Contact() {
   const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 
   return (
-    <section id="contact" className="text-band max-w-4xl min-w-0">
-      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-[var(--space-xl)] items-start">
-        <div className="min-w-0 space-y-6">
+    <section id="contact" className="text-band min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-[var(--space-xl)] items-start min-w-0">
+        <div className="min-w-0 space-y-[var(--space-md)]">
           <SectionHeading
             title="Say hello"
-            description="Open to full-time software engineering roles starting May/June 2026 — backend, infrastructure, developer tools, and platform work."
+            description="I'm open to full-time software engineering roles starting May 2026. Backend, infrastructure, developer tools, AI platform work. Also happy to chat about side projects, Cloudflare Workers, or anything you're stuck on."
           />
 
-          <div className="space-y-3 text-muted-foreground">
+          <div className="space-y-2 text-muted-foreground">
             <p>
               <a
                 href="mailto:divkix@divkix.me"
-                className="text-primary link-underline-grow whitespace-nowrap uppercase text-sm tracking-[0.06em]"
+                className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
+                rel="me author"
               >
                 divkix@divkix.me
               </a>
@@ -97,21 +98,21 @@ export function Contact() {
             <p>
               <a
                 href="/resume"
-                className="text-primary link-underline-grow whitespace-nowrap uppercase text-sm tracking-[0.06em]"
+                className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
               >
                 Download resume
               </a>
             </p>
           </div>
 
-          <ul className="space-y-2">
+          <ul className="flex flex-wrap gap-x-[var(--space-md)] gap-y-2 m-0 p-0 list-none">
             {socialLinks.map((social) => (
               <li key={social.label}>
                 <a
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.04em]"
+                  rel="noopener noreferrer me"
+                  className="text-xs text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.18em]"
                 >
                   {social.label}
                 </a>
@@ -121,13 +122,16 @@ export function Contact() {
         </div>
 
         <div className="min-w-0">
-          <div className="border border-border bg-card p-6 md:p-8">
+          <div className="border border-border bg-card p-[var(--space-md)] md:p-[var(--space-lg)]">
             {isSuccess ? (
-              <p className="text-lg text-primary font-medium py-8 text-center">
+              <p className="text-base text-primary font-medium py-[var(--space-lg)] text-center">
                 Message sent. I'll reply within a day or two.
               </p>
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-[var(--space-md)]"
+              >
                 <div>
                   <label
                     htmlFor="contact-name"

@@ -35,6 +35,7 @@ export function generatePersonSchema() {
     jobTitle: getJobTitle(),
     description: siteConfig.seo.metaDescription,
     url: baseUrl,
+    mainEntityOfPage: `${baseUrl}/about`,
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,

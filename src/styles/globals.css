@@ -258,6 +258,14 @@
     max-width: var(--measure);
   }
 
+  .content-rail {
+    width: 100%;
+    max-width: var(--content-rail);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+    min-width: 0;
+  }
+
   .accent-line {
     display: block;
     width: min(100%, var(--measure));
@@ -267,16 +275,16 @@
     margin-block: var(--space-md);
   }
 
-  .split-studio {
-    display: grid;
-    gap: var(--space-xl);
-    align-items: start;
+  .portrait-frame {
+    background: var(--color-paper-2);
+    border: var(--rule-hairline);
+    padding: var(--space-2xs);
   }
 
-  @media (min-width: 768px) {
-    .split-studio {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    }
+  .portrait-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .mast-line {
@@ -313,16 +321,18 @@
   }
 
   .text-fold {
-    padding: var(--space-2xl) var(--page-gutter);
-    max-width: calc(var(--measure) + 2 * var(--page-gutter));
+    padding: var(--space-xl) var(--page-gutter);
+    max-width: var(--content-rail);
     margin-inline: auto;
+    min-width: 0;
   }
 
   .text-band {
-    padding-block: var(--space-2xl);
+    padding-block: var(--space-xl);
     padding-inline: var(--page-gutter);
-    max-width: calc(var(--measure) + 2 * var(--page-gutter));
+    max-width: var(--content-rail);
     margin-inline: auto;
+    min-width: 0;
   }
 
   .btn-primary {

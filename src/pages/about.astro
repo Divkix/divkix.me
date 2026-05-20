@@ -11,14 +11,15 @@ const aboutUrl = `${baseUrl}/about`;
 
 const aboutPageSchema = {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
+  "@type": "ProfilePage",
   "@id": aboutUrl,
-  mainEntity: {
-    "@id": `${baseUrl}/#author`,
-  },
+  mainEntity: { "@id": `${baseUrl}/#author` },
+  about: { "@id": `${baseUrl}/#author` },
   name: `About ${siteConfig.name}`,
   description: siteConfig.seo.metaDescription,
   url: aboutUrl,
+  dateModified: "2026-05-20",
+  inLanguage: "en-US",
 };
 
 const breadcrumbSchema = generateBreadcrumbSchema([
@@ -30,7 +31,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 ---
 
 <SiteLayout
-  title={`About ${siteConfig.name} — Software Engineer & Builder`}
+  title={`About Divanshu Chauhan — Cloudflare engineer, Vinext contributor`}
   description={siteConfig.seo.metaDescription}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
@@ -38,57 +39,82 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutFaqSchema)} />
 
   <article class="min-w-0">
-    <section class="text-band pt-[var(--space-2xl)] pb-[var(--space-2xl)]" aria-labelledby="about-heading">
+    <section class="text-band" aria-labelledby="about-heading">
       <p class="mast-line mb-[var(--space-sm)]">About</p>
 
       <div
-        class="grid gap-[var(--space-xl)] md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start"
+        class="grid gap-[var(--space-xl)] md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start min-w-0"
       >
-        <div class="min-w-0 space-y-[var(--space-lg)]">
-          <header class="space-y-[var(--space-md)]">
-            <h1
-              id="about-heading"
-              class="font-display text-[length:var(--text-display-s)] leading-[1.05] text-foreground min-w-0 overflow-wrap-anywhere"
+        <header class="min-w-0 space-y-[var(--space-md)]">
+          <h1
+            id="about-heading"
+            class="font-display text-[length:var(--text-display-s)] leading-[1.05] text-foreground min-w-0 overflow-wrap-anywhere m-0"
+          >
+            {siteConfig.name}
+          </h1>
+          <p class="prose-measure text-[length:var(--text-md)] md:text-lg text-foreground/85 leading-relaxed">
+            {siteConfig.tagline}
+          </p>
+          <p class="text-xs text-muted-foreground uppercase tracking-[0.18em]">
+            {siteConfig.location} ·
+            <a
+              href={`mailto:${siteConfig.email}`}
+              class="link-underline-grow"
+              rel="me author"
             >
-              About me
-            </h1>
-            <p class="text-lg md:text-xl text-muted-foreground leading-relaxed prose-measure">
-              {siteConfig.tagline}
-            </p>
-            <div class="accent-line !mt-[var(--space-md)] !mb-0" aria-hidden="true"></div>
-          </header>
-
-          <p class="prose-measure text-[length:var(--text-md)] leading-relaxed text-foreground">
-            {siteConfig.about}
+              {siteConfig.email}
+            </a>
           </p>
-
-          <p class="prose-measure text-base leading-relaxed text-foreground/90">
-            Recent work includes <a href="https://github.com/cloudflare/vinext" class="text-primary link-underline-grow">Vinext</a> at Cloudflare (Next.js on Vite for Workers), <a href="https://github.com/Divkix/Logwell" class="text-primary link-underline-grow">LogWell</a> for self-hosted logging, <a href="https://pickmyclass.app" class="text-primary link-underline-grow">PickMyClass</a> for ASU course tracking, <a href="https://clickfolio.me" class="text-primary link-underline-grow">Clickfolio</a> for AI portfolios on Workers, and <a href="https://github.com/Divkix/Alita_Robot" class="text-primary link-underline-grow">Alita Robot</a> for Telegram communities ({siteConfig.facts.impact} users).
-          </p>
-
-          <p class="prose-measure text-base leading-relaxed text-foreground/90">
-            I mostly work in TypeScript, Go, and Python. Cloudflare Workers, PostgreSQL, Docker, edge-native architectures. I like clean APIs, boring reliability, and software people actually use.
-          </p>
-        </div>
+        </header>
 
         <figure
-          class="m-0 md:sticky md:top-[calc(4.5rem+var(--space-md))] border border-border bg-card p-2 w-full max-w-[min(100%,18rem)] md:max-w-none justify-self-center md:justify-self-auto"
+          class="portrait-frame m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-center md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
         >
           <img
             src={siteConfig.authorImage}
-            alt={`Portrait of ${siteConfig.name}`}
-            class="w-full aspect-[4/5] object-cover object-[center_20%]"
+            alt={`Portrait of ${siteConfig.name}, software engineer in Tempe, Arizona`}
+            class="w-full aspect-[4/5] object-cover object-[center_22%]"
             loading="eager"
+            decoding="async"
             width="480"
             height="600"
           />
+          <figcaption class="text-[10px] tracking-[0.18em] uppercase text-muted-foreground pt-[var(--space-xs)] text-center">
+            {siteConfig.location}
+          </figcaption>
         </figure>
       </div>
+
+      <div class="accent-line !mt-[var(--space-xl)] !mb-0" aria-hidden="true"></div>
     </section>
 
-    <section class="text-band space-y-[var(--space-xl)] pb-[var(--space-2xl)]">
-      <div class="space-y-[var(--space-md)]">
-        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground">
+    <section class="text-band !pt-[var(--space-md)] space-y-[var(--space-md)]">
+      <p class="prose-measure text-base leading-relaxed text-foreground">
+        {siteConfig.about}
+      </p>
+
+      <p class="prose-measure text-base leading-relaxed text-foreground">
+        Recent work:
+        <a href="https://github.com/cloudflare/vinext" class="text-primary link-underline-grow" rel="noopener">Vinext</a>
+        at Cloudflare (running Next.js on Vite for Workers),
+        <a href="https://github.com/Divkix/Logwell" class="text-primary link-underline-grow" rel="noopener">LogWell</a>
+        for self-hosted logging,
+        <a href="https://pickmyclass.app" class="text-primary link-underline-grow" rel="noopener">PickMyClass</a>
+        for ASU course alerts,
+        <a href="https://clickfolio.me" class="text-primary link-underline-grow" rel="noopener">Clickfolio</a>
+        for AI portfolios on Workers, and
+        <a href="https://github.com/Divkix/Alita_Robot" class="text-primary link-underline-grow" rel="noopener">Alita Robot</a>
+        for Telegram communities ({siteConfig.facts.impact} users).
+      </p>
+
+      <p class="prose-measure text-base leading-relaxed text-foreground">
+        Day-to-day I work in TypeScript, Go, and Python. Mostly Cloudflare Workers, PostgreSQL, Docker, and edge-native architectures. I like clean APIs, boring reliability, and software people open more than once.
+      </p>
+    </section>
+
+    <section class="text-band !pt-[var(--space-md)] space-y-[var(--space-lg)]">
+      <div class="space-y-[var(--space-xs)]">
+        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
           Outside of code
         </h2>
         <p class="prose-measure text-base leading-relaxed text-muted-foreground">
@@ -96,31 +122,26 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
         </p>
       </div>
 
-      <div class="space-y-[var(--space-md)]">
-        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground">
+      <div class="space-y-[var(--space-xs)]">
+        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
           Open to work
         </h2>
-        <p class="prose-measure text-base leading-relaxed text-foreground/90">
-          Full-time software engineering roles (backend, infrastructure, developer tools, AI tooling) starting May/June 2026. Open to relocation and remote.
+        <p class="prose-measure text-base leading-relaxed text-foreground">
+          Full-time software engineering roles starting May 2026: backend, infrastructure, developer tools, AI tooling. Open to relocation. Remote-friendly.
         </p>
       </div>
 
-      <p class="prose-measure text-sm leading-relaxed text-muted-foreground">
-        {siteConfig.location} · <a href={`mailto:${siteConfig.email}`} class="text-primary link-underline-grow">{siteConfig.email}</a>
-      </p>
-
-      <SocialIcons size="sm" />
+      <div class="pt-[var(--space-xs)]">
+        <SocialIcons size="sm" />
+      </div>
     </section>
 
-    <div class="text-band">
-      <hr class="hairline-rule mb-[var(--space-2xl)]" />
-    </div>
-
-    <div class="text-band pb-[var(--space-2xl)]">
+    <div class="text-band !pt-[var(--space-md)]">
+      <hr class="hairline-rule mb-[var(--space-xl)]" />
       <ExperienceBentoStatic />
     </div>
 
-    <div class="text-band pb-[var(--space-3xl)]">
+    <div class="text-band !pt-[var(--space-md)] pb-[var(--space-3xl)]">
       <Skills client:visible />
     </div>
   </article>

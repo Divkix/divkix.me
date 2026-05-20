@@ -37,7 +37,7 @@ export function Skills() {
     <section id="skills" className="min-w-0 space-y-10 not-prose">
       <SectionHeading
         title="Tools I reach for"
-        description="Technologies I use regularly — grouped by what they're for, not ranked by arbitrary scores."
+        description="Technologies I use regularly, grouped by what they're for. Not ranked by arbitrary scores."
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-0">

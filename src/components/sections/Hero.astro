@@ -1,50 +1,51 @@
 ---
 import SocialIcons from "@/components/shared/SocialIcons.astro";
 import { siteConfig } from "@/data/site.config";
-
-const currentYear = new Date().getFullYear();
 ---
 
-<section id="hero" class="photo-fold">
-  <figure class="m-0">
-    <img
-      src={siteConfig.authorImage}
-      alt={`Portrait of ${siteConfig.name}`}
-      width="1200"
-      height="800"
-      loading="eager"
-    />
-    <figcaption class="photo-caption">
-      {siteConfig.location} · {currentYear}
-    </figcaption>
-  </figure>
-</section>
+<section id="hero" class="text-band" aria-labelledby="hero-heading">
+  <div class="grid gap-[var(--space-xl)] md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start min-w-0">
+    <div class="min-w-0 space-y-[var(--space-md)]">
+      <p class="mast-line">Software engineer · Cloudflare · ASU</p>
 
-<section class="text-fold space-y-6 min-w-0" aria-labelledby="hero-heading">
-  <p class="mast-line">Software engineer · builder</p>
+      <h1
+        id="hero-heading"
+        class="font-display text-[length:var(--text-display)] leading-[1.02] text-foreground min-w-0 overflow-wrap-anywhere m-0"
+      >
+        {siteConfig.name}
+        <span class="sr-only"> — Software Engineer and Builder</span>
+      </h1>
 
-  <h1
-    id="hero-heading"
-    class="font-display text-[length:var(--text-display)] leading-[1.0] text-foreground min-w-0 overflow-wrap-anywhere"
-  >
-    {siteConfig.name}
-    <span class="sr-only"> — Software Engineer and Builder</span>
-  </h1>
+      <p class="prose-measure text-[length:var(--text-md)] md:text-lg text-foreground/85 leading-relaxed">
+        {siteConfig.heroSummary}
+      </p>
 
-  <p class="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-prose">
-    {siteConfig.heroSummary}
-  </p>
+      <div class="flex flex-wrap gap-3 pt-[var(--space-xs)]">
+        <a href="/#projects" class="btn-primary">
+          See selected work
+        </a>
+        <a href="/blog" class="btn-secondary">
+          Read recent writing
+        </a>
+      </div>
 
-  <div class="flex flex-wrap gap-3 pt-2">
-    <a href="#projects" class="btn-primary">
-      See selected work
-    </a>
-    <a href="/blog" class="btn-secondary">
-      Read recent writing
-    </a>
-  </div>
+      <div class="pt-[var(--space-2xs)]">
+        <SocialIcons size="sm" />
+      </div>
+    </div>
 
-  <div class="pt-4">
-    <SocialIcons size="sm" />
+    <figure
+      class="portrait-frame m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-center md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
+    >
+      <img
+        src={siteConfig.authorImage}
+        alt={`Portrait of ${siteConfig.name}, software engineer in Tempe, Arizona`}
+        class="w-full aspect-[4/5] object-cover object-[center_22%]"
+        width="480"
+        height="600"
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
   </div>
 </section>
