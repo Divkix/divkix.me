@@ -18,7 +18,8 @@
   --color-focus: oklch(0.44 0.09 265);
 
   --font-display:
-    "Playfair Display", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    "Playfair Display", "Cormorant Garamond", "Georgia", "Times New Roman",
+    serif;
   --font-body: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 

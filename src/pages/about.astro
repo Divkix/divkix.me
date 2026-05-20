@@ -85,10 +85,10 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
         </figure>
       </div>
 
-      <div class="accent-line !mt-[var(--space-xl)] !mb-0" aria-hidden="true"></div>
+      <div class="accent-line mt-[var(--space-xl)]! mb-0!" aria-hidden="true"></div>
     </section>
 
-    <section class="text-band !pt-[var(--space-md)] space-y-[var(--space-md)]">
+    <section class="text-band pt-[var(--space-md)]! space-y-[var(--space-md)]">
       <p class="prose-measure text-base leading-relaxed text-foreground">
         {siteConfig.about}
       </p>
@@ -112,7 +112,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
       </p>
     </section>
 
-    <section class="text-band !pt-[var(--space-md)] space-y-[var(--space-lg)]">
+    <section class="text-band pt-[var(--space-md)]! space-y-[var(--space-lg)]">
       <div class="space-y-[var(--space-xs)]">
         <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
           Outside of code
@@ -136,12 +136,12 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
       </div>
     </section>
 
-    <div class="text-band !pt-[var(--space-md)]">
+    <div class="text-band pt-[var(--space-md)]!">
       <hr class="hairline-rule mb-[var(--space-xl)]" />
       <ExperienceBentoStatic />
     </div>
 
-    <div class="text-band !pt-[var(--space-md)] pb-[var(--space-3xl)]">
+    <div class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
       <Skills client:visible />
     </div>
   </article>
