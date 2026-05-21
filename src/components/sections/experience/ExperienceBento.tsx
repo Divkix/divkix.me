@@ -133,9 +133,9 @@ export function ExperienceBento() {
 
           <div className="split-studio-proof min-w-0">
             <p className="text-muted-foreground leading-relaxed">
-              MS (GPA 3.889) and BS in Computer Science from Arizona State
-              University. I've also spent years teaching programming, which
-              taught me as much about explaining ideas as writing code.
+              MS (GPA 3.889) and BS (GPA 3.78) in Computer Science from Arizona
+              State University. I've also spent years teaching programming,
+              which taught me as much about explaining ideas as writing code.
             </p>
           </div>
         </div>

@@ -77,7 +77,7 @@ export function generatePersonSchema() {
         ...(() => {
           if ("honors" in edu && edu.honors) {
             const match = edu.honors.match(/\bGPA[:\s]+(.+)/i);
-            if (match && match[1]) {
+            if (match?.[1]) {
               return { grade: match[1].trim() };
             }
           }

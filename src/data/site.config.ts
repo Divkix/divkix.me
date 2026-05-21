@@ -249,7 +249,7 @@ export const siteConfig = {
     {
       title: "BS, Computer Science — Arizona State University",
       year: "Jan 2022 – May 2025",
-      honors: "Magna Cum Laude",
+      honors: "Magna Cum Laude, GPA 3.78",
     },
   ],
 
