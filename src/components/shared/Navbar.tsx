@@ -8,12 +8,11 @@ const primaryNavItems = [
   { label: "Work", href: "/#projects" },
   { label: "Writing", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Resume", href: "/resume" },
   { label: "Contact", href: "/#contact" },
 ];
 
-const secondaryNavItems = [{ label: "Resume", href: "/resume" }];
-
-const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+const allNavItems = [...primaryNavItems];
 
 const mastLine = `${siteConfig.handle} · Portfolio · ${new Date().getFullYear()}`;
 
