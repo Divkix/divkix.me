@@ -178,7 +178,7 @@ export const siteConfig = {
       ],
     },
     {
-      company: "UC Berkeley (The Purpose Academy)",
+      company: "The Purpose Academy (in partnership with SCET, UC Berkeley)",
       location: "Berkeley, California, USA (Remote)",
       duration: "Jan 2021 – May 2021",
       positions: [
