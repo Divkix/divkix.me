@@ -1,0 +1,123 @@
+---
+import ExperienceBentoStatic from "@/components/sections/experience/ExperienceBentoStatic.astro";
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { baseUrl } from "@/lib/seo";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteConfig.name,
+  jobTitle: siteConfig.seo.jobTitle,
+  url: baseUrl,
+  sameAs: siteConfig.socials
+    .filter((s: { label: string }) => s.label !== "Email")
+    .map((s: { href: string }) => s.href),
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Arizona State University",
+    },
+  ],
+};
+---
+
+<SiteLayout
+  title={`Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`}
+  description={`Resume of ${siteConfig.name} — ${siteConfig.tagline}`}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+  <article class="min-w-0">
+    <section class="text-band" aria-labelledby="resume-heading">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-[var(--space-sm)]">
+        <p class="mast-line">Resume</p>
+        <a
+          href="/Divanshu_Chauhan_Resume.pdf"
+          class="text-sm text-primary link-underline-grow uppercase tracking-[0.06em]"
+          target="_blank"
+          rel="noopener"
+        >
+          Download PDF
+        </a>
+      </div>
+
+      <h1
+        id="resume-heading"
+        class="font-display text-[length:var(--text-display-s)] leading-[1.05] tracking-[var(--tracking-display)] text-foreground m-0"
+      >
+        {siteConfig.name}
+      </h1>
+
+      <p class="prose-measure text-[length:var(--text-md)] md:text-lg text-foreground/85 leading-relaxed mt-[var(--space-md)]">
+        {siteConfig.tagline}
+      </p>
+
+      <div class="accent-line mt-[var(--space-xl)]! mb-0!" aria-hidden="true"></div>
+    </section>
+
+    <section class="text-band pt-[var(--space-md)]! space-y-[var(--space-md)]">
+      <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+        Summary
+      </h2>
+      <p class="prose-measure text-base leading-relaxed text-foreground">
+        {siteConfig.about}
+      </p>
+    </section>
+
+    <div class="text-band pt-[var(--space-md)]!">
+      <hr class="hairline-rule mb-[var(--space-xl)]" />
+      <ExperienceBentoStatic />
+    </div>
+
+    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
+      <div class="space-y-[var(--space-xs)]">
+        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+          Skills
+        </h2>
+        <ul class="flex flex-wrap gap-2 list-none m-0 p-0">
+          {siteConfig.skills.map((skill) => (
+            <li class="text-sm bg-muted px-3 py-1.5 rounded-sm text-foreground/85">
+              {skill.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
+      <div class="space-y-[var(--space-xs)]">
+        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">Projects</h2>
+        <ul class="space-y-[var(--space-md)] list-none m-0 p-0">
+          {siteConfig.projects.map((project) => (
+            <li>
+              <p class="font-display text-lg font-medium">{project.name}</p>
+              <p class="text-xs text-muted-foreground">
+                {project.links.map((link) => link.label).join(" · ")}
+              </p>
+              <p class="text-sm text-foreground/75 leading-relaxed mt-1">{project.desc}</p>
+              <p class="text-xs text-muted-foreground">{project.tags.join(" · ")}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
+      <div class="space-y-[var(--space-xs)]">
+        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+          Links
+        </h2>
+        <ul class="flex flex-wrap gap-x-4 gap-y-2 list-none m-0 p-0">
+          {siteConfig.socials.map((social) => (
+            <li>
+              <a href={social.href} class="text-sm text-primary link-underline-grow" rel="noopener noreferrer">
+                {social.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </article>
+</SiteLayout>

@@ -56,9 +56,14 @@ function ExperienceEntry({
       <div className="split-studio">
         <div className="split-studio-content min-w-0 space-y-2">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3 className="font-display text-xl md:text-2xl font-medium">
+            <a
+              href={company.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-display text-xl md:text-2xl font-medium text-foreground hover:text-primary transition-colors link-underline-grow"
+            >
               {company.company}
-            </h3>
+            </a>
             {isCurrentRole && (
               <span className="text-xs uppercase tracking-wide text-primary">
                 Current

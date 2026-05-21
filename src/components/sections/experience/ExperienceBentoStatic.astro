@@ -45,7 +45,14 @@ type Education = (typeof siteConfig.education)[number];
           <div class="split-studio">
             <div class="split-studio-content min-w-0 space-y-2">
               <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 class="font-display text-xl md:text-2xl font-medium">{company.company}</h3>
+                <a
+                  href={company.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-display text-xl md:text-2xl font-medium text-foreground hover:text-primary transition-colors link-underline-grow"
+                >
+                  {company.company}
+                </a>
                 {isCurrentRole && (
                   <span class="text-xs uppercase tracking-wide text-primary">Current</span>
                 )}

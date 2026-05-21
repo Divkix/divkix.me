@@ -92,6 +92,7 @@ export const siteConfig = {
   experience: [
     {
       company: "Cloudflare",
+      url: "https://www.cloudflare.com",
       location: "Austin, Texas / Remote",
       duration: "May 2026 – Present",
       positions: [
@@ -107,6 +108,7 @@ export const siteConfig = {
     },
     {
       company: "Arizona State University",
+      url: "https://www.asu.edu",
       location: "Tempe, Arizona, USA",
       duration: "Aug 2023 – May 2026",
       positions: [
@@ -148,6 +150,7 @@ export const siteConfig = {
     },
     {
       company: "The Software Developers Association at ASU",
+      url: "https://thesoda.io",
       location: "Tempe, Arizona, USA",
       duration: "Apr 2024 – May 2025",
       positions: [
@@ -163,6 +166,7 @@ export const siteConfig = {
     },
     {
       company: "Xrossways INC.",
+      url: "https://xrossways.com",
       location: "Gurugram, Haryana, India",
       duration: "May 2022 – Aug 2022",
       positions: [
@@ -179,6 +183,7 @@ export const siteConfig = {
     },
     {
       company: "The Purpose Academy (in partnership with SCET, UC Berkeley)",
+      url: "https://thepurposeacademy.asia",
       location: "Berkeley, California, USA (Remote)",
       duration: "Jan 2021 – May 2021",
       positions: [
@@ -194,6 +199,7 @@ export const siteConfig = {
     },
     {
       company: "IBM",
+      url: "https://www.ibm.com",
       location: "Bengaluru, Karnataka, India (Remote)",
       duration: "Dec 2020",
       positions: [
@@ -209,6 +215,7 @@ export const siteConfig = {
     },
     {
       company: "Haryana Police",
+      url: "https://haryanapolice.gov.in",
       location: "Gurugram, Haryana, India",
       duration: "Jun 2020 – Jul 2020",
       positions: [
@@ -224,6 +231,7 @@ export const siteConfig = {
     },
     {
       company: "CBSE x IBM",
+      url: "https://cbseacademic.nic.in",
       location: "Gurugram, Haryana, India",
       duration: "Sep 2019 – Jul 2020",
       positions: [
