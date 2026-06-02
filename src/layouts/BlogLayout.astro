@@ -13,6 +13,8 @@ interface Props {
   readingTime?: number; // in minutes
   ogType?: "website" | "article";
   articleMeta?: ArticleMeta;
+  dateModified?: string;
+  ogImageAlt?: string;
 }
 
 const {
@@ -23,6 +25,8 @@ const {
   readingTime = 5,
   ogType,
   articleMeta,
+  dateModified,
+  ogImageAlt,
 } = Astro.props;
 
 const canonical = `${baseUrl}${Astro.url.pathname}`;
@@ -35,6 +39,8 @@ const baseLayoutProps = {
   canonical,
   ...(ogType ? { ogType } : {}),
   ...(articleMeta ? { articleMeta } : {}),
+  ...(dateModified ? { dateModified } : {}),
+  ...(ogImageAlt ? { ogImageAlt } : {}),
 };
 ---
 

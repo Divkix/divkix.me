@@ -4,23 +4,25 @@ import { Skills } from "@/components/sections/skills";
 import SocialIcons from "@/components/shared/SocialIcons.astro";
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema, generateFAQPageSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateFAQPageSchema,
+  generateProfilePageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 const aboutUrl = `${baseUrl}/about`;
 
-const aboutPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": aboutUrl,
-  mainEntity: { "@id": `${baseUrl}/#author` },
-  about: { "@id": `${baseUrl}/#author` },
-  name: `About ${siteConfig.name}`,
-  description: siteConfig.seo.metaDescription,
-  url: aboutUrl,
-  dateModified: "2026-05-20",
-  inLanguage: "en-US",
-};
+const aboutPageSchema = generateProfilePageSchema(
+  `About ${siteConfig.name}`,
+  siteConfig.seo.metaDescription,
+  aboutUrl,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "About",
+  },
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },

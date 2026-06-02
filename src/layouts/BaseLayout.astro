@@ -19,6 +19,8 @@ interface Props {
   canonical?: string;
   ogType?: "website" | "article";
   articleMeta?: ArticleMeta;
+  dateModified?: string;
+  ogImageAlt?: string;
 }
 
 const {
@@ -28,6 +30,8 @@ const {
   canonical = `${baseUrl}${Astro.url.pathname}`,
   ogType = "website",
   articleMeta,
+  dateModified,
+  ogImageAlt = `${siteConfig.name} — Software Engineer & Blogger`,
 } = Astro.props;
 
 const personSchema = generatePersonSchema();
@@ -59,7 +63,7 @@ const websiteSchema = generateWebSiteSchema();
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:site_name" content={siteConfig.name} />
     {articleMeta && (
       <>
@@ -68,17 +72,21 @@ const websiteSchema = generateWebSiteSchema();
         <meta property="article:author" content={articleMeta.author} />
         {articleMeta.articleSection && <meta property="article:section" content={articleMeta.articleSection} />}
         {articleMeta.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+        {articleMeta.tags && <meta name="keywords" content={articleMeta.tags.join(", ")} />}
       </>
     )}
+    {dateModified && <meta property="article:modified_time" content={dateModified} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonical} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={title} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <meta name="twitter:creator" content="@divkix" />
     <meta name="twitter:site" content="@divkix" />
+
+    <meta name="content-signal" content="ai-train=no, search=yes, ai-input=yes" />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -163,5 +171,47 @@ const websiteSchema = generateWebSiteSchema();
     <slot />
 
     <Toaster client:idle />
+
+    <button
+      type="button"
+      id="scroll-to-top"
+      class="scroll-to-top fixed bottom-4 right-4 z-50 p-3 bg-primary text-primary-foreground rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300"
+      aria-label="Scroll to top"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m18 15-6-6-6 6" />
+      </svg>
+    </button>
+
+    <script is:inline>
+      (function () {
+        const btn = document.getElementById("scroll-to-top");
+        if (!btn) return;
+
+        function onScroll() {
+          const show = window.scrollY > 500;
+          btn.classList.toggle("opacity-0", !show);
+          btn.classList.toggle("pointer-events-none", !show);
+        }
+
+        btn.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
   </body>
 </html>

@@ -69,3 +69,13 @@
 # Cache blog posts (1 day, revalidate)
 /blog/*
   Cache-Control: public, max-age=86400, must-revalidate
+
+# llms.txt files - noindex
+/llms.txt
+  X-Robots-Tag: noindex
+
+/llms-full.txt
+  X-Robots-Tag: noindex
+
+/llms-small.txt
+  X-Robots-Tag: noindex

@@ -5,6 +5,16 @@ export function getJobTitle(): string {
   return siteConfig.seo.jobTitle;
 }
 
+const ISO_8601_DURATION_RE =
+  /^P(?:\d+Y)?(?:\d+M)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/;
+
+export function validateDuration(duration: string): string {
+  if (!ISO_8601_DURATION_RE.test(duration)) {
+    console.warn(`Invalid ISO 8601 duration: ${duration}`);
+  }
+  return duration;
+}
+
 type BreadcrumbItem = { name: string; item?: string };
 
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
@@ -36,6 +46,7 @@ export function generatePersonSchema() {
     description: siteConfig.seo.metaDescription,
     url: baseUrl,
     mainEntityOfPage: `${baseUrl}/about`,
+    disambiguatingDescription: `Software Engineer and blogger based in ${siteConfig.address.locality}, ${siteConfig.address.region}`,
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
@@ -129,6 +140,78 @@ export function generateWebSiteSchema() {
       "@id": `${baseUrl}/#author`,
     },
     inLanguage: "en-US",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/**
+ * Generate CollectionPage schema for index pages
+ */
+export function generateCollectionPageSchema(
+  name: string,
+  description: string,
+  url: string,
+  options?: {
+    dateModified?: string;
+    datePublished?: string;
+    articleSection?: string;
+    mainEntity?: Record<string, unknown>;
+  },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": url,
+    name,
+    description,
+    url,
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    mainEntity: options?.mainEntity ?? { "@id": `${baseUrl}/#author` },
+    inLanguage: "en-US",
+    ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
+    ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
+  };
+}
+
+/**
+ * Generate ProfilePage schema for profile pages
+ */
+export function generateProfilePageSchema(
+  name: string,
+  description: string,
+  url: string,
+  options?: {
+    dateModified?: string;
+    datePublished?: string;
+    articleSection?: string;
+  },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": url,
+    name,
+    description,
+    url,
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    mainEntity: { "@id": `${baseUrl}/#author` },
+    about: { "@id": `${baseUrl}/#author` },
+    inLanguage: "en-US",
+    ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
+    ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
   };
 }
 

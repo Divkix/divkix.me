@@ -1,20 +1,22 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema, getJobTitle } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateProfilePageSchema,
+  getJobTitle,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
-const profilePageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": `${baseUrl}/divkix`,
-  mainEntity: {
-    "@id": `${baseUrl}/#author`,
+const profilePageSchema = generateProfilePageSchema(
+  `${siteConfig.handle} - ${siteConfig.name}`,
+  `${siteConfig.handle.toLowerCase()} is the online handle of ${siteConfig.name}`,
+  `${baseUrl}/divkix`,
+  {
+    dateModified: "2026-05-20",
+    articleSection: "Profile",
   },
-  name: `${siteConfig.handle} - ${siteConfig.name}`,
-  description: `${siteConfig.handle.toLowerCase()} is the online handle of ${siteConfig.name}`,
-  url: `${baseUrl}/divkix`,
-};
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },

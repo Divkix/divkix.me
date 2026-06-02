@@ -1,7 +1,11 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema, getJobTitle } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateCollectionPageSchema,
+  getJobTitle,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 // Map social labels to their descriptive action text for SEO
@@ -18,17 +22,15 @@ const socialActions: Record<string, string> = {
 const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 const emailSocial = siteConfig.socials.find((s) => s.label === "Email");
 
-const collectionPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": `${baseUrl}/socials`,
-  mainEntity: { "@id": `${baseUrl}/#author` },
-  name: `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
-  description: "Official social media profiles and contact information",
-  url: `${baseUrl}/socials`,
-  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
-  inLanguage: "en-US",
-};
+const collectionPageSchema = generateCollectionPageSchema(
+  `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
+  "Official social media profiles and contact information",
+  `${baseUrl}/socials`,
+  {
+    dateModified: "2026-05-20",
+    articleSection: "Connect",
+  },
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },

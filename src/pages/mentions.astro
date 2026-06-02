@@ -1,20 +1,21 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateProfilePageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
-const mentionsPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": `${baseUrl}/mentions`,
-  mainEntity: {
-    "@id": `${baseUrl}/#author`,
+const mentionsPageSchema = generateProfilePageSchema(
+  `Mentions & Press — ${siteConfig.name}`,
+  `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
+  `${baseUrl}/mentions`,
+  {
+    dateModified: "2026-05-20",
+    articleSection: "Mentions",
   },
-  name: `Mentions & Press — ${siteConfig.name}`,
-  description: `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
-  url: `${baseUrl}/mentions`,
-};
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },

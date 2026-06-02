@@ -11,6 +11,7 @@ import {
   generateReviewedBySchema,
   generateSpeakableSchema,
   getJobTitle,
+  validateDuration,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
@@ -78,6 +79,7 @@ const blogPostingSchema = {
     "@type": "WebPage",
     "@id": `${baseUrl}/blog/${post.id}`,
   },
+  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
   image: `${baseUrl}/og/blog/${post.id}.png`,
   keywords: post.data.tags.join(", "),
   articleSection: post.data.tags[0] ?? "Technology",
@@ -135,7 +137,7 @@ const howToSchema =
         post.data.title,
         post.data.excerpt,
         post.data.howToSteps,
-        `PT${readingTimeMinutes}M`,
+        validateDuration(`PT${readingTimeMinutes}M`),
       )
     : null;
 ---
@@ -168,14 +170,19 @@ const howToSchema =
     <>
       {/* Mobile TOC Toggle */}
       <div class="xl:hidden container mx-auto px-4 pt-4">
-        <details class="surface-raised rounded-lg border border-border/40">
-          <summary class="p-4 cursor-pointer font-semibold flex items-center justify-between">
+        <details id="toc-details" class="surface-raised rounded-lg border border-border/40">
+          <summary
+            id="toc-summary"
+            class="p-4 cursor-pointer font-semibold flex items-center justify-between"
+            aria-expanded="false"
+            aria-controls="toc-nav"
+          >
             <span>Table of Contents</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform" aria-hidden="true">
               <path d="m6 9 6 6 6-6"/>
             </svg>
           </summary>
-          <nav class="p-4 pt-0 space-y-2 text-sm">
+          <nav id="toc-nav" class="p-4 pt-0 space-y-2 text-sm">
             <ul class="space-y-2">
               {toc.map((item: { id: string; text: string; level: number }) => (
                 <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
@@ -246,13 +253,13 @@ const howToSchema =
           <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
             {readingTime}
           </span>
-          <time datetime={post.data.date}>
+          <time datetime={`${post.data.date}T00:00:00Z`}>
             Published {formatDate(post.data.date)}
           </time>
           {post.data.dateModified && (
             <>
               <span class="text-primary" aria-hidden="true">•</span>
-              <time datetime={post.data.dateModified} class="text-primary font-medium">
+              <time datetime={`${post.data.dateModified}T00:00:00Z`} class="text-primary font-medium">
                 Updated {formatDate(post.data.dateModified)}
               </time>
             </>
@@ -414,4 +421,16 @@ const howToSchema =
       </div>
     </div>
   </article>
+
+  <script is:inline>
+    (function () {
+      const details = document.getElementById("toc-details");
+      const summary = document.getElementById("toc-summary");
+      if (!details || !summary) return;
+      details.addEventListener("toggle", function () {
+        summary.setAttribute("aria-expanded", String(details.open));
+      });
+      summary.setAttribute("aria-expanded", String(details.open));
+    })();
+  </script>
 </BlogLayout>

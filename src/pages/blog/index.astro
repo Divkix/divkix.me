@@ -2,7 +2,11 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { generateBreadcrumbSchema, generateFAQPageSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateCollectionPageSchema,
+  generateFAQPageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
@@ -30,27 +34,27 @@ const postsWithReadingTime: PostWithReadingTime[] = posts.map(
 
 const blogUrl = `${baseUrl}/blog`;
 
-const collectionPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": blogUrl,
-  name: "Blog | Divanshu Chauhan — Software Engineering & Building in Public",
-  description:
-    "Technical blog on software engineering, AI tooling, Cloudflare Workers, developer tools, and building production systems.",
-  url: blogUrl,
-  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: posts.map(
-      (post: CollectionEntry<"blog">, index: number) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        url: `${baseUrl}/blog/${post.id}`,
-        name: post.data.title,
-      }),
-    ),
+const collectionPageSchema = generateCollectionPageSchema(
+  "Blog | Divanshu Chauhan — Software Engineering & Building in Public",
+  "Technical blog on software engineering, AI tooling, Cloudflare Workers, developer tools, and building production systems.",
+  blogUrl,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "Blog",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: posts.map(
+        (post: CollectionEntry<"blog">, index: number) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          url: `${baseUrl}/blog/${post.id}`,
+          name: post.data.title,
+        }),
+      ),
+    },
   },
-};
+);
 
 const blogBreadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -104,7 +108,7 @@ const blogFaqSchema = generateFAQPageSchema(
         posts.length === 0 ? (
           <p class="text-muted-foreground">No posts yet. Check back soon.</p>
         ) : (
-          <ol class="list-none m-0 p-0 space-y-0">
+          <ol class="list-none m-0 p-0 space-y-0" aria-live="polite">
             {postsWithReadingTime.map((item: PostWithReadingTime) => (
               <li class="border-t border-border py-[var(--space-md)] first:border-t-0 first:pt-0">
                 <article class="space-y-[var(--space-2xs)] min-w-0">

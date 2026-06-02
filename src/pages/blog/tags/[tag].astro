@@ -2,7 +2,10 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateCollectionPageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
 
@@ -54,26 +57,26 @@ const postsWithReadingTime: PostWithReadingTime[] = posts
     readingTime: `${calculateReadingTime(post.body)} min read`,
   }));
 
-const collectionPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": `${baseUrl}/blog/tags/${encodeURIComponent(tag)}`,
-  name: `Posts tagged "${tag}"`,
-  description: `Blog posts tagged with ${tag}.`,
-  url: `${baseUrl}/blog/tags/${encodeURIComponent(tag)}`,
-  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: posts.map(
-      (post: CollectionEntry<"blog">, index: number) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        url: `${baseUrl}/blog/${post.id}`,
-        name: post.data.title,
-      }),
-    ),
+const collectionPageSchema = generateCollectionPageSchema(
+  `Posts tagged "${tag}"`,
+  `Blog posts tagged with ${tag}.`,
+  `${baseUrl}/blog/tags/${encodeURIComponent(tag)}`,
+  {
+    dateModified: "2026-05-20",
+    articleSection: "Blog",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: posts.map(
+        (post: CollectionEntry<"blog">, index: number) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          url: `${baseUrl}/blog/${post.id}`,
+          name: post.data.title,
+        }),
+      ),
+    },
   },
-};
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },

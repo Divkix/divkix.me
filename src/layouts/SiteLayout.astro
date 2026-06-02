@@ -9,16 +9,25 @@ interface Props {
   title?: string;
   description?: string;
   showScrollProgress?: boolean;
+  dateModified?: string;
+  ogImageAlt?: string;
 }
 
 const {
   title = `${siteConfig.name} — Software engineer at Cloudflare, Vinext contributor`,
   description = siteConfig.seo.metaDescription,
   showScrollProgress = false,
+  dateModified,
+  ogImageAlt,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  {...(dateModified ? { dateModified } : {})}
+  {...(ogImageAlt ? { ogImageAlt } : {})}
+>
   <Navbar client:idle />
 
   {showScrollProgress && <ScrollProgress client:idle />}

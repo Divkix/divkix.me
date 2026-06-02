@@ -2,7 +2,18 @@
 import ExperienceBentoStatic from "@/components/sections/experience/ExperienceBentoStatic.astro";
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { generateProfilePageSchema } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const resumePageSchema = generateProfilePageSchema(
+  `Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`,
+  `Resume of ${siteConfig.name} — ${siteConfig.tagline}`,
+  `${baseUrl}/resume`,
+  {
+    dateModified: "2026-05-20",
+    articleSection: "Resume",
+  },
+);
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -26,6 +37,7 @@ const personSchema = {
   title={`Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`}
   description={`Resume of ${siteConfig.name} — ${siteConfig.tagline}`}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(resumePageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
   <article class="min-w-0">
