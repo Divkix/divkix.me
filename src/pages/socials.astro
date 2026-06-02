@@ -42,12 +42,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-2xl mx-auto space-y-12">
+  <div class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)]">
+    <div class="space-y-12">
       <!-- Header -->
       <div class="space-y-4 text-center">
         <h1 class="text-5xl font-display font-bold">Connect</h1>
-        <p class="text-xl text-foreground/70">
+        <p class="text-xl text-muted-foreground">
           Find {siteConfig.name} across the web
         </p>
       </div>
@@ -61,10 +61,10 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               href={social.href}
               target="_blank"
               rel="me noopener noreferrer"
-              class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-6 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <span class="text-xl font-bold text-primary">
                     {social.label.charAt(0)}
                   </span>
@@ -73,7 +73,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
                   <span class="text-lg font-semibold block">
                     {action} {siteConfig.name} on {social.label}
                   </span>
-                  <span class="text-sm text-foreground/60 block">
+                  <span class="text-sm text-muted-foreground block">
                     {social.href.replace(/^https?:\/\//, "").replace(/\/$/, "")}
                   </span>
                 </div>
@@ -88,7 +88,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="text-foreground/40 group-hover:text-primary transition-colors"
+                class="text-muted-foreground group-hover:text-primary transition-colors"
               >
                 <path d="M7 7h10v10" />
                 <path d="M7 17 17 7" />
@@ -100,17 +100,17 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         {emailSocial && (
           <a
             href={emailSocial.href}
-            class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-6 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <div class="w-12 h-12 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <span class="text-xl font-bold text-primary">@</span>
               </div>
               <div>
                 <span class="text-lg font-semibold block">
                   Email {siteConfig.name}
                 </span>
-                <span class="text-sm text-foreground/60 block">
+                <span class="text-sm text-muted-foreground block">
                   {siteConfig.email}
                 </span>
               </div>
@@ -125,7 +125,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="text-foreground/40 group-hover:text-primary transition-colors"
+              class="text-muted-foreground group-hover:text-primary transition-colors"
             >
               <rect width="20" height="16" x="2" y="4" rx="2" />
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -135,7 +135,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
       </nav>
 
       <!-- Additional context for SEO -->
-      <div class="text-center text-foreground/60 text-sm space-y-2">
+      <div class="text-center text-muted-foreground text-sm space-y-2">
         <p>
           {siteConfig.name} is a {getJobTitle()} based in {siteConfig.location}.
         </p>

@@ -53,7 +53,7 @@ export function Skills() {
               <ul className="flex flex-wrap gap-2">
                 {categorySkills.map((skill) => (
                   <li key={skill.name}>
-                    <span className="inline-block px-3 py-1 text-sm border border-border text-foreground/80 rounded-[var(--radius-input)] whitespace-nowrap">
+                    <span className="inline-block px-3 py-1 text-sm border border-border text-muted-foreground rounded-[var(--radius-input)] whitespace-nowrap">
                       {skill.name}
                     </span>
                   </li>

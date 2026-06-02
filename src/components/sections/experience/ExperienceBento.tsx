@@ -89,7 +89,7 @@ function ExperienceEntry({
                 {position.highlights.map((highlight: string) => (
                   <li
                     key={highlight}
-                    className="text-sm text-foreground/75 leading-relaxed pl-4 border-l border-border"
+                    className="text-sm text-muted-foreground leading-relaxed pl-4 border-l border-border"
                   >
                     {highlight}
                   </li>
@@ -105,10 +105,7 @@ function ExperienceEntry({
 
 export function ExperienceBento() {
   return (
-    <section
-      id="experience"
-      className="container mx-auto px-4 py-16 md:py-24 reveal-on-scroll max-w-6xl"
-    >
+    <section id="experience" className="text-band min-w-0">
       <div className="space-y-12">
         <SectionHeading
           title="Where I've worked"

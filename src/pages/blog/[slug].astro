@@ -167,8 +167,8 @@ const howToSchema =
   {showToc && (
     <>
       {/* Mobile TOC Toggle */}
-      <div class="xl:hidden container mx-auto px-4 pt-4">
-        <details class="surface-raised rounded-lg border border-border/40">
+      <div class="xl:hidden pt-4 px-[var(--page-gutter)]">
+        <details class="surface-raised border border-border/40">
           <summary class="p-4 cursor-pointer font-semibold flex items-center justify-between">
             <span>Table of Contents</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform">
@@ -181,7 +181,7 @@ const howToSchema =
                 <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
                   <a
                     href={`#${item.id}`}
-                    class="text-foreground/60 hover:text-primary transition-colors"
+                    class="text-muted-foreground hover:text-primary transition-colors"
                   >
                     {item.text}
                   </a>
@@ -201,7 +201,7 @@ const howToSchema =
               <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
                 <a
                   href={`#${item.id}`}
-                  class="text-foreground/60 hover:text-primary transition-colors"
+                  class="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {item.text}
                 </a>
@@ -217,7 +217,7 @@ const howToSchema =
     <div class="space-y-[var(--space-lg)] min-w-0">
       <a
         href="/blog"
-        class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
+        class="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -242,7 +242,7 @@ const howToSchema =
           {post.data.title}
         </h1>
 
-        <div class="flex flex-wrap items-center gap-4 text-foreground/60">
+        <div class="flex flex-wrap items-center gap-4 text-muted-foreground">
           <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
             {readingTime}
           </span>
@@ -257,9 +257,9 @@ const howToSchema =
               </time>
             </>
           )}
-          <address class="not-italic">
-            by <a href="/divkix" class="hover:text-primary"><span>{post.data.author}</span></a>
-          </address>
+          <span class="not-italic">
+            by <a href="/divkix" class="hover:text-primary">{post.data.author}</a>
+          </span>
         </div>
 
         {post.data.tags.length > 0 && (
@@ -283,7 +283,7 @@ const howToSchema =
         alt={post.data.coverAlt ?? `Featured image for ${post.data.title}`}
         width="1200"
         height="630"
-        class="w-full rounded-lg"
+        class="w-full"
         loading="eager"
         decoding="async"
       />
@@ -291,14 +291,14 @@ const howToSchema =
       {(post.data.tldr || (post.data.keyTakeaways && post.data.keyTakeaways.length > 0)) && (
         <div id="speakable-content" class="space-y-6">
           {post.data.tldr && (
-            <div class="tldr-summary surface-raised p-6 rounded-lg border-l-4 border-primary">
+            <div class="tldr-summary surface-raised p-6 border-t-2 border-primary">
               <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
-              <p class="text-foreground/70">{post.data.tldr}</p>
+              <p class="text-muted-foreground">{post.data.tldr}</p>
             </div>
           )}
 
           {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
-            <div class="key-takeaways surface-raised p-6 rounded-lg">
+            <div class="key-takeaways surface-raised p-6">
               <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
               <ul class="key-takeaways-list space-y-2">
                 {post.data.keyTakeaways.map((takeaway: string) => (
@@ -318,7 +318,7 @@ const howToSchema =
                     >
                       <path d="M20 6 9 17l-5-5" />
                     </svg>
-                    <span class="text-foreground/70">{takeaway}</span>
+                    <span class="text-muted-foreground">{takeaway}</span>
                   </li>
                 ))}
               </ul>
@@ -327,7 +327,7 @@ const howToSchema =
         </div>
       )}
 
-      <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
+      <div class="prose dark:prose-invert max-w-none prose-headings:scroll-mt-20">
         <Content />
       </div>
 
@@ -336,9 +336,9 @@ const howToSchema =
           <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
             {post.data.faq.map((faq: { q: string; a: string }) => (
-              <div class="surface-raised p-6 rounded-lg">
+              <div class="surface-raised p-6">
                 <h3 class="font-semibold text-lg">{faq.q}</h3>
-                <p class="mt-3 text-foreground/70">{faq.a}</p>
+                <p class="mt-3 text-muted-foreground">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -372,12 +372,12 @@ const howToSchema =
             {relatedPosts.map((relatedPost: CollectionEntry<"blog">) => (
               <a
                 href={`/blog/${relatedPost.id}`}
-                class="block surface-raised hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 p-4"
+                class="block surface-raised hover:border-primary/50 transition-colors overflow-hidden border border-border/40 p-4"
               >
                 <h3 class="font-semibold hover:text-primary transition-colors mb-2">
                   {relatedPost.data.title}
                 </h3>
-                <p class="text-sm text-foreground/60 line-clamp-2">
+                <p class="text-sm text-muted-foreground line-clamp-2">
                   {relatedPost.data.excerpt}
                 </p>
               </a>
@@ -387,7 +387,7 @@ const howToSchema =
       )}
 
       <div class="pt-8 border-t border-border/40">
-        <div class="surface-raised p-6 rounded-lg">
+        <div class="surface-raised p-6">
           <div class="flex gap-4 items-start">
             <img
               src="/divanshu-chauhan.webp"
@@ -398,12 +398,12 @@ const howToSchema =
             <div class="flex-1">
               <h3 class="font-semibold">
                 {post.data.author}
-                <span class="text-foreground/50 font-normal">(@{siteConfig.handle.toLowerCase()})</span>
+                <span class="text-muted-foreground font-normal">(@{siteConfig.handle.toLowerCase()})</span>
               </h3>
-              <p class="text-sm text-foreground/70 mt-1">
+              <p class="text-sm text-muted-foreground mt-1">
                 {getJobTitle()} & MS CS @ Arizona State University. Currently SWE Intern @ Cloudflare. Based in {siteConfig.location}.
               </p>
-              <p class="text-sm text-foreground/60 mt-2">
+              <p class="text-sm text-muted-foreground mt-2">
                 Expertise:
                 {post.data.tags.slice(0, 4).join(", ")}.
                 <a href="/about" class="underline hover:text-primary ml-1">More about {siteConfig.handle.toLowerCase()}</a>

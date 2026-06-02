@@ -51,7 +51,7 @@ function ProjectEntry({ project }: { project: Project }) {
         </p>
       )}
 
-      <p className="mt-[var(--space-md)] text-base text-foreground/85 leading-relaxed max-w-prose">
+      <p className="mt-[var(--space-md)] text-base text-muted-foreground leading-relaxed max-w-prose">
         {project.desc}
       </p>
 
