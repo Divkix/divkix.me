@@ -65,6 +65,7 @@ These run automatically during `bun run build`, but you can run them individuall
 | Script | What it does |
 |--------|-------------|
 | `generate-posts-metadata.ts` | Parse MDX frontmatter via `src/lib/blog.ts` → `content/blog/posts.json` |
+| `validate-content.ts` | Validate MDX frontmatter and posts.json synchronization (verifies metadata matches source files) |
 | `generate-og-images.js` | Generate OpenGraph images for blog posts |
 | `generate-og-image.js` | Generate the site-wide OG image |
 | `generate-favicons.ts` | Generate favicons from the SVG source |

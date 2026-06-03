@@ -28,7 +28,7 @@ Portfolio and blog built with **Astro 5**, **TypeScript**, **Tailwind CSS v4**, 
 ├── scripts/                  # Build pipeline scripts
 │   ├── generate-posts-metadata.ts   # Extracts blog metadata → content/blog/posts.json
 │   ├── generate-og-images.js        # Creates OpenGraph images
-│   ├── validate-content.ts          # (Deprecated) Validated MDX/posts.json sync — removed
+│   ├── validate-content.ts          # Validates MDX content vs posts.json sync
 │   └── submit-indexnow.ts           # Search engine submission (production only)
 ├── content/
 │   └── blog/
@@ -55,10 +55,11 @@ bunx knip                # Detect unused exports/dependencies
 **Build Pipeline (order matters):**
 1. `generate-posts-metadata.ts` — Parses blog MDX via `src/lib/blog.ts` → `content/blog/posts.json`
 2. `generate-og-images.js` — Generates OG images
-3. `astro build` — Static build to `dist/`
-4. `submit-indexnow.ts` — Submits to search engines (production only)
+3. `validate-content.ts` — Validates MDX frontmatter and posts.json synchronization (fails if blog posts are not regenerated)
+4. `astro build` — Static build to `dist/`
+5. `submit-indexnow.ts` — Submits to search engines (production only)
 
-**Critical:** If you add/remove/rename a blog post, run `bun run prebuild` to regenerate `posts.json`. The blog module (`src/lib/blog.ts`) guarantees the artifact is always in sync with the source MDX files.
+**Critical:** If you add/remove/rename a blog post, run `bun run prebuild` to regenerate `posts.json`. The blog module (`src/lib/blog.ts`) guarantees the artifact is always in sync with the source MDX files. Running `validate-content.ts` after metadata generation verifies the sync — it will fail if posts are stale.
 
 ## Coding Style and Conventions
 

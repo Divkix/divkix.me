@@ -51,7 +51,10 @@ export function extractToc(
   const headingRegex = /^(#{2,3})\s+(.+)$/gm;
   const toc: Array<{ id: string; text: string; level: number }> = [];
   const slugger = new GitHubSlugger();
-  let match = headingRegex.exec(content);
+  const stripped = content
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/~~~[\s\S]*?~~~/g, "");
+  let match = headingRegex.exec(stripped);
 
   while (match !== null) {
     const [, hashes, headingText] = match;
@@ -70,26 +73,61 @@ export function extractToc(
   return toc;
 }
 
+const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
+function validateFrontmatter(
+  frontmatter: Record<string, unknown>,
+  slug: string,
+): void {
+  if (!frontmatter.title || typeof frontmatter.title !== "string") {
+    throw new Error(`[${slug}] Missing or invalid required field: title`);
+  }
+  if (
+    !frontmatter.date ||
+    typeof frontmatter.date !== "string" ||
+    !DATE_REGEX.test(frontmatter.date)
+  ) {
+    throw new Error(
+      `[${slug}] Missing or invalid required field: date (must be YYYY-MM-DD)`,
+    );
+  }
+  if (
+    frontmatter.dateModified &&
+    (typeof frontmatter.dateModified !== "string" ||
+      !DATE_REGEX.test(frontmatter.dateModified))
+  ) {
+    throw new Error(`[${slug}] Invalid dateModified (must be YYYY-MM-DD)`);
+  }
+  if (!frontmatter.excerpt || typeof frontmatter.excerpt !== "string") {
+    throw new Error(`[${slug}] Missing or invalid required field: excerpt`);
+  }
+  if (!frontmatter.tags || !Array.isArray(frontmatter.tags)) {
+    throw new Error(`[${slug}] Missing or invalid required field: tags`);
+  }
+}
+
 export function parsePostFile(slug: string, fileContent: string): PostMetadata {
   const { data: frontmatter, content } = matter(fileContent);
+
+  validateFrontmatter(frontmatter, slug);
 
   const { minutes: readingTime, wordCount } = calculateReadingTime(content);
   const toc = extractToc(content);
 
   return {
     slug,
-    title: frontmatter.title || "Untitled",
-    date: frontmatter.date || new Date().toISOString(),
-    dateModified: frontmatter.dateModified || null,
-    excerpt: frontmatter.excerpt || "",
-    tags: frontmatter.tags || [],
-    author: frontmatter.author || "Divanshu Chauhan",
-    seoTitle: frontmatter.seoTitle || null,
-    seoDescription: frontmatter.seoDescription || null,
+    title: frontmatter.title as string,
+    date: frontmatter.date as string,
+    dateModified: (frontmatter.dateModified as string) || null,
+    excerpt: frontmatter.excerpt as string,
+    tags: frontmatter.tags as string[],
+    author: (frontmatter.author as string) || "Divanshu Chauhan",
+    seoTitle: (frontmatter.seoTitle as string) || null,
+    seoDescription: (frontmatter.seoDescription as string) || null,
     published: frontmatter.published !== false,
-    tldr: frontmatter.tldr || null,
-    keyTakeaways: frontmatter.keyTakeaways || [],
-    faq: frontmatter.faq || null,
+    tldr: (frontmatter.tldr as string) || null,
+    keyTakeaways: (frontmatter.keyTakeaways as string[]) || [],
+    faq: (frontmatter.faq as Array<{ q: string; a: string }>) || null,
     readingTime,
     wordCount,
     toc,
