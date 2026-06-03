@@ -37,6 +37,12 @@ if (import.meta.main) {
       );
       hasError = true;
     }
+    if (postsJson.posts.length !== postsJson.totalPosts) {
+      console.error(
+        `❌ Count mismatch: posts.json totalPosts is ${postsJson.totalPosts}, but posts array has ${postsJson.posts.length} entries`,
+      );
+      hasError = true;
+    }
 
     // Check for missing posts in posts.json
     const missingInJson = canonicalSlugs.filter(
@@ -83,6 +89,9 @@ if (import.meta.main) {
       "tldr",
       "keyTakeaways",
       "faq",
+      "readingTime",
+      "wordCount",
+      "toc",
     ] as const;
 
     for (const post of canonicalPosts) {
@@ -92,8 +101,8 @@ if (import.meta.main) {
       const differences: string[] = [];
 
       for (const field of fieldsToCompare) {
-        const canonicalValue = normalizeValue(post[field]);
-        const jsonValue = normalizeValue(jsonPost[field]);
+        const canonicalValue = normalizeValue(post[field], field);
+        const jsonValue = normalizeValue(jsonPost[field], field);
 
         if (!deepEqual(canonicalValue, jsonValue)) {
           differences.push(field);
@@ -125,8 +134,8 @@ if (import.meta.main) {
   }
 }
 
-function normalizeValue(value: unknown): unknown {
-  if (Array.isArray(value)) {
+function normalizeValue(value: unknown, field?: string): unknown {
+  if (Array.isArray(value) && field === "tags") {
     return [...value].sort();
   }
   return value;

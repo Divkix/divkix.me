@@ -31,7 +31,10 @@ export interface PostMetadata {
 }
 
 function stripCodeBlocks(content: string): string {
-  return content.replace(/```[\s\S]*?```/g, "").replace(/`[^`]*`/g, "");
+  return content
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/~~~[\s\S]*?~~~/g, "")
+    .replace(/`[^`]*`/g, "");
 }
 
 export function calculateReadingTime(content: string): {
@@ -152,8 +155,8 @@ export function getAllPosts(options?: { published?: boolean }): PostMetadata[] {
 
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  if (options?.published === true) {
-    return posts.filter((post) => post.published);
+  if (options?.published !== undefined) {
+    return posts.filter((post) => post.published === options.published);
   }
 
   return posts;
