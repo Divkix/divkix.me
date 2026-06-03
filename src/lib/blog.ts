@@ -11,12 +11,6 @@ export interface TocItem {
   level: number;
 }
 
-export interface RelatedPost {
-  slug: string;
-  title: string;
-  excerpt: string;
-}
-
 export interface PostMetadata {
   slug: string;
   title: string;
@@ -34,7 +28,6 @@ export interface PostMetadata {
   readingTime: number;
   wordCount: number;
   toc: TocItem[];
-  relatedPosts?: RelatedPost[];
 }
 
 function stripCodeBlocks(content: string): string {
@@ -103,19 +96,6 @@ export function parsePostFile(slug: string, fileContent: string): PostMetadata {
   };
 }
 
-function calculateTagSimilarity(
-  tags1: string[] = [],
-  tags2: string[] = [],
-): number {
-  const set1 = new Set(tags1.map((t) => t.toLowerCase()));
-  const set2 = new Set(tags2.map((t) => t.toLowerCase()));
-  let intersection = 0;
-  for (const tag of set1) {
-    if (set2.has(tag)) intersection++;
-  }
-  return intersection;
-}
-
 export function getAllPosts(options?: { published?: boolean }): PostMetadata[] {
   if (!existsSync(CONTENT_DIR)) {
     throw new Error(`Blog directory not found: ${CONTENT_DIR}`);
@@ -134,25 +114,8 @@ export function getAllPosts(options?: { published?: boolean }): PostMetadata[] {
 
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const publishedPosts = posts.filter((post) => post.published);
-
-  for (const post of publishedPosts) {
-    const otherPosts = publishedPosts.filter((p) => p.slug !== post.slug);
-
-    post.relatedPosts = otherPosts
-      .map((p) => ({
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        score: calculateTagSimilarity(post.tags, p.tags),
-      }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3)
-      .map(({ slug, title, excerpt }) => ({ slug, title, excerpt }));
-  }
-
   if (options?.published === true) {
-    return publishedPosts;
+    return posts.filter((post) => post.published);
   }
 
   return posts;
