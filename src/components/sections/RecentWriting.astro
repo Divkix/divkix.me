@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { calculateReadingTime, formatDate } from "@/lib/utils";
+import { calculateReadingTime } from "@/lib/blog";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   posts: CollectionEntry<"blog">[];
@@ -36,7 +37,7 @@ const { posts } = Astro.props;
                   {formatDate(post.data.date)}
                 </time>
                 <span class="tabular-nums uppercase tracking-[0.18em]">
-                  {calculateReadingTime(post.body)} min read
+                  {calculateReadingTime(post.body).minutes} min read
                 </span>
               </div>
               <h3 class="font-display text-xl md:text-2xl leading-[1.1] m-0">

@@ -2,13 +2,14 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { calculateReadingTime } from "@/lib/blog";
 import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
   generateFAQPageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { calculateReadingTime, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 
 const allPosts = await getCollection("blog");
 
@@ -28,7 +29,7 @@ type PostWithReadingTime = {
 const postsWithReadingTime: PostWithReadingTime[] = posts.map(
   (post: CollectionEntry<"blog">) => ({
     post,
-    readingTime: `${calculateReadingTime(post.body)} min read`,
+    readingTime: `${calculateReadingTime(post.body).minutes} min read`,
   }),
 );
 
