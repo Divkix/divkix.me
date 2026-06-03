@@ -13,6 +13,7 @@ const profilePageSchema = generateProfilePageSchema(
   `${siteConfig.handle.toLowerCase()} is the online handle of ${siteConfig.name}`,
   `${baseUrl}/divkix`,
   {
+    datePublished: "2025-01-01",
     dateModified: "2026-05-20",
     articleSection: "Profile",
   },
@@ -49,6 +50,7 @@ const navLinks = [
 <SiteLayout
   title="divkix | Divanshu Chauhan"
   description="divkix is Divanshu Chauhan - Software Engineer and open source contributor."
+  ogImage={`${baseUrl}/og/divkix.png`}
   dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />

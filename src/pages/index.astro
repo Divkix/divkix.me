@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import { Contact } from "@/components/sections/Contact";
+import { ContactWithBoundary } from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero.astro";
-import { Highlights } from "@/components/sections/Highlights";
+import { HighlightsWithBoundary } from "@/components/sections/Highlights";
 import { Projects } from "@/components/sections/Projects";
 import RecentWriting from "@/components/sections/RecentWriting.astro";
 import { siteConfig } from "@/data/site.config";
@@ -42,13 +42,13 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
 ---
 
-<SiteLayout showScrollProgress={true} dateModified="2026-05-20">
+<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`} dateModified="2026-05-20">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
   <Hero />
-  <Highlights client:visible />
+  <HighlightsWithBoundary client:visible />
   <RecentWriting posts={recentPosts} />
   <Projects client:visible />
-  <Contact client:visible />
+  <ContactWithBoundary client:visible />
 </SiteLayout>

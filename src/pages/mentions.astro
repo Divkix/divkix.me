@@ -12,6 +12,7 @@ const mentionsPageSchema = generateProfilePageSchema(
   `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
   `${baseUrl}/mentions`,
   {
+    datePublished: "2025-01-01",
     dateModified: "2026-05-20",
     articleSection: "Mentions",
   },
@@ -26,6 +27,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 <SiteLayout
   title={`Mentions & Press — ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
   description={`External citations, podcast appearances, and conference talks featuring ${siteConfig.name} (divkix).`}
+  ogImage={`${baseUrl}/og/mentions.png`}
   dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />

@@ -27,6 +27,7 @@ const collectionPageSchema = generateCollectionPageSchema(
   "Official social media profiles and contact information",
   `${baseUrl}/socials`,
   {
+    datePublished: "2025-01-01",
     dateModified: "2026-05-20",
     articleSection: "Connect",
   },
@@ -41,6 +42,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 <SiteLayout
   title="Connect"
   description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
+  ogImage={`${baseUrl}/og/socials.png`}
   dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />

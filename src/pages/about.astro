@@ -35,6 +35,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 <SiteLayout
   title={`About Divanshu Chauhan — Cloudflare engineer, Vinext contributor`}
   description={siteConfig.seo.metaDescription}
+  ogImage={`${baseUrl}/og/about.png`}
   dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
