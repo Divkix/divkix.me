@@ -396,7 +396,7 @@ async function generateOGImages() {
   console.log("Generating blog post OG images...");
 
   if (!fs.existsSync(POSTS_JSON)) {
-    console.log("posts.json not found. Run generate-posts-metadata.js first.");
+    console.log("posts.json not found. Run generate-posts-metadata.ts first.");
     console.log("Skipping OG image generation.");
     return;
   }

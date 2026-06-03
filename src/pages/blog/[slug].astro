@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import { siteConfig } from "@/data/site.config";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { calculateReadingTime, extractToc } from "@/lib/blog";
 import {
   generateBlogPostingSchema,
   generateBreadcrumbSchema,
@@ -10,7 +11,7 @@ import {
   getJobTitle,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { calculateReadingTime, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -26,14 +27,8 @@ interface Props {
   post: CollectionEntry<"blog">;
 }
 
-interface Heading {
-  slug: string;
-  text: string;
-  depth: number;
-}
-
 const { post } = Astro.props;
-const { Content, headings } = await render(post);
+const { Content } = await render(post);
 
 // Get all posts for related posts section
 const allPosts = await getCollection("blog");
@@ -46,15 +41,12 @@ const relatedPosts = allPosts
   )
   .slice(0, 3);
 
-const readingTimeMinutes = calculateReadingTime(post.body);
+const { minutes: readingTimeMinutes, wordCount } = calculateReadingTime(
+  post.body,
+);
 const readingTime = `${readingTimeMinutes} min read`;
-const wordCount = post.body.trim().split(/\s+/).length;
 
-const toc = headings.map((h: Heading) => ({
-  id: h.slug,
-  text: h.text,
-  level: h.depth,
-}));
+const toc = extractToc(post.body);
 
 const showToc = toc.length >= 3;
 
