@@ -2,6 +2,7 @@
 title: "How I Scaled a Telegram Bot to 300k+ Users (Including the Tactics I'm Not Proud Of)"
 seoTitle: "How I Scaled a Telegram Bot to 300k+ Users (Including the Tactics I'm Not Proud Of)"
 seoDescription: "300K real users, 200 GitHub stars. The growth playbook nobody shares—directory blitzing, admin favor-trading, and the Python-to-Go rewrite that changed everything."
+coverAlt: "Growth chart showing Telegram bot scaling from zero to 300K users over six years"
 date: "2026-01-16"
 dateModified: "2026-04-05"
 excerpt: "I built an open-source Telegram bot that grew to 300k+ real users, 200+ GitHub stars, and 300+ forks. Here's the brutally honest story of how—including the tactics I'm not proud of."
@@ -29,6 +30,9 @@ keyTakeaways:
   - "Trading setup help for adoption with group admins created a network effect that snowballed into 300k+ users."
   - "Porting from Python to Go was about learning a new language and differentiating from the sea of Python bot managers—not just performance."
   - "Word-of-mouth only kicks in after you've done the dirty work of seeding your first 10,000 users manually."
+sources:
+  - "https://github.com/PaulSonOfLars/gotgbot"
+  - "https://core.telegram.org/bots/api"
 faq:
   - q: "Why did you port from Python to Go?"
     a: "Two reasons: I wanted to learn Go properly, and every other open-source Telegram bot manager was written in Python. Go made Alita stand out and gave me an excuse to build something from scratch with better architecture."
@@ -167,6 +171,19 @@ Results after the Go rewrite:
 
 Compared to the Python version, the Go rewrite reduced memory consumption by 65% and queries completed 3x faster. That alone justified the 2 months I spent on it.
 
+## Python vs Go for Telegram Bots
+
+| Aspect | Python (v1) | Go (v2) | Impact |
+|--------|------------|---------|--------|
+| **Memory Usage** | ~400MB | ~140MB | 65% reduction |
+| **Query Speed** | ~120ms | ~40ms | 3x faster |
+| **Concurrency** | Threads + asyncio | Goroutines + channels | Handles 300K users without lag |
+| **Binary Size** | ~15MB | ~12MB | Smaller deploy |
+| **Ecosystem** | python-telegram-bot | gotgbot | Both mature, Go is rarer |
+| **Learning Curve** | Low | Medium | 2 months to rewrite |
+
+The rewrite wasn't just about performance. It was about standing out in a sea of Python bots. Go made Alita different, and different got attention.
+
 ## Riding the Wave (Year 2-3)
 
 Something interesting happened as Alita matured: people started making their own Telegram bots.
@@ -192,6 +209,8 @@ Year 3 stats:
 - Forks: 112 → 287
 - Active groups: 1,847 → 12,000+
 - Users touched: ~89,000 → ~200,000
+
+> **Statistic:** Alita Robot grew to 300,000+ total users across 12,000+ active groups, with monthly active users around 40,000.
 
 ## The Aggregation Play (Years 3-5)
 

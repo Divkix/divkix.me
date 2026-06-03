@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
 
@@ -18,6 +19,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -30,6 +32,7 @@ export function Contact() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
+    setServerError(null);
 
     try {
       const response = await fetch("https://formspree.io/f/xgvreprq", {
@@ -55,19 +58,23 @@ export function Contact() {
           message?: string;
           errors?: Array<{ message: string }>;
         };
+        const errorMessage =
+          errorData.errors?.[0]?.message ||
+          errorData.message ||
+          "Please try again later.";
+        setServerError(errorMessage);
         toast.error("Failed to send message", {
-          description:
-            errorData.errors?.[0]?.message ||
-            errorData.message ||
-            "Please try again later.",
+          description: errorMessage,
         });
       }
     } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An error occurred. Please try again.";
+      setServerError(errorMessage);
       toast.error("Failed to send message", {
-        description:
-          error instanceof Error
-            ? error.message
-            : "An error occurred. Please try again.",
+        description: errorMessage,
       });
     } finally {
       setIsSubmitting(false);
@@ -91,6 +98,7 @@ export function Contact() {
                 href="mailto:divkix@divkix.me"
                 className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
                 rel="me author"
+                aria-label="Email divkix@divkix.me"
               >
                 divkix@divkix.me
               </a>
@@ -113,6 +121,7 @@ export function Contact() {
                   target="_blank"
                   rel="noopener noreferrer me"
                   className="text-xs text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.18em]"
+                  aria-label={`Opens in new tab: ${social.label}`}
                 >
                   {social.label}
                 </a>
@@ -132,127 +141,209 @@ export function Contact() {
                 Message sent. I'll reply within a day or two.
               </p>
             ) : (
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="space-y-[var(--space-md)]"
-              >
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="block text-sm font-medium mb-1.5"
-                  >
-                    Name
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    placeholder="Your name"
-                    autoComplete="name"
-                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
-                    aria-required="true"
-                    aria-describedby={
-                      errors.name ? "contact-name-error" : undefined
-                    }
-                    aria-invalid={errors.name ? true : undefined}
-                    {...register("name")}
-                    disabled={isSubmitting}
-                  />
-                  {errors.name && (
-                    <p
-                      id="contact-name-error"
-                      className="text-xs text-destructive mt-1"
-                      role="alert"
-                    >
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-sm font-medium mb-1.5"
-                  >
-                    Email
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    autoComplete="email"
-                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
-                    aria-required="true"
-                    aria-describedby={
-                      errors.email ? "contact-email-error" : undefined
-                    }
-                    aria-invalid={errors.email ? true : undefined}
-                    {...register("email")}
-                    disabled={isSubmitting}
-                  />
-                  {errors.email && (
-                    <p
-                      id="contact-email-error"
-                      className="text-xs text-destructive mt-1"
-                      role="alert"
-                    >
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-sm font-medium mb-1.5"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    placeholder="What's on your mind?"
-                    rows={5}
-                    className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
-                    aria-required="true"
-                    aria-describedby={
-                      errors.message ? "contact-message-error" : undefined
-                    }
-                    aria-invalid={errors.message ? true : undefined}
-                    {...register("message")}
-                    disabled={isSubmitting}
-                  />
-                  {errors.message && (
-                    <p
-                      id="contact-message-error"
-                      className="text-xs text-destructive mt-1"
-                      role="alert"
-                    >
-                      {errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              <>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-[var(--space-md)]"
                 >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <Loader2
-                        className="size-4 animate-spin"
-                        aria-hidden="true"
-                      />
-                      Sending…
-                    </span>
-                  ) : (
-                    "Send message"
+                  <div>
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-sm font-medium mb-1.5"
+                    >
+                      Name
+                    </label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      placeholder="Your name"
+                      autoComplete="name"
+                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.name ? "contact-name-error" : undefined
+                      }
+                      aria-invalid={errors.name ? true : undefined}
+                      {...register("name")}
+                      disabled={isSubmitting}
+                    />
+                    {errors.name && (
+                      <p
+                        id="contact-name-error"
+                        className="text-xs text-destructive mt-1"
+                        role="alert"
+                      >
+                        {errors.name.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-sm font-medium mb-1.5"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      autoComplete="email"
+                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.email ? "contact-email-error" : undefined
+                      }
+                      aria-invalid={errors.email ? true : undefined}
+                      {...register("email")}
+                      disabled={isSubmitting}
+                    />
+                    {errors.email && (
+                      <p
+                        id="contact-email-error"
+                        className="text-xs text-destructive mt-1"
+                        role="alert"
+                      >
+                        {errors.email.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-message"
+                      className="block text-sm font-medium mb-1.5"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      placeholder="What's on your mind?"
+                      rows={5}
+                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                      aria-required="true"
+                      aria-describedby={
+                        errors.message ? "contact-message-error" : undefined
+                      }
+                      aria-invalid={errors.message ? true : undefined}
+                      {...register("message")}
+                      disabled={isSubmitting}
+                    />
+                    {errors.message && (
+                      <p
+                        id="contact-message-error"
+                        className="text-xs text-destructive mt-1"
+                        role="alert"
+                      >
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {serverError && (
+                    <p
+                      className="text-sm text-destructive font-medium"
+                      role="alert"
+                    >
+                      {serverError}
+                    </p>
                   )}
-                </button>
-              </form>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label={
+                      isSubmitting ? "Sending message" : "Send message"
+                    }
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2
+                          className="size-4 animate-spin"
+                          aria-hidden="true"
+                        />
+                        Sending…
+                      </span>
+                    ) : (
+                      "Send message"
+                    )}
+                  </button>
+                </form>
+
+                <noscript>
+                  <form
+                    action="https://formspree.io/f/xgvreprq"
+                    method="POST"
+                    className="space-y-[var(--space-md)] mt-[var(--space-md)]"
+                  >
+                    <div>
+                      <label
+                        htmlFor="noscript-contact-name"
+                        className="block text-sm font-medium mb-1.5"
+                      >
+                        Name
+                      </label>
+                      <input
+                        id="noscript-contact-name"
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        required
+                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="noscript-contact-email"
+                        className="block text-sm font-medium mb-1.5"
+                      >
+                        Email
+                      </label>
+                      <input
+                        id="noscript-contact-email"
+                        name="email"
+                        type="email"
+                        placeholder="your@email.com"
+                        required
+                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="noscript-contact-message"
+                        className="block text-sm font-medium mb-1.5"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        id="noscript-contact-message"
+                        name="message"
+                        placeholder="What's on your mind?"
+                        rows={5}
+                        required
+                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                      />
+                    </div>
+                    <button type="submit" className="btn-primary">
+                      Send message
+                    </button>
+                  </form>
+                </noscript>
+              </>
             )}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+export function ContactWithBoundary() {
+  return (
+    <ErrorBoundary>
+      <Contact />
+    </ErrorBoundary>
   );
 }

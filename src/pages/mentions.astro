@@ -1,20 +1,37 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateFAQPageSchema,
+  generateProfilePageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
-const mentionsPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": `${baseUrl}/mentions`,
-  mainEntity: {
-    "@id": `${baseUrl}/#author`,
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What is this page for?",
+      a: "This page tracks external citations, podcast appearances, and conference talks featuring me.",
+    },
+    {
+      q: "Are there any mentions yet?",
+      a: "No external mentions have been recorded yet. Check back for updates.",
+    },
+  ],
+  `${baseUrl}/mentions`,
+);
+
+const mentionsPageSchema = generateProfilePageSchema(
+  `Mentions & Press — ${siteConfig.name}`,
+  `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
+  `${baseUrl}/mentions`,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "Mentions",
   },
-  name: `Mentions & Press — ${siteConfig.name}`,
-  description: `External citations, podcast appearances, and conference talks featuring ${siteConfig.name}.`,
-  url: `${baseUrl}/mentions`,
-};
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -25,9 +42,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 <SiteLayout
   title={`Mentions & Press — ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
   description={`External citations, podcast appearances, and conference talks featuring ${siteConfig.name} (divkix).`}
+  ogImage={`${baseUrl}/og/mentions.png`}
+  dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-3xl mx-auto space-y-12">
@@ -38,14 +58,14 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         </p>
       </div>
 
-      <div class="surface-raised p-8 rounded-lg">
+      <div class="surface-raised p-8 rounded-none">
         <p class="text-foreground/70 leading-relaxed">
           This page tracks where {siteConfig.name} has been cited, referenced, or featured across the web.
           As coverage grows, it will be updated with links to podcasts, conference talks, and external publications.
         </p>
       </div>
 
-      <div class="border border-border/40 rounded-lg p-8 text-center">
+      <div class="border border-border/40 rounded-none p-8 text-center">
         <p class="text-foreground/60">
           No external mentions recorded yet. Check back for updates.
         </p>

@@ -16,6 +16,17 @@ keyTakeaways:
   - "Serverless bills can spike without warning (D1 $5K, Workers $2.5K). Traditional VPS bills are predictable."
   - "The best stack for 2026: Cloudflare Workers (compute) + Supabase (database). Serverless speed with real Postgres."
   - "Use Docker/VPS when your app runs 24/7 or needs unlimited CPU — Telegram bots, video processing, cron-heavy services."
+howToSteps:
+  - name: "Determine if your app needs 24/7 uptime"
+    text: "Bots, cron jobs, and WebSocket services can't sleep. If yes, use Docker on a VPS. If no, use Cloudflare Workers."
+  - name: "Choose Cloudflare Workers for event-driven apps"
+    text: "For portfolios, APIs, and form handlers, Workers gives you global edge deployment and zero cold starts."
+  - name: "Choose Docker/VPS for long-running services"
+    text: "For Telegram bots, video processing, or heavy cron jobs, use Oracle Cloud or Hetzner with Docker Compose."
+  - name: "Add a managed database"
+    text: "Use Supabase or PlanetScale for real Postgres. Use D1 only for simple CRUD with low write volume."
+  - name: "Set rate limits and cost alerts before deploying"
+    text: "Add Workers rate limits, D1 spending alerts, and WAF rules to prevent surprise bills from DDoS or bad queries."
 faq:
   - q: "Can I run a Telegram bot on Cloudflare Workers?"
     a: "No — Workers WebSocket connections timeout and Workers don't run continuously. Use a VPS (Oracle free tier works great for this)."
@@ -31,6 +42,7 @@ faq:
     a: "Workers has no bandwidth caps and $0.50/M request overage. Vercel and Netlify cap bandwidth — you'll hit paywalls faster on those platforms for API-heavy apps."
   - q: "What's Oracle Cloud's free VPS?"
     a: "4 ARM cores (Ampere), 24GB RAM, 200GB block storage. Always free tier — no credit card tricks. Can run Docker Compose. Great for 24/7 apps like Telegram bots."
+reviewedBy: "Divanshu Chauhan"
 sources:
   - "https://developers.cloudflare.com/workers/platform/pricing/"
   - "https://developers.cloudflare.com/d1/platform/pricing/"

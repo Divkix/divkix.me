@@ -1,10 +1,43 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateFAQPageSchema,
+  generateProfilePageSchema,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What data do you collect?",
+      a: "I collect minimal data: contact form submissions, basic analytics, and theme preferences.",
+    },
+    {
+      q: "How do you protect my information?",
+      a: "I use reasonable security measures and do not sell or trade personal information.",
+    },
+    {
+      q: "Who processes my contact form submissions?",
+      a: "Formspree processes contact form submissions. You can review their privacy policy.",
+    },
+  ],
+  `${baseUrl}/privacy`,
+);
+
 const lastUpdated = "May 20, 2026";
+
+const privacyPageSchema = generateProfilePageSchema(
+  "Privacy Policy",
+  `Privacy Policy for ${siteConfig.name}'s portfolio website`,
+  `${baseUrl}/privacy`,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "Legal",
+  },
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -15,8 +48,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 <SiteLayout
   title="Privacy Policy"
   description={`Privacy Policy for ${siteConfig.name}'s portfolio website`}
+  ogImage={`${baseUrl}/og/privacy.png`}
+  dateModified="2026-05-20"
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(privacyPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-8">
@@ -26,7 +63,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
       </div>
 
       <div class="prose prose-slate dark:prose-invert max-w-none">
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Overview</h2>
           <p class="text-foreground/80">
             This privacy policy describes how {siteConfig.name} ("I", "me", "my")
@@ -34,7 +71,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Information Collection</h2>
           <p class="text-foreground/80">
             This website is built with privacy in mind and collects minimal information:
@@ -55,7 +92,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </ul>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">How Information is Used</h2>
           <p class="text-foreground/80">
             Information collected is used solely for:
@@ -73,7 +110,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Data Security</h2>
           <p class="text-foreground/80">
             I implement reasonable security measures to protect your information.
@@ -81,7 +118,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Third-Party Services</h2>
           <p class="text-foreground/80">
             This website is hosted on Cloudflare Workers. Please refer to
@@ -108,7 +145,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Your Rights</h2>
           <p class="text-foreground/80">You have the right to:</p>
           <ul class="list-disc list-inside space-y-2 text-foreground/80">
@@ -127,7 +164,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Children's Privacy</h2>
           <p class="text-foreground/80">
             This website is not intended for children under 13 years of age.
@@ -135,7 +172,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Changes to This Policy</h2>
           <p class="text-foreground/80">
             I may update this privacy policy from time to time. Changes will be posted
@@ -143,7 +180,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </p>
         </section>
 
-        <section class="surface-raised p-8 rounded-lg space-y-4">
+        <section class="surface-raised p-8 rounded-none space-y-4">
           <h2 class="text-2xl font-bold">Contact</h2>
           <p class="text-foreground/80">
             If you have questions about this privacy policy, please contact me at:

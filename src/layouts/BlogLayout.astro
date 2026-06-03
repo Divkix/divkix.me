@@ -1,7 +1,7 @@
 ---
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import Footer from "@/components/shared/Footer.astro";
-import { Navbar } from "@/components/shared/Navbar";
+import { NavbarWithBoundary } from "@/components/shared/Navbar";
 import { type ArticleMeta, baseUrl } from "@/lib/seo";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -13,6 +13,8 @@ interface Props {
   readingTime?: number; // in minutes
   ogType?: "website" | "article";
   articleMeta?: ArticleMeta;
+  dateModified?: string;
+  ogImageAlt?: string;
 }
 
 const {
@@ -23,6 +25,8 @@ const {
   readingTime = 5,
   ogType,
   articleMeta,
+  dateModified,
+  ogImageAlt,
 } = Astro.props;
 
 const canonical = `${baseUrl}${Astro.url.pathname}`;
@@ -35,11 +39,13 @@ const baseLayoutProps = {
   canonical,
   ...(ogType ? { ogType } : {}),
   ...(articleMeta ? { articleMeta } : {}),
+  ...(dateModified ? { dateModified } : {}),
+  ...(ogImageAlt ? { ogImageAlt } : {}),
 };
 ---
 
 <BaseLayout {...baseLayoutProps}>
-  <Navbar client:load />
+  <NavbarWithBoundary client:load />
 
   {showReadingProgress && (
     <ReadingProgress client:only="react" readingTime={readingTime} />

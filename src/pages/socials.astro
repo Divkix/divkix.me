@@ -1,8 +1,27 @@
 ---
 import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateBreadcrumbSchema, getJobTitle } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateCollectionPageSchema,
+  generateFAQPageSchema,
+  getJobTitle,
+} from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "How do I contact you?",
+      a: "You can email me at the address listed on this page or connect via LinkedIn.",
+    },
+    {
+      q: "Where can I find your work?",
+      a: "My projects are on GitHub, and my writing is on the blog.",
+    },
+  ],
+  `${baseUrl}/socials`,
+);
 
 // Map social labels to their descriptive action text for SEO
 const socialActions: Record<string, string> = {
@@ -18,17 +37,16 @@ const socialActions: Record<string, string> = {
 const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 const emailSocial = siteConfig.socials.find((s) => s.label === "Email");
 
-const collectionPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": `${baseUrl}/socials`,
-  mainEntity: { "@id": `${baseUrl}/#author` },
-  name: `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
-  description: "Official social media profiles and contact information",
-  url: `${baseUrl}/socials`,
-  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
-  inLanguage: "en-US",
-};
+const collectionPageSchema = generateCollectionPageSchema(
+  `Social Links — ${siteConfig.name} (${siteConfig.handle})`,
+  "Official social media profiles and contact information",
+  `${baseUrl}/socials`,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "Connect",
+  },
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -39,9 +57,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 <SiteLayout
   title="Connect"
   description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
+  ogImage={`${baseUrl}/og/socials.png`}
+  dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto space-y-12">
       <!-- Header -->
@@ -61,7 +82,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               href={social.href}
               target="_blank"
               rel="me noopener noreferrer"
-              class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-6 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -100,7 +121,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         {emailSocial && (
           <a
             href={emailSocial.href}
-            class="surface-raised p-6 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-6 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div class="flex items-center gap-4">
               <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">

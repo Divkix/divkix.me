@@ -5,6 +5,16 @@ export function getJobTitle(): string {
   return siteConfig.seo.jobTitle;
 }
 
+const ISO_8601_DURATION_RE =
+  /^P(?:\d+Y)?(?:\d+M)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/;
+
+export function validateDuration(duration: string): string {
+  if (!ISO_8601_DURATION_RE.test(duration)) {
+    console.warn(`Invalid ISO 8601 duration: ${duration}`);
+  }
+  return duration;
+}
+
 type BreadcrumbItem = { name: string; item?: string };
 
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
@@ -36,6 +46,7 @@ export function generatePersonSchema() {
     description: siteConfig.seo.metaDescription,
     url: baseUrl,
     mainEntityOfPage: `${baseUrl}/about`,
+    disambiguatingDescription: `Software Engineer and blogger based in ${siteConfig.address.locality}, ${siteConfig.address.region}`,
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
@@ -129,6 +140,78 @@ export function generateWebSiteSchema() {
       "@id": `${baseUrl}/#author`,
     },
     inLanguage: "en-US",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/**
+ * Generate CollectionPage schema for index pages
+ */
+export function generateCollectionPageSchema(
+  name: string,
+  description: string,
+  url: string,
+  options?: {
+    dateModified?: string;
+    datePublished?: string;
+    articleSection?: string;
+    mainEntity?: Record<string, unknown>;
+  },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": url,
+    name,
+    description,
+    url,
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    mainEntity: options?.mainEntity ?? { "@id": `${baseUrl}/#author` },
+    inLanguage: "en-US",
+    ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
+    ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
+  };
+}
+
+/**
+ * Generate ProfilePage schema for profile pages
+ */
+export function generateProfilePageSchema(
+  name: string,
+  description: string,
+  url: string,
+  options?: {
+    dateModified?: string;
+    datePublished?: string;
+    articleSection?: string;
+  },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": url,
+    name,
+    description,
+    url,
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    mainEntity: { "@id": `${baseUrl}/#author` },
+    about: { "@id": `${baseUrl}/#author` },
+    inLanguage: "en-US",
+    ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
+    ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
   };
 }
 
@@ -251,4 +334,63 @@ export function generateHowToSchema(
     })),
     ...(totalTime ? { totalTime } : {}),
   };
+}
+
+export function generateBlogPostingSchema(
+  post: {
+    id: string;
+    title: string;
+    excerpt: string;
+    date: string;
+    dateModified?: string;
+    author?: string;
+    tags: string[];
+    reviewedBy?: string;
+    howToSteps?: Array<{ name: string; text: string; url?: string }>;
+  },
+  readingTimeMinutes: number,
+  wordCount: number,
+) {
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${baseUrl}/blog/${post.id}#article`,
+    headline: post.title,
+    description: post.excerpt,
+    url: `${baseUrl}/blog/${post.id}`,
+    datePublished: `${post.date}T00:00:00Z`,
+    dateModified: post.dateModified
+      ? `${post.dateModified}T00:00:00Z`
+      : `${post.date}T00:00:00Z`,
+    author: generateBlogAuthorSchema(post.author),
+    publisher: generateBlogPublisherSchema(),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.id}`,
+    },
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    image: `${baseUrl}/og/blog/${post.id}.png`,
+    keywords: post.tags.join(", "),
+    articleSection: post.tags[0] ?? "Technology",
+    wordCount: wordCount,
+    timeRequired: `PT${readingTimeMinutes}M`,
+    inLanguage: "en-US",
+    ...(post.reviewedBy
+      ? {
+          reviewedBy: generateReviewedBySchema(post.reviewedBy),
+        }
+      : {}),
+  };
+
+  const howToSchema =
+    post.howToSteps && post.howToSteps.length > 0
+      ? generateHowToSchema(
+          post.title,
+          post.excerpt,
+          post.howToSteps,
+          validateDuration(`PT${readingTimeMinutes}M`),
+        )
+      : null;
+
+  return { blogPostingSchema, howToSchema };
 }

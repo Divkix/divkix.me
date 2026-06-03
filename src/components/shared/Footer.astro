@@ -33,12 +33,13 @@ const footerLinks = [
       <a
         href={`mailto:${siteConfig.email}`}
         class="text-foreground link-underline-grow whitespace-nowrap uppercase tracking-[0.06em]"
+        aria-label={`Email ${siteConfig.email}`}
       >
         Email
       </a>
     </p>
     <p class="text-xs text-muted-foreground tracking-[0.04em]">
-      &copy; {currentYear} · {siteConfig.location}
+      &copy; {currentYear} <span aria-hidden="true">·</span> {siteConfig.location}
     </p>
   </div>
 </footer>

@@ -1,0 +1,138 @@
+---
+import { siteConfig } from "@/data/site.config";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import {
+  generateBreadcrumbSchema,
+  generateProfilePageSchema,
+} from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
+
+const pricingUrl = `${baseUrl}/pricing`;
+
+const pricingPageSchema = generateProfilePageSchema(
+  "Pricing",
+  `Services and pricing for ${siteConfig.name}`,
+  pricingUrl,
+  {
+    datePublished: "2025-01-01",
+    dateModified: "2026-05-20",
+    articleSection: "Services",
+  },
+);
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", item: baseUrl },
+  { name: "Pricing", item: pricingUrl },
+]);
+
+const services = [
+  {
+    name: "Web Development",
+    price: "Starting at $2,000 per project",
+    description:
+      "Full-stack web applications, APIs, and portfolio sites built with modern frameworks.",
+  },
+  {
+    name: "Technical Consulting",
+    price: "$150/hour",
+    description:
+      "Architecture reviews, technology selection, and engineering strategy sessions.",
+  },
+  {
+    name: "Code Review & Audits",
+    price: "$500 per project",
+    description:
+      "Security audits, performance analysis, and code quality assessments.",
+  },
+  {
+    name: "SEO Optimization",
+    price: "$1,000 per project",
+    description:
+      "Technical SEO, structured data, and content optimization for search engines.",
+  },
+  {
+    name: "AI Integration",
+    price: "Custom pricing",
+    description:
+      "LLM-powered features, AI agent workflows, and intelligent automation.",
+  },
+];
+---
+
+<SiteLayout
+  title="Pricing"
+  description={`Services and pricing for ${siteConfig.name}`}
+  ogImage={`${baseUrl}/og/pricing.png`}
+  dateModified="2026-05-20"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <div class="container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <!-- Header -->
+      <div class="space-y-4 text-center">
+        <h1 class="text-5xl font-display font-bold">Pricing</h1>
+        <p class="text-xl text-foreground/70">
+          Services and rates for freelance work
+        </p>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="grid gap-6 md:grid-cols-2">
+        {services.map((service) => (
+          <div class="surface-raised p-8 rounded-none space-y-4">
+            <div class="space-y-2">
+              <h2 class="text-xl font-semibold">{service.name}</h2>
+              <p class="text-lg font-bold text-primary">{service.price}</p>
+            </div>
+            <p class="text-foreground/70">{service.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Download Link -->
+      <div class="text-center">
+        <a
+          href="/pricing.md"
+          class="inline-flex items-center gap-2 text-primary hover:underline"
+          download
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" x2="12" y1="15" y2="3" />
+          </svg>
+          Download pricing.md
+        </a>
+      </div>
+
+      <!-- Contact -->
+      <div class="text-center space-y-4 pt-8 border-t border-border">
+        <p class="text-foreground/60">
+          For project inquiries or custom quotes, reach out:
+        </p>
+        <div class="flex items-center justify-center gap-6">
+          <a
+            href={`mailto:${siteConfig.email}`}
+            class="text-primary hover:underline"
+          >
+            {siteConfig.email}
+          </a>
+          <span class="text-foreground/40">·</span>
+          <a href="/" class="text-primary hover:underline">divkix.me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

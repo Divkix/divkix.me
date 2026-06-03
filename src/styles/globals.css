@@ -407,3 +407,52 @@
     scroll-behavior: auto !important;
   }
 }
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: var(--color-ink);
+    --color-rule: var(--color-ink);
+  }
+
+  *:focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    border: 2px solid var(--color-ink);
+  }
+
+  .btn-secondary {
+    border: 2px solid var(--color-ink);
+  }
+
+  .link-underline-grow::after {
+    height: 2px;
+  }
+}
+
+@media print {
+  .scroll-to-top,
+  header,
+  nav,
+  footer,
+  .theme-toggle {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  a {
+    text-decoration: underline !important;
+    color: black !important;
+  }
+
+  .surface-raised {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+}

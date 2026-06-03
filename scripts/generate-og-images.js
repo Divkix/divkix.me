@@ -12,6 +12,7 @@ const fs = require("node:fs");
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
 const POSTS_JSON = path.join(CONTENT_DIR, "posts.json");
 const OUTPUT_DIR = path.join(process.cwd(), "public", "og", "blog");
+const STATIC_OUTPUT_DIR = path.join(process.cwd(), "public", "og");
 
 /**
  * Escape XML special characters
@@ -65,6 +66,101 @@ function formatDate(dateStr) {
     month: "long",
     day: "numeric",
   });
+}
+
+/**
+ * Generate SVG for a static page OG image
+ */
+function generateStaticPageSvg(page) {
+  const width = 1200;
+  const height = 630;
+
+  const titleLines = wrapText(page.title, 32);
+  const titleStartY = 200;
+  const lineHeight = 70;
+
+  const titleElements = titleLines
+    .map(
+      (line, i) =>
+        `<text x="80" y="${titleStartY + i * lineHeight}"
+           font-family="system-ui, -apple-system, sans-serif"
+           font-size="56"
+           font-weight="bold"
+           fill="white">
+        ${escapeXml(line)}
+      </text>`,
+    )
+    .join("\n");
+
+  const metaY = titleStartY + titleLines.length * lineHeight + 40;
+
+  return `
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#1a1a2e;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+        </linearGradient>
+
+        <!-- Accent gradient for decorative element -->
+        <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+
+      <!-- Background -->
+      <rect width="${width}" height="${height}" fill="url(#grad)" />
+
+      <!-- Grid pattern -->
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="${width}" height="${height}" fill="url(#grid)" />
+
+      <!-- Accent bar -->
+      <rect x="80" y="100" width="80" height="6" rx="3" fill="url(#accent)" />
+
+      <!-- Page label -->
+      <text x="180" y="108"
+            font-family="system-ui, -apple-system, sans-serif"
+            font-size="18"
+            fill="rgba(255,255,255,0.5)"
+            text-anchor="start">
+        ${escapeXml(page.label.toUpperCase())}
+      </text>
+
+      <!-- Title -->
+      ${titleElements}
+
+      <!-- Description -->
+      <text x="80" y="${metaY}"
+            font-family="system-ui, -apple-system, sans-serif"
+            font-size="22"
+            fill="rgba(255,255,255,0.6)">
+        ${escapeXml(page.description)}
+      </text>
+
+      <!-- Author and site -->
+      <text x="80" y="${height - 50}"
+            font-family="system-ui, -apple-system, sans-serif"
+            font-size="20"
+            fill="rgba(255,255,255,0.7)">
+        Divanshu Chauhan
+      </text>
+
+      <text x="${width - 80}" y="${height - 50}"
+            font-family="system-ui, -apple-system, sans-serif"
+            font-size="20"
+            fill="rgba(255,255,255,0.5)"
+            text-anchor="end">
+        divkix.me
+      </text>
+    </svg>
+  `;
 }
 
 /**
@@ -178,6 +274,124 @@ function generatePostSvg(post) {
   `;
 }
 
+async function generateStaticPageOGImages() {
+  console.log("Generating static page OG images...");
+
+  if (!fs.existsSync(STATIC_OUTPUT_DIR)) {
+    fs.mkdirSync(STATIC_OUTPUT_DIR, { recursive: true });
+    console.log(`Created directory: ${STATIC_OUTPUT_DIR}`);
+  }
+
+  const staticPages = [
+    {
+      slug: "about",
+      title: "About Divanshu Chauhan",
+      description: "Cloudflare engineer, Vinext contributor, ASU MS CS",
+      label: "About",
+    },
+    {
+      slug: "resume",
+      title: "Resume | Divanshu Chauhan",
+      description: "Software Engineer & Builder",
+      label: "Resume",
+    },
+    {
+      slug: "socials",
+      title: "Connect with Divanshu Chauhan",
+      description: "GitHub, LinkedIn, X, and more",
+      label: "Connect",
+    },
+    {
+      slug: "divkix",
+      title: "divkix | Divanshu Chauhan",
+      description: "Software Engineer & Open Source Contributor",
+      label: "Profile",
+    },
+    {
+      slug: "mentions",
+      title: "Mentions & Press",
+      description: "External citations and features",
+      label: "Mentions",
+    },
+    {
+      slug: "privacy",
+      title: "Privacy Policy",
+      description: "How data is handled on divkix.me",
+      label: "Legal",
+    },
+    {
+      slug: "blog",
+      title: "Blog | Divanshu Chauhan",
+      description: "Software Engineering & Building in Public",
+      label: "Blog",
+    },
+    {
+      slug: "pricing",
+      title: "Pricing | Divanshu Chauhan",
+      description: "Services and rates for freelance work",
+      label: "Pricing",
+    },
+  ];
+
+  let generated = 0;
+  let skipped = 0;
+
+  await Promise.all(
+    staticPages.map(async (page) => {
+      const outputPath = path.join(STATIC_OUTPUT_DIR, `${page.slug}.png`);
+      const webpOutputPath = path.join(STATIC_OUTPUT_DIR, `${page.slug}.webp`);
+
+      // Check if images already exist
+      if (fs.existsSync(outputPath) && fs.existsSync(webpOutputPath)) {
+        skipped++;
+        return;
+      }
+
+      try {
+        const svg = generateStaticPageSvg(page);
+
+        await sharp(Buffer.from(svg)).png().toFile(outputPath);
+        await sharp(Buffer.from(svg))
+          .webp({ quality: 80 })
+          .toFile(webpOutputPath);
+
+        generated++;
+        console.log(`Generated static OG: ${page.slug}.png, ${page.slug}.webp`);
+      } catch (error) {
+        console.error(
+          `Error generating static OG image for ${page.slug}:`,
+          error.message,
+        );
+      }
+    }),
+  );
+
+  // Generate root default OG image (og-image.webp)
+  const rootWebpPath = path.join(process.cwd(), "public", "og-image.webp");
+  if (!fs.existsSync(rootWebpPath)) {
+    try {
+      const homeSvg = generateStaticPageSvg({
+        slug: "home",
+        title: "Divanshu Chauhan — Software Engineer & Builder",
+        description: "Cloudflare engineer, Vinext contributor, ASU MS CS",
+        label: "Home",
+      });
+      await sharp(Buffer.from(homeSvg))
+        .webp({ quality: 80 })
+        .toFile(rootWebpPath);
+      console.log("Generated root OG image: og-image.webp");
+    } catch (error) {
+      console.error("Error generating root OG image:", error.message);
+    }
+  } else {
+    console.log("Root OG image already exists: og-image.webp");
+  }
+
+  console.log(
+    `\nStatic OG images: ${generated} generated, ${skipped} skipped (unchanged)`,
+  );
+}
+
 async function generateOGImages() {
   console.log("Generating blog post OG images...");
 
@@ -267,6 +481,9 @@ async function generateOGImages() {
   console.log(
     `\nOG images: ${generated} generated, ${skipped} skipped (unchanged)`,
   );
+
+  // Generate static page OG images
+  await generateStaticPageOGImages();
 }
 
 // Run if called directly

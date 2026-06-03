@@ -1,6 +1,6 @@
 ---
 import Footer from "@/components/shared/Footer.astro";
-import { Navbar } from "@/components/shared/Navbar";
+import { NavbarWithBoundary } from "@/components/shared/Navbar";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { siteConfig } from "@/data/site.config";
 import BaseLayout from "./BaseLayout.astro";
@@ -9,17 +9,29 @@ interface Props {
   title?: string;
   description?: string;
   showScrollProgress?: boolean;
+  dateModified?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
 const {
   title = `${siteConfig.name} — Software engineer at Cloudflare, Vinext contributor`,
   description = siteConfig.seo.metaDescription,
   showScrollProgress = false,
+  dateModified,
+  ogImage,
+  ogImageAlt,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
-  <Navbar client:idle />
+<BaseLayout
+  title={title}
+  description={description}
+  {...(ogImage ? { ogImage } : {})}
+  {...(dateModified ? { dateModified } : {})}
+  {...(ogImageAlt ? { ogImageAlt } : {})}
+>
+  <NavbarWithBoundary client:idle />
 
   {showScrollProgress && <ScrollProgress client:idle />}
 

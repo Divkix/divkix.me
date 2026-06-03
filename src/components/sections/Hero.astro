@@ -42,13 +42,17 @@ import { siteConfig } from "@/data/site.config";
     >
       <img
         src={siteConfig.authorImage}
-        alt={`Portrait of ${siteConfig.name}, software engineer in Tempe, Arizona`}
+        alt={`Portrait of ${siteConfig.name}`}
+        aria-describedby="hero-image-caption"
         class="w-full aspect-[4/5] object-cover object-[center_22%]"
         width="480"
         height="600"
         loading="eager"
         decoding="async"
       />
+      <figcaption id="hero-image-caption" class="sr-only">
+        Portrait of {siteConfig.name}, software engineer in Tempe, Arizona
+      </figcaption>
     </figure>
   </div>
 </section>

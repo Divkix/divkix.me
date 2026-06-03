@@ -3,12 +3,9 @@ import { type CollectionEntry, getCollection, render } from "astro:content";
 import { siteConfig } from "@/data/site.config";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import {
-  generateBlogAuthorSchema,
-  generateBlogPublisherSchema,
+  generateBlogPostingSchema,
   generateBreadcrumbSchema,
   generateFAQPageSchema,
-  generateHowToSchema,
-  generateReviewedBySchema,
   generateSpeakableSchema,
   getJobTitle,
 } from "@/lib/schema";
@@ -61,35 +58,21 @@ const toc = headings.map((h: Heading) => ({
 
 const showToc = toc.length >= 3;
 
-const blogPostingSchema = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "@id": `${baseUrl}/blog/${post.id}#article`,
-  headline: post.data.title,
-  description: post.data.excerpt,
-  url: `${baseUrl}/blog/${post.id}`,
-  datePublished: `${post.data.date}T00:00:00Z`,
-  dateModified: post.data.dateModified
-    ? `${post.data.dateModified}T00:00:00Z`
-    : `${post.data.date}T00:00:00Z`,
-  author: generateBlogAuthorSchema(post.data.author),
-  publisher: generateBlogPublisherSchema(),
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": `${baseUrl}/blog/${post.id}`,
+const { blogPostingSchema, howToSchema } = generateBlogPostingSchema(
+  {
+    id: post.id,
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    date: post.data.date,
+    dateModified: post.data.dateModified,
+    author: post.data.author,
+    tags: post.data.tags,
+    reviewedBy: post.data.reviewedBy,
+    howToSteps: post.data.howToSteps,
   },
-  image: `${baseUrl}/og/blog/${post.id}.png`,
-  keywords: post.data.tags.join(", "),
-  articleSection: post.data.tags[0] ?? "Technology",
-  wordCount: wordCount,
-  timeRequired: `PT${readingTimeMinutes}M`,
-  inLanguage: "en-US",
-  ...(post.data.reviewedBy
-    ? {
-        reviewedBy: generateReviewedBySchema(post.data.reviewedBy),
-      }
-    : {}),
-};
+  readingTimeMinutes,
+  wordCount,
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -127,17 +110,6 @@ const articleMeta = {
     ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
     : {}),
 };
-
-// HowTo schema - only for posts with tutorial steps
-const howToSchema =
-  post.data.howToSteps && post.data.howToSteps.length > 0
-    ? generateHowToSchema(
-        post.data.title,
-        post.data.excerpt,
-        post.data.howToSteps,
-        `PT${readingTimeMinutes}M`,
-      )
-    : null;
 ---
 
 <BlogLayout
@@ -149,6 +121,10 @@ const howToSchema =
   ogType="article"
   articleMeta={articleMeta}
 >
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground">
+    Skip to main content
+  </a>
+
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
@@ -168,14 +144,19 @@ const howToSchema =
     <>
       {/* Mobile TOC Toggle */}
       <div class="xl:hidden container mx-auto px-4 pt-4">
-        <details class="surface-raised rounded-lg border border-border/40">
-          <summary class="p-4 cursor-pointer font-semibold flex items-center justify-between">
+        <details id="toc-details" class="surface-raised rounded-none border border-border/40">
+          <summary
+            id="toc-summary"
+            class="p-4 cursor-pointer font-semibold flex items-center justify-between"
+            aria-expanded="false"
+            aria-controls="toc-nav"
+          >
             <span>Table of Contents</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform" aria-hidden="true">
               <path d="m6 9 6 6 6-6"/>
             </svg>
           </summary>
-          <nav class="p-4 pt-0 space-y-2 text-sm">
+          <nav id="toc-nav" class="p-4 pt-0 space-y-2 text-sm">
             <ul class="space-y-2">
               {toc.map((item: { id: string; text: string; level: number }) => (
                 <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
@@ -213,6 +194,33 @@ const howToSchema =
     </>
   )}
 
+  <div id="blog-skeleton" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0 space-y-[var(--space-lg)]" aria-hidden="true">
+    <div class="animate-pulse space-y-4">
+      <div class="h-8 w-32 bg-muted rounded"></div>
+      <div class="h-12 w-3/4 bg-muted rounded"></div>
+      <div class="flex gap-4">
+        <div class="h-6 w-24 bg-muted rounded"></div>
+        <div class="h-6 w-32 bg-muted rounded"></div>
+      </div>
+      <div class="h-64 w-full bg-muted rounded"></div>
+      <div class="space-y-2">
+        <div class="h-4 w-full bg-muted rounded"></div>
+        <div class="h-4 w-5/6 bg-muted rounded"></div>
+        <div class="h-4 w-4/6 bg-muted rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const skeleton = document.getElementById("blog-skeleton");
+      const article = document.getElementById("main-content");
+      if (skeleton && article) {
+        skeleton.style.display = "none";
+      }
+    })();
+  </script>
+
   <article id="main-content" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0">
     <div class="space-y-[var(--space-lg)] min-w-0">
       <a
@@ -246,13 +254,13 @@ const howToSchema =
           <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
             {readingTime}
           </span>
-          <time datetime={post.data.date}>
+          <time datetime={`${post.data.date}T00:00:00Z`}>
             Published {formatDate(post.data.date)}
           </time>
           {post.data.dateModified && (
             <>
               <span class="text-primary" aria-hidden="true">•</span>
-              <time datetime={post.data.dateModified} class="text-primary font-medium">
+              <time datetime={`${post.data.dateModified}T00:00:00Z`} class="text-primary font-medium">
                 Updated {formatDate(post.data.dateModified)}
               </time>
             </>
@@ -283,7 +291,7 @@ const howToSchema =
         alt={post.data.coverAlt ?? `Featured image for ${post.data.title}`}
         width="1200"
         height="630"
-        class="w-full rounded-lg"
+        class="w-full rounded-none"
         loading="eager"
         decoding="async"
       />
@@ -291,14 +299,14 @@ const howToSchema =
       {(post.data.tldr || (post.data.keyTakeaways && post.data.keyTakeaways.length > 0)) && (
         <div id="speakable-content" class="space-y-6">
           {post.data.tldr && (
-            <div class="tldr-summary surface-raised p-6 rounded-lg border-l-4 border-primary">
+            <div class="tldr-summary surface-raised p-6 rounded-none border-l-4 border-primary">
               <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
               <p class="text-foreground/70">{post.data.tldr}</p>
             </div>
           )}
 
           {post.data.keyTakeaways && post.data.keyTakeaways.length > 0 && (
-            <div class="key-takeaways surface-raised p-6 rounded-lg">
+            <div class="key-takeaways surface-raised p-6 rounded-none">
               <h2 class="text-lg font-semibold mb-4">Key Takeaways</h2>
               <ul class="key-takeaways-list space-y-2">
                 {post.data.keyTakeaways.map((takeaway: string) => (
@@ -336,7 +344,7 @@ const howToSchema =
           <h2 id="faq-heading" class="text-2xl font-bold">Frequently Asked Questions</h2>
           <div class="space-y-4">
             {post.data.faq.map((faq: { q: string; a: string }) => (
-              <div class="surface-raised p-6 rounded-lg">
+              <div class="surface-raised p-6 rounded-none">
                 <h3 class="font-semibold text-lg">{faq.q}</h3>
                 <p class="mt-3 text-foreground/70">{faq.a}</p>
               </div>
@@ -372,7 +380,7 @@ const howToSchema =
             {relatedPosts.map((relatedPost: CollectionEntry<"blog">) => (
               <a
                 href={`/blog/${relatedPost.id}`}
-                class="block surface-raised hover:border-primary/50 transition-colors rounded-lg overflow-hidden border border-border/40 p-4"
+                class="block surface-raised hover:border-primary/50 transition-colors rounded-none overflow-hidden border border-border/40 p-4"
               >
                 <h3 class="font-semibold hover:text-primary transition-colors mb-2">
                   {relatedPost.data.title}
@@ -387,13 +395,15 @@ const howToSchema =
       )}
 
       <div class="pt-8 border-t border-border/40">
-        <div class="surface-raised p-6 rounded-lg">
+        <div class="surface-raised p-6 rounded-none">
           <div class="flex gap-4 items-start">
             <img
               src="/divanshu-chauhan.webp"
               alt="Divanshu Chauhan"
               class="w-16 h-16 rounded-full"
               loading="lazy"
+              width="64"
+              height="64"
             />
             <div class="flex-1">
               <h3 class="font-semibold">
@@ -414,4 +424,16 @@ const howToSchema =
       </div>
     </div>
   </article>
+
+  <script is:inline>
+    (function () {
+      const details = document.getElementById("toc-details");
+      const summary = document.getElementById("toc-summary");
+      if (!details || !summary) return;
+      details.addEventListener("toggle", function () {
+        summary.setAttribute("aria-expanded", String(details.open));
+      });
+      summary.setAttribute("aria-expanded", String(details.open));
+    })();
+  </script>
 </BlogLayout>
