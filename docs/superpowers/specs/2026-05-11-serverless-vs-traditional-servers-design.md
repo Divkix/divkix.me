@@ -283,7 +283,7 @@ Primary queries this post should rank for and get cited on:
 
 ## 9. Files That May Need Changes
 - `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` — **new file**
-- `scripts/generate-posts-metadata.js` — no changes needed (auto-detects new MDX)
+- `scripts/generate-posts-metadata.ts` — no changes needed (auto-detects new MDX)
 - `scripts/generate-og-images.js` — may need OG image (use Clickfolio or custom banner)
 - Existing blog posts — no changes, but cross-link from them to this new post (optional)
 

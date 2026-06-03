@@ -108,7 +108,7 @@ No `fs` module at runtime. The solution? Prebuild everything.
 I wrote a build script that runs before deployment:
 
 ```javascript
-// scripts/generate-posts-metadata.js
+// scripts/generate-posts-metadata.ts
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -195,7 +195,7 @@ My `package.json` scripts:
 ```json
 {
   "scripts": {
-    "prebuild": "node scripts/generate-posts-metadata.js",
+    "prebuild": "bun run scripts/generate-posts-metadata.ts",
     "build": "bun run prebuild && next build",
     "preview": "bun run build && wrangler pages dev .open-next/assets",
     "deploy": "bun run build && wrangler pages deploy .open-next/assets"

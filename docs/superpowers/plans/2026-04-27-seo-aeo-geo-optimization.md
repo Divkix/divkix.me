@@ -548,7 +548,7 @@ In `package.json`, add the new script to the `prebuild` pipeline. Read the curre
 Note: Add this to the `prebuild` script so it runs before the build:
 
 ```json
-"prebuild": "bun run scripts/generate-posts-metadata.js && bun run scripts/generate-og-images.js && bun run scripts/validate-content.ts && bun run scripts/validate-citations.ts"
+"prebuild": "bun run scripts/generate-posts-metadata.ts && bun run scripts/generate-og-images.js && bun run scripts/validate-citations.ts"
 ```
 
 This uses `&&` to chain (not `||`) so build continues even if citations have warnings.
@@ -770,9 +770,9 @@ bun run build
 ```
 
 Expected: Clean build with all 5 pipeline steps succeeding:
-1. generate-posts-metadata.js — 12 posts processed
-2. generate-og-images.js — OG images generated
-3. validate-content.ts — MDX count matches posts.json
+1. generate-posts-metadata.ts — 12 posts processed
+2. generate-og-images.js — 12 images generated
+3. blog module (src/lib/blog.ts) — guarantees MDX/posts.json sync
 4. astro build — static build complete
 5. validate-citations.ts — content quality warnings (non-blocking)
 

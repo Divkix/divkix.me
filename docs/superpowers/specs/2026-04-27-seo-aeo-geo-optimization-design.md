@@ -179,12 +179,12 @@ sameAs: siteConfig.socials
 
 ### 11. Citation Density Lint (Build-Time Warning)
 
-**What:** Add a post-build validation step (or extend `validate-content.ts`) that checks:
+**What:** Add a post-build validation step (or extend `scripts/validate-citations.ts`) that checks:
 - Each blog post has ≥ 3 external links (data/source citations)
 - Each post has ≥ 3 specific data points/statistics
 - Warns (non-blocking) if thresholds not met
 
-**File:** New `scripts/validate-citations.ts` or extend `scripts/validate-content.ts`
+**File:** `scripts/validate-citations.ts` (or extend it if it already exists)
 
 **Why:** GEO research shows that AI systems prioritize content with verifiable facts and cited sources. At minimum 1 data point per 150 words. This keeps content quality high without being a hard build blocker.
 
