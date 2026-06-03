@@ -2,6 +2,7 @@
 title: "I Needed Logs, Not a PhD in Elasticsearch — So I Built Logwell"
 seoTitle: "I Needed Logs, Not a PhD in Elasticsearch — So I Built Logwell"
 seoDescription: "I was paying $170/month for Datadog. Now I run Logwell on a $6 VPS with PostgreSQL. Self-hosted logging that actually makes sense."
+coverAlt: "Logwell dashboard showing real-time log streaming and PostgreSQL search interface"
 date: "2026-01-06"
 dateModified: "2026-04-05"
 excerpt: "Every logging tool felt like overkill—ELK's operational complexity, Datadog's pricing, Loki's LogQL learning curve. So I built Logwell: one Docker Compose, PostgreSQL-native, real-time streaming. Here's what I learned."
@@ -38,6 +39,10 @@ howToSteps:
     text: "Run docker compose up -d to start the app and PostgreSQL. The app serves the dashboard on the configured port."
   - name: "Stream logs via the SDK"
     text: "Install the Logwell SDK in your projects, configure the endpoint and API key, and start sending logs."
+reviewedBy: "Divanshu Chauhan"
+sources:
+  - "https://www.postgresql.org/docs/current/textsearch.html"
+  - "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events"
 faq:
   - q: "Why not just use Loki?"
     a: "Loki requires learning LogQL and has no built-in UI—you need Grafana. For side projects, I wanted something simpler with batteries included."

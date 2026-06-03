@@ -95,7 +95,7 @@ const navLinks = [
       </div>
 
       <!-- Quick Bio -->
-      <div class="surface-raised p-6 rounded-lg space-y-4">
+      <div class="surface-raised p-6 rounded-none space-y-4">
         <h2 class="text-xl font-semibold">Quick Bio</h2>
         <p class="text-foreground/70 leading-relaxed">
           {siteConfig.about}
@@ -124,7 +124,7 @@ const navLinks = [
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="surface-raised p-5 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-5 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div>
               <span class="text-lg font-semibold block">{link.label}</span>
@@ -159,7 +159,7 @@ const navLinks = [
               href={primaryLink.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="surface-raised p-5 rounded-lg flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-5 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex-1">
                 <span class="text-lg font-semibold block">{project.name}</span>

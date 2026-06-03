@@ -2,6 +2,7 @@
 title: "I Built a Full-Stack AI App on Cloudflare Workers With D1, Durable Objects, and Queues — Here's What Actually Worked"
 seoTitle: "I Built a Full-Stack AI App on Cloudflare Workers With D1, Durable Objects, and Queues — Here's What Actually Worked"
 seoDescription: "I built clickfolio.me entirely on Cloudflare's free tier: D1, R2, Queues, Durable Objects, Gemini AI. $0 hosting, 50ms response times. Every technical decision explained."
+coverAlt: "Architecture diagram of Cloudflare Workers stack with D1, R2, Queues, and Durable Objects"
 date: "2026-01-26"
 dateModified: "2026-04-05"
 excerpt: "Upload a PDF resume, get a live web portfolio. I built clickfolio.me entirely on Cloudflare's edge stack, D1 for data, R2 for files, Queues for async processing, Durable Objects for real-time WebSockets, and Gemini for AI parsing. Here's every technical decision, including the ones I regret."
@@ -40,6 +41,13 @@ howToSteps:
     text: "Use Gemini Flash Lite for resume parsing. Apply lenient transforms to AI output and strict Zod validation to user edits."
   - name: "Deploy real-time updates with WebSockets"
     text: "Replace HTTP polling with Durable Objects and WebSocket Hibernation. The DO evicts from memory when idle, keeping costs near zero."
+reviewedBy: "Divanshu Chauhan"
+sources:
+  - "https://developers.cloudflare.com/workers/"
+  - "https://developers.cloudflare.com/d1/"
+  - "https://developers.cloudflare.com/durable-objects/"
+  - "https://developers.cloudflare.com/queues/"
+  - "https://developers.cloudflare.com/r2/"
 faq:
   - q: "Can you build a full-stack app on Cloudflare Workers?"
     a: "Yes, but with constraints. No filesystem access, no native Node.js modules, D1 is SQLite (not Postgres), and you can't use Next.js Image component. Drizzle ORM + Better Auth + R2 bindings cover most needs. It's production-viable for apps that don't need heavy Node.js dependencies."

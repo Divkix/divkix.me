@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         this.props.fallback || (
-          <div className="p-4 border border-destructive rounded-lg bg-destructive/10">
+          <div className="p-4 border border-destructive rounded-none bg-destructive/10">
             <p className="text-destructive font-medium" role="alert">
               Something went wrong. Please try again later.
             </p>
