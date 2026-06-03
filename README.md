@@ -64,16 +64,15 @@ These run automatically during `bun run build`, but you can run them individuall
 
 | Script | What it does |
 |--------|-------------|
-| `generate-posts-metadata.js` | Parse MDX frontmatter → `content/blog/posts.json` |
-| `generate-og-images.js` | Generate OG images for each blog post |
+| `generate-posts-metadata.ts` | Parse MDX frontmatter via `src/lib/blog.ts` → `content/blog/posts.json` |
+| `generate-og-images.js` | Generate OpenGraph images for blog posts |
 | `generate-og-image.js` | Generate the site-wide OG image |
 | `generate-favicons.ts` | Generate favicons from the SVG source |
-| `validate-content.ts` | Make sure MDX files and `posts.json` are in sync |
-| `submit-indexnow.ts` | Tell search engines about new content (production only) |
+| `submit-indexnow.ts` | Submit sitemap to search engines (production only) |
 | `check-citation-density.ts` | Check how "citation-dense" blog posts are |
 | `seo-production-audit.ts` | Production SEO audit |
 
-**Note:** If you add, remove, or rename a blog post, run `bun run prebuild` to regenerate `posts.json` or the build will fail at the validation step.
+**Note:** If you add, remove, or rename a blog post, run `bun run prebuild` to regenerate `posts.json`. The blog module (`src/lib/blog.ts`) guarantees the artifact is always in sync with the source MDX files.
 
 ## Project structure
 
