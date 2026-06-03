@@ -325,6 +325,12 @@ async function generateStaticPageOGImages() {
       description: "Software Engineering & Building in Public",
       label: "Blog",
     },
+    {
+      slug: "pricing",
+      title: "Pricing | Divanshu Chauhan",
+      description: "Services and rates for freelance work",
+      label: "Pricing",
+    },
   ];
 
   let generated = 0;
@@ -359,6 +365,27 @@ async function generateStaticPageOGImages() {
       }
     }),
   );
+
+  // Generate root default OG image (og-image.webp)
+  const rootWebpPath = path.join(process.cwd(), "public", "og-image.webp");
+  if (!fs.existsSync(rootWebpPath)) {
+    try {
+      const homeSvg = generateStaticPageSvg({
+        slug: "home",
+        title: "Divanshu Chauhan — Software Engineer & Builder",
+        description: "Cloudflare engineer, Vinext contributor, ASU MS CS",
+        label: "Home",
+      });
+      await sharp(Buffer.from(homeSvg))
+        .webp({ quality: 80 })
+        .toFile(rootWebpPath);
+      console.log("Generated root OG image: og-image.webp");
+    } catch (error) {
+      console.error("Error generating root OG image:", error.message);
+    }
+  } else {
+    console.log("Root OG image already exists: og-image.webp");
+  }
 
   console.log(
     `\nStatic OG images: ${generated} generated, ${skipped} skipped (unchanged)`,

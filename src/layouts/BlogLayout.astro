@@ -1,7 +1,7 @@
 ---
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import Footer from "@/components/shared/Footer.astro";
-import { Navbar } from "@/components/shared/Navbar";
+import { NavbarWithBoundary } from "@/components/shared/Navbar";
 import { type ArticleMeta, baseUrl } from "@/lib/seo";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -45,7 +45,7 @@ const baseLayoutProps = {
 ---
 
 <BaseLayout {...baseLayoutProps}>
-  <Navbar client:load />
+  <NavbarWithBoundary client:load />
 
   {showReadingProgress && (
     <ReadingProgress client:only="react" readingTime={readingTime} />

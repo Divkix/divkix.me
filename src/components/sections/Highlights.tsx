@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { siteConfig } from "@/data/site.config";
 
 export function Highlights() {
@@ -11,10 +12,20 @@ export function Highlights() {
         <a
           href="/about"
           className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
+          aria-label="Full background, experience, and skills"
         >
-          Full background, experience, and skills →
+          Full background, experience, and skills{" "}
+          <span aria-hidden="true">→</span>
         </a>
       </p>
     </section>
+  );
+}
+
+export function HighlightsWithBoundary() {
+  return (
+    <ErrorBoundary>
+      <Highlights />
+    </ErrorBoundary>
   );
 }

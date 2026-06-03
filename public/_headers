@@ -70,6 +70,11 @@
 /blog/*
   Cache-Control: public, max-age=86400, must-revalidate
 
+# Markdown pricing file
+/pricing.md
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: text/markdown; charset=utf-8
+
 # llms.txt files - noindex
 /llms.txt
   X-Robots-Tag: noindex

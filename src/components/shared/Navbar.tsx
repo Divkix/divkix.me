@@ -1,5 +1,6 @@
 import { MenuIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { siteConfig } from "@/data/site.config";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
@@ -179,6 +180,14 @@ export function Navbar() {
         onClosed={() => hamburgerRef.current?.focus()}
       />
     </>
+  );
+}
+
+export function NavbarWithBoundary() {
+  return (
+    <ErrorBoundary>
+      <Navbar />
+    </ErrorBoundary>
   );
 }
 
