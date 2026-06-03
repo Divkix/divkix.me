@@ -22,11 +22,10 @@ if (import.meta.main) {
     const postsJsonContent = readFileSync(POSTS_JSON_PATH, "utf-8");
     const postsJson: PostsJson = JSON.parse(postsJsonContent);
 
-    const canonicalPosts = getAllPosts({ published: true });
+    const allPosts = getAllPosts();
+    const canonicalPosts = allPosts.filter((post) => post.published);
     const canonicalSlugs = canonicalPosts.map((post) => post.slug);
     const jsonSlugs = postsJson.posts.map((post) => post.slug);
-
-    const allPosts = getAllPosts();
     const allSlugs = allPosts.map((post) => post.slug);
 
     let hasError = false;

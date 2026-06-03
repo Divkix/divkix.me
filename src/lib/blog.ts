@@ -46,7 +46,8 @@ export function calculateReadingTime(content: string): {
   wordCount: number;
 } {
   const stripped = stripCodeBlocks(content);
-  const wordCount = stripped.trim().split(/\s+/).length;
+  const trimmed = stripped.trim();
+  const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
   const minutes = Math.max(1, Math.ceil(wordCount / 200));
   return { minutes, wordCount };
 }
@@ -151,7 +152,7 @@ export function getAllPosts(options?: { published?: boolean }): PostMetadata[] {
   }
 
   if (options?.published === true) {
-    return posts.filter((post) => post.published);
+    return publishedPosts;
   }
 
   return posts;

@@ -46,7 +46,13 @@ const { minutes: readingTimeMinutes, wordCount } = calculateReadingTime(
 );
 const readingTime = `${readingTimeMinutes} min read`;
 
-const toc = headings.map((h: { slug: string; text: string; depth: number }) => ({ id: h.slug, text: h.text, level: h.depth }));
+const toc = headings.map(
+  (h: { slug: string; text: string; depth: number }) => ({
+    id: h.slug,
+    text: h.text,
+    level: h.depth,
+  }),
+);
 
 const showToc = toc.length >= 3;
 
