@@ -14,6 +14,15 @@ keyTakeaways:
   - "OpenNext adapter makes Next.js work on edge runtime with minimal config changes"
   - "Edge runtime constraints require prebuild strategy - no filesystem access at runtime"
   - "Global deployment to 330+ cities happens automatically without multi-region setup"
+howToSteps:
+  - name: "Install the OpenNext adapter"
+    text: "Run bun add -D @opennextjs/cloudflare in your Next.js project to bridge the gap between Next.js and Cloudflare Workers."
+  - name: "Configure wrangler.jsonc"
+    text: "Create a wrangler.jsonc with compatibility_date, nodejs_compat flag, and assets pointing to .open-next/assets."
+  - name: "Move filesystem operations to prebuild scripts"
+    text: "Replace runtime fs.readFileSync with a build script that generates static JSON from MDX or markdown files."
+  - name: "Deploy to Cloudflare Workers"
+    text: "Run bun run build followed by wrangler pages deploy .open-next/assets. Your site is live on the edge in under a minute."
 faq:
   - q: "Can I use Next.js App Router with Cloudflare Workers?"
     a: "Yes, but with constraints. Server components work fine, but you can't use Node.js APIs like 'fs' at runtime. OpenNext handles the adaptation automatically."

@@ -167,6 +167,19 @@ Results after the Go rewrite:
 
 Compared to the Python version, the Go rewrite reduced memory consumption by 65% and queries completed 3x faster. That alone justified the 2 months I spent on it.
 
+## Python vs Go for Telegram Bots
+
+| Aspect | Python (v1) | Go (v2) | Impact |
+|--------|------------|---------|--------|
+| **Memory Usage** | ~400MB | ~140MB | 65% reduction |
+| **Query Speed** | ~120ms | ~40ms | 3x faster |
+| **Concurrency** | Threads + asyncio | Goroutines + channels | Handles 300K users without lag |
+| **Binary Size** | ~15MB | ~12MB | Smaller deploy |
+| **Ecosystem** | python-telegram-bot | gotgbot | Both mature, Go is rarer |
+| **Learning Curve** | Low | Medium | 2 months to rewrite |
+
+The rewrite wasn't just about performance. It was about standing out in a sea of Python bots. Go made Alita different, and different got attention.
+
 ## Riding the Wave (Year 2-3)
 
 Something interesting happened as Alita matured: people started making their own Telegram bots.
@@ -192,6 +205,8 @@ Year 3 stats:
 - Forks: 112 → 287
 - Active groups: 1,847 → 12,000+
 - Users touched: ~89,000 → ~200,000
+
+> **Statistic:** Alita Robot grew to 300,000+ total users across 12,000+ active groups, with monthly active users around 40,000.
 
 ## The Aggregation Play (Years 3-5)
 

@@ -3,9 +3,24 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
+  generateFAQPageSchema,
   generateProfilePageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What is this page for?",
+      a: "This page tracks external citations, podcast appearances, and conference talks featuring me.",
+    },
+    {
+      q: "Are there any mentions yet?",
+      a: "No external mentions have been recorded yet. Check back for updates.",
+    },
+  ],
+  `${baseUrl}/mentions`,
+);
 
 const mentionsPageSchema = generateProfilePageSchema(
   `Mentions & Press — ${siteConfig.name}`,
@@ -32,6 +47,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-3xl mx-auto space-y-12">

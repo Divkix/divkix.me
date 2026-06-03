@@ -3,9 +3,28 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
+  generateFAQPageSchema,
   generateProfilePageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What data do you collect?",
+      a: "I collect minimal data: contact form submissions, basic analytics, and theme preferences.",
+    },
+    {
+      q: "How do you protect my information?",
+      a: "I use reasonable security measures and do not sell or trade personal information.",
+    },
+    {
+      q: "Who processes my contact form submissions?",
+      a: "Formspree processes contact form submissions. You can review their privacy policy.",
+    },
+  ],
+  `${baseUrl}/privacy`,
+);
 
 const lastUpdated = "May 20, 2026";
 
@@ -34,6 +53,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(privacyPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-4xl mx-auto space-y-8">

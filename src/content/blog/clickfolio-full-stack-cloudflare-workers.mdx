@@ -31,6 +31,15 @@ keyTakeaways:
   - "Cloudflare Queues with dead letter queues and orphan recovery crons are essential, AI parsing fails more than you'd expect."
   - "Two-stage validation (lenient on AI output, strict on user edits) prevents double-encoding and keeps XSS protection where it matters."
   - "File hash deduplication with a waiting-for-cache pattern prevents duplicate Gemini API calls for the same PDF."
+howToSteps:
+  - name: "Set up Cloudflare Workers with D1 and R2"
+    text: "Create a Workers project with D1 database and R2 storage bindings. Configure Wrangler with queues, crons, and durable objects."
+  - name: "Implement anonymous upload with Claim Check Pattern"
+    text: "Allow users to upload PDFs before authentication. Store in R2 with a temp key, then link to the user after login."
+  - name: "Add AI parsing with two-stage validation"
+    text: "Use Gemini Flash Lite for resume parsing. Apply lenient transforms to AI output and strict Zod validation to user edits."
+  - name: "Deploy real-time updates with WebSockets"
+    text: "Replace HTTP polling with Durable Objects and WebSocket Hibernation. The DO evicts from memory when idle, keeping costs near zero."
 faq:
   - q: "Can you build a full-stack app on Cloudflare Workers?"
     a: "Yes, but with constraints. No filesystem access, no native Node.js modules, D1 is SQLite (not Postgres), and you can't use Next.js Image component. Drizzle ORM + Better Auth + R2 bindings cover most needs. It's production-viable for apps that don't need heavy Node.js dependencies."
@@ -310,11 +319,29 @@ Cloudflare's edge stack is production-viable, but you're an early adopter. The d
 
 The Claim Check Pattern improved conversion by 43%. Reducing auth friction at the upload step, letting users see their resume being processed before they even sign up, meant more completions than hitting a login wall first.
 
+> **Statistic:** The Claim Check Pattern improved conversion by 43%.
+
 Deduplication saved more than I expected. The file hash cache and waiting-for-cache pattern eliminated roughly 30% of Gemini API calls in the first month. Users reupload constantly, same resume, different template, fixing a typo.
+
+> **Statistic:** File hash deduplication eliminated roughly 30% of Gemini API calls in the first month.
 
 Filtering at fetch time rather than storage time is the right call. Storing full data and filtering on read is simpler, more flexible, and much easier to reason about than trying to maintain multiple filtered copies.
 
 Each edge computing constraint, no filesystem, no native modules, SQLite instead of Postgres, no ISR, middleware limitations, is manageable on its own. Stacked together, they add up to a fundamentally different development experience. Know what you're getting into before you're three sprints deep.
+
+## Database Comparison: D1 vs Supabase vs Self-Hosted Postgres
+
+| Feature | D1 (Clickfolio) | Supabase (PickMyClass) | Self-Hosted Postgres (Alita) |
+|---------|----------------|------------------------|------------------------------|
+| **Type** | SQLite at edge | Managed Postgres | Full Postgres |
+| **JSON Support** | TEXT (JSON.parse) | Native JSONB | Native JSONB |
+| **Row-Level Security** | No | Yes | Yes (manual) |
+| **Boolean Handling** | Integers (0/1) | Native boolean | Native boolean |
+| **Cost** | $0 free tier | $0 free tier | $0 (Oracle VPS) |
+| **Ops Work** | None | None | Backups, upgrades, monitoring |
+| **Best For** | Simple CRUD on Workers | Real apps needing Postgres | Full control, 24/7 bots |
+
+D1 works for clickfolio because the data model is simple and write volume is low. For anything needing real Postgres features, use Supabase or self-host.
 
 If you want to try it: [clickfolio.me](https://clickfolio.me). Upload a PDF, pick a template, get a URL. No code required.
 

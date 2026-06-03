@@ -1,5 +1,21 @@
 ---
 import SiteLayout from "@/layouts/SiteLayout.astro";
+import { generateFAQPageSchema } from "@/lib/schema";
+import { baseUrl } from "@/lib/seo";
+
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What is this page?",
+      a: "This is a 404 error page, meaning the URL you requested doesn't exist on this site.",
+    },
+    {
+      q: "How do I get back?",
+      a: "Use the navigation links to go home or read the blog.",
+    },
+  ],
+  `${baseUrl}/404`,
+);
 ---
 
 <SiteLayout
@@ -7,6 +23,7 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
   description="The page you're looking for doesn't exist."
   dateModified="2026-05-20"
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto text-center space-y-8">
       <div class="space-y-4">

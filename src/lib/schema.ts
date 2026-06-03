@@ -335,3 +335,62 @@ export function generateHowToSchema(
     ...(totalTime ? { totalTime } : {}),
   };
 }
+
+export function generateBlogPostingSchema(
+  post: {
+    id: string;
+    title: string;
+    excerpt: string;
+    date: string;
+    dateModified?: string;
+    author?: string;
+    tags: string[];
+    reviewedBy?: string;
+    howToSteps?: Array<{ name: string; text: string; url?: string }>;
+  },
+  readingTimeMinutes: number,
+  wordCount: number,
+) {
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${baseUrl}/blog/${post.id}#article`,
+    headline: post.title,
+    description: post.excerpt,
+    url: `${baseUrl}/blog/${post.id}`,
+    datePublished: `${post.date}T00:00:00Z`,
+    dateModified: post.dateModified
+      ? `${post.dateModified}T00:00:00Z`
+      : `${post.date}T00:00:00Z`,
+    author: generateBlogAuthorSchema(post.author),
+    publisher: generateBlogPublisherSchema(),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.id}`,
+    },
+    isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
+    image: `${baseUrl}/og/blog/${post.id}.png`,
+    keywords: post.tags.join(", "),
+    articleSection: post.tags[0] ?? "Technology",
+    wordCount: wordCount,
+    timeRequired: `PT${readingTimeMinutes}M`,
+    inLanguage: "en-US",
+    ...(post.reviewedBy
+      ? {
+          reviewedBy: generateReviewedBySchema(post.reviewedBy),
+        }
+      : {}),
+  };
+
+  const howToSchema =
+    post.howToSteps && post.howToSteps.length > 0
+      ? generateHowToSchema(
+          post.title,
+          post.excerpt,
+          post.howToSteps,
+          validateDuration(`PT${readingTimeMinutes}M`),
+        )
+      : null;
+
+  return { blogPostingSchema, howToSchema };
+}

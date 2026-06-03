@@ -29,6 +29,15 @@ keyTakeaways:
   - "SSE batching (1.5s window + 50-log max) balances latency vs throughput better than naive streaming."
   - "Claude Code accelerated architecture decisions and boilerplate—but I had to course-correct on performance patterns."
   - "TDD with Trophy testing (integration-heavy, red-green-refactor) caught subtle bugs in SSE batching and pagination before production."
+howToSteps:
+  - name: "Clone the Logwell repository"
+    text: "Fork or clone the Logwell repo from GitHub. It contains a single Docker Compose file and a SvelteKit app."
+  - name: "Configure Docker Compose with PostgreSQL"
+    text: "Set environment variables in the Docker Compose file, especially DATABASE_URL and SSE_BATCH_WINDOW_MS."
+  - name: "Deploy the SvelteKit app and database"
+    text: "Run docker compose up -d to start the app and PostgreSQL. The app serves the dashboard on the configured port."
+  - name: "Stream logs via the SDK"
+    text: "Install the Logwell SDK in your projects, configure the endpoint and API key, and start sending logs."
 faq:
   - q: "Why not just use Loki?"
     a: "Loki requires learning LogQL and has no built-in UI—you need Grafana. For side projects, I wanted something simpler with batteries included."
@@ -63,6 +72,17 @@ ELK is what everyone recommends, and everyone who recommends it either (a) has a
 Datadog and Papertrail solve the operational complexity by being managed. The tradeoff is you're now paying per-GB, which creates this weird incentive where you start questioning whether you really need that debug log statement. Logging shouldn't feel like a taxi meter.
 
 What I wanted: a single Docker Compose file, a web UI, PostgreSQL because I already know it, and the ability to search "connection refused" across all my projects. That's it.
+
+## Logging Tools Compared
+
+| Tool | Setup Complexity | Monthly Cost | Search Speed | Real-time | Best For |
+|------|-----------------|-------------|-------------|-----------|----------|
+| **ELK Stack** | High (JVM tuning, shard allocation) | $0 self-hosted, $100+ managed | Fast | Yes | Enterprise with DevOps teams |
+| **Datadog** | Low (managed) | $0.10/GB + $1.70/M events | Fast | Yes | Teams with logging budgets |
+| **Loki** | Medium (Grafana required) | $0 self-hosted | Medium | Yes | Grafana/Prometheus ecosystem |
+| **Logwell** | Very Low (one Docker Compose) | $0 (self-hosted on free VPS) | Fast enough | Yes | Side projects and personal use |
+
+Logwell is embarrassingly simple compared to the others. That's the point.
 
 ## What I Actually Built
 

@@ -3,15 +3,11 @@ import { type CollectionEntry, getCollection, render } from "astro:content";
 import { siteConfig } from "@/data/site.config";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import {
-  generateBlogAuthorSchema,
-  generateBlogPublisherSchema,
+  generateBlogPostingSchema,
   generateBreadcrumbSchema,
   generateFAQPageSchema,
-  generateHowToSchema,
-  generateReviewedBySchema,
   generateSpeakableSchema,
   getJobTitle,
-  validateDuration,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 import { calculateReadingTime, formatDate } from "@/lib/utils";
@@ -62,36 +58,21 @@ const toc = headings.map((h: Heading) => ({
 
 const showToc = toc.length >= 3;
 
-const blogPostingSchema = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "@id": `${baseUrl}/blog/${post.id}#article`,
-  headline: post.data.title,
-  description: post.data.excerpt,
-  url: `${baseUrl}/blog/${post.id}`,
-  datePublished: `${post.data.date}T00:00:00Z`,
-  dateModified: post.data.dateModified
-    ? `${post.data.dateModified}T00:00:00Z`
-    : `${post.data.date}T00:00:00Z`,
-  author: generateBlogAuthorSchema(post.data.author),
-  publisher: generateBlogPublisherSchema(),
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": `${baseUrl}/blog/${post.id}`,
+const { blogPostingSchema, howToSchema } = generateBlogPostingSchema(
+  {
+    id: post.id,
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    date: post.data.date,
+    dateModified: post.data.dateModified,
+    author: post.data.author,
+    tags: post.data.tags,
+    reviewedBy: post.data.reviewedBy,
+    howToSteps: post.data.howToSteps,
   },
-  isPartOf: { "@type": "WebSite", "@id": `${baseUrl}/#website` },
-  image: `${baseUrl}/og/blog/${post.id}.png`,
-  keywords: post.data.tags.join(", "),
-  articleSection: post.data.tags[0] ?? "Technology",
-  wordCount: wordCount,
-  timeRequired: `PT${readingTimeMinutes}M`,
-  inLanguage: "en-US",
-  ...(post.data.reviewedBy
-    ? {
-        reviewedBy: generateReviewedBySchema(post.data.reviewedBy),
-      }
-    : {}),
-};
+  readingTimeMinutes,
+  wordCount,
+);
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
@@ -129,17 +110,6 @@ const articleMeta = {
     ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
     : {}),
 };
-
-// HowTo schema - only for posts with tutorial steps
-const howToSchema =
-  post.data.howToSteps && post.data.howToSteps.length > 0
-    ? generateHowToSchema(
-        post.data.title,
-        post.data.excerpt,
-        post.data.howToSteps,
-        validateDuration(`PT${readingTimeMinutes}M`),
-      )
-    : null;
 ---
 
 <BlogLayout
@@ -151,6 +121,10 @@ const howToSchema =
   ogType="article"
   articleMeta={articleMeta}
 >
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground">
+    Skip to main content
+  </a>
+
   <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
@@ -219,6 +193,33 @@ const howToSchema =
       </aside>
     </>
   )}
+
+  <div id="blog-skeleton" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0 space-y-[var(--space-lg)]" aria-hidden="true">
+    <div class="animate-pulse space-y-4">
+      <div class="h-8 w-32 bg-muted rounded"></div>
+      <div class="h-12 w-3/4 bg-muted rounded"></div>
+      <div class="flex gap-4">
+        <div class="h-6 w-24 bg-muted rounded"></div>
+        <div class="h-6 w-32 bg-muted rounded"></div>
+      </div>
+      <div class="h-64 w-full bg-muted rounded"></div>
+      <div class="space-y-2">
+        <div class="h-4 w-full bg-muted rounded"></div>
+        <div class="h-4 w-5/6 bg-muted rounded"></div>
+        <div class="h-4 w-4/6 bg-muted rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const skeleton = document.getElementById("blog-skeleton");
+      const article = document.getElementById("main-content");
+      if (skeleton && article) {
+        skeleton.style.display = "none";
+      }
+    })();
+  </script>
 
   <article id="main-content" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0">
     <div class="space-y-[var(--space-lg)] min-w-0">

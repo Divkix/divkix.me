@@ -3,10 +3,25 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
+  generateFAQPageSchema,
   generateProfilePageSchema,
   getJobTitle,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
+
+const faqPageSchema = generateFAQPageSchema(
+  [
+    {
+      q: "What is Divkix?",
+      a: "Divkix is the online handle of Divanshu Chauhan, a Software Engineer and open source contributor.",
+    },
+    {
+      q: "Why the name Divkix?",
+      a: "It's a unique handle that combines my name and stands out across platforms.",
+    },
+  ],
+  `${baseUrl}/divkix`,
+);
 
 const profilePageSchema = generateProfilePageSchema(
   `${siteConfig.handle} - ${siteConfig.name}`,
@@ -55,6 +70,7 @@ const navLinks = [
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="container mx-auto px-4 py-20">
     <div class="max-w-2xl mx-auto space-y-12">
