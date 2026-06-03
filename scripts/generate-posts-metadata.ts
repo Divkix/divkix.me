@@ -10,7 +10,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     console.log("📚 Generating blog posts metadata...");
 
-    const allPosts = getAllPosts();
+    const allPosts = getAllPosts({ published: true });
     const output = {
       posts: allPosts,
       generatedAt: new Date().toISOString(),
