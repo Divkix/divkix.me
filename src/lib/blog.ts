@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import GitHubSlugger from "github-slugger";
 import matter from "gray-matter";
 
 const CONTENT_DIR = join(process.cwd(), "src", "content", "blog");
@@ -55,6 +56,7 @@ export function extractToc(
 ): Array<{ id: string; text: string; level: number }> {
   const headingRegex = /^(#{2,3})\s+(.+)$/gm;
   const toc: Array<{ id: string; text: string; level: number }> = [];
+  const slugger = new GitHubSlugger();
   let match = headingRegex.exec(content);
 
   while (match !== null) {
@@ -65,10 +67,7 @@ export function extractToc(
     }
     const level = hashes.length;
     const text = headingText.trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+    const id = slugger.slug(text);
 
     toc.push({ id, text, level });
     match = headingRegex.exec(content);

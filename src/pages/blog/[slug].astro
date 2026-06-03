@@ -2,7 +2,7 @@
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import { siteConfig } from "@/data/site.config";
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { calculateReadingTime, extractToc } from "@/lib/blog";
+import { calculateReadingTime } from "@/lib/blog";
 import {
   generateBlogPostingSchema,
   generateBreadcrumbSchema,
@@ -28,7 +28,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 // Get all posts for related posts section
 const allPosts = await getCollection("blog");
@@ -46,7 +46,7 @@ const { minutes: readingTimeMinutes, wordCount } = calculateReadingTime(
 );
 const readingTime = `${readingTimeMinutes} min read`;
 
-const toc = extractToc(post.body);
+const toc = headings.map((h: { slug: string; text: string; depth: number }) => ({ id: h.slug, text: h.text, level: h.depth }));
 
 const showToc = toc.length >= 3;
 

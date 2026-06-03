@@ -2,11 +2,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { getAllPosts } from "../src/lib/blog.ts";
 
-export { getAllPosts } from "../src/lib/blog.ts";
-
 const OUTPUT_FILE = join(process.cwd(), "content", "blog", "posts.json");
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.main) {
   try {
     console.log("📚 Generating blog posts metadata...");
 
