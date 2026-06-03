@@ -59,7 +59,7 @@ export function extractToc(
   while (match !== null) {
     const [, hashes, headingText] = match;
     if (!hashes || !headingText) {
-      match = headingRegex.exec(content);
+      match = headingRegex.exec(stripped);
       continue;
     }
     const level = hashes.length;
@@ -67,7 +67,7 @@ export function extractToc(
     const id = slugger.slug(text);
 
     toc.push({ id, text, level });
-    match = headingRegex.exec(content);
+    match = headingRegex.exec(stripped);
   }
 
   return toc;
