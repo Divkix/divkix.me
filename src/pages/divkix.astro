@@ -71,7 +71,7 @@ const navLinks = [
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
   <div class="text-band">
-    <div class="content-rail space-y-12">
+    <div class="space-y-12">
       <!-- Author Image & Identity -->
       <div class="text-center space-y-6">
         <figure class="portrait-frame mx-auto w-32 h-32">
@@ -96,7 +96,7 @@ const navLinks = [
 
       <!-- Quick Bio -->
       <div class="surface-raised p-6 space-y-4">
-        <p class="mast-line">Quick Bio</p>
+        <h2 class="mast-line">Quick Bio</h2>
         <p class="text-foreground/70 leading-relaxed">
           {siteConfig.about}
         </p>
@@ -120,7 +120,7 @@ const navLinks = [
 
       <!-- Navigation Links -->
       <nav class="space-y-4" aria-label="Site navigation">
-        <p class="mast-line text-center">Explore</p>
+        <h2 class="mast-line text-center">Explore</h2>
         {navLinks.map((link) => (
           <a
             href={link.href}
@@ -151,7 +151,7 @@ const navLinks = [
 
       <!-- Top Projects -->
       <section class="space-y-4">
-        <p class="mast-line text-center">Featured Projects</p>
+        <h2 class="mast-line text-center">Featured Projects</h2>
         {topProjects.map((project) => {
           const primaryLink = project.links[0];
           return (

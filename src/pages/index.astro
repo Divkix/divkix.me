@@ -43,18 +43,10 @@ const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
 
 const authorId = `${baseUrl}/#author`;
 
-const vinextSchema = generateSoftwareApplicationSchema(
-  "Vinext",
-  "Next.js on Vite for Cloudflare Workers",
-  "https://github.com/cloudflare/vinext",
-  authorId,
-  {
-    applicationCategory: "DeveloperApplication",
-    keywords: ["Next.js", "Vite", "Cloudflare", "Workers"],
-    codeRepository: "https://github.com/cloudflare/vinext",
-  },
-);
-
+// Note: only the author's own projects are modelled as SoftwareApplication
+// authored by the Person node. Vinext is a Cloudflare project the author
+// contributes to (not authors), so it is represented via the Person node's
+// knowsAbout entity signal instead — not as an owned SoftwareApplication.
 const logwellSchema = generateSoftwareApplicationSchema(
   "LogWell",
   "Self-hosted logging platform",
@@ -79,16 +71,18 @@ const clickfolioSchema = generateSoftwareApplicationSchema(
   },
 );
 
+// Assemble a single JSON-LD graph. Each helper returns a standalone node with
+// its own "@context"; strip it from members so only the graph wrapper carries
+// the context (valid, idiomatic JSON-LD without redundant duplicate contexts).
 const graphSchema = {
   "@context": "https://schema.org",
   "@graph": [
     collectionPageSchema,
     breadcrumbSchema,
     homeFaqSchema,
-    vinextSchema,
     logwellSchema,
     clickfolioSchema,
-  ],
+  ].map(({ "@context": _context, ...node }) => node),
 };
 ---
 

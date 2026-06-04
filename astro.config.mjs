@@ -43,7 +43,14 @@ export default defineConfig({
     mdx(),
     sitemap({
       xslURL: "/sitemap.xsl",
-      filter: (page) => !page.includes("/draft/"),
+      // Exclude draft routes and any noindexed pages — submitting a noindexed
+      // URL in the sitemap is a self-contradicting signal Google Search Console
+      // flags as "Submitted URL marked noindex".
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/$/, "");
+        const noindex = ["/mentions"];
+        return !page.includes("/draft/") && !noindex.includes(path);
+      },
       namespaces: {
         news: false,
         xhtml: false,
