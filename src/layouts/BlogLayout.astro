@@ -15,6 +15,7 @@ interface Props {
   articleMeta?: ArticleMeta;
   dateModified?: string;
   ogImageAlt?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   articleMeta,
   dateModified,
   ogImageAlt,
+  noindex,
 } = Astro.props;
 
 const canonical = `${baseUrl}${Astro.url.pathname}`;
@@ -41,6 +43,7 @@ const baseLayoutProps = {
   ...(articleMeta ? { articleMeta } : {}),
   ...(dateModified ? { dateModified } : {}),
   ...(ogImageAlt ? { ogImageAlt } : {}),
+  ...(noindex ? { noindex } : {}),
 };
 ---
 

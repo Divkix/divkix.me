@@ -128,7 +128,7 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
           Back to Blog
         </a>
 
-        <h1 class="font-display text-[var(--text-display)]">
+        <h1 class="font-display text-[length:var(--text-display)]">
           <span class="mast-line block mb-2">Posts tagged</span>
           {displayTag}
         </h1>
@@ -164,7 +164,7 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
                       {formatDate(item.post.data.date)}
                     </time>
                   </div>
-                  <h2 class="font-display text-[var(--text-xl)] transition-colors">
+                  <h2 class="font-display text-[length:var(--text-xl)] transition-colors">
                     <a
                       href={`/blog/${item.post.id}`}
                       class="hover:text-primary transition-colors link-underline-grow"
