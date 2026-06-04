@@ -229,7 +229,10 @@ export function generateSoftwareApplicationSchema(
     author: { "@type": "Person", "@id": authorId },
     applicationCategory: options?.applicationCategory ?? "DeveloperApplication",
     isAccessibleForFree: options?.isFree ?? true,
-    keywords: options?.keywords?.join(", ") ?? undefined,
+    keywords:
+      options?.keywords && options.keywords.length > 0
+        ? options.keywords.join(", ")
+        : undefined,
     codeRepository: options?.codeRepository ?? undefined,
   };
 }

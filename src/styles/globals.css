@@ -89,35 +89,6 @@
   --sidebar-ring: var(--color-focus);
 }
 
-.dark {
-  --background: var(--color-paper);
-  --foreground: var(--color-ink);
-  --card: var(--color-paper-2);
-  --card-foreground: var(--color-ink);
-  --popover: var(--color-paper-2);
-  --popover-foreground: var(--color-ink);
-  --primary: var(--color-accent);
-  --primary-foreground: var(--color-accent-ink);
-  --secondary: var(--color-paper-2);
-  --secondary-foreground: var(--color-ink);
-  --muted: var(--color-paper-2);
-  --muted-foreground: var(--color-ink-2);
-  --accent: var(--color-paper-2);
-  --accent-foreground: var(--color-ink);
-  --destructive: oklch(0.7 0.19 22);
-  --border: var(--color-rule);
-  --input: var(--color-rule);
-  --ring: var(--color-focus);
-  --sidebar: var(--color-paper-2);
-  --sidebar-foreground: var(--color-ink);
-  --sidebar-primary: var(--color-accent);
-  --sidebar-primary-foreground: var(--color-accent-ink);
-  --sidebar-accent: var(--color-paper-2);
-  --sidebar-accent-foreground: var(--color-ink);
-  --sidebar-border: var(--color-rule);
-  --sidebar-ring: var(--color-focus);
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;

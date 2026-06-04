@@ -12,9 +12,7 @@ import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
   generateFAQPageSchema,
-  generatePersonSchema,
   generateSoftwareApplicationSchema,
-  generateWebSiteSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
@@ -84,8 +82,6 @@ const clickfolioSchema = generateSoftwareApplicationSchema(
 const graphSchema = {
   "@context": "https://schema.org",
   "@graph": [
-    generatePersonSchema(),
-    generateWebSiteSchema(),
     collectionPageSchema,
     breadcrumbSchema,
     homeFaqSchema,
