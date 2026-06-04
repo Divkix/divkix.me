@@ -28,7 +28,6 @@ const mentionsPageSchema = generateProfilePageSchema(
   `${baseUrl}/mentions`,
   {
     datePublished: "2025-01-01",
-    dateModified: "2026-05-20",
     articleSection: "Mentions",
   },
 );
@@ -43,32 +42,35 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   title={`Mentions & Press — ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
   description={`External citations, podcast appearances, and conference talks featuring ${siteConfig.name} (divkix).`}
   ogImage={`${baseUrl}/og/mentions.png`}
-  dateModified="2026-05-20"
+  noindex
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-3xl mx-auto space-y-12">
-      <div class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">Mentions & Press</h1>
-        <p class="text-xl text-foreground/70">
-          External citations, podcast appearances, and conference talks.
-        </p>
-      </div>
+  <div class="text-band">
+    <div class="content-rail">
+      <div class="space-y-12">
+        <div class="space-y-4">
+          <p class="mast-line">Mentions</p>
+          <h1 class="font-display" style="font-size: var(--text-display);">Mentions & Press</h1>
+          <p class="text-xl text-foreground/70">
+            External citations, podcast appearances, and conference talks.
+          </p>
+        </div>
 
-      <div class="surface-raised p-8 rounded-none">
-        <p class="text-foreground/70 leading-relaxed">
-          This page tracks where {siteConfig.name} has been cited, referenced, or featured across the web.
-          As coverage grows, it will be updated with links to podcasts, conference talks, and external publications.
-        </p>
-      </div>
+        <div class="surface-raised p-8 rounded-none">
+          <p class="text-foreground/70 leading-relaxed">
+            This page tracks where {siteConfig.name} has been cited, referenced, or featured across the web.
+            As coverage grows, it will be updated with links to podcasts, conference talks, and external publications.
+          </p>
+        </div>
 
-      <div class="border border-border/40 rounded-none p-8 text-center">
-        <p class="text-foreground/60">
-          No external mentions recorded yet. Check back for updates.
-        </p>
+        <div class="border border-border/40 rounded-none p-8 text-center">
+          <p class="text-foreground/60">
+            No external mentions recorded yet. Check back for updates.
+          </p>
+        </div>
       </div>
     </div>
   </div>

@@ -101,14 +101,68 @@ export function generatePersonSchema() {
       };
     }),
     knowsAbout: [
-      ...siteConfig.skills.map((s) => s.name),
-      "Cloudflare Vinext",
-      "Telegram Bot Development",
-      "Edge Computing",
-      "Developer Tools",
-      "Self-Hosted Logging",
-      "AI-Assisted Development",
-      "Software Engineering",
+      ...new Set([
+        // Cloudflare ecosystem
+        "Cloudflare Workers",
+        "Cloudflare Pages",
+        "Cloudflare D1",
+        "Cloudflare R2",
+        "Cloudflare Queues",
+        "Cloudflare DO",
+        "Cloudflare Vinext",
+        "Serverless Architecture",
+        "D1 Database",
+        "Durable Objects",
+        "Edge Computing",
+
+        // Programming & frameworks
+        "TypeScript",
+        "Go",
+        "Go Programming",
+        "JavaScript",
+        "Node.js",
+        "React",
+        "Next.js App Router",
+        "Astro",
+        "Vite",
+        "Express",
+        "REST APIs",
+        "WebSockets",
+        "WebSocket Hibernation",
+        "SSE",
+        "Docker",
+        "Linux",
+        "PostgreSQL",
+        "SQLite",
+        "MongoDB",
+        "Python",
+        "Java",
+        "C/C++",
+        "Tailwind CSS",
+
+        // Telegram
+        "Telegram Bot API",
+        "Telegram Bot Development",
+
+        // AI
+        "Gemini API",
+        "LLM workflows",
+        "AI Agents",
+        "Local AI",
+        "LM Studio",
+        "AI-Assisted Development",
+
+        // Open Source
+        "Git",
+        "Open Source",
+        "GitHub",
+
+        // Other
+        "Developer Tools",
+        "Self-Hosted Logging",
+        "Observability",
+        "Software Engineering",
+      ]),
     ],
     worksFor: {
       "@type": "Organization",
@@ -148,6 +202,35 @@ export function generateWebSiteSchema() {
       },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+/**
+ * Generate SoftwareApplication schema for projects
+ */
+export function generateSoftwareApplicationSchema(
+  name: string,
+  description: string,
+  url: string,
+  authorId: string,
+  options?: {
+    applicationCategory?: string;
+    keywords?: string[];
+    isFree?: boolean;
+    codeRepository?: string;
+  },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name,
+    description,
+    url,
+    author: { "@type": "Person", "@id": authorId },
+    applicationCategory: options?.applicationCategory ?? "DeveloperApplication",
+    isAccessibleForFree: options?.isFree ?? true,
+    keywords: options?.keywords?.join(", ") ?? undefined,
+    codeRepository: options?.codeRepository ?? undefined,
   };
 }
 

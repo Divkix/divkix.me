@@ -12,6 +12,7 @@ interface Props {
   dateModified?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   dateModified,
   ogImage,
   ogImageAlt,
+  noindex,
 } = Astro.props;
 ---
 
@@ -30,7 +32,9 @@ const {
   {...(ogImage ? { ogImage } : {})}
   {...(dateModified ? { dateModified } : {})}
   {...(ogImageAlt ? { ogImageAlt } : {})}
+  {...(noindex ? { noindex } : {})}
 >
+
   <NavbarWithBoundary client:idle />
 
   {showScrollProgress && <ScrollProgress client:idle />}

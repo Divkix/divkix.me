@@ -12,6 +12,9 @@ import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
   generateFAQPageSchema,
+  generatePersonSchema,
+  generateSoftwareApplicationSchema,
+  generateWebSiteSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
@@ -30,7 +33,6 @@ const collectionPageSchema = generateCollectionPageSchema(
   baseUrl,
   {
     datePublished: "2025-01-01",
-    dateModified: "2026-05-20",
     articleSection: "Portfolio",
   },
 );
@@ -40,12 +42,62 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 ]);
 
 const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
+
+const authorId = `${baseUrl}/#author`;
+
+const vinextSchema = generateSoftwareApplicationSchema(
+  "Vinext",
+  "Next.js on Vite for Cloudflare Workers",
+  "https://github.com/cloudflare/vinext",
+  authorId,
+  {
+    applicationCategory: "DeveloperApplication",
+    keywords: ["Next.js", "Vite", "Cloudflare", "Workers"],
+    codeRepository: "https://github.com/cloudflare/vinext",
+  },
+);
+
+const logwellSchema = generateSoftwareApplicationSchema(
+  "LogWell",
+  "Self-hosted logging platform",
+  "https://github.com/Divkix/Logwell",
+  authorId,
+  {
+    applicationCategory: "DeveloperApplication",
+    keywords: ["Logging", "PostgreSQL", "Docker", "OTLP"],
+    codeRepository: "https://github.com/Divkix/Logwell",
+  },
+);
+
+const clickfolioSchema = generateSoftwareApplicationSchema(
+  "Clickfolio",
+  "AI portfolio builder on Cloudflare Workers",
+  "https://clickfolio.me",
+  authorId,
+  {
+    applicationCategory: "WebApplication",
+    keywords: ["AI", "Portfolio", "Cloudflare", "Workers"],
+    codeRepository: "https://github.com/Divkix/clickfolio.me",
+  },
+);
+
+const graphSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    generatePersonSchema(),
+    generateWebSiteSchema(),
+    collectionPageSchema,
+    breadcrumbSchema,
+    homeFaqSchema,
+    vinextSchema,
+    logwellSchema,
+    clickfolioSchema,
+  ],
+};
 ---
 
-<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`} dateModified="2026-05-20">
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
+<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
   <Hero />
   <HighlightsWithBoundary client:visible />
   <RecentWriting posts={recentPosts} />

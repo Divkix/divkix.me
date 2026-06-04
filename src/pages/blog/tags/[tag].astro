@@ -62,7 +62,6 @@ const collectionPageSchema = generateCollectionPageSchema(
   `Blog posts tagged with ${tag}.`,
   `${baseUrl}/blog/tags/${encodeURIComponent(tag)}`,
   {
-    dateModified: "2026-05-20",
     articleSection: "Blog",
     mainEntity: {
       "@type": "ItemList",
@@ -92,7 +91,7 @@ const pageTitle = `Posts tagged "${displayTag}" — Blog`;
 const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}". Articles about software development, AI, and engineering.`;
 ---
 
-<BlogLayout title={pageTitle} description={pageDescription} dateModified="2026-05-20">
+<BlogLayout title={pageTitle} description={pageDescription}>
   <script
     is:inline
     type="application/ld+json"
@@ -104,12 +103,12 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
     set:html={JSON.stringify(breadcrumbSchema)}
   />
 
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-4xl mx-auto space-y-12">
+  <div class="text-band">
+    <div class="content-rail space-y-12">
       <div class="space-y-4">
         <a
           href="/blog"
-          class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors"
+          class="inline-flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors link-underline-grow"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +128,8 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
           Back to Blog
         </a>
 
-        <h1 class="text-5xl font-display font-bold">
-          <span class="text-foreground/60 text-3xl block mb-2">Posts tagged</span>
+        <h1 class="font-display text-[var(--text-display)]">
+          <span class="mast-line block mb-2">Posts tagged</span>
           {displayTag}
         </h1>
         <p class="text-xl text-foreground/70">
@@ -145,61 +144,57 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
         <div class="space-y-6">
           {
             postsWithReadingTime.map((item: PostWithReadingTime) => (
-              <div
-                class="block transition-all hover:scale-[1.01]"
-              >
-                <article class="surface-raised hover:border-primary/50 transition-colors rounded-none overflow-hidden border border-border/40">
-                  <div class="p-6 space-y-4">
-                    <div class="flex items-center justify-between gap-4 flex-wrap">
-                      <div class="flex items-center gap-2">
-                        {item.post.data.featured && (
-                          <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
-                            Featured
-                          </span>
-                        )}
-                        <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
-                          {item.readingTime}
+              <article class="surface-raised hover:border-primary/50 transition-colors rounded-none overflow-hidden border border-border/40">
+                <div class="p-6 space-y-4">
+                  <div class="flex items-center justify-between gap-4 flex-wrap">
+                    <div class="flex items-center gap-2">
+                      {item.post.data.featured && (
+                        <span class="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded font-medium">
+                          Featured
                         </span>
-                      </div>
-                      <time
-                        datetime={item.post.data.date}
-                        class="text-sm text-foreground/60"
-                      >
-                        {formatDate(item.post.data.date)}
-                      </time>
+                      )}
+                      <span class="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded">
+                        {item.readingTime}
+                      </span>
                     </div>
-                    <h2 class="text-2xl font-bold transition-colors">
-                      <a
-                        href={`/blog/${item.post.id}`}
-                        class="hover:text-primary transition-colors"
-                      >
-                        {item.post.data.title}
-                      </a>
-                    </h2>
-                    {item.post.data.excerpt && (
-                      <p class="text-base text-foreground/70">
-                        {item.post.data.excerpt}
-                      </p>
-                    )}
-                    {item.post.data.tags.length > 0 && (
-                      <div class="flex flex-wrap gap-2">
-                        {item.post.data.tags.map((t: string) => (
-                          <a
-                            href={`/blog/tags/${encodeURIComponent(t.toLowerCase())}`}
-                            class={
-                              t.toLowerCase() === tag
-                                ? "text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
-                                : "text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
-                            }
-                          >
-                            {t}
-                          </a>
-                        ))}
-                      </div>
-                    )}
+                    <time
+                      datetime={item.post.data.date}
+                      class="text-sm text-foreground/60"
+                    >
+                      {formatDate(item.post.data.date)}
+                    </time>
                   </div>
-                </article>
-              </div>
+                  <h2 class="font-display text-[var(--text-xl)] transition-colors">
+                    <a
+                      href={`/blog/${item.post.id}`}
+                      class="hover:text-primary transition-colors link-underline-grow"
+                    >
+                      {item.post.data.title}
+                    </a>
+                  </h2>
+                  {item.post.data.excerpt && (
+                    <p class="text-base text-foreground/70">
+                      {item.post.data.excerpt}
+                    </p>
+                  )}
+                  {item.post.data.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {item.post.data.tags.map((t: string) => (
+                        <a
+                          href={`/blog/tags/${encodeURIComponent(t.toLowerCase())}`}
+                          class={
+                            t.toLowerCase() === tag
+                              ? "text-xs px-2 py-1 bg-primary text-primary-foreground rounded link-underline-grow"
+                              : "text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors link-underline-grow"
+                          }
+                        >
+                          {t}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
             ))
           }
         </div>

@@ -29,7 +29,6 @@ const profilePageSchema = generateProfilePageSchema(
   `${baseUrl}/divkix`,
   {
     datePublished: "2025-01-01",
-    dateModified: "2026-05-20",
     articleSection: "Profile",
   },
 );
@@ -66,37 +65,38 @@ const navLinks = [
   title="divkix | Divanshu Chauhan"
   description="divkix is Divanshu Chauhan - Software Engineer and open source contributor."
   ogImage={`${baseUrl}/og/divkix.png`}
-  dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
 
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-2xl mx-auto space-y-12">
+  <div class="text-band">
+    <div class="content-rail space-y-12">
       <!-- Author Image & Identity -->
       <div class="text-center space-y-6">
-        <img
-          src={siteConfig.authorImage}
-          alt={siteConfig.name}
-          class="w-32 h-32 rounded-full mx-auto border-4 border-primary/20 shadow-lg"
-          width="128"
-          height="128"
-        />
+        <figure class="portrait-frame mx-auto w-32 h-32">
+          <img
+            src={siteConfig.authorImage}
+            alt={siteConfig.name}
+            class="w-full h-full object-cover"
+            width="128"
+            height="128"
+          />
+        </figure>
         <div class="space-y-2">
-          <h1 class="font-display text-4xl md:text-5xl font-medium">{siteConfig.name}</h1>
-          <p class="text-xl text-muted-foreground">
+          <h1 class="font-display text-[length:var(--text-display-s)]">{siteConfig.name}</h1>
+          <p class="text-[length:var(--text-lg)] text-muted-foreground">
             Online as <span class="text-foreground">{siteConfig.handle.toLowerCase()}</span>
           </p>
         </div>
-        <p class="text-lg text-foreground/60 max-w-md mx-auto">
+        <p class="text-[length:var(--text-md)] text-foreground/60 max-w-md mx-auto">
           {siteConfig.tagline}
         </p>
       </div>
 
       <!-- Quick Bio -->
-      <div class="surface-raised p-6 rounded-none space-y-4">
-        <h2 class="text-xl font-semibold">Quick Bio</h2>
+      <div class="surface-raised p-6 space-y-4">
+        <p class="mast-line">Quick Bio</p>
         <p class="text-foreground/70 leading-relaxed">
           {siteConfig.about}
         </p>
@@ -120,14 +120,14 @@ const navLinks = [
 
       <!-- Navigation Links -->
       <nav class="space-y-4" aria-label="Site navigation">
-        <h2 class="text-xl font-semibold text-center">Explore</h2>
+        <p class="mast-line text-center">Explore</p>
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="surface-raised p-5 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-5 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div>
-              <span class="text-lg font-semibold block">{link.label}</span>
+              <span class="text-[length:var(--text-lg)] font-semibold block">{link.label}</span>
               <span class="text-sm text-foreground/60 block">{link.description}</span>
             </div>
             <svg
@@ -151,7 +151,7 @@ const navLinks = [
 
       <!-- Top Projects -->
       <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-center">Featured Projects</h2>
+        <p class="mast-line text-center">Featured Projects</p>
         {topProjects.map((project) => {
           const primaryLink = project.links[0];
           return (
@@ -159,14 +159,14 @@ const navLinks = [
               href={primaryLink.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="surface-raised p-5 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-5 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex-1">
-                <span class="text-lg font-semibold block">{project.name}</span>
+                <span class="text-[length:var(--text-lg)] font-semibold block">{project.name}</span>
                 <span class="text-sm text-foreground/60 block line-clamp-2">{project.desc}</span>
                 <div class="flex flex-wrap gap-2 mt-2">
                   {project.tags.slice(0, 3).map((tag) => (
-                    <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">{tag}</span>
+                    <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded-sm">{tag}</span>
                   ))}
                 </div>
               </div>

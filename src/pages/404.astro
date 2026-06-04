@@ -1,35 +1,17 @@
 ---
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { generateFAQPageSchema } from "@/lib/schema";
-import { baseUrl } from "@/lib/seo";
-
-const faqPageSchema = generateFAQPageSchema(
-  [
-    {
-      q: "What is this page?",
-      a: "This is a 404 error page, meaning the URL you requested doesn't exist on this site.",
-    },
-    {
-      q: "How do I get back?",
-      a: "Use the navigation links to go home or read the blog.",
-    },
-  ],
-  `${baseUrl}/404`,
-);
 ---
 
 <SiteLayout
   title="404 - Page Not Found"
   description="The page you're looking for doesn't exist."
-  dateModified="2026-05-20"
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-2xl mx-auto text-center space-y-8">
+  <div class="text-band">
+    <div class="content-rail text-center space-y-8">
       <div class="space-y-4">
-        <h1 class="font-display text-8xl md:text-9xl font-medium text-primary">404</h1>
-        <h2 class="font-display text-3xl font-medium">Page not found</h2>
-        <p class="text-xl text-muted-foreground max-w-prose mx-auto">
+        <h1 class="font-display text-[length:var(--text-display)] leading-[1.02] text-primary">404</h1>
+        <h2 class="font-display text-[length:var(--text-2xl)] leading-[1.1]">Page not found</h2>
+        <p class="text-[length:var(--text-lg)] text-muted-foreground max-w-prose mx-auto">
           The page you're looking for doesn't exist or may have moved.
         </p>
       </div>
@@ -51,7 +33,7 @@ const faqPageSchema = generateFAQPageSchema(
         </div>
       </div>
 
-      <p class="text-sm text-muted-foreground">
+      <p class="text-[length:var(--text-sm)] text-muted-foreground">
         If you believe this is a mistake, please{" "}
         <a href="/#contact" class="text-primary link-underline-grow">
           get in touch

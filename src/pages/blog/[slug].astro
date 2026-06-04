@@ -194,7 +194,7 @@ const articleMeta = {
     </>
   )}
 
-  <div id="blog-skeleton" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0 space-y-[var(--space-lg)]" aria-hidden="true">
+  <div id="blog-skeleton" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0 space-y-[var(--space-lg)] xl:pl-[22rem]" aria-hidden="true">
     <div class="animate-pulse space-y-4">
       <div class="h-8 w-32 bg-muted rounded"></div>
       <div class="h-12 w-3/4 bg-muted rounded"></div>
@@ -221,7 +221,7 @@ const articleMeta = {
     })();
   </script>
 
-  <article id="main-content" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0">
+  <article id="main-content" class="text-band pt-[var(--space-xl)]! pb-[var(--space-3xl)] min-w-0 xl:pl-[22rem]">
     <div class="space-y-[var(--space-lg)] min-w-0">
       <a
         href="/blog"
@@ -246,7 +246,7 @@ const articleMeta = {
       </a>
 
       <header class="space-y-4">
-        <h1 class="text-5xl font-display font-bold">
+        <h1 class="text-[length:var(--text-display)] font-display tracking-[var(--tracking-display)]">
           {post.data.title}
         </h1>
 
@@ -299,7 +299,7 @@ const articleMeta = {
       {(post.data.tldr || (post.data.keyTakeaways && post.data.keyTakeaways.length > 0)) && (
         <div id="speakable-content" class="space-y-6">
           {post.data.tldr && (
-            <div class="tldr-summary surface-raised p-6 rounded-none border-l-4 border-primary">
+            <div class="tldr-summary surface-raised p-6 rounded-none bg-accent/5">
               <h2 class="text-lg font-semibold mb-2">TL;DR</h2>
               <p class="text-foreground/70">{post.data.tldr}</p>
             </div>
@@ -335,7 +335,7 @@ const articleMeta = {
         </div>
       )}
 
-      <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
+      <div class="prose max-w-none prose-headings:scroll-mt-20">
         <Content />
       </div>
 
@@ -363,7 +363,7 @@ const articleMeta = {
                   href={source}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-primary hover:underline break-all"
+                  class="text-primary link-underline-grow break-all"
                 >
                   {source}
                 </a>
@@ -400,7 +400,7 @@ const articleMeta = {
             <img
               src="/divanshu-chauhan.webp"
               alt="Divanshu Chauhan"
-              class="w-16 h-16 rounded-full"
+              class="w-16 h-16 portrait-frame"
               loading="lazy"
               width="64"
               height="64"

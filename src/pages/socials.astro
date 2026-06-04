@@ -43,7 +43,6 @@ const collectionPageSchema = generateCollectionPageSchema(
   `${baseUrl}/socials`,
   {
     datePublished: "2025-01-01",
-    dateModified: "2026-05-20",
     articleSection: "Connect",
   },
 );
@@ -58,23 +57,22 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   title="Connect"
   description={`Connect with ${siteConfig.name} on social media - GitHub, LinkedIn, X, and more.`}
   ogImage={`${baseUrl}/og/socials.png`}
-  dateModified="2026-05-20"
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
-  <div class="container mx-auto px-4 py-20">
-    <div class="max-w-2xl mx-auto space-y-12">
+  <div class="text-band">
+    <div class="content-rail space-y-[var(--space-xl)]">
       <!-- Header -->
-      <div class="space-y-4 text-center">
-        <h1 class="text-5xl font-display font-bold">Connect</h1>
-        <p class="text-xl text-foreground/70">
+      <div class="space-y-[var(--space-sm)] text-center">
+        <p class="mast-line">Connect</p>
+        <h1 class="font-display text-[length:var(--text-display-s)] font-bold tracking-[var(--tracking-display)]">
           Find {siteConfig.name} across the web
-        </p>
+        </h1>
       </div>
 
       <!-- Social Links with Full Name Anchor Text -->
-      <nav class="space-y-4" aria-label="Social media profiles">
+      <nav class="space-y-[var(--space-md)]" aria-label="Social media profiles">
         {socialLinks.map((social) => {
           const action = socialActions[social.label] || "Follow";
           return (
@@ -82,10 +80,10 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               href={social.href}
               target="_blank"
               rel="me noopener noreferrer"
-              class="surface-raised p-6 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-[var(--space-lg)] rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div class="w-12 h-12 aspect-square bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <span class="text-xl font-bold text-primary">
                     {social.label.charAt(0)}
                   </span>
@@ -121,10 +119,10 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         {emailSocial && (
           <a
             href={emailSocial.href}
-            class="surface-raised p-6 rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-[var(--space-lg)] rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <div class="w-12 h-12 aspect-square bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <span class="text-xl font-bold text-primary">@</span>
               </div>
               <div>
@@ -156,7 +154,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
       </nav>
 
       <!-- Additional context for SEO -->
-      <div class="text-center text-foreground/60 text-sm space-y-2">
+      <div class="text-center text-foreground/60 text-sm space-y-[var(--space-sm)]">
         <p>
           {siteConfig.name} is a {getJobTitle()} based in {siteConfig.location}.
         </p>
