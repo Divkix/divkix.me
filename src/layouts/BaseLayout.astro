@@ -21,6 +21,7 @@ interface Props {
   articleMeta?: ArticleMeta;
   dateModified?: string;
   ogImageAlt?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   articleMeta,
   dateModified,
   ogImageAlt = `${siteConfig.name} — Software Engineer & Blogger`,
+  noindex,
 } = Astro.props;
 
 const personSchema = generatePersonSchema();
@@ -106,6 +108,8 @@ const websiteSchema = generateWebSiteSchema();
     }
 
     <meta name="author" content={siteConfig.name} />
+
+    {noindex && <meta name="robots" content="noindex" />}
 
     <link rel="dns-prefetch" href="https://analytics.divkix.me" />
     <link rel="preconnect" href="https://analytics.divkix.me" crossorigin />

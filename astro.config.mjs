@@ -4,6 +4,7 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
+import { NOINDEX_PATHS } from "./src/data/site.config.ts";
 
 // Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
 // No @astrojs/tailwind needed - it's only for Tailwind v3
@@ -43,7 +44,13 @@ export default defineConfig({
     mdx(),
     sitemap({
       xslURL: "/sitemap.xsl",
-      filter: (page) => !page.includes("/draft/"),
+      // Exclude draft routes and any noindexed pages — submitting a noindexed
+      // URL in the sitemap is a self-contradicting signal Google Search Console
+      // flags as "Submitted URL marked noindex".
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/$/, "");
+        return !path.includes("/draft") && !NOINDEX_PATHS.includes(path);
+      },
       namespaces: {
         news: false,
         xhtml: false,

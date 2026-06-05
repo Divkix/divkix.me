@@ -12,6 +12,7 @@ import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
   generateFAQPageSchema,
+  generateSoftwareApplicationSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
@@ -30,7 +31,6 @@ const collectionPageSchema = generateCollectionPageSchema(
   baseUrl,
   {
     datePublished: "2025-01-01",
-    dateModified: "2026-05-20",
     articleSection: "Portfolio",
   },
 );
@@ -40,12 +40,54 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 ]);
 
 const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
+
+const authorId = `${baseUrl}/#author`;
+
+// Note: only the author's own projects are modelled as SoftwareApplication
+// authored by the Person node. Vinext is a Cloudflare project the author
+// contributes to (not authors), so it is represented via the Person node's
+// knowsAbout entity signal instead — not as an owned SoftwareApplication.
+const logwellSchema = generateSoftwareApplicationSchema(
+  "LogWell",
+  "Self-hosted logging platform",
+  "https://github.com/Divkix/Logwell",
+  authorId,
+  {
+    applicationCategory: "DeveloperApplication",
+    keywords: ["Logging", "PostgreSQL", "Docker", "OTLP"],
+    codeRepository: "https://github.com/Divkix/Logwell",
+  },
+);
+
+const clickfolioSchema = generateSoftwareApplicationSchema(
+  "Clickfolio",
+  "AI portfolio builder on Cloudflare Workers",
+  "https://clickfolio.me",
+  authorId,
+  {
+    applicationCategory: "WebApplication",
+    keywords: ["AI", "Portfolio", "Cloudflare", "Workers"],
+    codeRepository: "https://github.com/Divkix/clickfolio.me",
+  },
+);
+
+// Assemble a single JSON-LD graph. Each helper returns a standalone node with
+// its own "@context"; strip it from members so only the graph wrapper carries
+// the context (valid, idiomatic JSON-LD without redundant duplicate contexts).
+const graphSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    collectionPageSchema,
+    breadcrumbSchema,
+    homeFaqSchema,
+    logwellSchema,
+    clickfolioSchema,
+  ].map(({ "@context": _context, ...node }) => node),
+};
 ---
 
-<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`} dateModified="2026-05-20">
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
+<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
   <Hero />
   <HighlightsWithBoundary client:visible />
   <RecentWriting posts={recentPosts} />

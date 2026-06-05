@@ -2,7 +2,7 @@
 import Footer from "@/components/shared/Footer.astro";
 import { NavbarWithBoundary } from "@/components/shared/Navbar";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
-import { siteConfig } from "@/data/site.config";
+import { NOINDEX_PATHS, siteConfig } from "@/data/site.config";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
   dateModified?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -21,6 +22,9 @@ const {
   dateModified,
   ogImage,
   ogImageAlt,
+  noindex = (NOINDEX_PATHS as readonly string[]).includes(
+    Astro.url.pathname.replace(/\/$/, ""),
+  ),
 } = Astro.props;
 ---
 
@@ -30,7 +34,9 @@ const {
   {...(ogImage ? { ogImage } : {})}
   {...(dateModified ? { dateModified } : {})}
   {...(ogImageAlt ? { ogImageAlt } : {})}
+  {...(noindex ? { noindex } : {})}
 >
+
   <NavbarWithBoundary client:idle />
 
   {showScrollProgress && <ScrollProgress client:idle />}

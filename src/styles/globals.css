@@ -89,35 +89,6 @@
   --sidebar-ring: var(--color-focus);
 }
 
-.dark {
-  --background: var(--color-paper);
-  --foreground: var(--color-ink);
-  --card: var(--color-paper-2);
-  --card-foreground: var(--color-ink);
-  --popover: var(--color-paper-2);
-  --popover-foreground: var(--color-ink);
-  --primary: var(--color-accent);
-  --primary-foreground: var(--color-accent-ink);
-  --secondary: var(--color-paper-2);
-  --secondary-foreground: var(--color-ink);
-  --muted: var(--color-paper-2);
-  --muted-foreground: var(--color-ink-2);
-  --accent: var(--color-paper-2);
-  --accent-foreground: var(--color-ink);
-  --destructive: oklch(0.7 0.19 22);
-  --border: var(--color-rule);
-  --input: var(--color-rule);
-  --ring: var(--color-focus);
-  --sidebar: var(--color-paper-2);
-  --sidebar-foreground: var(--color-ink);
-  --sidebar-primary: var(--color-accent);
-  --sidebar-primary-foreground: var(--color-accent-ink);
-  --sidebar-accent: var(--color-paper-2);
-  --sidebar-accent-foreground: var(--color-ink);
-  --sidebar-border: var(--color-rule);
-  --sidebar-ring: var(--color-focus);
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -288,10 +259,29 @@
   }
 
   .mast-line {
+    /* Self-contained so it renders identically on a <p> eyebrow or an <h2>
+       section label — overrides the base heading font/weight in the utilities
+       layer, keeping the small-caps kicker look regardless of element. */
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-style: normal;
     font-variant: small-caps;
     letter-spacing: 0.08em;
     font-size: var(--text-xs);
-    color: var(--color-muted);
+    color: var(--color-muted-foreground);
+  }
+
+  /* TL;DR callout — a subtle accent-tinted surface so it reads as a distinct
+     summary block (the design system bans the border-l-4 accent stripe, and
+     bg-accent/5 was a no-op since --accent === --card). Defined after
+     .surface-raised so it wins the background/border-color cascade. */
+  .tldr-summary {
+    background: color-mix(in oklch, var(--color-accent) 9%, var(--card));
+    border-color: color-mix(
+      in oklch,
+      var(--color-accent) 40%,
+      var(--color-rule)
+    );
   }
 
   .photo-fold {
