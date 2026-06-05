@@ -268,7 +268,7 @@
     font-variant: small-caps;
     letter-spacing: 0.08em;
     font-size: var(--text-xs);
-    color: var(--color-muted);
+    color: var(--color-muted-foreground);
   }
 
   /* TL;DR callout — a subtle accent-tinted surface so it reads as a distinct

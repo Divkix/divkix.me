@@ -371,3 +371,5 @@ export const siteConfig = {
     { label: "Email", href: "mailto:divkix@divkix.me" },
   ],
 } as const;
+
+export const NOINDEX_PATHS = ["/mentions"] as const;

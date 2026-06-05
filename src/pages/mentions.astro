@@ -1,6 +1,9 @@
 ---
-import { siteConfig } from "@/data/site.config";
+import { NOINDEX_PATHS, siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
+
+const noindex = NOINDEX_PATHS.includes("/mentions");
+
 import {
   generateBreadcrumbSchema,
   generateFAQPageSchema,
@@ -42,11 +45,20 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   title={`Mentions & Press — ${siteConfig.name} (${siteConfig.handle.toLowerCase()})`}
   description={`External citations, podcast appearances, and conference talks featuring ${siteConfig.name} (divkix).`}
   ogImage={`${baseUrl}/og/mentions.png`}
-  noindex
+  noindex={noindex}
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
+  <!--
+    These schema scripts (mentionsPageSchema, breadcrumbSchema, faqPageSchema)
+    are wrapped to only render when the page is indexable. They serve as
+    scaffolding for future indexed content.
+  -->
+  {!noindex && (
+    <>
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(mentionsPageSchema)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
+    </>
+  )}
 
   <div class="text-band">
     <div class="space-y-12">

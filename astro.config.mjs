@@ -4,6 +4,7 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
+import { NOINDEX_PATHS } from "./src/data/site.config.ts";
 
 // Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
 // No @astrojs/tailwind needed - it's only for Tailwind v3
@@ -48,8 +49,7 @@ export default defineConfig({
       // flags as "Submitted URL marked noindex".
       filter: (page) => {
         const path = new URL(page).pathname.replace(/\/$/, "");
-        const noindex = ["/mentions"];
-        return !page.includes("/draft/") && !noindex.includes(path);
+        return !path.includes("/draft") && !NOINDEX_PATHS.includes(path);
       },
       namespaces: {
         news: false,
