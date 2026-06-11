@@ -94,11 +94,11 @@ export const siteConfig = {
       company: "Cloudflare",
       url: "https://www.cloudflare.com",
       location: "Austin, Texas / Remote",
-      duration: "May 2026 – Present",
+      duration: "June 2026 – Present",
       positions: [
         {
           title: "Software Engineer Intern",
-          year: "May 2026 – Present",
+          year: "June 2026 – Present",
           highlights: [
             "Working on engineering tooling and platform systems as part of the ETI team",
             "Focused on developer experience, infrastructure, and production-grade systems in the Cloudflare ecosystem",
