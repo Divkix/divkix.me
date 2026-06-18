@@ -8,7 +8,7 @@ export function getJobTitle(): string {
 const ISO_8601_DURATION_RE =
   /^P(?:\d+Y)?(?:\d+M)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/;
 
-export function validateDuration(duration: string): string {
+function validateDuration(duration: string): string {
   if (!ISO_8601_DURATION_RE.test(duration)) {
     console.warn(`Invalid ISO 8601 duration: ${duration}`);
   }
@@ -305,7 +305,7 @@ export function generateProfilePageSchema(
  * Generate author schema for blog posts
  * Links to main Person schema when author is site owner
  */
-export function generateBlogAuthorSchema(authorName?: string) {
+function generateBlogAuthorSchema(authorName?: string) {
   const isSiteOwner = !authorName || authorName === siteConfig.name;
 
   if (isSiteOwner) {
@@ -328,7 +328,7 @@ export function generateBlogAuthorSchema(authorName?: string) {
  * Generate publisher schema for blog posts
  * Always references the site owner
  */
-export function generateBlogPublisherSchema() {
+function generateBlogPublisherSchema() {
   return generateBlogAuthorSchema();
 }
 
@@ -378,7 +378,7 @@ export function generateFAQPageSchema(
  * Generate reviewedBy schema for technical posts
  * Signals editorial review process for E-E-A-T
  */
-export function generateReviewedBySchema(
+function generateReviewedBySchema(
   reviewerName: string,
   reviewerCredentials?: string,
 ) {
@@ -400,7 +400,7 @@ export function generateReviewedBySchema(
  * Generate HowTo schema for tutorial posts
  * Targets Google's HowTo rich results
  */
-export function generateHowToSchema(
+function generateHowToSchema(
   title: string,
   description: string,
   steps: Array<{ name: string; text: string; url?: string }>,

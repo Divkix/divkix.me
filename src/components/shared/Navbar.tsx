@@ -38,7 +38,7 @@ function isNavItemActive(
   return false;
 }
 
-export function Navbar() {
+function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [pathname, setPathname] = useState(() =>

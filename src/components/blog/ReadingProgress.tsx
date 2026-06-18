@@ -100,7 +100,7 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
-          className="text-primary transition-all duration-300"
+          className="text-primary transition-[stroke-dashoffset] duration-300"
         />
       </svg>
       <div className="text-sm">

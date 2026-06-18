@@ -1,7 +1,7 @@
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { siteConfig } from "@/data/site.config";
 
-export function Highlights() {
+function Highlights() {
   return (
     <section id="highlights" className="text-band min-w-0">
       <p className="mast-line mb-[var(--space-sm)]">Why this site exists</p>

@@ -13,7 +13,7 @@ export const siteConfig = {
     "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I'm heading toward founding something small and durable. Until then I'm shipping in public and writing down what I learn along the way.",
   interests:
     "When I'm not coding, I'm usually on a road trip with friends, exploring somewhere I haven't been, or planning the next drive when I should probably be asleep.",
-  authorImage: "/divanshu-chauhan.jpeg",
+  authorImage: "/divanshu-chauhan.webp",
   nationality: "Indian",
   address: {
     locality: "Tempe",
