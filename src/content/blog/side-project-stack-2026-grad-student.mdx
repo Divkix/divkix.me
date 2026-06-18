@@ -1,7 +1,7 @@
 ---
 title: "My 2026 Stack for Shipping 30+ Side Projects After Grad School"
-seoTitle: "My 2026 Stack for Shipping 30+ Side Projects (MS CS, 250K+ Users)"
-seoDescription: "I shipped 30+ projects while finishing my MS at ASU. Next.js, Supabase, Cloudflare — real lessons from tools serving 250K+ users."
+seoTitle: "My 2026 Stack for Shipping 30+ Side Projects (MS CS, 300K+ Users)"
+seoDescription: "I shipped 30+ projects while finishing my MS at ASU. Next.js, Supabase, Cloudflare — real lessons from tools serving 300K+ users."
 coverAlt: "Tech stack diagram showing Next.js, Supabase, and Cloudflare Workers integration"
 date: "2025-11-24"
 dateModified: "2026-05-20"
@@ -26,12 +26,12 @@ faq:
   - q: "Isn't Supabase vendor lock-in?"
     a: "Yes, and I don't care. For side projects, the alternative is spending weekends debugging Postgres connections. Supabase's free tier is ridiculously generous and I can always migrate if a project actually makes money."
   - q: "What about costs at scale?"
-    a: "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (250K+ users) runs on minimal infra. Most projects never hit paid tiers."
+    a: "PickMyClass serves thousands of students on Cloudflare's free tier. Alita Robot (300K+ users) runs on minimal infra. Most projects never hit paid tiers."
   - q: "Why Biome over ESLint + Prettier?"
     a: "20x faster, one config file, zero conflicts between linter and formatter. Migrated all my projects in 2024 and never looked back."
 ---
 
-I've shipped 30+ projects while getting my master's degree in Computer Science at ASU. None of them are perfect. Most serve specific needs. A few have actually scaled to real users—PickMyClass helps thousands of ASU students grab classes, Alita Robot serves 250K+ Telegram users.
+I've shipped 30+ projects while getting my master's degree in Computer Science at ASU. None of them are perfect. Most serve specific needs. A few have actually scaled to real users—PickMyClass helps thousands of ASU students grab classes, Alita Robot serves 300K+ Telegram users.
 
 Here's the thing nobody tells you about side projects in grad school: you don't have time. Between CS courses, TA work, and pretending to have a social life, every tech decision is a time trade-off. Pick the wrong stack and you'll spend weekends debugging CORS errors instead of shipping features.
 
@@ -129,7 +129,7 @@ Supabase's query analyzer showed me exactly which queries were slow. Fixed in an
 
 ### Alita Robot: Go for High Traffic
 
-Alita is a Telegram bot serving 250K+ users. I wrote it in Go, not TypeScript.
+Alita is a Telegram bot serving 300K+ users. I wrote it in Go, not TypeScript.
 
 **Why Go here?** Telegram bots need to handle webhooks fast. Go's concurrency model (goroutines) makes this trivial. The bot handles thousands of concurrent requests without breaking a sweat.
 
@@ -137,7 +137,7 @@ I use TypeScript for web apps and Go for high-throughput services. Don't be dogm
 
 The bot runs on minimal infrastructure—single VPS, no load balancer. Go's performance headroom is insane compared to Node.js for this use case.
 
-## Lessons from 250K+ Users
+## Lessons from 300K+ Users
 
 Self-hosting Postgres in Docker taught me that managed services save more time than they cost. I was spending weekends debugging "why is this container restarting" instead of building features. Supabase is free for most projects and handles everything I used to babysit. If you're optimizing cloud costs before you have real users, you're optimizing the wrong thing.
 

@@ -82,13 +82,13 @@ export default defineConfig({
     astroLlmsTxt({
       title: "Divanshu Chauhan",
       description:
-        "Portfolio and blog of Divanshu Chauhan (divkix), a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 250,000+ people, and writes about Cloudflare Workers, Go, TypeScript, and Python.",
+        "Portfolio and blog of Divanshu Chauhan (divkix), a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about Cloudflare Workers, Go, TypeScript, and Python.",
       details: `
 ## About
 Software engineer with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026).
 SWE Intern @ Cloudflare on the ETI team.
 Open-source contributor to Cloudflare Vinext (Next.js API on Vite for Workers).
-Creator of LogWell, PickMyClass, Clickfolio, Alita Robot (250,000+ users), and other side projects.
+Creator of LogWell, PickMyClass, Clickfolio, Alita Robot (300,000+ users), and other side projects.
 Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.
 
 ## Expertise & Topics

@@ -6,9 +6,9 @@ export const siteConfig = {
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
-    "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 250,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
+    "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
   heroSummary:
-    "MS in Computer Science from ASU, GPA 3.889. SWE intern at Cloudflare and Vinext contributor. I write code on the edge during the day and ship side projects at night: a Telegram bot used by 250k people, a self-hosted logging tool, a class tracker for ASU.",
+    "MS in Computer Science from ASU, GPA 3.889. SWE intern at Cloudflare and Vinext contributor. I write code on the edge during the day and ship side projects at night: a Telegram bot used by 300k people, a self-hosted logging tool, a class tracker for ASU.",
   founderPov:
     "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I'm heading toward founding something small and durable. Until then I'm shipping in public and writing down what I learn along the way.",
   interests:
@@ -24,7 +24,7 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer",
     metaDescription:
-      "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 250,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
+      "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
   },
 
   faq: [
@@ -46,12 +46,12 @@ export const siteConfig = {
     },
     {
       q: "What projects has Divanshu Chauhan built?",
-      a: "Notable projects include Alita Robot (Telegram community bot used by 250,000+ users), LogWell (self-hosted logging platform), Clickfolio (AI portfolio builder on Cloudflare Workers), PickMyClass (ASU class availability tracker), and contributions to Cloudflare Vinext.",
+      a: "Notable projects include Alita Robot (Telegram community bot used by 300,000+ users), LogWell (self-hosted logging platform), Clickfolio (AI portfolio builder on Cloudflare Workers), PickMyClass (ASU class availability tracker), and contributions to Cloudflare Vinext.",
     },
   ] as const,
 
   facts: {
-    impact: "250000+",
+    impact: "300000+",
     projects: "30+",
     oss: "50+",
   },
@@ -310,7 +310,7 @@ export const siteConfig = {
     },
     {
       name: "Alita Robot",
-      desc: "Open-source Telegram moderation bot I've maintained since 2020. Currently serving 250,000+ users across real communities, with the boring features people actually need: anti-spam, scheduling, role management, locale support, and a self-hostable Go binary.",
+      desc: "Open-source Telegram moderation bot I've maintained since 2020. Currently serving 300,000+ users across real communities, with the boring features people actually need: anti-spam, scheduling, role management, locale support, and a self-hostable Go binary.",
       image: "/og/blog/scaling-telegram-bot-300k-users.webp",
       tags: ["Go", "MongoDB", "Telegram Bot API", "Docker"],
       period: "Feb 2020 – Present",
