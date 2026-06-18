@@ -10,7 +10,7 @@ export const siteConfig = {
   heroSummary:
     "MS in Computer Science from ASU, GPA 3.889. SWE intern at Cloudflare and Vinext contributor. I write code on the edge during the day and ship side projects at night: a Telegram bot used by 300k people, a self-hosted logging tool, a class tracker for ASU.",
   founderPov:
-    "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I'm heading toward founding something small and durable. Until then I'm shipping in public and writing down what I learn along the way.",
+    "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I care about building things that are small, durable, and worth coming back to. I ship in public and write down what I learn along the way.",
   interests:
     "When I'm not coding, I'm usually on a road trip with friends, exploring somewhere I haven't been, or planning the next drive when I should probably be asleep.",
   authorImage: "/divanshu-chauhan.webp",
