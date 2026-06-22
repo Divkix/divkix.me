@@ -104,7 +104,6 @@ const articleMeta = {
   publishedTime: `${post.data.date}T00:00:00Z`,
   author: post.data.author,
   tags: post.data.tags,
-  wordCount: wordCount,
   articleSection: post.data.tags[0] ?? "Technology",
   ...(post.data.dateModified
     ? { modifiedTime: `${post.data.dateModified}T00:00:00Z` }
