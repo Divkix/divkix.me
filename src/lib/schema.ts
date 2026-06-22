@@ -5,16 +5,6 @@ export function getJobTitle(): string {
   return siteConfig.seo.jobTitle;
 }
 
-const ISO_8601_DURATION_RE =
-  /^P(?:\d+Y)?(?:\d+M)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/;
-
-function validateDuration(duration: string): string {
-  if (!ISO_8601_DURATION_RE.test(duration)) {
-    console.warn(`Invalid ISO 8601 duration: ${duration}`);
-  }
-  return duration;
-}
-
 type BreadcrumbItem = { name: string; item?: string };
 
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
@@ -325,14 +315,6 @@ function generateBlogAuthorSchema(authorName?: string) {
 }
 
 /**
- * Generate publisher schema for blog posts
- * Always references the site owner
- */
-function generateBlogPublisherSchema() {
-  return generateBlogAuthorSchema();
-}
-
-/**
  * Generate Speakable schema for AEO (Answer Engine Optimization)
  * Identifies content that can be spoken by voice assistants
  */
@@ -449,7 +431,7 @@ export function generateBlogPostingSchema(
       ? `${post.dateModified}T00:00:00Z`
       : `${post.date}T00:00:00Z`,
     author: generateBlogAuthorSchema(post.author),
-    publisher: generateBlogPublisherSchema(),
+    publisher: generateBlogAuthorSchema(),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${baseUrl}/blog/${post.id}`,
@@ -474,7 +456,7 @@ export function generateBlogPostingSchema(
           post.title,
           post.excerpt,
           post.howToSteps,
-          validateDuration(`PT${readingTimeMinutes}M`),
+          `PT${readingTimeMinutes}M`,
         )
       : null;
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { onThrottledScroll } from "@/lib/throttledScroll";
 
 interface ReadingProgressProps {
   readingTime: number; // in minutes
@@ -14,55 +15,21 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
     const article = document.querySelector("article");
     if (!article) return;
 
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    let lastExecutedTime = 0;
-    const wait = 50;
-
     // Cache layout properties to avoid reflow
     const articleTop = article.offsetTop;
     const articleHeight = article.offsetHeight;
 
-    const updateProgress = () => {
-      const now = Date.now();
-      const remaining = wait - (now - lastExecutedTime);
-
-      const calculate = () => {
-        const scrolled = window.scrollY - articleTop;
-        const progress = Math.min(
-          Math.max((scrolled / articleHeight) * 100, 0),
-          100,
-        );
-        setState({
-          progress,
-          isVisible: window.scrollY > 200,
-        });
-      };
-
-      if (remaining <= 0) {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-        lastExecutedTime = now;
-        calculate();
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(() => {
-          lastExecutedTime = Date.now();
-          timeoutId = null;
-          calculate();
-        }, remaining);
-      }
-    };
-
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    updateProgress();
-
-    return () => {
-      window.removeEventListener("scroll", updateProgress);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
+    return onThrottledScroll(() => {
+      const scrolled = window.scrollY - articleTop;
+      const progress = Math.min(
+        Math.max((scrolled / articleHeight) * 100, 0),
+        100,
+      );
+      setState({
+        progress,
+        isVisible: window.scrollY > 200,
+      });
+    });
   }, []);
 
   const { progress, isVisible } = state;
