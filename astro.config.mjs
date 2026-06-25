@@ -3,11 +3,14 @@ import astroLlmsTxt from "@4hse/astro-llms-txt";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { NOINDEX_PATHS } from "./src/data/site.config.ts";
 
-// Note: Tailwind v4 is configured via postcss.config.mjs with @tailwindcss/postcss
-// No @astrojs/tailwind needed - it's only for Tailwind v3
+// Note: Tailwind v4 is configured via the @tailwindcss/vite plugin (below).
+// No @astrojs/tailwind needed - it's only for Tailwind v3. The PostCSS variant
+// (@tailwindcss/postcss) is incompatible with Astro 7's rolldown-based Vite 8,
+// whose postcss-import step tries to resolve `@import "tailwindcss"` as a file.
 
 // Build a map of blog URLs to dates for sitemap lastmod
 // Read from pre-generated posts.json (astro:content not available in config)
@@ -213,6 +216,9 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
       theme: "github-dark-dimmed",
       wrap: true,
     },
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
   compressHTML: true,
   build: {

@@ -33,8 +33,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── wrangler.jsonc            # Cloudflare Workers static-assets config (serves ./dist)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
 ├── biome.json                # Linting and formatting rules
-├── knip.json                 # Unused export/dependency detection
-└── postcss.config.mjs        # Tailwind v4 via @tailwindcss/postcss
+└── knip.json                 # Unused export/dependency detection
 ```
 
 > Note: There is **no** `src/components/ui/` (shadcn) or `src/components/providers/` directory. Component groups are only `blog/`, `sections/` (with `experience/` and `skills/`), and `shared/`. The content config lives at `src/content.config.ts` (not `src/content/config.ts`).
@@ -73,7 +72,7 @@ Package manager is **bun@1.3.14**. `prepare` runs `husky`; staged `*.{js,jsx,ts,
 **Languages & Tools:**
 - TypeScript extending `astro/tsconfigs/strict` with extra flags: `noUnusedLocals`, `noUnusedParameters`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noFallthroughCasesInSwitch`. (`ignoreDeprecations: "6.0"` for TypeScript 6.)
 - Biome for linting and formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80.
-- Tailwind CSS v4 via PostCSS (`@tailwindcss/postcss`) — there is no `tailwind.config.js` and no `@astrojs/tailwind`.
+- Tailwind CSS v4 via the `@tailwindcss/vite` plugin (registered in `astro.config.mjs` under `vite.plugins`) — there is no `tailwind.config.js`, no `postcss.config.mjs`, and no `@astrojs/tailwind`.
 
 **Component Architecture:**
 - **Static sections:** Use `.astro` files (zero client JS) — e.g., `Hero.astro`, `RecentWriting.astro`, `Footer.astro`, `ExperienceBentoStatic.astro`.
@@ -135,7 +134,7 @@ After adding/modifying blog posts, run `bun run prebuild` to regenerate `posts.j
 
 ## Common Pitfalls
 
-1. **Tailwind v4:** Do not use `@astrojs/tailwind` — use `@tailwindcss/postcss` in `postcss.config.mjs`. No `tailwind.config.js` exists; theme is mapped in `src/styles/globals.css` via `@theme`.
+1. **Tailwind v4:** Do not use `@astrojs/tailwind` (v3-only) or `@tailwindcss/postcss` (its postcss-import step is incompatible with Astro 7's rolldown-based Vite 8 and fails to resolve `@import "tailwindcss"`). Use the `@tailwindcss/vite` plugin in `astro.config.mjs`. No `tailwind.config.js` exists; theme is mapped in `src/styles/globals.css` via `@theme`.
 2. **Client Directives:** React components need a `client:*` directive to hydrate; without one they render static.
 3. **Content Collections in config:** `astro:content` is unavailable in `astro.config.mjs`, so `content/blog/posts.json` supplies blog dates to the sitemap `serialize()`.
 4. **TypeScript Strictness:** Bracket access returns `T | undefined` (`noUncheckedIndexedAccess`) — handle undefined cases.
