@@ -66,23 +66,23 @@ const services = [
   <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
-  <div class="text-band space-y-[var(--space-xl)]">
+  <div class="text-band space-y-(--space-xl)">
     <!-- Header -->
-    <div class="space-y-[var(--space-md)] text-center">
+    <div class="space-y-(--space-md) text-center">
       <p class="mast-line">Services</p>
-      <h1 class="font-display text-[length:var(--text-display)]">Freelance Services & Pricing</h1>
-      <p class="text-[length:var(--text-xl)] text-foreground/70">
+      <h1 class="font-display text-(length:--text-display)">Freelance Services & Pricing</h1>
+      <p class="text-(length:--text-xl) text-foreground/70">
         Services and rates for freelance work
       </p>
     </div>
 
     <!-- Services Grid -->
-    <div class="grid gap-[var(--space-md)] md:grid-cols-2">
+    <div class="grid gap-(--space-md) md:grid-cols-2">
       {services.map((service) => (
-        <div class="surface-raised p-[var(--space-lg)] space-y-[var(--space-md)]">
-          <div class="space-y-[var(--space-xs)]">
-            <h2 class="font-display text-[length:var(--text-xl)]">{service.name}</h2>
-            <p class="text-[length:var(--text-lg)] font-bold text-primary">{service.price}</p>
+        <div class="surface-raised p-(--space-lg) space-y-(--space-md)">
+          <div class="space-y-(--space-xs)">
+            <h2 class="font-display text-(length:--text-xl)">{service.name}</h2>
+            <p class="text-(length:--text-lg) font-bold text-primary">{service.price}</p>
           </div>
           <p class="text-foreground/70">{service.description}</p>
         </div>
@@ -116,11 +116,11 @@ const services = [
     </div>
 
     <!-- Contact -->
-    <div class="text-center space-y-[var(--space-md)] pt-[var(--space-lg)] border-t border-border">
+    <div class="text-center space-y-(--space-md) pt-(--space-lg) border-t border-border">
       <p class="text-foreground/60">
         For project inquiries or custom quotes, reach out:
       </p>
-      <div class="flex items-center justify-center gap-[var(--space-md)]">
+      <div class="flex items-center justify-center gap-(--space-md)">
         <a
           href={`mailto:${siteConfig.email}`}
           class="text-primary link-underline-grow"

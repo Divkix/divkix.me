@@ -62,17 +62,17 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
   <div class="text-band">
-    <div class="space-y-[var(--space-xl)]">
+    <div class="space-y-(--space-xl)">
       <!-- Header -->
-      <div class="space-y-[var(--space-sm)] text-center">
+      <div class="space-y-(--space-sm) text-center">
         <p class="mast-line">Connect</p>
-        <h1 class="font-display text-[length:var(--text-display-s)] tracking-[var(--tracking-display)]">
+        <h1 class="font-display text-(length:--text-display-s) tracking-(--tracking-display)">
           Find {siteConfig.name} across the web
         </h1>
       </div>
 
       <!-- Social Links with Full Name Anchor Text -->
-      <nav class="space-y-[var(--space-md)]" aria-label="Social media profiles">
+      <nav class="space-y-(--space-md)" aria-label="Social media profiles">
         {socialLinks.map((social) => {
           const action = socialActions[social.label] || "Follow";
           return (
@@ -80,7 +80,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               href={social.href}
               target="_blank"
               rel="me noopener noreferrer"
-              class="surface-raised p-[var(--space-lg)] rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+              class="surface-raised p-(--space-lg) rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 aspect-square bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -119,7 +119,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         {emailSocial && (
           <a
             href={emailSocial.href}
-            class="surface-raised p-[var(--space-lg)] rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
+            class="surface-raised p-(--space-lg) rounded-none flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div class="flex items-center gap-4">
               <div class="w-12 h-12 aspect-square bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -154,7 +154,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
       </nav>
 
       <!-- Additional context for SEO -->
-      <div class="text-center text-foreground/60 text-sm space-y-[var(--space-sm)]">
+      <div class="text-center text-foreground/60 text-sm space-y-(--space-sm)">
         <p>
           {siteConfig.name} is a {getJobTitle()} based in {siteConfig.location}.
         </p>

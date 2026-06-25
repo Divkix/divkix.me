@@ -85,8 +85,8 @@ function Contact() {
 
   return (
     <section id="contact" className="text-band min-w-0">
-      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-[var(--space-xl)] items-start min-w-0">
-        <div className="min-w-0 space-y-[var(--space-md)]">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-(--space-xl) items-start min-w-0">
+        <div className="min-w-0 space-y-(--space-md)">
           <SectionHeading
             title="Say hello"
             description="I'm open to full-time software engineering roles starting May 2026. Backend, infrastructure, developer tools, AI platform work. Also happy to chat about side projects, Cloudflare Workers, or anything you're stuck on."
@@ -113,7 +113,7 @@ function Contact() {
             </p>
           </div>
 
-          <ul className="flex flex-wrap gap-x-[var(--space-md)] gap-y-2 m-0 p-0 list-none">
+          <ul className="flex flex-wrap gap-x-(--space-md) gap-y-2 m-0 p-0 list-none">
             {socialLinks.map((social) => (
               <li key={social.label}>
                 <a
@@ -131,12 +131,12 @@ function Contact() {
         </div>
 
         <div className="min-w-0">
-          <div className="border border-border bg-card p-[var(--space-md)] md:p-[var(--space-lg)]">
+          <div className="border border-border bg-card p-(--space-md) md:p-(--space-lg)">
             {isSuccess ? (
               <p
                 role="status"
                 aria-live="polite"
-                className="text-base text-primary font-medium py-[var(--space-lg)] text-center"
+                className="text-base text-primary font-medium py-(--space-lg) text-center"
               >
                 Message sent. I'll reply within a day or two.
               </p>
@@ -144,7 +144,7 @@ function Contact() {
               <>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="space-y-[var(--space-md)]"
+                  className="space-y-(--space-md)"
                 >
                   <div>
                     <label
@@ -158,7 +158,7 @@ function Contact() {
                       type="text"
                       placeholder="Your name"
                       autoComplete="name"
-                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       aria-required="true"
                       aria-describedby={
                         errors.name ? "contact-name-error" : undefined
@@ -190,7 +190,7 @@ function Contact() {
                       type="email"
                       placeholder="your@email.com"
                       autoComplete="email"
-                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                      className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       aria-required="true"
                       aria-describedby={
                         errors.email ? "contact-email-error" : undefined
@@ -221,7 +221,7 @@ function Contact() {
                       id="contact-message"
                       placeholder="What's on your mind?"
                       rows={5}
-                      className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                      className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
                       aria-required="true"
                       aria-describedby={
                         errors.message ? "contact-message-error" : undefined
@@ -276,7 +276,7 @@ function Contact() {
                   <form
                     action="https://formspree.io/f/xgvreprq"
                     method="POST"
-                    className="space-y-[var(--space-md)] mt-[var(--space-md)]"
+                    className="space-y-(--space-md) mt-(--space-md)"
                   >
                     <div>
                       <label
@@ -291,7 +291,7 @@ function Contact() {
                         type="text"
                         placeholder="Your name"
                         required
-                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                        className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       />
                     </div>
                     <div>
@@ -307,7 +307,7 @@ function Contact() {
                         type="email"
                         placeholder="your@email.com"
                         required
-                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
+                        className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       />
                     </div>
                     <div>
@@ -323,7 +323,7 @@ function Contact() {
                         placeholder="What's on your mind?"
                         rows={5}
                         required
-                        className="input-focus-ring w-full rounded-[var(--radius-input)] border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
+                        className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
                       />
                     </div>
                     <button type="submit" className="btn-primary">

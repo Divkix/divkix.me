@@ -33,8 +33,8 @@ function ProjectEntry({ project }: { project: Project }) {
   const hasPeriod = "period" in project && project.period;
 
   return (
-    <article className="border-t border-border py-[var(--space-xl)] first:border-t-0 first:pt-0">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-[var(--space-md)] gap-y-[var(--space-xs)]">
+    <article className="border-t border-border py-(--space-xl) first:border-t-0 first:pt-0">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-(--space-md) gap-y-(--space-xs)">
         <h3 className="font-display text-2xl md:text-[1.75rem] leading-[1.05] m-0">
           {project.name}
         </h3>
@@ -46,16 +46,16 @@ function ProjectEntry({ project }: { project: Project }) {
       </div>
 
       {hasTags && (
-        <p className="mt-[var(--space-sm)] text-xs text-muted-foreground leading-relaxed">
+        <p className="mt-(--space-sm) text-xs text-muted-foreground leading-relaxed">
           {project.tags.join(" · ")}
         </p>
       )}
 
-      <p className="mt-[var(--space-md)] text-base text-foreground/85 leading-relaxed max-w-prose">
+      <p className="mt-(--space-md) text-base text-foreground/85 leading-relaxed max-w-prose">
         {project.desc}
       </p>
 
-      <p className="mt-[var(--space-md)] flex flex-wrap items-center gap-x-[var(--space-lg)] gap-y-[var(--space-xs)] text-xs">
+      <p className="mt-(--space-md) flex flex-wrap items-center gap-x-(--space-lg) gap-y-(--space-xs) text-xs">
         {project.links.map((link: ProjectLink) => (
           <a
             key={link.label}
@@ -92,13 +92,13 @@ export function Projects() {
         description="Four projects I keep coming back to. Edge infrastructure at Cloudflare, a logging tool I built because Datadog priced me out, an AI portfolio generator, and the Telegram bot that taught me what shipping at scale really means."
       />
 
-      <div className="mt-[var(--space-lg)]">
+      <div className="mt-(--space-lg)">
         {featured.map((project: Project) => (
           <ProjectEntry key={project.name} project={project} />
         ))}
       </div>
 
-      <p className="mt-[var(--space-lg)]">
+      <p className="mt-(--space-lg)">
         <a
           href="/about"
           className="text-xs text-primary link-underline-grow whitespace-nowrap uppercase tracking-[0.18em]"

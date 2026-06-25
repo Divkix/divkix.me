@@ -4,23 +4,23 @@ import { siteConfig } from "@/data/site.config";
 ---
 
 <section id="hero" class="text-band" aria-labelledby="hero-heading">
-  <div class="grid gap-[var(--space-xl)] md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start min-w-0">
-    <div class="min-w-0 space-y-[var(--space-md)]">
+  <div class="grid gap-(--space-xl) md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start min-w-0">
+    <div class="min-w-0 space-y-(--space-md)">
       <p class="mast-line">Software engineer · Cloudflare · ASU</p>
 
       <h1
         id="hero-heading"
-        class="font-display text-[length:var(--text-display)] leading-[1.02] text-foreground min-w-0 overflow-wrap-anywhere m-0"
+        class="font-display text-(length:--text-display) leading-[1.02] text-foreground min-w-0 overflow-wrap-anywhere m-0"
       >
         {siteConfig.name}
         <span class="sr-only"> — Software Engineer and Builder</span>
       </h1>
 
-      <p class="prose-measure text-[length:var(--text-md)] md:text-lg text-foreground/85 leading-relaxed">
+      <p class="prose-measure text-(length:--text-md) md:text-lg text-foreground/85 leading-relaxed">
         {siteConfig.heroSummary}
       </p>
 
-      <div class="flex flex-wrap gap-3 pt-[var(--space-xs)]">
+      <div class="flex flex-wrap gap-3 pt-(--space-xs)">
         <a href="/#projects" class="btn-primary">
           See selected work
         </a>
@@ -32,7 +32,7 @@ import { siteConfig } from "@/data/site.config";
         </a>
       </div>
 
-      <div class="pt-[var(--space-2xs)]">
+      <div class="pt-(--space-2xs)">
         <SocialIcons size="sm" />
       </div>
     </div>
@@ -44,7 +44,7 @@ import { siteConfig } from "@/data/site.config";
         src={siteConfig.authorImage}
         alt={`Portrait of ${siteConfig.name}`}
         aria-describedby="hero-image-caption"
-        class="w-full aspect-[4/5] object-cover object-[center_22%]"
+        class="w-full aspect-4/5 object-cover object-[center_22%]"
         width="480"
         height="600"
         loading="eager"

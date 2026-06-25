@@ -10,9 +10,9 @@ const { posts } = Astro.props;
 ---
 
 <section id="writing" class="text-band min-w-0">
-  <header class="space-y-[var(--space-sm)] mb-[var(--space-lg)]">
+  <header class="space-y-(--space-sm) mb-(--space-lg)">
     <p class="mast-line">Writing</p>
-    <h2 class="font-display text-[length:var(--text-display-s)] leading-[1.05] tracking-[var(--tracking-display)] m-0">
+    <h2 class="font-display text-(length:--text-display-s) leading-[1.05] tracking-(--tracking-display) m-0">
       Recent posts
     </h2>
     <p class="prose-measure text-muted-foreground leading-relaxed text-base">
@@ -26,8 +26,8 @@ const { posts } = Astro.props;
     ) : (
       <ol class="list-none m-0 p-0">
         {posts.map((post) => (
-          <li class="border-t border-border py-[var(--space-md)] first:border-t-0 first:pt-0">
-            <article class="space-y-[var(--space-2xs)] min-w-0">
+          <li class="border-t border-border py-(--space-md) first:border-t-0 first:pt-0">
+            <article class="space-y-(--space-2xs) min-w-0">
               <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-xs text-muted-foreground">
                 <time
                   datetime={post.data.date}
@@ -59,7 +59,7 @@ const { posts } = Astro.props;
     )
   }
 
-  <p class="mt-[var(--space-lg)]">
+  <p class="mt-(--space-lg)">
     <a
       href="/blog"
       class="text-xs text-primary link-underline-grow whitespace-nowrap uppercase tracking-[0.18em]"

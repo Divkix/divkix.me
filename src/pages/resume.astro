@@ -58,7 +58,7 @@ const personSchema = {
 
   <article class="min-w-0">
     <section class="text-band" aria-labelledby="resume-heading">
-      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-[var(--space-sm)]">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-(--space-sm)">
         <p class="mast-line">Resume</p>
         <a
           href="/Divanshu_Chauhan_Resume.pdf"
@@ -72,20 +72,20 @@ const personSchema = {
 
       <h1
         id="resume-heading"
-        class="font-display text-[length:var(--text-display-s)] leading-[1.05] tracking-[var(--tracking-display)] text-foreground m-0"
+        class="font-display text-(length:--text-display-s) leading-[1.05] tracking-(--tracking-display) text-foreground m-0"
       >
         {siteConfig.name}
       </h1>
 
-      <p class="prose-measure text-[length:var(--text-md)] md:text-lg text-foreground/85 leading-relaxed mt-[var(--space-md)]">
+      <p class="prose-measure text-(length:--text-md) md:text-lg text-foreground/85 leading-relaxed mt-(--space-md)">
         {siteConfig.tagline}
       </p>
 
-      <div class="accent-line mt-[var(--space-xl)]! mb-0!" aria-hidden="true"></div>
+      <div class="accent-line mt-(--space-xl)! mb-0!" aria-hidden="true"></div>
     </section>
 
-    <section class="text-band pt-[var(--space-md)]! space-y-[var(--space-md)]">
-      <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+    <section class="text-band pt-(--space-md)! space-y-(--space-md)">
+      <h2 class="font-display text-(length:--text-xl) leading-tight text-foreground m-0">
         Summary
       </h2>
       <p class="prose-measure text-base leading-relaxed text-foreground">
@@ -93,14 +93,14 @@ const personSchema = {
       </p>
     </section>
 
-    <div class="text-band pt-[var(--space-md)]!">
-      <hr class="hairline-rule mb-[var(--space-xl)]" />
+    <div class="text-band pt-(--space-md)!">
+      <hr class="hairline-rule mb-(--space-xl)" />
       <ExperienceBentoStatic />
     </div>
 
-    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
-      <div class="space-y-[var(--space-xs)]">
-        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+    <section class="text-band pt-(--space-md)! pb-(--space-3xl)">
+      <div class="space-y-(--space-xs)">
+        <h2 class="font-display text-(length:--text-xl) leading-tight text-foreground m-0">
           Skills
         </h2>
         <ul class="flex flex-wrap gap-2 list-none m-0 p-0">
@@ -113,10 +113,10 @@ const personSchema = {
       </div>
     </section>
 
-    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
-      <div class="space-y-[var(--space-xs)]">
-        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">Projects</h2>
-        <ul class="space-y-[var(--space-md)] list-none m-0 p-0">
+    <section class="text-band pt-(--space-md)! pb-(--space-3xl)">
+      <div class="space-y-(--space-xs)">
+        <h2 class="font-display text-(length:--text-xl) leading-tight text-foreground m-0">Projects</h2>
+        <ul class="space-y-(--space-md) list-none m-0 p-0">
           {siteConfig.projects.map((project) => (
             <li>
               <p class="font-display text-lg font-medium">{project.name}</p>
@@ -131,9 +131,9 @@ const personSchema = {
       </div>
     </section>
 
-    <section class="text-band pt-[var(--space-md)]! pb-[var(--space-3xl)]">
-      <div class="space-y-[var(--space-xs)]">
-        <h2 class="font-display text-[length:var(--text-xl)] leading-tight text-foreground m-0">
+    <section class="text-band pt-(--space-md)! pb-(--space-3xl)">
+      <div class="space-y-(--space-xs)">
+        <h2 class="font-display text-(length:--text-xl) leading-tight text-foreground m-0">
           Links
         </h2>
         <ul class="flex flex-wrap gap-x-4 gap-y-2 list-none m-0 p-0">

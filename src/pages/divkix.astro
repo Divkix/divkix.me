@@ -84,12 +84,12 @@ const navLinks = [
           />
         </figure>
         <div class="space-y-2">
-          <h1 class="font-display text-[length:var(--text-display-s)]">{siteConfig.name}</h1>
-          <p class="text-[length:var(--text-lg)] text-muted-foreground">
+          <h1 class="font-display text-(length:--text-display-s)">{siteConfig.name}</h1>
+          <p class="text-(length:--text-lg) text-muted-foreground">
             Online as <span class="text-foreground">{siteConfig.handle.toLowerCase()}</span>
           </p>
         </div>
-        <p class="text-[length:var(--text-md)] text-foreground/60 max-w-md mx-auto">
+        <p class="text-(length:--text-md) text-foreground/60 max-w-md mx-auto">
           {siteConfig.tagline}
         </p>
       </div>
@@ -127,7 +127,7 @@ const navLinks = [
             class="surface-raised p-5 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
           >
             <div>
-              <span class="text-[length:var(--text-lg)] font-semibold block">{link.label}</span>
+              <span class="text-(length:--text-lg) font-semibold block">{link.label}</span>
               <span class="text-sm text-foreground/60 block">{link.description}</span>
             </div>
             <svg
@@ -162,7 +162,7 @@ const navLinks = [
               class="surface-raised p-5 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group block"
             >
               <div class="flex-1">
-                <span class="text-[length:var(--text-lg)] font-semibold block">{project.name}</span>
+                <span class="text-(length:--text-lg) font-semibold block">{project.name}</span>
                 <span class="text-sm text-foreground/60 block line-clamp-2">{project.desc}</span>
                 <div class="flex flex-wrap gap-2 mt-2">
                   {project.tags.slice(0, 3).map((tag) => (

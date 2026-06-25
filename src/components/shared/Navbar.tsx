@@ -112,21 +112,21 @@ function Navbar() {
         Skip to main content
       </a>
       <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-transparent">
-        <div className="content-rail pt-[var(--space-md)] pb-0">
-          <p className="mast-line mb-[var(--space-2xs)]">{mastLine}</p>
+        <div className="content-rail pt-(--space-md) pb-0">
+          <p className="mast-line mb-(--space-2xs)">{mastLine}</p>
           <a
             href="/"
-            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-[var(--tracking-display)] text-foreground transition-opacity hover:opacity-80 block min-w-0"
+            className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-[0.95] tracking-(--tracking-display) text-foreground transition-opacity hover:opacity-80 block min-w-0"
             aria-label={`${siteConfig.name} home`}
           >
             {siteConfig.name}
           </a>
 
           <nav
-            className="hidden md:block mt-[var(--space-sm)]"
+            className="hidden md:block mt-(--space-sm)"
             aria-label="Main navigation"
           >
-            <ul className="flex flex-wrap items-center gap-x-[var(--space-lg)] gap-y-2 list-none m-0 p-0">
+            <ul className="flex flex-wrap items-center gap-x-(--space-lg) gap-y-2 list-none m-0 p-0">
               {primaryNavItems.map((item) => {
                 const isActive = getIsActive(item.href);
                 return (
@@ -153,7 +153,7 @@ function Navbar() {
             </ul>
           </nav>
 
-          <div className="flex md:hidden items-center gap-3 mt-[var(--space-sm)] pb-[var(--space-xs)]">
+          <div className="flex md:hidden items-center gap-3 mt-(--space-sm) pb-(--space-xs)">
             <ThemeToggle />
             <button
               ref={hamburgerRef}
@@ -168,7 +168,7 @@ function Navbar() {
             </button>
           </div>
 
-          <hr className="double-rule mt-[var(--space-sm)] mb-0" />
+          <hr className="double-rule mt-(--space-sm) mb-0" />
         </div>
       </header>
 
@@ -289,12 +289,12 @@ function MobileNavDialog({
     <div
       ref={dialogRef}
       id="mobile-nav-dialog"
-      className="fixed inset-0 z-[100] flex flex-col bg-background"
+      className="fixed inset-0 z-100 flex flex-col bg-background"
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
     >
-      <div className="flex h-14 items-center justify-between border-b border-border px-[var(--page-gutter)] gap-2">
+      <div className="flex h-14 items-center justify-between border-b border-border px-(--page-gutter) gap-2">
         <span className="font-display text-base text-foreground truncate min-w-0">
           {siteConfig.name}
         </span>
