@@ -11,7 +11,8 @@ editorial
 ## Macrostructure family
 
 - Marketing homepage: Photographic — portrait-led hero fold, narrow text bands, image edge as divider
-- Marketing sections (projects): border-top list rows with typographic proof links
+- Homepage section order: Hero → Highlights/proof → Selected work → Recent writing → Contact
+- Marketing sections (projects): `.split-studio` asymmetric rows (meta left, proof right) with border-top separators
 - Content pages: Long Document — continuous prose, inline section heads, generous measure
 
 ## Theme
@@ -56,15 +57,27 @@ tokens (`var(--space-md)`), never raw values.
 
 - Primary CTA: filled, square corners (`--radius-input: 0`), verb-led copy
 - Secondary CTA: hairline outline, same radius
+- Hero: one primary + one secondary button max; tertiary actions are plain text links
+- In-section footer links (e.g. "All posts →"): sentence case, no uppercase tracking — buttons stay uppercase
+
+## Mast-line discipline
+
+- `.mast-line` is brand chrome, not section grammar
+- Required: nav masthead (`N6`)
+- Optional: hero identity line, page-title orientation on interior pages (About, Blog index, Resume)
+- Not required on homepage section heads — prefer display H2 alone
+- Do not put a mast-line above every section
 
 ## Nav + Footer
 
 - Nav: N6 Newspaper masthead
-- Footer: Ft1 Mast-headed
+- Footer: Ft1 Mast-headed — sentence-case links; warm closer line allowed
 
 ## Per-page allowances
 
 - Marketing pages MAY use author photo in hero figure (real portrait only)
+- Homepage MAY surface `facts` and `proofPoints` as typographic proof (no metric cards)
+- Featured projects MAY use screenshots when real assets exist under `public/` — never colored placeholders
 - Content pages: typography only, no enrichment
 
 ## What pages MUST share
@@ -79,6 +92,7 @@ tokens (`var(--space-md)`), never raw values.
 
 - Photo fold vs prose fold rhythm on marketing pages
 - Blog list vs post prose width
+- Featured writing teaser vs compact rows on homepage
 
 ## Exports
 

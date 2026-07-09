@@ -20,17 +20,44 @@ import { siteConfig } from "@/data/site.config";
         {siteConfig.heroSummary}
       </p>
 
-      <div class="flex flex-wrap gap-3 pt-(--space-xs)">
+      <p class="prose-measure text-base text-muted-foreground leading-relaxed">
+        {siteConfig.heroProof}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-3 pt-(--space-xs)">
         <a href="/#projects" class="btn-primary">
           See selected work
         </a>
         <a href="/resume" class="btn-secondary">
           View resume
         </a>
-        <a href="/blog" class="btn-secondary">
-          Read recent writing
+        <a
+          href="/blog"
+          class="text-sm text-muted-foreground hover:text-foreground link-underline-grow transition-colors"
+        >
+          Recent writing
         </a>
       </div>
+
+      <p
+        class="flex flex-wrap items-baseline gap-x-(--space-md) gap-y-1 pt-(--space-xs) text-xs text-muted-foreground"
+        aria-label="At-a-glance stats"
+      >
+        <span>
+          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.impact}</span>
+          {" "}users
+        </span>
+        <span class="text-border" aria-hidden="true">·</span>
+        <span>
+          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.projects}</span>
+          {" "}projects
+        </span>
+        <span class="text-border" aria-hidden="true">·</span>
+        <span>
+          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.oss}</span>
+          {" "}open source
+        </span>
+      </p>
 
       <div class="pt-(--space-2xs)">
         <SocialIcons size="sm" />

@@ -17,14 +17,15 @@ const footerLinks = [
       {siteConfig.name}
     </p>
     <p class="text-muted-foreground text-base max-w-prose leading-relaxed">
-      Software engineer, builder, writer. Based in {siteConfig.location}.
+      Software engineer, builder, writer. Based in {siteConfig.location} —
+      building on the edge, shipping in public.
     </p>
     <p class="text-sm text-muted-foreground flex flex-wrap gap-x-4 gap-y-2">
       {
         footerLinks.map((link) => (
           <a
             href={link.href}
-            class="text-foreground link-underline-grow whitespace-nowrap uppercase tracking-[0.06em]"
+            class="text-foreground link-underline-grow whitespace-nowrap"
           >
             {link.label}
           </a>
@@ -32,7 +33,7 @@ const footerLinks = [
       }
       <a
         href={`mailto:${siteConfig.email}`}
-        class="text-foreground link-underline-grow whitespace-nowrap uppercase tracking-[0.06em]"
+        class="text-foreground link-underline-grow whitespace-nowrap"
         aria-label={`Email ${siteConfig.email}`}
       >
         Email

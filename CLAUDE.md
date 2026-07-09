@@ -4,7 +4,7 @@ This file provides guidance for AI assistants working with the divkix.me portfol
 
 ## Project Overview
 
-Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, and **React islands**. Deployed to Cloudflare as static output served via Workers static assets. Features a single-page homepage (Hero, Highlights, Recent Writing, Projects, Contact), additional marketing/profile pages (`/about`, `/resume`, `/divkix`, `/pricing`, `/socials`, `/mentions`, `/privacy`), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data (JSON-LD, OG images, IndexNow, `llms.txt`).
+Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, and **React islands**. Deployed to Cloudflare as static output served via Workers static assets. Features a single-page homepage (Hero, Highlights, Projects, Recent Writing, Contact), additional marketing/profile pages (`/about`, `/resume`, `/divkix`, `/pricing`, `/socials`, `/mentions`, `/privacy`), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data (JSON-LD, OG images, IndexNow, `llms.txt`).
 
 ## Project Structure
 

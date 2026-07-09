@@ -8,7 +8,9 @@ export const siteConfig = {
   about:
     "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
   heroSummary:
-    "MS in Computer Science from ASU, GPA 3.889. SWE intern at Cloudflare and Vinext contributor. I write code on the edge during the day and ship side projects at night: a Telegram bot used by 300k people, a self-hosted logging tool, a class tracker for ASU.",
+    "Software engineer at Cloudflare. MS in Computer Science from ASU. I build edge infrastructure by day and side projects people actually open at night.",
+  heroProof:
+    "Alita Robot serves 300k+ Telegram users. I contribute to Vinext, Cloudflare's open-source Next.js-on-Workers stack.",
   founderPov:
     "I build tools so software feels obvious at 2am, when you're stressed and want it to just work. Cloudflare taught me how a real edge platform behaves under load. Side projects taught me what people actually open more than once. I care about building things that are small, durable, and worth coming back to. I ship in public and write down what I learn along the way.",
   interests:
@@ -26,6 +28,22 @@ export const siteConfig = {
     metaDescription:
       "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
   },
+
+  /** Compact homepage proof points — outcomes, not skill tags */
+  proofPoints: [
+    {
+      label: "Alita Robot",
+      detail: "300k+ users on a Telegram bot I've maintained since 2020",
+    },
+    {
+      label: "LogWell",
+      detail: "Self-hosted logging I built after Datadog priced me out",
+    },
+    {
+      label: "Teaching",
+      detail: "Two years tutoring eight CS courses at ASU",
+    },
+  ] as const,
 
   faq: [
     {
@@ -51,7 +69,7 @@ export const siteConfig = {
   ] as const,
 
   facts: {
-    impact: "300000+",
+    impact: "300k+",
     projects: "30+",
     oss: "50+",
   },

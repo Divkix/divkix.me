@@ -59,7 +59,7 @@ function Navbar() {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sections = ["hero", "highlights", "writing", "projects", "contact"];
+    const sections = ["hero", "highlights", "projects", "writing", "contact"];
 
     const observer = new IntersectionObserver(
       (entries) => {

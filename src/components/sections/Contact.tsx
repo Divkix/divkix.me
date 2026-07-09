@@ -89,26 +89,31 @@ function Contact() {
         <div className="min-w-0 space-y-(--space-md)">
           <SectionHeading
             title="Say hello"
-            description="I'm open to full-time software engineering roles starting May 2026. Backend, infrastructure, developer tools, AI platform work. Also happy to chat about side projects, Cloudflare Workers, or anything you're stuck on."
+            description="Open to full-time software engineering roles — backend, infrastructure, developer tools, AI platforms. Also happy to talk side projects, Cloudflare Workers, or something you're stuck on."
           />
 
-          <div className="space-y-2 text-muted-foreground">
-            <p>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-prose">
+            Email is fastest. Resume is one click. Or send a short note with the
+            form.
+          </p>
+
+          <div className="space-y-3">
+            <p className="m-0">
               <a
-                href="mailto:divkix@divkix.me"
-                className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
+                href={`mailto:${siteConfig.email}`}
+                className="text-base text-primary link-underline-grow"
                 rel="me author"
-                aria-label="Email divkix@divkix.me"
+                aria-label={`Email ${siteConfig.email}`}
               >
-                divkix@divkix.me
+                {siteConfig.email}
               </a>
             </p>
-            <p>
+            <p className="m-0">
               <a
                 href="/resume"
-                className="text-primary link-underline-grow whitespace-nowrap uppercase text-xs tracking-[0.18em]"
+                className="text-sm text-foreground link-underline-grow"
               >
-                Download resume
+                Download resume <span aria-hidden="true">→</span>
               </a>
             </p>
           </div>
@@ -120,7 +125,7 @@ function Contact() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer me"
-                  className="text-xs text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.18em]"
+                  className="text-sm text-muted-foreground hover:text-foreground link-underline-grow whitespace-nowrap transition-colors"
                   aria-label={`Opens in new tab: ${social.label}`}
                 >
                   {social.label}
@@ -131,6 +136,9 @@ function Contact() {
         </div>
 
         <div className="min-w-0">
+          <p className="text-xs text-muted-foreground mb-(--space-sm)">
+            Prefer a form? Leave a note below.
+          </p>
           <div className="border border-border bg-card p-(--space-md) md:p-(--space-lg)">
             {isSuccess ? (
               <p

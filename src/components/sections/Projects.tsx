@@ -34,50 +34,53 @@ function ProjectEntry({ project }: { project: Project }) {
 
   return (
     <article className="border-t border-border py-(--space-xl) first:border-t-0 first:pt-0">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-(--space-md) gap-y-(--space-xs)">
-        <h3 className="font-display text-2xl md:text-[1.75rem] leading-[1.05] m-0">
-          {project.name}
-        </h3>
-        {hasPeriod && (
-          <span className="text-xs text-muted-foreground uppercase tracking-[0.18em] tabular-nums whitespace-nowrap">
-            {project.period}
-          </span>
-        )}
+      <div className="split-studio">
+        <div className="min-w-0 space-y-(--space-sm)">
+          <h3 className="font-display text-2xl md:text-[1.75rem] leading-[1.05] m-0">
+            {project.name}
+          </h3>
+          {hasPeriod && (
+            <p className="m-0 text-xs text-muted-foreground tabular-nums">
+              {project.period}
+            </p>
+          )}
+          {hasTags && (
+            <p className="m-0 text-xs text-muted-foreground leading-relaxed">
+              {project.tags.join(" · ")}
+            </p>
+          )}
+        </div>
+
+        <div className="min-w-0 space-y-(--space-md)">
+          <p className="m-0 text-base text-foreground/85 leading-relaxed max-w-prose">
+            {project.desc}
+          </p>
+
+          <p className="m-0 flex flex-wrap items-center gap-x-(--space-lg) gap-y-(--space-xs) text-sm">
+            {project.links.map((link: ProjectLink) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${linkLabel(link.label)} — ${project.name}`}
+                className="text-foreground link-underline-grow"
+              >
+                {linkLabel(link.label)} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+            {blogHref && (
+              <a
+                href={blogHref}
+                aria-label={`Case study — ${project.name}`}
+                className="text-primary link-underline-grow"
+              >
+                Case study <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </p>
+        </div>
       </div>
-
-      {hasTags && (
-        <p className="mt-(--space-sm) text-xs text-muted-foreground leading-relaxed">
-          {project.tags.join(" · ")}
-        </p>
-      )}
-
-      <p className="mt-(--space-md) text-base text-foreground/85 leading-relaxed max-w-prose">
-        {project.desc}
-      </p>
-
-      <p className="mt-(--space-md) flex flex-wrap items-center gap-x-(--space-lg) gap-y-(--space-xs) text-xs">
-        {project.links.map((link: ProjectLink) => (
-          <a
-            key={link.label}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${linkLabel(link.label)} — ${project.name}`}
-            className="text-foreground link-underline-grow uppercase tracking-[0.18em]"
-          >
-            {linkLabel(link.label)} <span aria-hidden="true">↗</span>
-          </a>
-        ))}
-        {blogHref && (
-          <a
-            href={blogHref}
-            aria-label={`Case study — ${project.name}`}
-            className="text-primary link-underline-grow uppercase tracking-[0.18em]"
-          >
-            Case study <span aria-hidden="true">→</span>
-          </a>
-        )}
-      </p>
     </article>
   );
 }
@@ -99,11 +102,9 @@ export function Projects() {
       </div>
 
       <p className="mt-(--space-lg)">
-        <a
-          href="/about"
-          className="text-xs text-primary link-underline-grow whitespace-nowrap uppercase tracking-[0.18em]"
-        >
-          More projects and full résumé on About →
+        <a href="/about" className="text-sm text-primary link-underline-grow">
+          More projects and full résumé on About{" "}
+          <span aria-hidden="true">→</span>
         </a>
       </p>
     </section>
