@@ -4,10 +4,13 @@ onlyBuiltDependencies:
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: ^0.2.3
+  vite-plus: ^0.2.5
 overrides:
   vite: 'catalog:'
   vitest: 'catalog:'
+  # astro check relies on TypeScript's programmatic API, which TS 7.0 does not
+  # ship yet. Pin to latest 6.x until astro check supports TS 7.
+  typescript: ^6.0.3
 peerDependencyRules:
   allowAny:
     - vite
