@@ -8,7 +8,11 @@ import {
   generateFAQPageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { calculateReadingTime, formatDate } from "@/lib/utils";
+import {
+  calculateReadingTime,
+  formatDate,
+  getMultiPostTags,
+} from "@/lib/utils";
 
 const allPosts = await getCollection("blog");
 
@@ -30,6 +34,10 @@ const postsWithReadingTime: PostWithReadingTime[] = posts.map(
     post,
     readingTime: `${calculateReadingTime(post.body)} min read`,
   }),
+);
+
+const multiPostTags = getMultiPostTags(
+  posts.map((p: CollectionEntry<"blog">) => ({ tags: p.data.tags })),
 );
 
 const blogUrl = `${baseUrl}/blog`;
@@ -134,12 +142,18 @@ const blogFaqSchema = generateFAQPageSchema(
                   {item.post.data.tags.length > 0 && (
                     <p class="text-xs text-muted-foreground pt-(--space-2xs)">
                       {item.post.data.tags.map((tag: string) => (
-                        <a
-                          href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
-                          class="hover:text-primary transition-colors link-underline-grow mr-(--space-sm) last:mr-0 uppercase tracking-widest"
-                        >
-                          {tag}
-                        </a>
+                        multiPostTags.has(tag.toLowerCase()) ? (
+                          <a
+                            href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
+                            class="hover:text-primary transition-colors link-underline-grow mr-(--space-sm) last:mr-0 uppercase tracking-widest"
+                          >
+                            {tag}
+                          </a>
+                        ) : (
+                          <span class="text-muted-foreground/50 mr-(--space-sm) last:mr-0 uppercase tracking-widest">
+                            {tag}
+                          </span>
+                        )
                       ))}
                     </p>
                   )}

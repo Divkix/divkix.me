@@ -10,7 +10,11 @@ import {
   getJobTitle,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
-import { calculateReadingTime, formatDate } from "@/lib/utils";
+import {
+  calculateReadingTime,
+  formatDate,
+  getMultiPostTags,
+} from "@/lib/utils";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -45,6 +49,12 @@ const relatedPosts = allPosts
       p.data.tags.some((tag: string) => post.data.tags.includes(tag)),
   )
   .slice(0, 3);
+
+const multiPostTags = getMultiPostTags(
+  allPosts
+    .filter((p: CollectionEntry<"blog">) => p.data.published === true)
+    .map((p: CollectionEntry<"blog">) => ({ tags: p.data.tags })),
+);
 
 const readingTimeMinutes = calculateReadingTime(post.body);
 const readingTime = `${readingTimeMinutes} min read`;
@@ -245,12 +255,18 @@ const articleMeta = {
         {post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2">
             {post.data.tags.map((tag: string) => (
-              <a
-                href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
-                class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
-              >
-                {tag}
-              </a>
+              multiPostTags.has(tag.toLowerCase()) ? (
+                <a
+                  href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
+                  class="text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors"
+                >
+                  {tag}
+                </a>
+              ) : (
+                <span class="text-xs px-2 py-1 border border-border/60 rounded text-foreground/40">
+                  {tag}
+                </span>
+              )
             ))}
           </div>
         )}

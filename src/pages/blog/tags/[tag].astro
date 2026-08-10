@@ -30,6 +30,7 @@ export async function getStaticPaths() {
   }
 
   // Create paths for each tag
+  const multiPostTagsArray = Array.from(tags);
   return Array.from(tags).map((tag) => ({
     params: { tag: tag },
     props: {
@@ -37,6 +38,7 @@ export async function getStaticPaths() {
       posts: publishedPosts.filter((p: CollectionEntry<"blog">) =>
         p.data.tags.some((t: string) => t.toLowerCase() === tag),
       ),
+      multiPostTags: multiPostTagsArray,
     },
   }));
 }
@@ -44,9 +46,10 @@ export async function getStaticPaths() {
 interface Props {
   tag: string;
   posts: CollectionEntry<"blog">[];
+  multiPostTags: string[];
 }
 
-const { tag, posts } = Astro.props;
+const { tag, posts, multiPostTags } = Astro.props;
 
 type PostWithReadingTime = {
   post: CollectionEntry<"blog">;
@@ -186,16 +189,22 @@ const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}".
                   {item.post.data.tags.length > 0 && (
                     <div class="flex flex-wrap gap-2">
                       {item.post.data.tags.map((t: string) => (
-                        <a
-                          href={`/blog/tags/${encodeURIComponent(t.toLowerCase())}`}
-                          class={
-                            t.toLowerCase() === tag
-                              ? "text-xs px-2 py-1 bg-primary text-primary-foreground rounded link-underline-grow"
-                              : "text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors link-underline-grow"
-                          }
-                        >
-                          {t}
-                        </a>
+                        multiPostTags.includes(t.toLowerCase()) ? (
+                          <a
+                            href={`/blog/tags/${encodeURIComponent(t.toLowerCase())}`}
+                            class={
+                              t.toLowerCase() === tag
+                                ? "text-xs px-2 py-1 bg-primary text-primary-foreground rounded link-underline-grow"
+                                : "text-xs px-2 py-1 border border-border/60 rounded hover:border-primary/60 hover:text-primary transition-colors link-underline-grow"
+                            }
+                          >
+                            {t}
+                          </a>
+                        ) : (
+                          <span class="text-xs px-2 py-1 border border-border/60 rounded text-foreground/40">
+                            {t}
+                          </span>
+                        )
                       ))}
                     </div>
                   )}
