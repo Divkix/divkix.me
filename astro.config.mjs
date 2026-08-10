@@ -15,10 +15,9 @@ import { NOINDEX_PATHS } from "./src/data/site.config.ts";
 // Build a map of blog URLs to dates for sitemap lastmod
 // Read from pre-generated posts.json (astro:content not available in config)
 const blogDateMap = new Map();
+let postsData;
 try {
-  const postsData = JSON.parse(
-    readFileSync("./content/blog/posts.json", "utf-8"),
-  );
+  postsData = JSON.parse(readFileSync("./content/blog/posts.json", "utf-8"));
   for (const post of postsData.posts) {
     if (post.published) {
       const url = `https://divkix.me/blog/${post.slug}`;
@@ -31,6 +30,24 @@ try {
   console.warn(
     "Warning: posts.json not found, sitemap will use build date for blog posts",
   );
+}
+
+const multiPostTags = new Set();
+try {
+  const tagCounts = new Map();
+  for (const post of postsData.posts) {
+    if (post.published && post.tags) {
+      for (const tag of post.tags) {
+        const normalized = tag.toLowerCase();
+        tagCounts.set(normalized, (tagCounts.get(normalized) || 0) + 1);
+      }
+    }
+  }
+  for (const [tag, count] of tagCounts) {
+    if (count >= 2) multiPostTags.add(tag);
+  }
+} catch {
+  // posts.json not found, skip
 }
 
 export default defineConfig({
@@ -52,7 +69,17 @@ export default defineConfig({
       // flags as "Submitted URL marked noindex".
       filter: (page) => {
         const path = new URL(page).pathname.replace(/\/$/, "");
-        return !path.includes("/draft") && !NOINDEX_PATHS.includes(path);
+        if (path.includes("/draft") || NOINDEX_PATHS.includes(path)) {
+          return false;
+        }
+        // Exclude thin tag pages (tags with fewer than 2 posts)
+        if (path.includes("/blog/tags/")) {
+          const tag = decodeURIComponent(
+            path.split("/blog/tags/")[1] || "",
+          ).toLowerCase();
+          return multiPostTags.has(tag);
+        }
+        return true;
       },
       namespaces: {
         news: false,
@@ -127,40 +154,6 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
           ],
           promote: ["/blog/**"],
           demote: ["/privacy"],
-        },
-        {
-          title: "Full Documentation",
-          description: "Complete site content in one file",
-          url: "/llms-full.txt",
-          include: [
-            "/",
-            "/about",
-            "/blog",
-            "/blog/**",
-            "/divkix",
-            "/pricing",
-            "/privacy",
-            "/socials",
-          ],
-          promote: ["/blog/**"],
-          demote: ["/privacy"],
-        },
-        {
-          title: "Compact",
-          description: "Headings and structure only",
-          url: "/llms-small.txt",
-          include: [
-            "/",
-            "/about",
-            "/blog",
-            "/blog/**",
-            "/divkix",
-            "/pricing",
-            "/privacy",
-            "/socials",
-          ],
-          onlyStructure: true,
-          promote: ["/blog/**"],
         },
       ],
       notes:

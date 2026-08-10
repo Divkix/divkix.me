@@ -81,7 +81,7 @@ User Request → Cloudflare Worker (Edge)
             Resend API (Email Notification)
 ```
 
-The architecture keeps costs low: Cloudflare handles edge logic for free, Oracle's always-free tier runs the heavy Puppeteer work, and Supabase's generous free tier stores user data.
+The architecture keeps costs low: Cloudflare handles edge logic for free, Oracle's always-free tier runs the heavy Puppeteer work, and Supabase's generous free tier stores user data. [Building full-stack apps on Cloudflare Workers](/blog/clickfolio-full-stack-cloudflare-workers) taught me how powerful this edge-first architecture can be.
 
 ## The Technical Challenge
 
@@ -152,7 +152,7 @@ The goal is to be a good citizen. If everyone scraped irresponsibly, they'd bloc
 
 ## The Stack
 
-Next.js 15 for the frontend, Cloudflare Workers for edge logic, Supabase for auth and real-time subscriptions, PostgreSQL with row-level security, Puppeteer for scraping, and Resend for emails.
+Next.js 15 for the frontend, Cloudflare Workers for edge logic, Supabase for auth and real-time subscriptions, PostgreSQL with row-level security, Puppeteer for scraping, and Resend for emails. It's a subset of the [broader stack I use for every side project as a grad student](/blog/side-project-stack-2026-grad-student).
 
 The dashboard updates live. Add a class watch and it appears instantly, when the cron job detects changes, your browser sees them without refreshing.
 
@@ -172,7 +172,7 @@ I also learned to [instrument everything early](/blog/logwell-self-hosted-loggin
 
 ## Where It Stands
 
-[PickMyClass](https://pickmyclass.app) is running. 10,000+ users, $34/month, no serious outages.
+[PickMyClass](https://pickmyclass.app) is running. 10,000+ users, $34/month, no serious outages. It's not [300K+ users on a Telegram bot](/blog/scaling-telegram-bot-300k-users), but it's real people relying on something I built.
 
 Extending it to other universities is theoretically straightforward, each school needs its own scraper config, but I haven't built that yet. ASU keeps me busy enough. If you're at another school and want to adapt it, the code is open to fork.
 

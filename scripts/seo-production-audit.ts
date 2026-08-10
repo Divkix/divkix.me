@@ -61,7 +61,7 @@ assert(
   "Content-Security-Policy should allow form submissions to Formspree.",
 );
 assert(
-  robots.includes("Content-Signal: ai-train=no, search=yes, ai-input=yes"),
+  robots.includes("Content-Signal: ai-train=yes, search=yes, ai-input=yes"),
   "robots.txt should allow AI assistants to use indexed content as answer context.",
 );
 assert(

@@ -11,7 +11,6 @@ import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
-  generateFAQPageSchema,
   generateSoftwareApplicationSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
@@ -38,8 +37,6 @@ const collectionPageSchema = generateCollectionPageSchema(
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", item: baseUrl },
 ]);
-
-const homeFaqSchema = generateFAQPageSchema([...siteConfig.faq], baseUrl);
 
 const authorId = `${baseUrl}/#author`;
 
@@ -79,14 +76,13 @@ const graphSchema = {
   "@graph": [
     collectionPageSchema,
     breadcrumbSchema,
-    homeFaqSchema,
     logwellSchema,
     clickfolioSchema,
   ].map(({ "@context": _context, ...node }) => node),
 };
 ---
 
-<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og/blog.png`}>
+<SiteLayout showScrollProgress={true} ogImage={`${baseUrl}/og-image.webp`}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
   <Hero />
   <HighlightsWithBoundary client:visible />

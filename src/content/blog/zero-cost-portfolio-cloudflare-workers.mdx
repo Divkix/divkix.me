@@ -5,10 +5,10 @@ seoDescription: "I ditched Vercel for Cloudflare Workers. Now I pay $0/month for
 coverAlt: "Cloudflare Workers hosting architecture diagram showing zero-cost edge deployment"
 date: "2025-11-24"
 dateModified: "2026-04-05"
-excerpt: "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Next.js 15 and why you should consider ditching Vercel."
+excerpt: "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Astro 7 and why you should consider ditching Vercel."
 tags: ["Cloudflare Workers", "Next.js", "Edge Computing", "Serverless", "Free Hosting", "OpenNext", "Portfolio", "Web Development", "Cost Optimization", "2025"]
 published: true
-tldr: "I host my Next.js portfolio on Cloudflare Workers completely free using OpenNext, getting global edge deployment and zero cold starts without paying Vercel's premium."
+tldr: "I host my Astro portfolio on Cloudflare Workers completely free using static output, getting global edge deployment and zero cold starts without paying Vercel's premium."
 keyTakeaways:
   - "Cloudflare Workers free tier: 100K requests/day with zero bandwidth limits beats Vercel's 100GB cap"
   - "V8 isolates mean 5ms cold starts vs 200-500ms for traditional serverless functions"
@@ -37,18 +37,17 @@ faq:
 
 I haven't paid for hosting in two years. Not because I'm using some sketchy free trial, but because my portfolio genuinely costs $0/month to run on Cloudflare Workers.
 
-This isn't a flex post. It's the architecture breakdown of how divkix.me runs on Cloudflare's edge network with Next.js 15, why I picked it over Vercel, and the actual constraints you'll hit.
+This isn't a flex post. It's the architecture breakdown of how divkix.me runs on Cloudflare's edge network with Astro 7, why I picked it over Vercel, and the actual constraints you'll hit. I've also built a [full-stack app on the same edge platform](/blog/clickfolio-full-stack-cloudflare-workers) — but this post is about the simpler static-site case.
 
 ## The Stack Nobody Tells You About
 
-Here's what powers this site:
+Here's what powers this site today:
 
-- Next.js 15 (App Router, RSC)
-- OpenNext (`@opennextjs/cloudflare`) - the adapter that makes Next.js work on Workers
-- Cloudflare Workers - edge runtime using V8 isolates
+- Astro 7 (static output, Content Collections for the blog)
+- Cloudflare Workers - serves the static build from 330+ edge locations
 - Wrangler - Cloudflare's deployment CLI
 
-The secret sauce is OpenNext. It's an open-source adapter that converts Next.js builds into formats that edge runtimes understand. You can't just deploy Next.js to Cloudflare Workers directly. OpenNext bridges the gap.
+I originally built this on Next.js 15 with the OpenNext adapter, but I've since migrated to Astro 7. The reason is simple: this is a content site, not an app. Astro builds everything to static HTML, CSS, and JS at build time, and Cloudflare Workers serves those files from the edge. No adapter, no edge-runtime workarounds, no fighting the platform. The earlier Next.js setup worked, but Astro's static output is a cleaner fit for a portfolio and blog.
 
 ## Why Not Vercel? (The Real Reasons)
 
@@ -81,11 +80,11 @@ For a portfolio or blog, you'll never hit 100K requests/day unless you're Hacker
 
 ## Edge Runtime Constraints (The Pain Points)
 
-Cloudflare Workers run on the edge. That means no Node.js. No filesystem. No `fs.readFileSync()`. This breaks a lot of Next.js patterns.
+This is the section where I'd warn you about edge runtime constraints — and when I ran the site on Next.js 15 + OpenNext, they were real. No Node.js. No filesystem. No `fs.readFileSync()`. Those constraints broke a lot of Next.js patterns. Migrating to Astro's static output sidestepped most of them, because Astro reads your MDX at build time instead of at request time.
 
 ### The Blog Problem
 
-My blog uses MDX files. Typical Next.js pattern:
+When the site ran on Next.js, my blog used MDX files read from the filesystem at request time — a pattern that breaks on the edge:
 
 ```typescript
 // This DOES NOT WORK on Cloudflare Workers
@@ -155,16 +154,16 @@ Here's the minimal `wrangler.jsonc` config:
     "global_fetch_strictly_public"
   ],
   "assets": {
-    "directory": ".open-next/assets"
+    "directory": "./dist"
   }
 }
 ```
 
 - `nodejs_compat` enables some Node.js APIs (Buffer, process.env)
 - `global_fetch_strictly_public` enforces standards-compliant fetch
-- `assets.directory` points to OpenNext's build output
+- `assets.directory` points to Astro's static build output (`dist/`)
 
-OpenNext generates `.open-next/` folder with all Worker-compatible assets. Wrangler uploads it.
+Astro builds the site to `dist/`, and Wrangler uploads those static assets to Cloudflare's edge.
 
 ## Performance: The Actual Numbers
 
@@ -177,14 +176,14 @@ I ran tests from 5 global locations. Here's reality:
 - Mumbai: 35ms
 - São Paulo: 42ms
 
-**Blog Post (SSR)**
+**Blog Post (SSG)**
 - San Francisco: 45ms
 - London: 52ms
 - Singapore: 48ms
 - Mumbai: 61ms
 - São Paulo: 58ms
 
-These are total response times, not TTFB. Cold starts are invisible. V8 isolates are fast.
+These are total response times, not TTFB. With Astro's static output served from Cloudflare's edge, there are no cold starts to worry about — it's just static files delivered from the nearest POP.
 
 For comparison, my old Vercel setup averaged 80-120ms on dynamic routes because of container cold starts.
 
@@ -196,18 +195,17 @@ My `package.json` scripts:
 {
   "scripts": {
     "prebuild": "node scripts/generate-posts-metadata.js",
-    "build": "bun run prebuild && next build",
-    "preview": "bun run build && wrangler pages dev .open-next/assets",
-    "deploy": "bun run build && wrangler pages deploy .open-next/assets"
+    "build": "bun run prebuild && astro build",
+    "preview": "bun run build && wrangler pages dev dist",
+    "deploy": "bun run build && wrangler pages deploy dist"
   }
 }
 ```
 
 Workflow:
 1. `bun run prebuild` - generates posts.json from MDX
-2. `next build` - Next.js builds app
-3. OpenNext transforms output (happens automatically via next.config)
-4. `wrangler pages deploy` - uploads to Cloudflare
+2. `astro build` - Astro builds the static site to `dist/`
+3. `wrangler pages deploy` - uploads `dist/` to Cloudflare
 
 First deploy took 2 minutes. Updates take 30-45 seconds.
 
@@ -219,11 +217,11 @@ Local development uses Node.js. Production uses V8 isolates. Sometimes code work
 
 2. No Incremental Static Regeneration (ISR)
 
-Next.js ISR doesn't work on Workers. You get static or fully dynamic. No middle ground. For a portfolio, this doesn't matter. For a high-traffic blog, you'll need full SSR or static builds.
+Astro outputs static files, so there's no ISR concept — you rebuild and redeploy when content changes. For a portfolio, this doesn't matter. For a high-traffic blog that updates constantly, you'll want a static rebuild pipeline or a dynamic host.
 
-3. OpenNext Is Community-Maintained
+3. The Next.js + OpenNext Era Had Sharp Edges
 
-Vercel isn't maintaining this. The community is. Updates lag behind Next.js releases. I'm on Next.js 15.0, OpenNext adapter works, but edge cases exist.
+My earlier Next.js setup relied on OpenNext, a community-maintained adapter. Updates lagged behind Next.js releases and edge cases popped up. Migrating to Astro eliminated that dependency entirely — static output needs no adapter.
 
 4. Limited Node.js APIs
 
@@ -231,7 +229,7 @@ Vercel isn't maintaining this. The community is. Updates lag behind Next.js rele
 
 5. Build Times
 
-OpenNext adds 10-15 seconds to build time. Not terrible, but noticeable. Vercel builds are faster because they control the entire stack.
+The prebuild step (generating posts metadata) plus Astro's static build adds a little time, but it's still fast. Vercel's builds are quicker for Next.js because they control the entire stack, but for a static site the difference is negligible.
 
 ## When You'd Actually Pay
 
@@ -249,30 +247,30 @@ For context, a site getting 13M requests/month is doing 430K requests/day. That'
 
 If you're on Vercel now:
 
-1. Install OpenNext: `bun add -D @opennextjs/cloudflare`
-2. Create `wrangler.jsonc` with basic config
-3. Audit your code for `fs`, `path`, Node.js APIs
-4. Move filesystem operations to prebuild scripts
+1. Create `wrangler.jsonc` with `assets.directory` pointing at your build output (`dist/` for Astro)
+2. Set your build command (`astro build`, or whatever your framework uses)
+3. If you're coming from Next.js, audit your code for `fs`, `path`, and other Node.js APIs that don't work on the edge
+4. Move any filesystem operations to prebuild scripts
 5. Test locally: `bun run preview`
 6. Deploy: `bun run deploy`
 7. Add custom domain in Cloudflare dashboard
 
-I migrated in 3 hours. Most of that was rewriting the blog system to use prebuild JSON instead of runtime filesystem reads.
+I migrated from Vercel in 3 hours. The Next.js-to-Astro move came later, but the Cloudflare side stayed the same — just point Wrangler at the new build output.
 
 ## Should You Do This?
 
 Worth it if you want $0/month with no asterisks, you're building a portfolio or blog or anything low-traffic, and you're comfortable with edge runtime constraints. The cold start speed and global edge are genuinely nice, not just marketing.
 
-Probably not worth it if you need ISR, rely on Node.js-specific libraries, want zero-config deployment (Vercel is much easier there), or have a site that makes heavy use of database connections, Workers have connection pooling limits that bite you at scale.
+Probably not worth it if you need ISR, rely on Node.js-specific libraries, want zero-config deployment (Vercel is much easier there), or have a site that makes heavy use of database connections, Workers have connection pooling limits that bite you at scale. (I've written a fuller [comparison of serverless Workers versus traditional VPS servers](/blog/serverless-vs-traditional-servers-cloudflare-workers-docker) if you're deciding between the two.)
 
-For divkix.me, Cloudflare Workers is perfect. No hosting bills, global performance, and the constraints force better architecture decisions. I prebuild everything anyway. Why not make it official?
+For divkix.me, Cloudflare Workers is perfect. No hosting bills, global performance, and the constraints force better architecture decisions. I prebuild everything anyway. Why not make it official? If you're weighing this against the rest of your infrastructure, [my side-project stack for 2026](/blog/side-project-stack-2026-grad-student) shows how this hosting setup fits alongside everything else I ship.
 
 The free tier isn't a trial. It's permanent. Cloudflare makes money from enterprises, not personal portfolios. Use that to your advantage.
 
 ---
 
 **Resources:**
-- [OpenNext Documentation](https://opennext.js.org)
+- [Astro Documentation](https://docs.astro.build)
 - [Cloudflare Workers Docs](https://developers.cloudflare.com/workers)
 - [My Portfolio Source Code](https://github.com/divkix/divkix.me) (see wrangler.jsonc and prebuild scripts)
 

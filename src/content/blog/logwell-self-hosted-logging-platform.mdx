@@ -58,11 +58,11 @@ Logwell is a self-hosted logging platform built on PostgreSQL with tsvector full
 
 I wasted an entire Saturday trying to set up logging for a side project.
 
-Not building features. Not fixing bugs. Just trying to see what my app was doing when it crashed at 2 AM. I opened the ELK Stack docs, saw the words "JVM heap sizing" and "shard allocation strategy," and closed the tab. I'm running a Telegram bot, not Netflix.
+Not building features. Not fixing bugs. Just trying to see what my app was doing when it crashed at 2 AM. I opened the ELK Stack docs, saw the words "JVM heap sizing" and "shard allocation strategy," and closed the tab. I'm running a [Telegram bot with 300K+ users](/blog/scaling-telegram-bot-300k-users), not Netflix.
 
 Loki looked promising until I realized I'd need to learn LogQL (which isn't grep, despite what the docs imply) and set up Grafana just to see my logs in a browser. That's two more services to babysit.
 
-Datadog? I did the math on their pricing page. $0.10 per GB ingested, plus $1.70 per million log events indexed. My PickMyClass scraper generates maybe 50GB of logs a month during peak registration season. That's $85 just to ingest, before I can even search anything. For a project that makes $0.
+Datadog? I did the math on their pricing page. $0.10 per GB ingested, plus $1.70 per million log events indexed. My PickMyClass scraper generates maybe 50GB of logs a month during peak registration season. That's $85 just to ingest, before I can even search anything. For a project that makes $0. [Keeping infrastructure costs at zero](/blog/zero-cost-portfolio-cloudflare-workers) isn't just frugality — it's what makes side projects viable.
 
 I don't have a DevOps team. I have mass assignments due and a thesis to procrastinate on.
 
@@ -95,7 +95,7 @@ Logwell is embarrassingly simple compared to "real" logging platforms. That's th
 
 ![Logwell dashboard showing projects list with log counts](/blog/dashboard.png)
 
-One Docker Compose with two services: the app (SvelteKit on Bun) and PostgreSQL. No Redis. No Kafka. No separate search cluster. Your logs go into Postgres and you query them with... Postgres.
+One Docker Compose with two services: the app (SvelteKit on Bun) and PostgreSQL. No Redis. No Kafka. No separate search cluster. Your logs go into Postgres and you query them with... Postgres. This minimalism is a core principle of my [side project stack](/blog/side-project-stack-2026-grad-student).
 
 The interesting part is making Postgres work for log search without becoming a performance disaster.
 
@@ -137,7 +137,7 @@ The SSE endpoint batches logs (flush every 1.5s or when 50 logs accumulate, whic
 
 ## The Claude Part
 
-I used Claude Code for most of this project. Here's what actually happened, not the sanitized "AI helped me be 10x more productive" story.
+I used Claude Code for most of this project — the same approach I took when [building a full-stack app on Cloudflare Workers](/blog/clickfolio-full-stack-cloudflare-workers). Here's what actually happened, not the sanitized "AI helped me be 10x more productive" story.
 
 Architecture discussions genuinely helped. When I was deciding between `pg_notify` and an in-memory event bus, I described the tradeoffs and Claude walked through the implications. It correctly identified that for a single-server deployment, in-memory is simpler and the "doesn't survive restarts" limitation doesn't matter for my use case. I probably would've reached the same conclusion, but faster to talk it through.
 

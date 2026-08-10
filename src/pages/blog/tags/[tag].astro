@@ -15,12 +15,18 @@ export async function getStaticPaths() {
     (post: CollectionEntry<"blog">) => post.data.published === true,
   );
 
-  // Get unique tags
-  const tags = new Set<string>();
+  // Count tags so only tags with multiple posts get their own page
+  const tagCounts = new Map<string, number>();
   for (const post of publishedPosts) {
     for (const tag of post.data.tags) {
-      tags.add(tag.toLowerCase());
+      const normalized = tag.toLowerCase();
+      tagCounts.set(normalized, (tagCounts.get(normalized) ?? 0) + 1);
     }
+  }
+
+  const tags = new Set<string>();
+  for (const [tag, count] of tagCounts) {
+    if (count >= 2) tags.add(tag);
   }
 
   // Create paths for each tag

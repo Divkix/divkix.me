@@ -79,7 +79,7 @@ Complex refactors where I need to touch 5+ files. Yesterday I asked it to migrat
 - Updated package.json scripts
 - Tested the build locally
 
-I gave it one prompt. It executed 15 file operations and ran validation commands. That's what terminal-based agents excel at - multi-step workflows where each step depends on the previous one succeeding.
+I gave it one prompt. It executed 15 file operations and ran validation commands. That's what terminal-based [AI agents](/blog/openclaw-ai-agent-review-2026) excel at - multi-step workflows where each step depends on the previous one succeeding.
 
 I also use Claude Code when I need MCP integrations. The Playwright MCP lets it automate browser testing. The Context7 MCP pulls latest docs for frameworks. The Next.js DevTools MCP reads my dev server errors directly.
 
@@ -91,7 +91,7 @@ The downside? It requires Claude Pro ($20/mo) or Claude Max ($100/mo) subscripti
 
 Exploring codebases I didn't write. I'm in a 50k+ line Next.js monorepo and need to understand how auth flows work. Cursor's `Ctrl+K` lets me select files, ask questions, and get answers grounded in actual code.
 
-I also use Cursor when I want chat but don't want to leave my editor. It's fast, the context is automatic (it sees your open files), and Claude or GPT-4 responses stream directly in the sidebar.
+I also use Cursor when I want chat but don't want to leave my editor. It's fast, the context is automatic (it sees your open files), and [Claude or GPT-4](/blog/ai-models-compared-2026) responses stream directly in the sidebar.
 
 For rapid iteration - make change, ask AI to review, adjust, repeat - Cursor's inline chat beats copying code into ChatGPT. The feedback loop is tighter.
 
@@ -105,7 +105,7 @@ Copilot's autocomplete flow is unmatched: type the function name, tab to accept 
 
 I also keep Copilot active when using Claude Code or Cursor. They handle complex tasks; Copilot handles the "I need to import this but don't want to type the full path" micro-moments.
 
-The downside? It's not smart enough for architecture decisions or complex logic. It hallucinates APIs that don't exist. It auto-completes confidently wrong code. You need to read what it suggests. The GitHub requirement also means your code metadata goes to Microsoft (anonymized, but still).
+The downside? It's not smart enough for architecture decisions or complex logic. It hallucinates APIs that don't exist. It auto-completes confidently wrong code. You need to read what it suggests - [the risks of accepting AI-generated code without review](/blog/vibe-coding-truth-ai-programming-2026) are well documented. The GitHub requirement also means your code metadata goes to Microsoft (anonymized, but still).
 
 ## When I Still Use LM Studio
 

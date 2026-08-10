@@ -61,7 +61,7 @@ faq:
 
 Nobody should need to know HTML to have a web portfolio in 2026.
 
-That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services, D1, R2, Queues, Durable Objects, Workers, without reaching for Supabase or Postgres or any external dependency. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL. The entire stack costs $0 per month. D1, R2, Queues, and Durable Objects all stay within free tier limits even at 500+ monthly active users.
+That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services, D1, R2, Queues, Durable Objects, Workers, without reaching for Supabase or Postgres or any external dependency. It's the same instinct behind [self-hosting my own logging platform](/blog/logwell-self-hosted-logging-platform) instead of paying for a SaaS — build the thing, learn the constraints. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL. The entire stack costs $0 per month — the same [zero-cost Cloudflare Workers hosting](/blog/zero-cost-portfolio-cloudflare-workers) that powers my own portfolio, just stretched across a full dynamic app. D1, R2, Queues, and Durable Objects all stay within free tier limits even at 500+ monthly active users.
 
 Simple pitch. The architecture behind it? Less simple.
 
@@ -352,6 +352,8 @@ Each edge computing constraint, no filesystem, no native modules, SQLite instead
 D1 works for clickfolio because the data model is simple and write volume is low. For anything needing real Postgres features, use Supabase or self-host.
 
 If you want to try it: [clickfolio.me](https://clickfolio.me). Upload a PDF, pick a template, get a URL. No code required.
+
+For a broader look at when this serverless setup beats a traditional VPS, I wrote up the [real cost trade-offs between Cloudflare Workers and Docker](/blog/serverless-vs-traditional-servers-cloudflare-workers-docker) across 30+ projects.
 
 ---
 

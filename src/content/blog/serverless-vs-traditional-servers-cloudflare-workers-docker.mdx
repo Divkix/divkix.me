@@ -97,7 +97,7 @@ But I've woken up to "bot not responding" messages more times than I can count b
 
 ## The Serverless Pivot: Cloudflare Workers
 
-Around the same time I was maintaining Alita on a VPS, I started building Clickfolio — a portfolio builder with AI features. I picked Cloudflare Workers for the entire backend.
+Around the same time I was maintaining Alita on a VPS, I started building Clickfolio — [a full-stack portfolio builder running entirely on Cloudflare Workers](/blog/clickfolio-full-stack-cloudflare-workers). I picked Workers for the entire backend.
 
 The stack:
 
@@ -188,7 +188,7 @@ This hybrid approach gives you the best of both worlds:
 
 Supabase's free tier is generous (500MB database, 50K MAU), and if you outgrow it, the $25/mo Pro tier is reasonable. PlanetScale at $5/mo is the next step up if you need cost controls and don't want to manage infrastructure.
 
-This is my default stack recommendation for 2026: Cloudflare Workers + Supabase. Fall back to self-hosted Docker only when the app needs to run continuously or has heavy database requirements that outgrow managed tiers.
+This is my default stack recommendation for 2026: Cloudflare Workers + Supabase. Fall back to self-hosted Docker only when the app needs to run continuously or has heavy database requirements that outgrow managed tiers. I've written more about the broader [side-project stack I use to ship while in grad school](/blog/side-project-stack-2026-grad-student), if you want the full picture.
 
 ## Cloudflare Workers vs Vercel vs Netlify: Bandwidth and Billing Reality
 
@@ -206,7 +206,7 @@ I don't actually use a checklist when I pick a stack. I ask one question: does t
 
 The only time I reach for D1 is when I'm too lazy to spin up Supabase and I know the app will barely touch the database. That's the entire decision tree. Thirty projects and it really is that simple.
 
-Workers alone works when your write volume is low, you don't need real Postgres features, and you want push-and-forget deployment with zero maintenance. The free tier handles 100K requests per day and 5M D1 row reads — generous enough that most side projects never pay.
+Workers alone works when your write volume is low, you don't need real Postgres features, and you want push-and-forget deployment with zero maintenance. The free tier handles 100K requests per day and 5M D1 row reads — generous enough that most side projects never pay. My own portfolio runs this way at [$0/month on Cloudflare Workers](/blog/zero-cost-portfolio-cloudflare-workers), and it's never come close to the limit.
 
 Workers + Supabase is what I use for anything that needs real Postgres: JSON operators, row-level security, extensions, proper tooling. Supabase's free tier covers 500MB and 50K monthly active users. If you outgrow it, the $25/mo Pro plan is still cheaper than running your own VPS with equivalent reliability.
 

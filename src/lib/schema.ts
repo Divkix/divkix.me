@@ -40,12 +40,10 @@ export function generatePersonSchema() {
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
-    sameAs: siteConfig.socials
-      .reduce<string[]>((acc, s) => {
-        if (s.label !== "Email") acc.push(s.href);
-        return acc;
-      }, [])
-      .concat(`${baseUrl}/mentions`),
+    sameAs: siteConfig.socials.reduce<string[]>((acc, s) => {
+      if (s.label !== "Email") acc.push(s.href);
+      return acc;
+    }, []),
     alumniOf: siteConfig.education.map((edu) => {
       const parts = edu.title.split(" — ");
       return {
@@ -184,14 +182,6 @@ export function generateWebSiteSchema() {
       "@id": `${baseUrl}/#author`,
     },
     inLanguage: "en-US",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -288,6 +278,22 @@ export function generateProfilePageSchema(
     ...(options?.articleSection
       ? { articleSection: options.articleSection }
       : {}),
+  };
+}
+
+export function generateOfferSchema(service: {
+  name: string;
+  description: string;
+  price: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    name: service.name,
+    description: service.description,
+    price: service.price,
+    availability: "https://schema.org/InStock",
+    seller: { "@type": "Person", "@id": `${baseUrl}/#author` },
   };
 }
 
