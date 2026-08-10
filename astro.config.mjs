@@ -33,7 +33,7 @@ try {
 }
 
 const multiPostTags = new Set();
-try {
+if (postsData) {
   const tagCounts = new Map();
   for (const post of postsData.posts) {
     if (post.published && post.tags) {
@@ -44,10 +44,10 @@ try {
     }
   }
   for (const [tag, count] of tagCounts) {
-    if (count >= 2) multiPostTags.add(tag);
+    if (count >= 2) {
+      multiPostTags.add(tag);
+    }
   }
-} catch {
-  // posts.json not found, skip
 }
 
 export default defineConfig({

@@ -28,23 +28,6 @@ const resumePageSchema = generateProfilePageSchema(
     articleSection: "Resume",
   },
 );
-
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.name,
-  jobTitle: siteConfig.seo.jobTitle,
-  url: baseUrl,
-  sameAs: siteConfig.socials
-    .filter((s: { label: string }) => s.label !== "Email")
-    .map((s: { href: string }) => s.href),
-  alumniOf: [
-    {
-      "@type": "CollegeOrUniversity",
-      name: "Arizona State University",
-    },
-  ],
-};
 ---
 
 <SiteLayout
@@ -54,7 +37,6 @@ const personSchema = {
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(resumePageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
   <article class="min-w-0">
     <section class="text-band" aria-labelledby="resume-heading">

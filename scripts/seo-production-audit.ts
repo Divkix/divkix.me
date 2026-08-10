@@ -18,6 +18,7 @@ const headers = read("public/_headers");
 const redirects = read("public/_redirects");
 const robots = read("src/pages/robots.txt.ts");
 const astroConfig = read("astro.config.mjs");
+const hasResumePage = read("src/pages/resume.astro").includes("<SiteLayout");
 
 const hasHeroCta =
   hero.includes('href="/Divanshu_Chauhan_Resume.pdf"') ||
@@ -30,9 +31,14 @@ assert(
 
 if (hero.includes('href="/resume"') || hero.includes('href="/resume/"')) {
   assert(
+    hasResumePage,
+    "Hero CTA references /resume, but the resume page is missing.",
+  );
+} else if (hero.includes('href="/Divanshu_Chauhan_Resume.pdf"')) {
+  assert(
     redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
       redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-    "Hero CTA references a redirect path, but the redirect is missing or misconfigured in _redirects.",
+    "Hero CTA references a PDF path, but the resume redirect is missing or misconfigured in _redirects.",
   );
 }
 
@@ -47,9 +53,14 @@ assert(
 
 if (contact.includes('href="/resume"') || contact.includes('href="/resume/"')) {
   assert(
+    hasResumePage,
+    "Contact CTA references /resume, but the resume page is missing.",
+  );
+} else if (contact.includes('href="/Divanshu_Chauhan_Resume.pdf"')) {
+  assert(
     redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
       redirects.includes("/resume/ /Divanshu_Chauhan_Resume.pdf 302"),
-    "Contact CTA references a redirect path, but the redirect is missing or misconfigured in _redirects.",
+    "Contact CTA references a PDF path, but the resume redirect is missing or misconfigured in _redirects.",
   );
 }
 assert(

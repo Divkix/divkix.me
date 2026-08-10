@@ -77,7 +77,9 @@ const websiteSchema = generateWebSiteSchema();
         {articleMeta.tags && <meta name="keywords" content={articleMeta.tags.join(", ")} />}
       </>
     )}
-    {dateModified && <meta property="article:modified_time" content={dateModified} />}
+    {dateModified && !articleMeta?.modifiedTime && (
+      <meta property="article:modified_time" content={dateModified} />
+    )}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonical} />
@@ -203,8 +205,11 @@ const websiteSchema = generateWebSiteSchema();
         const btn = document.getElementById("scroll-to-top");
         if (!btn) return;
 
+        let visible = false;
         function onScroll() {
           const show = window.scrollY > 500;
+          if (show === visible) return;
+          visible = show;
           btn.classList.toggle("opacity-0", !show);
           btn.classList.toggle("pointer-events-none", !show);
         }
