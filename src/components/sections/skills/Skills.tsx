@@ -22,11 +22,9 @@ function groupSkillsByCategory(
 
 const CATEGORIES = [
   "Languages",
-  "Frontend",
-  "Backend",
-  "Cloud/Infra",
-  "Databases",
-  "AI/Tooling",
+  "Frameworks",
+  "Cloud & Infrastructure",
+  "Data & Systems",
 ] as const;
 
 export function Skills() {
@@ -40,7 +38,7 @@ export function Skills() {
         description="Technologies I use regularly, grouped by what they're for. Not ranked by arbitrary scores."
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 min-w-0">
         {CATEGORIES.map((category) => {
           const categorySkills = groupedSkills[category];
           if (!categorySkills || categorySkills.length === 0) return null;
