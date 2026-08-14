@@ -8,7 +8,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 
 ## Project Structure
 
-```
+````
 /
 ├── src/
 │   ├── components/
@@ -29,52 +29,49 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
 ├── .github/                  # dependabot.yml + opencode.yml (AI bot trigger; no build CI)
-├── astro.config.mjs          # Astro config: integrations + sitemap serialization + llms.txt
-├── wrangler.jsonc            # Cloudflare Workers static-assets config (serves ./dist)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
-├── biome.json                # Linting and formatting rules
+├── .oxlintrc.json            # Oxlint rules (JS/TS/React/a11y)
+├── .oxfmtrc.json             # Oxfmt formatting (80 width, 2-space, double quotes)
+├── vite.config.ts            # vite-plus: lint/staged + fmt config
 └── knip.json                 # Unused export/dependency detection
-```
 
 > Note: There is **no** `src/components/ui/` (shadcn) or `src/components/providers/` directory. Component groups are only `blog/`, `sections/` (with `experience/` and `skills/`), and `shared/`. The content config lives at `src/content.config.ts` (not `src/content/config.ts`).
-
 ## Build, Test, and Development Commands
 
 ```bash
-bun run dev              # Start dev server (astro dev) on localhost:4321
-bun run build            # Full production build (4-step pipeline)
-bun run preview          # Preview production build locally
-bun run lint             # Run Biome check (biome check .)
-bun run lint:fix         # Auto-fix lint issues (biome check --write)
-bun run format           # Format with Biome (biome format --write .)
-bun run type-check       # astro check && tsc --noEmit
-bun run check:citations  # GEO/SEO: enforce citation density in posts (manual)
-bun run audit:seo        # Assert production SEO/config invariants (manual)
-bunx knip                # Detect unused exports/dependencies
-```
+pnpm run dev             # Start dev server (astro dev) on localhost:4321
+pnpm run build           # Full production build (4-step pipeline)
+pnpm run preview         # Preview production build locally
+pnpm run lint            # Lint with Oxlint (oxlint .)
+pnpm run lint:fix        # Auto-fix lint issues (oxlint --fix .)
+pnpm run format          # Format with Oxfmt (oxfmt --write .)
+pnpm run format:check    # Check formatting (oxfmt --check .)
+pnpm run type-check      # astro check && tsc --noEmit
+pnpm run check:citations # GEO/SEO: enforce citation density in posts (manual)
+pnpm run audit:seo       # Assert production SEO/config invariants (manual)
+pnpx knip                # Detect unused exports/dependencies
+````
 
-Package manager is **bun@1.3.14**. `prepare` runs `husky`; staged `*.{js,jsx,ts,tsx,json,css,md}` files run `biome check --write` + `biome format --write` via lint-staged.
+Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,jsx,ts,tsx,json,css,md}` files run `oxlint --fix` + `oxfmt --write` via `vite-plus` staged hooks (`vite.config.ts`).
+**Build Pipeline (`pnpm run build`, `&&`-chained — any failure aborts):**
 
-**Build Pipeline (`bun run build`, `&&`-chained — any failure aborts):**
 1. `prebuild`:
    - `node scripts/generate-posts-metadata.js` — Parses blog MDX → `content/blog/posts.json`
    - `node scripts/generate-og-images.js` — Generates OG images into `public/og/`
-2. `bun run scripts/validate-content.ts` — Validates published MDX matches `posts.json`
+2. `pnpm run scripts/validate-content.ts` — Validates published MDX matches `posts.json`
 3. `astro build` — Static build to `dist/`
-4. `bun run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
+4. `pnpm run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
 
 **Manual scripts (not in the build):** `check-citation-density.ts`, `seo-production-audit.ts`, and `generate-favicons.ts`.
 
-**Critical:** If you add/remove/rename a blog post, run `bun run prebuild` to regenerate `posts.json` or the build fails at step 2 with a count/slug mismatch.
-
-## Coding Style and Conventions
+**Critical:** If you add/remove/rename a blog post, run `pnpm run prebuild` to regenerate `posts.json` or the build fails at step 2 with a count/slug mismatch.
 
 **Languages & Tools:**
-- TypeScript extending `astro/tsconfigs/strict` with extra flags: `noUnusedLocals`, `noUnusedParameters`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noFallthroughCasesInSwitch`. (`ignoreDeprecations: "6.0"` for TypeScript 6.)
-- Biome for linting and formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80.
-- Tailwind CSS v4 via the `@tailwindcss/vite` plugin (registered in `astro.config.mjs` under `vite.plugins`) — there is no `tailwind.config.js`, no `postcss.config.mjs`, and no `@astrojs/tailwind`.
 
-**Component Architecture:**
+- TypeScript extending `astro/tsconfigs/strict` with extra flags: `noUnusedLocals`, `noUnusedParameters`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noFallthroughCasesInSwitch`. (`ignoreDeprecations: "6.0"` for TypeScript 6.)
+- Oxlint for linting + Oxfmt for formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80. Config in `.oxlintrc.json` / `.oxfmtrc.json`.
+- Tailwind CSS v4 via the `@tailwindcss/vite` plugin (registered in `astro.config.mjs` under `vite.plugins`) — there is no `tailwind.config.js`, no `postcss.config.mjs`, and no `@astrojs/tailwind`.
+  **Component Architecture:**
 - **Static sections:** Use `.astro` files (zero client JS) — e.g., `Hero.astro`, `RecentWriting.astro`, `Footer.astro`, `ExperienceBentoStatic.astro`.
 - **Interactive components:** Use `.tsx` with client directives. Directives used across the app:
   ```astro
@@ -88,11 +85,13 @@ Package manager is **bun@1.3.14**. `prepare` runs `husky`; staged `*.{js,jsx,ts,
   ```
 
 **Naming Patterns:**
+
 - Components: PascalCase (`Hero.astro`, `Contact.tsx`)
 - Utilities: camelCase (`throttledScroll.ts`, `skillsUtils.ts`)
 - Blog slugs: kebab-case, URL-safe (`/^[a-z0-9-]+$/`)
 
 **Import Paths:**
+
 - Use `@/` alias for `src/*` (configured in tsconfig.json)
 
 ## Centralized Content
@@ -106,42 +105,33 @@ Blog posts are MDX files in `src/content/blog/` loaded via a glob collection. Fr
 ```yaml
 ---
 title: "Post Title"
-date: "2026-01-15"           # YYYY-MM-DD (regex + valid-date enforced)
-dateModified: "2026-01-20"   # Optional, same format
+date: "2026-01-15" # YYYY-MM-DD (regex + valid-date enforced)
+dateModified: "2026-01-20" # Optional, same format
 excerpt: "Brief description"
 tags: ["tag1", "tag2"]
-published: false             # Defaults to false; must be true to appear
-featured: false              # Optional, defaults false
-author: "Divanshu Chauhan"   # Optional, defaults to this
-seoTitle: "..."              # Optional
-seoDescription: "..."        # Optional
-coverAlt: "..."              # Optional
-tldr: "One-line summary"     # Optional
-keyTakeaways: ["point 1"]    # Optional
-faq:                         # Optional
+published: false # Defaults to false; must be true to appear
+featured: false # Optional, defaults false
+author: "Divanshu Chauhan" # Optional, defaults to this
+seoTitle: "..." # Optional
+seoDescription: "..." # Optional
+coverAlt: "..." # Optional
+tldr: "One-line summary" # Optional
+keyTakeaways: ["point 1"] # Optional
+faq: # Optional
   - q: "Question?"
     a: "Answer."
-reviewedBy: "..."            # Optional (E-E-A-T)
-sources: ["https://..."]     # Optional, must be valid URLs
-howToSteps:                  # Optional (HowTo schema)
+reviewedBy: "..." # Optional (E-E-A-T)
+sources: ["https://..."] # Optional, must be valid URLs
+howToSteps: # Optional (HowTo schema)
   - name: "Step"
     text: "Detail"
-    url: "https://..."       # Optional, must be valid URL
+    url: "https://..." # Optional, must be valid URL
 ---
 ```
 
 After adding/modifying blog posts, run `bun run prebuild` to regenerate `posts.json`.
 
-## Common Pitfalls
-
-1. **Tailwind v4:** Do not use `@astrojs/tailwind` (v3-only) or `@tailwindcss/postcss` (its postcss-import step is incompatible with Astro 7's rolldown-based Vite 8 and fails to resolve `@import "tailwindcss"`). Use the `@tailwindcss/vite` plugin in `astro.config.mjs`. No `tailwind.config.js` exists; theme is mapped in `src/styles/globals.css` via `@theme`.
-2. **Client Directives:** React components need a `client:*` directive to hydrate; without one they render static.
-3. **Content Collections in config:** `astro:content` is unavailable in `astro.config.mjs`, so `content/blog/posts.json` supplies blog dates to the sitemap `serialize()`.
-4. **TypeScript Strictness:** Bracket access returns `T | undefined` (`noUncheckedIndexedAccess`) — handle undefined cases.
-5. **Biome Exclusions:** `.astro` files are NOT linted (excluded in `biome.json`); only JS/TS/TSX is. `content/blog/posts.json` and `public/` are excluded from formatting.
-6. **Slug Validation:** Slugs are checked against `/^[a-z0-9-]+$/` in `validate-content.ts` (warning), and `posts.json` must match published MDX (hard failure).
-7. **Date Format:** All dates must be `YYYY-MM-DD` (Zod regex + valid-date refinement in `content.config.ts`).
-8. **Generated files:** Do not hand-edit `content/blog/posts.json` or files under `public/og/` — they are generated by the prebuild scripts.
+5. **Oxlint/Oxfmt Exclusions:** `.astro` files are NOT linted (via `ignorePatterns` in `.oxlintrc.json`); only JS/TS/TSX is. `content/blog/posts.json` and `public/` are excluded from formatting (via `ignorePatterns` in `.oxfmtrc.json`).
 
 ## Deployment
 

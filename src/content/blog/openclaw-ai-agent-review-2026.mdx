@@ -91,14 +91,14 @@ To put it bluntly: if you're running OpenClaw exposed to the internet right now,
 
 The cost burns are real. Running [Claude Opus](/blog/ai-models-compared-2026) as your agent's brain costs $10-25 per day in active use — $300-750/month if you're using it heavily. Even routing through OpenRouter for cheaper models, you're looking at $40-200/month for realistic usage. The software is free. The intelligence is not. This is a fundamentally different cost model than paying $20/month for ChatGPT, and most people don't realize it until they get their first API bill.
 
-| Cost Component | Monthly Estimate |
-|---|---|
-| OpenClaw software | $0 (MIT license) |
-| Claude Opus (heavy use) | $300-750 |
-| Claude Opus (moderate use) | $40-200 |
-| Cheaper models via OpenRouter | $15-80 |
-| Twilio voice (optional) | $5-30 |
-| ElevenLabs TTS (optional) | $5-22 |
+| Cost Component                | Monthly Estimate |
+| ----------------------------- | ---------------- |
+| OpenClaw software             | $0 (MIT license) |
+| Claude Opus (heavy use)       | $300-750         |
+| Claude Opus (moderate use)    | $40-200          |
+| Cheaper models via OpenRouter | $15-80           |
+| Twilio voice (optional)       | $5-30            |
+| ElevenLabs TTS (optional)     | $5-22            |
 
 Setup is a nightmare for non-developers. You need Node.js 22+, a terminal, API keys from at least one LLM provider, platform-specific configuration for each messaging channel, and the patience to debug cryptic error messages when things don't connect. There's a bootstrap problem — the people who would benefit most from a persistent AI agent are the least equipped to set one up.
 
@@ -112,7 +112,7 @@ The honest assessment: it's not Jarvis. It's a capable but frustrating intern wh
 
 Here's why I still think OpenClaw is the most important open-source project of 2026, despite everything above.
 
-Persistent agents work differently from chatbots. Every AI tool I use today — [Claude Code](/blog/ai-coding-tools-compared-2026/), ChatGPT, [LM Studio](/blog/lm-studio-local-ai-mac/) — is reactive. I open them, I ask something, I close them. OpenClaw agents are always on. They can message *you* first. They run scheduled tasks. They monitor things. The difference between a calculator and a spreadsheet is a useful analogy here — same underlying math, fundamentally different relationship with the user.
+Persistent agents work differently from chatbots. Every AI tool I use today — [Claude Code](/blog/ai-coding-tools-compared-2026/), ChatGPT, [LM Studio](/blog/lm-studio-local-ai-mac/) — is reactive. I open them, I ask something, I close them. OpenClaw agents are always on. They can message _you_ first. They run scheduled tasks. They monitor things. The difference between a calculator and a spreadsheet is a useful analogy here — same underlying math, fundamentally different relationship with the user.
 
 Messaging as the interface avoids the adoption problem that kills most AI apps. Instead of asking people to download a new app and build new habits, the AI shows up inside WhatsApp or Telegram or Discord — wherever people already communicate. Nobody needs to learn anything new.
 

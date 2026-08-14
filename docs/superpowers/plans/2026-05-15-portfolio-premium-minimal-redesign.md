@@ -14,29 +14,30 @@
 
 ## File Structure Map
 
-| File | Role | Change |
-|------|------|--------|
-| `src/styles/globals.css` | Theme tokens, utilities, component styles | Major — new palette, remove old utilities, add surface classes |
-| `src/styles/animations.css` | Reusable keyframes | Minor — remove terminal/timeline keyframes |
-| `src/layouts/BaseLayout.astro` | Root layout, fonts, `<head>`, background layers | Minor — remove dot grid & noise divs |
-| `src/components/sections/Hero.astro` | Hero section | Major — full rewrite |
-| `src/components/sections/Highlights.tsx` | Animated stat counters | Major — simplify to compact text stats |
-| `src/components/sections/Projects.tsx` | Project cards + filter bar | Major — remove BrowserMockup, rework cards |
-| `src/components/sections/experience/ExperienceBento.tsx` | Timeline + education | Moderate — remove hard shadows |
-| `src/components/sections/skills/Skills.tsx` | Skills section wrapper | Major — remove terminal background |
-| `src/components/sections/skills/SkillsTerminal.tsx` | Terminal-framed skills display | **Delete file** |
-| `src/components/sections/skills/index.ts` | Skills barrel export | Minor — stop exporting terminal |
-| `src/components/sections/Contact.tsx` | Contact form | Major — full rewrite |
-| `src/components/shared/Footer.astro` | Site footer | Major — full rewrite |
-| `src/components/shared/Navbar.tsx` | Navigation + theme toggle | Minor — remove gradient border |
-| `src/components/shared/SectionLabel.tsx` | Section heading label | Minor — remove `//` prefix |
-| `src/components/shared/TerminalWindow.tsx` | Terminal window wrapper | **Delete file** |
+| File                                                     | Role                                            | Change                                                         |
+| -------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
+| `src/styles/globals.css`                                 | Theme tokens, utilities, component styles       | Major — new palette, remove old utilities, add surface classes |
+| `src/styles/animations.css`                              | Reusable keyframes                              | Minor — remove terminal/timeline keyframes                     |
+| `src/layouts/BaseLayout.astro`                           | Root layout, fonts, `<head>`, background layers | Minor — remove dot grid & noise divs                           |
+| `src/components/sections/Hero.astro`                     | Hero section                                    | Major — full rewrite                                           |
+| `src/components/sections/Highlights.tsx`                 | Animated stat counters                          | Major — simplify to compact text stats                         |
+| `src/components/sections/Projects.tsx`                   | Project cards + filter bar                      | Major — remove BrowserMockup, rework cards                     |
+| `src/components/sections/experience/ExperienceBento.tsx` | Timeline + education                            | Moderate — remove hard shadows                                 |
+| `src/components/sections/skills/Skills.tsx`              | Skills section wrapper                          | Major — remove terminal background                             |
+| `src/components/sections/skills/SkillsTerminal.tsx`      | Terminal-framed skills display                  | **Delete file**                                                |
+| `src/components/sections/skills/index.ts`                | Skills barrel export                            | Minor — stop exporting terminal                                |
+| `src/components/sections/Contact.tsx`                    | Contact form                                    | Major — full rewrite                                           |
+| `src/components/shared/Footer.astro`                     | Site footer                                     | Major — full rewrite                                           |
+| `src/components/shared/Navbar.tsx`                       | Navigation + theme toggle                       | Minor — remove gradient border                                 |
+| `src/components/shared/SectionLabel.tsx`                 | Section heading label                           | Minor — remove `//` prefix                                     |
+| `src/components/shared/TerminalWindow.tsx`               | Terminal window wrapper                         | **Delete file**                                                |
 
 ---
 
 ### Task 1: CSS Foundation — New Color Palette & Shadow Tokens
 
 **Files:**
+
 - Modify: `src/styles/globals.css` (entire `:root` and `.dark` blocks, `@theme` shadow tokens, utilities layer)
 
 **Purpose:** Replace the orange/teal palette and cartoonish shadows with muted earth tones and atmospheric shadows.
@@ -54,31 +55,31 @@ Replace the entire `:root` and `.dark` blocks with the new palette:
   --card-foreground: oklch(0.15 0.01 60);
   --popover: oklch(0.99 0.003 85);
   --popover-foreground: oklch(0.15 0.01 60);
-  --primary: oklch(0.70 0.12 80);
+  --primary: oklch(0.7 0.12 80);
   --primary-foreground: oklch(0.97 0.005 90);
   --secondary: oklch(0.94 0.01 85);
-  --secondary-foreground: oklch(0.20 0.01 60);
+  --secondary-foreground: oklch(0.2 0.01 60);
   --muted: oklch(0.94 0.01 85);
-  --muted-foreground: oklch(0.50 0.01 60);
+  --muted-foreground: oklch(0.5 0.01 60);
   --accent: oklch(0.94 0.01 85);
-  --accent-foreground: oklch(0.20 0.01 60);
+  --accent-foreground: oklch(0.2 0.01 60);
   --destructive: oklch(0.57 0.24 27);
   --border: oklch(0.88 0.01 85);
   --input: oklch(0.88 0.01 85);
-  --ring: oklch(0.70 0.12 80);
+  --ring: oklch(0.7 0.12 80);
   --chart-1: oklch(0.65 0.22 41);
-  --chart-2: oklch(0.60 0.12 185);
-  --chart-3: oklch(0.40 0.07 227);
+  --chart-2: oklch(0.6 0.12 185);
+  --chart-3: oklch(0.4 0.07 227);
   --chart-4: oklch(0.83 0.19 84);
   --chart-5: oklch(0.77 0.19 70);
   --sidebar: oklch(0.97 0.005 90);
   --sidebar-foreground: oklch(0.15 0.01 60);
-  --sidebar-primary: oklch(0.70 0.12 80);
+  --sidebar-primary: oklch(0.7 0.12 80);
   --sidebar-primary-foreground: oklch(0.97 0.005 90);
   --sidebar-accent: oklch(0.94 0.01 85);
-  --sidebar-accent-foreground: oklch(0.20 0.01 60);
+  --sidebar-accent-foreground: oklch(0.2 0.01 60);
   --sidebar-border: oklch(0.88 0.01 85);
-  --sidebar-ring: oklch(0.70 0.12 80);
+  --sidebar-ring: oklch(0.7 0.12 80);
 }
 
 .dark {
@@ -90,18 +91,18 @@ Replace the entire `:root` and `.dark` blocks with the new palette:
   --popover-foreground: oklch(0.92 0.01 85);
   --primary: oklch(0.75 0.12 75);
   --primary-foreground: oklch(0.13 0.01 60);
-  --secondary: oklch(0.20 0.01 60);
+  --secondary: oklch(0.2 0.01 60);
   --secondary-foreground: oklch(0.92 0.01 85);
-  --muted: oklch(0.20 0.01 60);
-  --muted-foreground: oklch(0.60 0.01 60);
-  --accent: oklch(0.20 0.01 60);
+  --muted: oklch(0.2 0.01 60);
+  --muted-foreground: oklch(0.6 0.01 60);
+  --accent: oklch(0.2 0.01 60);
   --accent-foreground: oklch(0.92 0.01 85);
-  --destructive: oklch(0.70 0.19 22);
+  --destructive: oklch(0.7 0.19 22);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.75 0.12 75);
   --chart-1: oklch(0.49 0.24 264);
-  --chart-2: oklch(0.70 0.17 162);
+  --chart-2: oklch(0.7 0.17 162);
   --chart-3: oklch(0.77 0.19 70);
   --chart-4: oklch(0.63 0.27 304);
   --chart-5: oklch(0.65 0.25 16);
@@ -109,7 +110,7 @@ Replace the entire `:root` and `.dark` blocks with the new palette:
   --sidebar-foreground: oklch(0.92 0.01 85);
   --sidebar-primary: oklch(0.75 0.12 75);
   --sidebar-primary-foreground: oklch(0.13 0.01 60);
-  --sidebar-accent: oklch(0.20 0.01 60);
+  --sidebar-accent: oklch(0.2 0.01 60);
   --sidebar-accent-foreground: oklch(0.92 0.01 85);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.75 0.12 75);
@@ -173,7 +174,7 @@ Remove all old utilities and replace with the new surface classes:
     background: linear-gradient(
       to right,
       transparent,
-      oklch(0.70 0.12 80 / 0.3),
+      oklch(0.7 0.12 80 / 0.3),
       transparent
     );
   }
@@ -214,7 +215,7 @@ Remove all old utilities and replace with the new surface classes:
   .input-focus-ring:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px oklch(0.70 0.12 80 / 0.2);
+    box-shadow: 0 0 0 3px oklch(0.7 0.12 80 / 0.2);
   }
 }
 ```
@@ -222,6 +223,7 @@ Remove all old utilities and replace with the new surface classes:
 - [ ] **Step 4: Remove old keyframe blocks from globals.css (lines 345-418)**
 
 Delete these keyframes from `globals.css` (they're duplicates of what's in `animations.css`):
+
 - `timeline-node-appear`
 - `timeline-pulse`
 - `cursor-blink` (keep in animations.css only)
@@ -241,6 +243,7 @@ git commit -m "refactor: replace color palette and shadows with muted earth tone
 ### Task 2: Animations Cleanup
 
 **Files:**
+
 - Modify: `src/styles/animations.css`
 
 **Purpose:** Remove terminal/timeline-specific keyframes that won't be used after the redesign.
@@ -248,6 +251,7 @@ git commit -m "refactor: replace color palette and shadows with muted earth tone
 - [ ] **Step 1: Remove terminal keyframes**
 
 Delete these blocks from `animations.css`:
+
 - `cursor-glow` (lines 99-109)
 - `timeline-node-appear` (lines 145-154)
 - `timeline-pulse` (lines 156-166)
@@ -256,6 +260,7 @@ Delete these blocks from `animations.css`:
 - [ ] **Step 2: Keep everything else**
 
 The following remain:
+
 - `reveal-on-scroll` (scroll-driven section reveals)
 - `text-clip-reveal`
 - `card-enter`
@@ -275,6 +280,7 @@ git commit -m "refactor: remove terminal and timeline keyframes from animations"
 ### Task 3: Remove Background Noise & Dot Grid
 
 **Files:**
+
 - Modify: `src/layouts/BaseLayout.astro`
 
 **Purpose:** Remove the two decorative overlay divs from the `<body>`.
@@ -282,12 +288,14 @@ git commit -m "refactor: remove terminal and timeline keyframes from animations"
 - [ ] **Step 1: Remove the overlay divs**
 
 On lines 162-163, delete:
+
 ```html
 <div class="dot-grid-bg" aria-hidden="true"></div>
 <div class="page-noise" aria-hidden="true"></div>
 ```
 
 The `<body>` should now look like:
+
 ```html
 <body>
   <slot />
@@ -307,6 +315,7 @@ git commit -m "refactor: remove dot grid and film grain background overlays"
 ### Task 4: SectionLabel — Remove `//` Prefix
 
 **Files:**
+
 - Modify: `src/components/shared/SectionLabel.tsx`
 
 **Purpose:** Replace `// 02 / projects` with clean `02 — Projects` format.
@@ -341,6 +350,7 @@ export function SectionLabel({ number, label, className }: SectionLabelProps) {
 Remove the `variant` prop — it's no longer needed since terminal-specific styling is gone.
 
 **Files that import SectionLabel need updating** (remove `variant="terminal"` where used):
+
 - `src/components/sections/skills/Skills.tsx` (will be rewritten in Task 9)
 - `src/components/sections/Contact.tsx` (will be rewritten in Task 10)
 
@@ -358,6 +368,7 @@ git commit -m "refactor: simplify SectionLabel — remove // prefix and terminal
 ### Task 5: Hero Rewrite
 
 **Files:**
+
 - Modify: `src/components/sections/Hero.astro`
 
 **Purpose:** Replace the terminal-mockup hero with a clean, confident premium-minimal layout.
@@ -469,6 +480,7 @@ const lastName = siteConfig.name.split(" ")[1];
 ```
 
 **What changed:**
+
 - No `@divkix_` handle, no `// 00 — intro` label, no terminal mockup
 - Single column, max-w-3xl, centered name in serif
 - Gold accent divider line between name and bio
@@ -488,6 +500,7 @@ git commit -m "refactor: premium-minimal hero — remove terminal, add clean ser
 ### Task 6: Highlights — Simplify to Compact Stats
 
 **Files:**
+
 - Modify: `src/components/sections/Highlights.tsx`
 
 **Purpose:** Replace massive animated counter numbers with compact inline text statistics.
@@ -537,6 +550,7 @@ git commit -m "refactor: simplify highlights to compact inline stats"
 ### Task 7: Projects — Remove Browser Mockups, Rework Cards
 
 **Files:**
+
 - Modify: `src/components/sections/Projects.tsx`
 
 **Purpose:** Remove `BrowserMockup`, `shadow-hard`, colored border tops, and per-tag accent colors. Replace with clean bordered cards.
@@ -655,9 +669,7 @@ function RegularProjectCard({
     >
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="text-xl font-display font-semibold">
-            {project.name}
-          </h3>
+          <h3 className="text-xl font-display font-semibold">{project.name}</h3>
           {"period" in project && project.period && (
             <span className="text-xs font-mono text-muted-foreground shrink-0">
               {project.period}
@@ -718,6 +730,7 @@ function RegularProjectCard({
 - [ ] **Step 3: Remove unused imports and functions**
 
 Remove these from the top of the file:
+
 - `BrowserMockup` function (lines 84-111)
 - `getAccentColor` function (lines 36-38)
 - `getTagColor` function (lines 23-34) and the `allTags` variable if no longer used — but `allTags` is still needed for the filter bar, so keep it.
@@ -737,6 +750,7 @@ git commit -m "refactor: projects — remove browser mockups, hard shadows, colo
 ### Task 8: Experience — Remove Hard Shadows
 
 **Files:**
+
 - Modify: `src/components/sections/experience/ExperienceBento.tsx`
 
 **Purpose:** Replace `shadow-hard` with `shadow-sm` and use `surface-raised` for cards. Keep the timeline structure.
@@ -744,12 +758,17 @@ git commit -m "refactor: projects — remove browser mockups, hard shadows, colo
 - [ ] **Step 1: Replace card shadow class**
 
 In the `TimelineCard` function, change line 78 from:
+
 ```tsx
-className="rounded-xl border border-border bg-card p-6 shadow-hard hover:border-primary/50 transition-colors"
+className =
+  "rounded-xl border border-border bg-card p-6 shadow-hard hover:border-primary/50 transition-colors";
 ```
+
 to:
+
 ```tsx
-className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/50 transition-colors"
+className =
+  "rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/50 transition-colors";
 ```
 
 - [ ] **Step 2: Replace the active role dot**
@@ -757,11 +776,13 @@ className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-pr
 Change lines 46-53 (the pulsing green dot indicator) to a simpler non-animated dot:
 
 ```tsx
-{isCurrentRole ? (
-  <span className="inline-flex rounded-full size-3 bg-primary border-2 border-background" />
-) : (
-  <span className="inline-flex rounded-full size-3 bg-muted-foreground/30 border-2 border-background" />
-)}
+{
+  isCurrentRole ? (
+    <span className="inline-flex rounded-full size-3 bg-primary border-2 border-background" />
+  ) : (
+    <span className="inline-flex rounded-full size-3 bg-muted-foreground/30 border-2 border-background" />
+  );
+}
 ```
 
 This removes the `animate-ping` and changes the color from green to the primary gold accent.
@@ -782,6 +803,7 @@ git commit -m "refactor: experience — replace hard shadows with subtle shadows
 ### Task 9: Skills — Replace Terminal with Clean Grid
 
 **Files:**
+
 - Modify: `src/components/sections/skills/Skills.tsx`
 - Delete: `src/components/sections/skills/SkillsTerminal.tsx`
 - Modify: `src/components/sections/skills/index.ts`
@@ -855,6 +877,7 @@ export function Skills() {
 ```
 
 This removes:
+
 - The dark terminal background gradient
 - The `SkillsTerminal` import
 - The CRT scanlines, typewriter animation, tab bar, green text glow
@@ -882,6 +905,7 @@ git commit -m "refactor: skills — replace terminal display with clean categori
 ### Task 10: Contact — Full Rewrite
 
 **Files:**
+
 - Modify: `src/components/sections/Contact.tsx`
 - Delete: `src/components/shared/TerminalWindow.tsx` (if no longer imported anywhere)
 
@@ -890,6 +914,7 @@ git commit -m "refactor: skills — replace terminal display with clean categori
 - [ ] **Step 1: Verify TerminalWindow is only used by Contact.tsx**
 
 Check if any other file imports `TerminalWindow`:
+
 ```bash
 rg "TerminalWindow" src/
 ```
@@ -1092,7 +1117,11 @@ export function Contact() {
               )}
             </div>
 
-            <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+            >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
                   <Loader2 className="size-4 animate-spin" />
@@ -1132,6 +1161,7 @@ export function Contact() {
 ```
 
 Key changes:
+
 - No terminal wrapper, no dark background
 - Visible `<label>` elements (not `sr-only`)
 - Standard borders and rounded inputs
@@ -1161,6 +1191,7 @@ git commit -m "refactor: contact — replace terminal form with clean standard f
 ### Task 11: Footer — Full Rewrite
 
 **Files:**
+
 - Modify: `src/components/shared/Footer.astro`
 
 **Purpose:** Replace the dark terminal-themed footer with a clean, minimal footer.
@@ -1211,6 +1242,7 @@ const footerLinks = [
 ```
 
 Key changes:
+
 - No dark background — uses normal site background
 - No terminal prompt, no blinking cursor
 - No `[src]` button, no status dot
@@ -1230,6 +1262,7 @@ git commit -m "refactor: footer — replace terminal theme with clean minimal fo
 ### Task 12: Navbar — Remove Gradient Border
 
 **Files:**
+
 - Modify: `src/components/shared/Navbar.tsx`
 
 **Purpose:** Replace the gradient border-on-scroll with a simple transparent border.
@@ -1312,6 +1345,7 @@ bun run preview
 ```
 
 Open `http://localhost:4321` and visually verify:
+
 - Both light and dark themes render correctly
 - No dot grid or noise visible
 - No terminal effects visible

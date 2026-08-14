@@ -20,6 +20,7 @@ However, 2026 research shows that SEO alone is no longer sufficient. **GEO (Gene
 **What:** Create a Wikidata entry (`Q-item`) for "Divanshu Chauhan".
 
 **Properties:**
+
 - `instance of (P31)`: human (Q5)
 - `occupation (P106)`: software engineer (Q170359)
 - `educated at (P69)`: Arizona State University (Q670897)
@@ -43,6 +44,7 @@ However, 2026 research shows that SEO alone is no longer sufficient. **GEO (Gene
 **File:** `src/lib/schema.ts:41-43`
 
 **Current:**
+
 ```ts
 sameAs: siteConfig.socials
   .filter((s) => s.label !== "Email")
@@ -60,6 +62,7 @@ sameAs: siteConfig.socials
 **File:** `src/pages/index.astro`
 
 **Schema to add:**
+
 ```json
 {
   "@context": "https://schema.org",
@@ -81,6 +84,7 @@ sameAs: siteConfig.socials
 **File:** `src/pages/blog/[slug].astro`
 
 **Schema addition:**
+
 ```json
 {
   "speakable": {
@@ -115,6 +119,7 @@ sameAs: siteConfig.socials
 **File:** `src/pages/socials.astro`
 
 **Schema to add:**
+
 ```json
 {
   "@context": "https://schema.org",
@@ -145,6 +150,7 @@ sameAs: siteConfig.socials
 ### 9. Blog Post Answer-First Restructuring
 
 **What:** For ALL existing blog posts, ensure:
+
 - A `tldr` (answer capsule) exists in frontmatter and renders visibly at the top
 - An FAQ section (3-5 Q&A pairs) exists in frontmatter `faq` and renders at the bottom
 - H2 headings use question phrasing where applicable
@@ -160,6 +166,7 @@ sameAs: siteConfig.socials
 **File:** `src/pages/blog/[slug].astro`
 
 **Schema to add (when `faq` exists):**
+
 ```json
 {
   "@context": "https://schema.org",
@@ -180,6 +187,7 @@ sameAs: siteConfig.socials
 ### 11. Citation Density Lint (Build-Time Warning)
 
 **What:** Add a post-build validation step (or extend `validate-content.ts`) that checks:
+
 - Each blog post has ≥ 3 external links (data/source citations)
 - Each post has ≥ 3 specific data points/statistics
 - Warns (non-blocking) if thresholds not met
@@ -195,11 +203,26 @@ sameAs: siteConfig.socials
 **File:** `src/pages/about.astro`, `src/lib/schema.ts`
 
 **Schema addition:**
+
 ```json
 {
   "hasCredential": [
-    { "@type": "EducationalOccupationalCredential", "credentialCategory": "MS Computer Science", "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Arizona State University" } },
-    { "@type": "EducationalOccupationalCredential", "credentialCategory": "BS Computer Science", "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Arizona State University" } }
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "MS Computer Science",
+      "recognizedBy": {
+        "@type": "CollegeOrUniversity",
+        "name": "Arizona State University"
+      }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "BS Computer Science",
+      "recognizedBy": {
+        "@type": "CollegeOrUniversity",
+        "name": "Arizona State University"
+      }
+    }
   ]
 }
 ```
@@ -227,6 +250,7 @@ sameAs: siteConfig.socials
 ### 15. Cross-Platform Identity Audit
 
 **What:** Ensure identical naming/descriptions across all platforms:
+
 - GitHub: Divanshu Chauhan (divkix) — already set
 - LinkedIn: Divanshu Chauhan — already set
 - X: @divkix — already set
@@ -241,6 +265,7 @@ sameAs: siteConfig.socials
 ### 16. Knowledge Panel Trigger Strategy
 
 **Actions over 3-6 months:**
+
 1. Wikidata entry (Tier 1 #1)
 2. Consistent `sameAs` linking
 3. Cross-post blog content to Dev.to/Hashnode with canonical back to divkix.me
@@ -253,6 +278,7 @@ sameAs: siteConfig.socials
 ### 17. llms.txt Enhancement
 
 **What:** Enhance the auto-generated `llms.txt` from `@4hse/astro-llms-txt`:
+
 - Ensure `Content-Type: text/markdown` header
 - Curated page descriptions in blockquotes (currently auto-generated — review quality)
 - Priority ordering: homepage first, then blog, then about/socials, then posts sorted by recency
@@ -270,20 +296,20 @@ sameAs: siteConfig.socials
 
 ## Summary of Changes by File
 
-| File | Changes |
-|---|---|
-| `src/data/site.config.ts` | Add ORCID, Crunchbase, Google Scholar to socials; add credential detail fields |
-| `src/lib/schema.ts` | Add ORCID to sameAs; add `hasCredential` to Person; add `speakable` to BlogPosting generator |
-| `src/pages/index.astro` | Add CollectionPage JSON-LD |
-| `src/pages/blog/[slug].astro` | Add FAQPage JSON-LD; add speakable to BlogPosting; render tldr answer capsule; render dateModified badge; render keyTakeaways callout |
-| `src/pages/socials.astro` | Add CollectionPage JSON-LD |
-| `src/pages/privacy.astro` | Add BreadcrumbList JSON-LD |
-| `src/pages/about.astro` | Enhanced credential display + hasCredential schema |
-| `src/content/blog/*.mdx` | Populate missing tldr/faq/keyTakeaways frontmatter; add external citations |
-| `astro.config.mjs` | Review llms.txt plugin config |
-| `scripts/validate-citations.ts` | New — citation density lint |
-| `src/content.config.ts` | No changes needed (schema already has all fields) |
-| External | Wikidata entry, Crunchbase profile, Google Scholar, Dev.to/Hashnode accounts |
+| File                            | Changes                                                                                                                               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/data/site.config.ts`       | Add ORCID, Crunchbase, Google Scholar to socials; add credential detail fields                                                        |
+| `src/lib/schema.ts`             | Add ORCID to sameAs; add `hasCredential` to Person; add `speakable` to BlogPosting generator                                          |
+| `src/pages/index.astro`         | Add CollectionPage JSON-LD                                                                                                            |
+| `src/pages/blog/[slug].astro`   | Add FAQPage JSON-LD; add speakable to BlogPosting; render tldr answer capsule; render dateModified badge; render keyTakeaways callout |
+| `src/pages/socials.astro`       | Add CollectionPage JSON-LD                                                                                                            |
+| `src/pages/privacy.astro`       | Add BreadcrumbList JSON-LD                                                                                                            |
+| `src/pages/about.astro`         | Enhanced credential display + hasCredential schema                                                                                    |
+| `src/content/blog/*.mdx`        | Populate missing tldr/faq/keyTakeaways frontmatter; add external citations                                                            |
+| `astro.config.mjs`              | Review llms.txt plugin config                                                                                                         |
+| `scripts/validate-citations.ts` | New — citation density lint                                                                                                           |
+| `src/content.config.ts`         | No changes needed (schema already has all fields)                                                                                     |
+| External                        | Wikidata entry, Crunchbase profile, Google Scholar, Dev.to/Hashnode accounts                                                          |
 
 ## Non-Goals
 

@@ -19,13 +19,13 @@ editorial
 
 Atelier layout · Atelier palette — cool near-white cream · Didone-serif display · muted slate-indigo accent
 
-- `--color-paper`   oklch(0.986 0.003 250) — smooth cool cream, near-white (no brown/yellow cast)
+- `--color-paper` oklch(0.986 0.003 250) — smooth cool cream, near-white (no brown/yellow cast)
 - `--color-paper-2` oklch(0.968 0.004 248) — lifted cream for cards
-- `--color-ink`     oklch(0.29 0.02 260) — cool blue-gray charcoal
-- `--color-ink-2`   oklch(0.47 0.014 258)
-- `--color-rule`    oklch(0.92 0.004 260) — neutral cool hairline
-- `--color-accent`  oklch(0.44 0.09 265) — muted indigo on cream
-- `--color-focus`   oklch(0.44 0.09 265)
+- `--color-ink` oklch(0.29 0.02 260) — cool blue-gray charcoal
+- `--color-ink-2` oklch(0.47 0.014 258)
+- `--color-rule` oklch(0.92 0.004 260) — neutral cool hairline
+- `--color-accent` oklch(0.44 0.09 265) — muted indigo on cream
+- `--color-focus` oklch(0.44 0.09 265)
 - Dark `--color-paper` oklch(0.20 0.006 265) · `--color-ink` oklch(0.92 0.005 265) · `--color-accent` oklch(0.62 0.1 265)
 
 ## Typography

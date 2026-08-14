@@ -14,28 +14,29 @@
 
 ## File Structure
 
-| File | Action | Responsibility |
-|---|---|---|
-| `src/data/site.config.ts` | Modify | Add ORCID to socials array |
-| `src/lib/schema.ts` | Modify | Add hasCredential to Person schema |
-| `src/pages/index.astro` | Modify | Add CollectionPage JSON-LD |
-| `src/pages/blog/[slug].astro` | Modify | Add FAQPage + Speakable JSON-LD |
-| `src/pages/socials.astro` | Modify | Add CollectionPage JSON-LD |
-| `src/pages/privacy.astro` | Modify | Add BreadcrumbList JSON-LD |
-| `scripts/validate-citations.ts` | Create | Citation density build-time check |
-| `astro.config.mjs` | Modify | Minor llms.txt config tweaks |
-| `src/content/blog/ai-models-compared-2026.mdx` | Modify | Add tldr/faq/keyTakeaways |
-| `src/content/blog/clickfolio-full-stack-cloudflare-workers.mdx` | Modify | Add tldr/faq/keyTakeaways |
-| `src/content/blog/logwell-self-hosted-logging-platform.mdx` | Modify | Add tldr/faq/keyTakeaways |
-| `src/content/blog/openclaw-ai-agent-review-2026.mdx` | Modify | Add tldr/faq/keyTakeaways |
-| `src/content/blog/scaling-telegram-bot-300k-users.mdx` | Modify | Add tldr/faq/keyTakeaways |
-| `src/content/blog/vibe-coding-truth-ai-programming-2026.mdx` | Modify | Add tldr/faq/keyTakeaways |
+| File                                                            | Action | Responsibility                     |
+| --------------------------------------------------------------- | ------ | ---------------------------------- |
+| `src/data/site.config.ts`                                       | Modify | Add ORCID to socials array         |
+| `src/lib/schema.ts`                                             | Modify | Add hasCredential to Person schema |
+| `src/pages/index.astro`                                         | Modify | Add CollectionPage JSON-LD         |
+| `src/pages/blog/[slug].astro`                                   | Modify | Add FAQPage + Speakable JSON-LD    |
+| `src/pages/socials.astro`                                       | Modify | Add CollectionPage JSON-LD         |
+| `src/pages/privacy.astro`                                       | Modify | Add BreadcrumbList JSON-LD         |
+| `scripts/validate-citations.ts`                                 | Create | Citation density build-time check  |
+| `astro.config.mjs`                                              | Modify | Minor llms.txt config tweaks       |
+| `src/content/blog/ai-models-compared-2026.mdx`                  | Modify | Add tldr/faq/keyTakeaways          |
+| `src/content/blog/clickfolio-full-stack-cloudflare-workers.mdx` | Modify | Add tldr/faq/keyTakeaways          |
+| `src/content/blog/logwell-self-hosted-logging-platform.mdx`     | Modify | Add tldr/faq/keyTakeaways          |
+| `src/content/blog/openclaw-ai-agent-review-2026.mdx`            | Modify | Add tldr/faq/keyTakeaways          |
+| `src/content/blog/scaling-telegram-bot-300k-users.mdx`          | Modify | Add tldr/faq/keyTakeaways          |
+| `src/content/blog/vibe-coding-truth-ai-programming-2026.mdx`    | Modify | Add tldr/faq/keyTakeaways          |
 
 ---
 
 ### Task 1: Add ORCID to Site Config and Person Schema
 
 **Files:**
+
 - Modify: `src/data/site.config.ts:269-275`
 - Modify: `src/lib/schema.ts:41-43`
 
@@ -85,6 +86,7 @@ git commit -m "feat: add ORCID to site config socials for entity consolidation"
 ### Task 2: Add CollectionPage Schema to Homepage
 
 **Files:**
+
 - Modify: `src/pages/index.astro`
 
 - [ ] **Step 1: Add CollectionPage JSON-LD to the index page**
@@ -167,6 +169,7 @@ git commit -m "feat: add CollectionPage JSON-LD to homepage for entity signals"
 ### Task 3: Add Speakable and FAQPage Schema to Blog Posts
 
 **Files:**
+
 - Modify: `src/pages/blog/[slug].astro`
 
 **Note:** The tldr/keyTakeaways/faq rendering is already in place at lines 198-248. Only the JSON-LD structured data is missing.
@@ -223,20 +226,21 @@ Also add `class="post-title"` to the `<h1>` on line 151 and `class="post-excerpt
 Add this code in the frontmatter section after the existing `blogPostingSchema` definition (after line 77):
 
 ```ts
-const faqPageSchema = post.data.faq && post.data.faq.length > 0
-  ? {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: post.data.faq.map((qa: { q: string; a: string }) => ({
-        "@type": "Question",
-        name: qa.q,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: qa.a,
-        },
-      })),
-    }
-  : null;
+const faqPageSchema =
+  post.data.faq && post.data.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.data.faq.map((qa: { q: string; a: string }) => ({
+          "@type": "Question",
+          name: qa.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: qa.a,
+          },
+        })),
+      }
+    : null;
 ```
 
 Add the FAQPage JSON-LD script after the breadcrumb schema script (after line 104), before the TOC section:
@@ -265,6 +269,7 @@ git commit -m "feat: add Speakable and FAQPage JSON-LD to blog posts for AEO"
 ### Task 4: Add hasCredential to Person Schema
 
 **Files:**
+
 - Modify: `src/lib/schema.ts`
 
 - [ ] **Step 1: Add top-level hasCredential to generatePersonSchema**
@@ -367,6 +372,7 @@ git commit -m "feat: add hasCredential to Person schema for E-E-A-T signals"
 ### Task 5: Add CollectionPage Schema to Socials Page
 
 **Files:**
+
 - Modify: `src/pages/socials.astro`
 
 - [ ] **Step 1: Add CollectionPage JSON-LD**
@@ -419,6 +425,7 @@ git commit -m "feat: add CollectionPage JSON-LD to socials page"
 ### Task 6: Add BreadcrumbList Schema to Privacy Page
 
 **Files:**
+
 - Modify: `src/pages/privacy.astro`
 
 - [ ] **Step 1: Add BreadcrumbList JSON-LD**
@@ -462,6 +469,7 @@ git commit -m "feat: add BreadcrumbList JSON-LD to privacy page"
 ### Task 7: Citation Density Validation Script
 
 **Files:**
+
 - Create: `scripts/validate-citations.ts`
 
 - [ ] **Step 1: Create the validation script**
@@ -500,13 +508,18 @@ function validatePost(filePath: string): CheckResult {
 
   // Check for keyTakeaways
   if (!data.keyTakeaways || data.keyTakeaways.length < 3) {
-    issues.push(`keyTakeaways: need >= 3 items (has ${data.keyTakeaways?.length ?? 0})`);
+    issues.push(
+      `keyTakeaways: need >= 3 items (has ${data.keyTakeaways?.length ?? 0})`,
+    );
   }
 
   // Check external link count
-  const externalLinks = content.match(/https?:\/\/(?!divkix\.me|localhost)[^\s)"'<>]+/g) || [];
+  const externalLinks =
+    content.match(/https?:\/\/(?!divkix\.me|localhost)[^\s)"'<>]+/g) || [];
   if (externalLinks.length < 3) {
-    issues.push(`external links: need >= 3 citations (has ${externalLinks.length})`);
+    issues.push(
+      `external links: need >= 3 citations (has ${externalLinks.length})`,
+    );
   }
 
   return { slug, passed: issues.length === 0, issues };
@@ -514,7 +527,9 @@ function validatePost(filePath: string): CheckResult {
 
 function main() {
   const files = readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
-  const results: CheckResult[] = files.map((f) => validatePost(`${CONTENT_DIR}/${f}`));
+  const results: CheckResult[] = files.map((f) =>
+    validatePost(`${CONTENT_DIR}/${f}`),
+  );
 
   const failed = results.filter((r) => !r.passed && r.issues.length > 0);
   const passed = results.filter((r) => r.passed);
@@ -573,6 +588,7 @@ git commit -m "feat: add citation density validation script for content quality"
 ### Task 8: Populate Missing Frontmatter for 6 Blog Posts
 
 **Files:**
+
 - Modify: `src/content/blog/ai-models-compared-2026.mdx`
 - Modify: `src/content/blog/clickfolio-full-stack-cloudflare-workers.mdx`
 - Modify: `src/content/blog/logwell-self-hosted-logging-platform.mdx`
@@ -730,11 +746,13 @@ git commit -m "feat: add tldr/faq/keyTakeaways frontmatter to all blog posts for
 ### Task 9: Enhance llms.txt Config
 
 **Files:**
+
 - Modify: `astro.config.mjs`
 
 - [ ] **Step 1: Review current llms.txt plugin config**
 
 The current config is already comprehensive. Only two minor tweaks:
+
 1. For the `promote` and `demote` arrays, blog URL patterns use `/blog/**` but actual URLs are `/blog/slug/` — verify the plugin handles trailing slashes correctly (since `trailingSlash: "always"` adds them).
 2. Ensure `Content-Type: text/markdown` header is set by the plugin (check plugin documentation — likely automatic).
 
@@ -770,6 +788,7 @@ bun run build
 ```
 
 Expected: Clean build with all 5 pipeline steps succeeding:
+
 1. generate-posts-metadata.js — 12 posts processed
 2. generate-og-images.js — OG images generated
 3. validate-content.ts — MDX count matches posts.json

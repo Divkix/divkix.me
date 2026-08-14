@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y", "import"],
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true,
+    "builtin": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.0"
+    }
+  },
+  "ignorePatterns": [
+    "dist/**",
+    ".next/**",
+    "out/**",
+    "build/**",
+    "node_modules/**",
+    "**/*.lock",
+    "public/**",
+    "**/*.tsbuildinfo",
+    "content/blog/posts.json",
+    ".open-next/**",
+    "wrangler.toml",
+    "next-env.d.ts",
+    "**/*.astro"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "off",
+    "style": "off",
+    "perf": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "rules": {
+    "unicorn/filename-case": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/no-null": "off",
+    "unicorn/no-array-sort": "off",
+    "import/no-cycle": "off",
+    "import/prefer-default-export": "off",
+    "import/no-named-export": "off",
+    "import/group-exports": "off",
+    "import/consistent-type-specifier-style": "off",
+    "eslint/sort-keys": "off",
+    "eslint/func-style": "off",
+    "eslint/one-var": "off",
+    "eslint/max-lines": "off",
+    "eslint/id-length": "off",
+    "eslint/no-shadow": "off",
+    "eslint/no-new": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "typescript/no-unused-vars": "warn"
+      }
+    }
+  ]
+}

@@ -80,12 +80,12 @@ What I wanted: a single Docker Compose file, a web UI, PostgreSQL because I alre
 
 ## Logging Tools Compared
 
-| Tool | Setup Complexity | Monthly Cost | Search Speed | Real-time | Best For |
-|------|-----------------|-------------|-------------|-----------|----------|
-| **ELK Stack** | High (JVM tuning, shard allocation) | $0 self-hosted, $100+ managed | Fast | Yes | Enterprise with DevOps teams |
-| **Datadog** | Low (managed) | $0.10/GB + $1.70/M events | Fast | Yes | Teams with logging budgets |
-| **Loki** | Medium (Grafana required) | $0 self-hosted | Medium | Yes | Grafana/Prometheus ecosystem |
-| **Logwell** | Very Low (one Docker Compose) | $0 (self-hosted on free VPS) | Fast enough | Yes | Side projects and personal use |
+| Tool          | Setup Complexity                    | Monthly Cost                  | Search Speed | Real-time | Best For                       |
+| ------------- | ----------------------------------- | ----------------------------- | ------------ | --------- | ------------------------------ |
+| **ELK Stack** | High (JVM tuning, shard allocation) | $0 self-hosted, $100+ managed | Fast         | Yes       | Enterprise with DevOps teams   |
+| **Datadog**   | Low (managed)                       | $0.10/GB + $1.70/M events     | Fast         | Yes       | Teams with logging budgets     |
+| **Loki**      | Medium (Grafana required)           | $0 self-hosted                | Medium       | Yes       | Grafana/Prometheus ecosystem   |
+| **Logwell**   | Very Low (one Docker Compose)       | $0 (self-hosted on free VPS)  | Fast enough  | Yes       | Side projects and personal use |
 
 Logwell is embarrassingly simple compared to the others. That's the point.
 
@@ -194,18 +194,18 @@ The other use is just... seeing what's happening. Searching for a specific user'
 The SDK is minimal:
 
 ```typescript
-import { Logwell } from 'logwell';
+import { Logwell } from "logwell";
 
 const logger = Logwell.create({
-  apiKey: 'lw_xxx',
-  endpoint: 'https://logs.example.com',
-  service: 'pickmyclass-scraper'
+  apiKey: "lw_xxx",
+  endpoint: "https://logs.example.com",
+  service: "pickmyclass-scraper",
 });
 
-logger.error('Scrape failed', {
+logger.error("Scrape failed", {
   url: targetUrl,
   statusCode: response.status,
-  retryCount: 3
+  retryCount: 3,
 });
 ```
 

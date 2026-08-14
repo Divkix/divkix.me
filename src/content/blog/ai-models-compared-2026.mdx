@@ -109,19 +109,19 @@ Still useful, no longer the headline: GPT 5.5, Opus 4.7, Kimi K2.6, GLM-5.1, Min
 
 ## Quick comparison: models worth knowing
 
-| Model | Maker | Best for | Weakness | What the numbers say | Verdict |
-|-------|-------|----------|----------|----------------------|---------|
-| **Claude Fable 5** | Anthropic | Peak coding, planning, hard agents | Price; access/policy risk | SWE Pro ~80.4% (max); AA-Briefcase ~1390; DeepSWE/Terminal top-tier | Ceiling when available |
-| **Claude Opus 4.8** | Anthropic | Daily professional coding, writing | Price and token burn on long agents | ~69.2% SWE-bench Pro (max); AA-Briefcase Elo 1354 (max) | Coding daily driver |
-| **GPT-5.6 Sol** | OpenAI | Coding agents, Codex, hard reasoning | Overthinks; ultra modes can be slow | Leads AA Coding Agent Index (max); Arena Code Frontend joint #1 with Fable; ~$5/$30 MTok | Agent coding leader |
-| **Grok 4.5** | SpaceXAI / xAI | Cheap fast agents, automation | Presentation polish weaker; can tool-loop | AA-Briefcase Elo 1328; AutomationBench-AA 51% at ~$0.34/task; SWE Pro ~64.7% | Best ROI agent |
-| **Cognition SWE-1.7** | Cognition | Specialized coding agents | Product access; not a free open base | K2.7-Code + Cognition RL; coding near Opus / GPT-5.5 class; cleaner alignment than raw Kimi | Specialist coding stack |
-| **Muse Spark 1.1** | Meta | Cheap agent API, computer use, long context | Not the SWE Pro king | Agentic + coding focus; AA-Omniscience jump mostly from fewer hallucinations | Price disruptor |
-| **Kimi K2.7-Code** | Moonshot | Open coding agents | Hardware; base alignment concerns | Open 1T-class coding model; NVFP4; base for SWE-1.7 | Open coding pick |
-| **GLM 5.2** | Z.AI | Open coding value | Self-host is heavy (hundreds of GB at 4-bit) | Competitive vs Sol/Grok; SWE Pro ~62.1%; AA-Briefcase ~$1.71/task (max) | Open value pick |
-| **MiniMax M3** | MiniMax | Token-efficient open coding agents | Trails Fable/Opus/Sol on peak SWE | Strong coding agent in community use; low token burn; mlx support | Token-sipper open pick |
-| **Gemini 3.1 Pro** (and Flash siblings) | Google | Research, multimodal, long context | Writing and pure SWE lag coding specialists | Still the default for long docs / audio / video for a lot of research work | Research leader |
-| **DeepSeek V4 Pro** | DeepSeek | Cheap near-frontier coding via API | Hosting friction | Still one of the best $/coding deals from spring | Value API |
+| Model                                   | Maker          | Best for                                    | Weakness                                     | What the numbers say                                                                        | Verdict                 |
+| --------------------------------------- | -------------- | ------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------- |
+| **Claude Fable 5**                      | Anthropic      | Peak coding, planning, hard agents          | Price; access/policy risk                    | SWE Pro ~80.4% (max); AA-Briefcase ~1390; DeepSWE/Terminal top-tier                         | Ceiling when available  |
+| **Claude Opus 4.8**                     | Anthropic      | Daily professional coding, writing          | Price and token burn on long agents          | ~69.2% SWE-bench Pro (max); AA-Briefcase Elo 1354 (max)                                     | Coding daily driver     |
+| **GPT-5.6 Sol**                         | OpenAI         | Coding agents, Codex, hard reasoning        | Overthinks; ultra modes can be slow          | Leads AA Coding Agent Index (max); Arena Code Frontend joint #1 with Fable; ~$5/$30 MTok    | Agent coding leader     |
+| **Grok 4.5**                            | SpaceXAI / xAI | Cheap fast agents, automation               | Presentation polish weaker; can tool-loop    | AA-Briefcase Elo 1328; AutomationBench-AA 51% at ~$0.34/task; SWE Pro ~64.7%                | Best ROI agent          |
+| **Cognition SWE-1.7**                   | Cognition      | Specialized coding agents                   | Product access; not a free open base         | K2.7-Code + Cognition RL; coding near Opus / GPT-5.5 class; cleaner alignment than raw Kimi | Specialist coding stack |
+| **Muse Spark 1.1**                      | Meta           | Cheap agent API, computer use, long context | Not the SWE Pro king                         | Agentic + coding focus; AA-Omniscience jump mostly from fewer hallucinations                | Price disruptor         |
+| **Kimi K2.7-Code**                      | Moonshot       | Open coding agents                          | Hardware; base alignment concerns            | Open 1T-class coding model; NVFP4; base for SWE-1.7                                         | Open coding pick        |
+| **GLM 5.2**                             | Z.AI           | Open coding value                           | Self-host is heavy (hundreds of GB at 4-bit) | Competitive vs Sol/Grok; SWE Pro ~62.1%; AA-Briefcase ~$1.71/task (max)                     | Open value pick         |
+| **MiniMax M3**                          | MiniMax        | Token-efficient open coding agents          | Trails Fable/Opus/Sol on peak SWE            | Strong coding agent in community use; low token burn; mlx support                           | Token-sipper open pick  |
+| **Gemini 3.1 Pro** (and Flash siblings) | Google         | Research, multimodal, long context          | Writing and pure SWE lag coding specialists  | Still the default for long docs / audio / video for a lot of research work                  | Research leader         |
+| **DeepSeek V4 Pro**                     | DeepSeek       | Cheap near-frontier coding via API          | Hosting friction                             | Still one of the best $/coding deals from spring                                            | Value API               |
 
 These mix Artificial Analysis runs, Arena, vendor charts (especially Grok 4.5's launch deck), and lab notes. If you are shipping on a score, re-check the live board that day.
 
@@ -179,13 +179,13 @@ How I route work:
 
 Open models are no longer "almost there on one chart." They show up in the same side-by-sides as Sol and Grok. Post-trains also change the product enough that the brand name alone lies.
 
-| Stack | Role | When I would try it |
-|-------|------|---------------------|
-| **Kimi K2.7-Code** | Open base coding model | You want weights and will own hosting or a host |
-| **Cognition SWE-1.7** | K2.7 + Cognition RL | You want coding near Opus-class with Cognition's product |
-| **GLM 5.2** | Open value coding | Price first; API first, cluster second |
-| **MiniMax M3** | Token-efficient open agent | High-volume loops where tokens dominate the bill |
-| **DeepSeek V4 Pro** | Cheap near-frontier API | Existing DeepSeek stack, backlog cleanup |
+| Stack                 | Role                       | When I would try it                                      |
+| --------------------- | -------------------------- | -------------------------------------------------------- |
+| **Kimi K2.7-Code**    | Open base coding model     | You want weights and will own hosting or a host          |
+| **Cognition SWE-1.7** | K2.7 + Cognition RL        | You want coding near Opus-class with Cognition's product |
+| **GLM 5.2**           | Open value coding          | Price first; API first, cluster second                   |
+| **MiniMax M3**        | Token-efficient open agent | High-volume loops where tokens dominate the bill         |
+| **DeepSeek V4 Pro**   | Cheap near-frontier API    | Existing DeepSeek stack, backlog cleanup                 |
 
 Quote the checkpoint. Kimi and SWE-1.7 are related and not interchangeable. MiniMax M3 is not M2.7 with a new version string.
 
@@ -206,16 +206,16 @@ Token-efficient open agents: **MiniMax M3**.
 
 Approximate SWE-bench Pro snapshot around the Grok 4.5 launch (vendor + independent citations; re-verify):
 
-| Model | SWE-bench Pro (approx.) | Notes |
-|-------|-------------------------|-------|
-| Claude Fable 5 (max) | ~80.4% | Peak when available |
-| Claude Opus 4.8 (max) | ~69.2% | Best always-on Anthropic default |
-| Grok 4.5 | ~64.7% | Strong for cost; not the Pro leader |
-| Claude Opus 4.7 (max) | ~64.3% | April champion, now previous gen |
-| GLM 5.2 | ~62.1% | Open, competitive |
-| GPT 5.5 (xhigh) | ~58.6% | Prior OpenAI flagship on this chart |
-| Cognition SWE-1.7 | near Opus / GPT-5.5 class (lab/community) | K2.7 base + Cognition RL; check live harness scores |
-| MiniMax M3 | competitive open agent (community) | Strength is token efficiency more than top SWE Pro |
+| Model                 | SWE-bench Pro (approx.)                   | Notes                                               |
+| --------------------- | ----------------------------------------- | --------------------------------------------------- |
+| Claude Fable 5 (max)  | ~80.4%                                    | Peak when available                                 |
+| Claude Opus 4.8 (max) | ~69.2%                                    | Best always-on Anthropic default                    |
+| Grok 4.5              | ~64.7%                                    | Strong for cost; not the Pro leader                 |
+| Claude Opus 4.7 (max) | ~64.3%                                    | April champion, now previous gen                    |
+| GLM 5.2               | ~62.1%                                    | Open, competitive                                   |
+| GPT 5.5 (xhigh)       | ~58.6%                                    | Prior OpenAI flagship on this chart                 |
+| Cognition SWE-1.7     | near Opus / GPT-5.5 class (lab/community) | K2.7 base + Cognition RL; check live harness scores |
+| MiniMax M3            | competitive open agent (community)        | Strength is token efficiency more than top SWE Pro  |
 
 DeepSWE and Terminal-Bench reorder this list. Grok and Sol look better on some agent setups than raw SWE Pro suggests. Scaffold choice — [which AI coding tools you wrap around the model](/blog/ai-coding-tools-compared-2026) — still moves scores by double digits.
 
@@ -236,13 +236,13 @@ Open/specialized coding agents: **SWE-1.7** or **MiniMax M3**, depending on prod
 
 AA-Briefcase (private agentic knowledge-work set) around Grok 4.5 launch:
 
-| Model | AA-Briefcase Elo (approx.) | Cost / task | Time / task |
-|-------|----------------------------|-------------|-------------|
-| Claude Fable 5 | ~1390 | high | efficient turns relative to peers |
-| Claude Sonnet 5 (max) | ~1390 | high | slow (many turns) |
-| Claude Opus 4.8 (max) | ~1354 | ~$8.26 | ~23.9 min |
-| **Grok 4.5** | **~1328** | **~$1.12** | **~12.4 min** |
-| GLM 5.2 (max) | lower | ~$1.71 | more turns |
+| Model                 | AA-Briefcase Elo (approx.) | Cost / task | Time / task                       |
+| --------------------- | -------------------------- | ----------- | --------------------------------- |
+| Claude Fable 5        | ~1390                      | high        | efficient turns relative to peers |
+| Claude Sonnet 5 (max) | ~1390                      | high        | slow (many turns)                 |
+| Claude Opus 4.8 (max) | ~1354                      | ~$8.26      | ~23.9 min                         |
+| **Grok 4.5**          | **~1328**                  | **~$1.12**  | **~12.4 min**                     |
+| GLM 5.2 (max)         | lower                      | ~$1.71      | more turns                        |
 
 AutomationBench-AA: Grok 4.5 at **51%** headline score and about **$0.34** per task. Fable and Opus were close on score and several times more expensive.
 
@@ -262,15 +262,15 @@ The July coding race does not replace Gemini for long audio/video plus huge docu
 
 ## Benchmark scorecard: July 2026
 
-| Signal | Approx. leader | Runner-up | Open / specialist contender |
-|--------|----------------|-----------|-----------------------------|
-| SWE-bench Pro | Claude Fable 5 (~80.4%) | Opus 4.8 (~69.2%) | Grok 4.5 (~64.7%) / GLM 5.2 (~62.1%) |
-| AA Coding Agent Index | GPT-5.6 Sol (max) | Grok 4.5 (ties on some axes) | K2.7-Code / SWE-1.7 / GLM 5.2 |
-| Arena Code Frontend | Fable 5 = GPT-5.6 Sol (joint #1) | — | open agents (task-dependent) |
-| AA-Briefcase | Claude Fable 5 / Sonnet 5 | Opus 4.8, then Grok 4.5 | GLM 5.2 (cost-competitive) |
-| AutomationBench-AA | Grok 4.5 (51%) | Fable 5 / Opus 4.8 | — |
-| Cost per hard agent task | Grok 4.5 | Muse Spark 1.1 / MiniMax M3 / GLM | DeepSeek / Kimi hosted |
-| Multimodal long context | Gemini | Muse Spark 1.1 / GPT family | open VLMs (task-dependent) |
+| Signal                   | Approx. leader                   | Runner-up                         | Open / specialist contender          |
+| ------------------------ | -------------------------------- | --------------------------------- | ------------------------------------ |
+| SWE-bench Pro            | Claude Fable 5 (~80.4%)          | Opus 4.8 (~69.2%)                 | Grok 4.5 (~64.7%) / GLM 5.2 (~62.1%) |
+| AA Coding Agent Index    | GPT-5.6 Sol (max)                | Grok 4.5 (ties on some axes)      | K2.7-Code / SWE-1.7 / GLM 5.2        |
+| Arena Code Frontend      | Fable 5 = GPT-5.6 Sol (joint #1) | —                                 | open agents (task-dependent)         |
+| AA-Briefcase             | Claude Fable 5 / Sonnet 5        | Opus 4.8, then Grok 4.5           | GLM 5.2 (cost-competitive)           |
+| AutomationBench-AA       | Grok 4.5 (51%)                   | Fable 5 / Opus 4.8                | —                                    |
+| Cost per hard agent task | Grok 4.5                         | Muse Spark 1.1 / MiniMax M3 / GLM | DeepSeek / Kimi hosted               |
+| Multimodal long context  | Gemini                           | Muse Spark 1.1 / GPT family       | open VLMs (task-dependent)           |
 
 Every leader here will move. Private benches matter more for agent product work than public quiz scores, and they can still overfit harness style.
 
@@ -328,4 +328,4 @@ Nothing wins every category in July 2026. Match the model to the job and re-chec
 - [OpenAI](https://openai.com)
 - [Meta AI / Muse announcements via Meta channels](https://ai.meta.com)
 
-If you care more about the *tools* around these models (IDE agents, terminal agents, autocomplete) than the base checkpoints, see [Claude Code vs Cursor vs Copilot (2026)](/blog/ai-coding-tools-compared-2026/).
+If you care more about the _tools_ around these models (IDE agents, terminal agents, autocomplete) than the base checkpoints, see [Claude Code vs Cursor vs Copilot (2026)](/blog/ai-coding-tools-compared-2026/).

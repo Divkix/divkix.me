@@ -6,7 +6,20 @@ coverAlt: "Cost comparison chart showing Cloudflare Workers free tier at $0 vs O
 date: "2026-05-11"
 dateModified: "2026-05-11"
 excerpt: "Real numbers from 30+ projects: Alita Robot (300K users on Docker/Oracle free VPS) vs Clickfolio (Cloudflare Workers + D1 + R2 at $0). Cost comparison, database trade-offs, DDoS horror stories, and a decision framework for when to pick which architecture."
-tags: ["Cloudflare Workers", "Serverless", "VPS", "Docker", "Side Projects", "Cloudflare D1", "Supabase", "PlanetScale", "Cost Optimization", "Backend Architecture", "2026"]
+tags:
+  [
+    "Cloudflare Workers",
+    "Serverless",
+    "VPS",
+    "Docker",
+    "Side Projects",
+    "Cloudflare D1",
+    "Supabase",
+    "PlanetScale",
+    "Cost Optimization",
+    "Backend Architecture",
+    "2026",
+  ]
 published: true
 featured: true
 tldr: "Serverless (Cloudflare Workers) gives you $0 global hosting and push-and-forget deployment. Traditional servers (Docker/VPS) give you full control and fixed pricing. Here's when to pick which, backed by real projects and real bills."
@@ -54,12 +67,12 @@ I've shipped on both sides of this divide. Docker Compose on a VPS. Cloudflare W
 
 Here's the quick tour of what I'm comparing:
 
-| Project | Architecture | Infrastructure | Cost/Month | Users |
-|---|---|---|---|---|
-| Alita Robot | Traditional | Docker Compose (Dokploy) + Postgres + Redis on Oracle free VPS | $0 (was $7 on Heroku) | 300K+ |
-| Logwell | Traditional | Docker (Fly.io) + Postgres | $0 (free tier) | Self-hosted log pipeline |
-| Clickfolio | Serverless | Cloudflare Workers + D1 + R2 + Queues + Durable Objects | $0 (free tier) | 500+ MAU |
-| PickMyClass | Hybrid | Cloudflare Workers + Supabase | $0 (free tier) | Thousands ASU students |
+| Project     | Architecture | Infrastructure                                                 | Cost/Month            | Users                    |
+| ----------- | ------------ | -------------------------------------------------------------- | --------------------- | ------------------------ |
+| Alita Robot | Traditional  | Docker Compose (Dokploy) + Postgres + Redis on Oracle free VPS | $0 (was $7 on Heroku) | 300K+                    |
+| Logwell     | Traditional  | Docker (Fly.io) + Postgres                                     | $0 (free tier)        | Self-hosted log pipeline |
+| Clickfolio  | Serverless   | Cloudflare Workers + D1 + R2 + Queues + Durable Objects        | $0 (free tier)        | 500+ MAU                 |
+| PickMyClass | Hybrid       | Cloudflare Workers + Supabase                                  | $0 (free tier)        | Thousands ASU students   |
 
 Four projects. Three architectures. One conclusion: there's no universal answer — but there absolutely is a right answer for your specific project.
 
@@ -130,15 +143,15 @@ PickMyClass, another project serving thousands of ASU students, uses a similar p
 
 Here's what I actually pay, and what you'd pay at each tier:
 
-| Service | Free Tier | Paid Entry | Key Limits (Free) | Overage Cost |
-|---|---|---|---|---|
-| **Cloudflare Workers** | 100K req/day | $5/mo | 10ms CPU, 128MB mem | $0.30/M requests |
-| **Cloudflare D1** | 5M rows read/day | Included in $5 | 100K writes/day | $1.00/M writes |
-| **Cloudflare R2** | 10GB storage | $0.015/GB-mo | Class A ops free, B $0.36/M | $0.36/M ops |
-| **Oracle Cloud VPS** | 4 OCPU, 24GB RAM | Always free | 200GB block, 10TB egress | None (hard cap) |
-| **Hetzner VPS** | N/A | ~$5/mo | 2 vCPU, 4GB RAM | Fixed price |
-| **Supabase** | 500MB DB, 50K MAU | $25/mo | 2GB file storage | $0.00326/GB egress |
-| **PlanetScale** | No free plan | $5/mo | Single node, 512MB | Row-based |
+| Service                | Free Tier         | Paid Entry     | Key Limits (Free)           | Overage Cost       |
+| ---------------------- | ----------------- | -------------- | --------------------------- | ------------------ |
+| **Cloudflare Workers** | 100K req/day      | $5/mo          | 10ms CPU, 128MB mem         | $0.30/M requests   |
+| **Cloudflare D1**      | 5M rows read/day  | Included in $5 | 100K writes/day             | $1.00/M writes     |
+| **Cloudflare R2**      | 10GB storage      | $0.015/GB-mo   | Class A ops free, B $0.36/M | $0.36/M ops        |
+| **Oracle Cloud VPS**   | 4 OCPU, 24GB RAM  | Always free    | 200GB block, 10TB egress    | None (hard cap)    |
+| **Hetzner VPS**        | N/A               | ~$5/mo         | 2 vCPU, 4GB RAM             | Fixed price        |
+| **Supabase**           | 500MB DB, 50K MAU | $25/mo         | 2GB file storage            | $0.00326/GB egress |
+| **PlanetScale**        | No free plan      | $5/mo          | Single node, 512MB          | Row-based          |
 
 **Real stories behind these numbers:**
 
@@ -219,12 +232,14 @@ Docker on a VPS is for continuous uptime, unlimited CPU, and full database contr
 Both sides have sharp edges. Here's what I learned the hard way:
 
 **Serverless surprises:**
+
 - D1 bills can bankrupt you in seconds. A missing WHERE clause, a loop that wasn't supposed to loop — and you're looking at thousands of dollars. D1 has no query cost limits and no real-time alerts. Add rate limiting and WHERE clause validation before you deploy
 - Workers debugging is harder than `docker compose logs`. Production V8 isolates run differently than local. Tracing a request across Workers, Queues, and Durable Objects means checking three separate dashboards
 - "At least once" delivery on Queues means messages can duplicate or go missing. You need orphan recovery crons for production apps
 - Cloudflare's free tier is permanent and generous, but the upsell to Enterprise can be aggressive. One user was told to pay $120K/year or get kicked off within 24 hours
 
 **Traditional server surprises:**
+
 - Your server will crash at 3 AM and nobody will fix it but you. Docker container restarts, Postgres connection pools exhausting, disk filling up — all happen while you're asleep
 - DDoS protection is your problem. Cloudflare absorbs 200+ Tbps attacks. Your VPS absorbs maybe 1 Gbps before it keels over
 - Single-region latency is real. Users in India don't care that your server is in Ashburn, Virginia — they care that it takes 300ms to respond

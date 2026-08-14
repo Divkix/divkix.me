@@ -61,7 +61,7 @@ faq:
 
 Nobody should need to know HTML to have a web portfolio in 2026.
 
-That was the pitch I told myself. The reality is I wanted to see if I could build a production app using *only* Cloudflare services, D1, R2, Queues, Durable Objects, Workers, without reaching for Supabase or Postgres or any external dependency. It's the same instinct behind [self-hosting my own logging platform](/blog/logwell-self-hosted-logging-platform) instead of paying for a SaaS — build the thing, learn the constraints. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL. The entire stack costs $0 per month — the same [zero-cost Cloudflare Workers hosting](/blog/zero-cost-portfolio-cloudflare-workers) that powers my own portfolio, just stretched across a full dynamic app. D1, R2, Queues, and Durable Objects all stay within free tier limits even at 500+ monthly active users.
+That was the pitch I told myself. The reality is I wanted to see if I could build a production app using _only_ Cloudflare services, D1, R2, Queues, Durable Objects, Workers, without reaching for Supabase or Postgres or any external dependency. It's the same instinct behind [self-hosting my own logging platform](/blog/logwell-self-hosted-logging-platform) instead of paying for a SaaS — build the thing, learn the constraints. [clickfolio.me](https://clickfolio.me) is the result: upload a PDF resume, AI parses it, you get a customizable web portfolio with a public URL. The entire stack costs $0 per month — the same [zero-cost Cloudflare Workers hosting](/blog/zero-cost-portfolio-cloudflare-workers) that powers my own portfolio, just stretched across a full dynamic app. D1, R2, Queues, and Durable Objects all stay within free tier limits even at 500+ monthly active users.
 
 Simple pitch. The architecture behind it? Less simple.
 
@@ -103,7 +103,7 @@ const cached = await db.query.resumes.findFirst({
     eq(resumes.userId, userId),
     eq(resumes.fileHash, fileHash),
     eq(resumes.status, "completed"),
-    isNotNull(resumes.parsedContent)
+    isNotNull(resumes.parsedContent),
   ),
 });
 
@@ -116,7 +116,7 @@ if (cached) {
 
 The file hash deduplication saved me real money, roughly $0.02 per Gemini API call avoided, which added up to over $50 in savings during the first 3 months. Gemini API calls aren't free, and users upload the same resume multiple times more often than you'd think, fixing a typo in their name, trying different templates, abandoning the wizard and restarting. Same SHA-256 hash? Skip the parse.
 
-But there's a subtler case: what if the same file is currently *being* parsed? That's the `waiting_for_cache` status. Instead of firing a duplicate Gemini call, the new resume record waits for the first parse to complete, then copies the result. Ten-minute timeout if the primary parse dies. Belt and suspenders.
+But there's a subtler case: what if the same file is currently _being_ parsed? That's the `waiting_for_cache` status. Instead of firing a duplicate Gemini call, the new resume record waits for the first parse to complete, then copies the result. Ten-minute timeout if the primary parse dies. Belt and suspenders.
 
 ## AI Parsing: Two Workers, One Pipeline, Many Hallucinations
 
@@ -135,7 +135,7 @@ This is the decision I'm most proud of, and it took three rewrites to get right.
 
 **Stage 1 (AI output): Lenient transforms.** Trim whitespace, normalize URLs, detect garbage patterns (repeating path segments like `/divkix/divkix/divkix`), move LinkedIn URLs from the website field to the LinkedIn field. No XSS sanitization here. Why? Because React escapes on render, and sanitizing at parse time would double-encode special characters. An `&` in "AT&T" becomes `&amp;` in the database, then `&amp;amp;` when React renders it. I shipped that bug and it looked terrible.
 
-**Stage 2 (user edits): Strict Zod validation with XSS sanitization.** When users modify their resume content in the editor, *that's* when I sanitize. Strict email regex, URL validation, HTML entity encoding. This is the trust boundary — AI output is internal data, user edits are untrusted input.
+**Stage 2 (user edits): Strict Zod validation with XSS sanitization.** When users modify their resume content in the editor, _that's_ when I sanitize. Strict email regex, URL validation, HTML entity encoding. This is the trust boundary — AI output is internal data, user edits are untrusted input.
 
 ```typescript
 // Parse-time: lenient (AI output → display)
@@ -208,13 +208,15 @@ The queue setup:
 {
   "queues": {
     "producers": [{ "queue": "resume-parse-queue", "binding": "PARSE_QUEUE" }],
-    "consumers": [{
-      "queue": "resume-parse-queue",
-      "max_batch_size": 1,     // One resume at a time
-      "max_retries": 3,        // Three attempts before DLQ
-      "dead_letter_queue": "resume-parse-dlq"
-    }]
-  }
+    "consumers": [
+      {
+        "queue": "resume-parse-queue",
+        "max_batch_size": 1, // One resume at a time
+        "max_retries": 3, // Three attempts before DLQ
+        "dead_letter_queue": "resume-parse-dlq",
+      },
+    ],
+  },
 }
 ```
 
@@ -263,7 +265,7 @@ Most rate limiting tutorials assume Redis. I don't have Redis. I have D1.
 
 Two layers:
 
-**IP-based rate limiting for anonymous endpoints uses hashed IPs stored in `uploadRateLimits` with `expiresAt` timestamps. A single SQL query with conditional aggregation checks both hourly and daily limits in one roundtrip:
+\*\*IP-based rate limiting for anonymous endpoints uses hashed IPs stored in `uploadRateLimits` with `expiresAt` timestamps. A single SQL query with conditional aggregation checks both hourly and daily limits in one roundtrip:
 
 ```sql
 SELECT
@@ -285,7 +287,7 @@ The template system is deliberately simple. Every template receives the same pro
 
 ```typescript
 interface TemplateProps {
-  content: ResumeContent;  // Already privacy-filtered
+  content: ResumeContent; // Already privacy-filtered
   profile: {
     avatar_url: string | null;
     handle: string;
@@ -339,15 +341,15 @@ Each edge computing constraint, no filesystem, no native modules, SQLite instead
 
 ## Database Comparison: D1 vs Supabase vs Self-Hosted Postgres
 
-| Feature | D1 (Clickfolio) | Supabase (PickMyClass) | Self-Hosted Postgres (Alita) |
-|---------|----------------|------------------------|------------------------------|
-| **Type** | SQLite at edge | Managed Postgres | Full Postgres |
-| **JSON Support** | TEXT (JSON.parse) | Native JSONB | Native JSONB |
-| **Row-Level Security** | No | Yes | Yes (manual) |
-| **Boolean Handling** | Integers (0/1) | Native boolean | Native boolean |
-| **Cost** | $0 free tier | $0 free tier | $0 (Oracle VPS) |
-| **Ops Work** | None | None | Backups, upgrades, monitoring |
-| **Best For** | Simple CRUD on Workers | Real apps needing Postgres | Full control, 24/7 bots |
+| Feature                | D1 (Clickfolio)        | Supabase (PickMyClass)     | Self-Hosted Postgres (Alita)  |
+| ---------------------- | ---------------------- | -------------------------- | ----------------------------- |
+| **Type**               | SQLite at edge         | Managed Postgres           | Full Postgres                 |
+| **JSON Support**       | TEXT (JSON.parse)      | Native JSONB               | Native JSONB                  |
+| **Row-Level Security** | No                     | Yes                        | Yes (manual)                  |
+| **Boolean Handling**   | Integers (0/1)         | Native boolean             | Native boolean                |
+| **Cost**               | $0 free tier           | $0 free tier               | $0 (Oracle VPS)               |
+| **Ops Work**           | None                   | None                       | Backups, upgrades, monitoring |
+| **Best For**           | Simple CRUD on Workers | Real apps needing Postgres | Full control, 24/7 bots       |
 
 D1 works for clickfolio because the data model is simple and write volume is low. For anything needing real Postgres features, use Supabase or self-host.
 

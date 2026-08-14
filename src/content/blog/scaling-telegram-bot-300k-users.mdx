@@ -75,6 +75,7 @@ That "something I controlled" became Alita.
 The initial Python version was held together with duct tape and optimism. It used python-telegram-bot, SQLite (yes, really), and was deployed on a $5 DigitalOcean droplet that I shared with three other projects.
 
 Features in v1:
+
 - Basic admin commands (ban, mute, kick)
 - Welcome messages
 - Word filters
@@ -85,11 +86,12 @@ Nothing revolutionary. Every Telegram admin bot had these features. But mine had
 I posted it on GitHub with a README that was 60% installation instructions and 40% desperation. "Please star if you find this useful" energy.
 
 First month stats:
+
 - GitHub stars: 12 (half were friends)
 - Active groups: 47
 - Users touched: ~3,000
 
-Not exactly viral. But I learned something important: the people who did use it were *passionate* about self-hosting. They didn't want my hosted version—they wanted to run their own.
+Not exactly viral. But I learned something important: the people who did use it were _passionate_ about self-hosting. They didn't want my hosted version—they wanted to run their own.
 
 That insight changed everything.
 
@@ -100,6 +102,7 @@ Here's something most developers don't realize: Telegram has an entire ecosystem
 I spent two weekends compiling every Telegram bot directory I could find. Then I submitted Alita to every single one. Most required manual review. Some asked for screenshots. A few wanted payment.
 
 The free ones? I submitted to all of them:
+
 - StoreBot
 - BotList
 - Telegram Bot Store
@@ -111,6 +114,7 @@ The free ones? I submitted to all of them:
 Was this glamorous work? Absolutely not. I spent hours filling out forms, writing descriptions, and taking screenshots. But each listing was a permanent backlink and a potential discovery point.
 
 Results after the directory blitz:
+
 - GitHub stars: 34 → 89
 - Active groups: 47 → 312
 - Users touched: ~3,000 → ~28,000
@@ -128,11 +132,13 @@ In exchange, they'd switch to Alita and tell their admin friends about it.
 This wasn't paid promotion. This wasn't affiliate marketing. This was me trading 10-20 hours of my time per group for adoption and word-of-mouth.
 
 The math worked like this:
+
 - Time investment per group: 15 hours average
 - Average group size: 15,000 members
 - Referrals generated per satisfied admin: 3-5 additional groups
 
 I did this for about 20 groups over 3 months. That's 300 hours of free labor. In return, I got:
+
 - 20 anchor groups (total: ~250,000 potential users)
 - 60+ referral groups (total: ~400,000 potential users)
 - A reputation as "that guy who actually helps"
@@ -164,6 +170,7 @@ The Go version was objectively better engineered than the Python version. The re
 I also added multi-language support—English, Spanish, Hindi, and French. Hindi was a personal choice. I'm Indian, and it felt wrong to build something used by groups worldwide without supporting my own language. The i18n system uses YAML locale files, so adding new languages is straightforward if anyone wants to contribute translations.
 
 Results after the Go rewrite:
+
 - GitHub stars: 89 → 156
 - Forks: 34 → 112
 - Active groups: 312 → 1,847
@@ -173,14 +180,14 @@ Compared to the Python version, the Go rewrite reduced memory consumption by 65%
 
 ## Python vs Go for Telegram Bots
 
-| Aspect | Python (v1) | Go (v2) | Impact |
-|--------|------------|---------|--------|
-| **Memory Usage** | ~400MB | ~140MB | 65% reduction |
-| **Query Speed** | ~120ms | ~40ms | 3x faster |
-| **Concurrency** | Threads + asyncio | Goroutines + channels | Handles 300K users without lag |
-| **Binary Size** | ~15MB | ~12MB | Smaller deploy |
-| **Ecosystem** | python-telegram-bot | gotgbot | Both mature, Go is rarer |
-| **Learning Curve** | Low | Medium | 2 months to rewrite |
+| Aspect             | Python (v1)         | Go (v2)               | Impact                         |
+| ------------------ | ------------------- | --------------------- | ------------------------------ |
+| **Memory Usage**   | ~400MB              | ~140MB                | 65% reduction                  |
+| **Query Speed**    | ~120ms              | ~40ms                 | 3x faster                      |
+| **Concurrency**    | Threads + asyncio   | Goroutines + channels | Handles 300K users without lag |
+| **Binary Size**    | ~15MB               | ~12MB                 | Smaller deploy                 |
+| **Ecosystem**      | python-telegram-bot | gotgbot               | Both mature, Go is rarer       |
+| **Learning Curve** | Low                 | Medium                | 2 months to rewrite            |
 
 The rewrite wasn't just about performance. It was about standing out in a sea of Python bots. Go made Alita different, and different got attention.
 
@@ -205,6 +212,7 @@ This is when organic growth finally kicked in. The flywheel I'd been pushing for
 By year two, I stopped doing personal setup assistance. I didn't need to—the word-of-mouth was strong enough on its own.
 
 Year 3 stats:
+
 - GitHub stars: 156 → 234
 - Forks: 112 → 287
 - Active groups: 1,847 → 12,000+
@@ -217,12 +225,14 @@ Year 3 stats:
 With organic growth established, I focused on aggregation: making Alita the default choice for anyone entering the Telegram bot space who wanted something in Go.
 
 This meant:
+
 1. **SEO optimization**: Blog posts targeting "Telegram group management bot," "open source Telegram bot Go," and similar keywords
 2. **Stack Overflow presence**: Answering questions about Telegram bots and linking to Alita where relevant
 3. **GitHub discoverability**: Proper topics, comprehensive README, attractive issue templates
 4. **Documentation**: Deployment guides for every major platform
 
 I created one-click deploy buttons for:
+
 - Render
 - Railway
 - Heroku
@@ -231,6 +241,7 @@ I created one-click deploy buttons for:
 Every friction point I could remove was a potential user gained.
 
 Year 5 stats:
+
 - GitHub stars: 234 → 300+
 - Forks: 287 → 350+
 - Users touched: ~200,000 → ~312,000
@@ -244,6 +255,7 @@ It doesn't mean 300,000 daily active users. It doesn't even mean 300,000 monthly
 Are all those people "using" Alita? No. Most of them probably don't even know the bot exists—they're just members of groups where it's installed.
 
 Current reality:
+
 - Monthly active users: ~40,000
 - This number fluctuates with Telegram group trends
 
@@ -313,7 +325,7 @@ The users are real. The growth is real. The grind to get there? Also very, very 
 
 ---
 
-*Alita Robot is open source and available at [github.com/divkix/Alita_Robot](https://github.com/divkix/Alita_Robot) or try the live bot at [t.me/Alita_Robot](https://t.me/Alita_Robot). If you're running a Telegram group and want a self-hosted admin bot, give it a try. Just don't ask me to do your personal setup—I'm retired from that particular hustle.*
+_Alita Robot is open source and available at [github.com/divkix/Alita_Robot](https://github.com/divkix/Alita_Robot) or try the live bot at [t.me/Alita_Robot](https://t.me/Alita_Robot). If you're running a Telegram group and want a self-hosted admin bot, give it a try. Just don't ask me to do your personal setup—I'm retired from that particular hustle._
 
 ## Related Posts
 

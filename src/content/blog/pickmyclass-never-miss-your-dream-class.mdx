@@ -6,7 +6,19 @@ coverAlt: "ASU class enrollment notification system architecture diagram"
 date: "2025-10-28"
 dateModified: "2026-01-05"
 excerpt: "How I built a class notification system that watches for open seats and instructor updates, so students never miss their dream classes due to constant refreshing."
-tags: ["Side Project", "Puppeteer", "Web Scraping", "Next.js", "Cloudflare Workers", "Supabase", "ASU", "College", "SaaS", "Full Stack"]
+tags:
+  [
+    "Side Project",
+    "Puppeteer",
+    "Web Scraping",
+    "Next.js",
+    "Cloudflare Workers",
+    "Supabase",
+    "ASU",
+    "College",
+    "SaaS",
+    "Full Stack",
+  ]
 published: true
 tldr: "PickMyClass is a notification system that monitors ASU class availability every 30 minutes and emails students when seats open or instructors are assigned, serving 10,000+ users for $34/month."
 keyTakeaways:
@@ -93,18 +105,18 @@ Here's the core scraping logic:
 
 ```typescript
 // Wait for the class results to load
-await page.waitForSelector('.class-results-row', { timeout: 30000 });
+await page.waitForSelector(".class-results-row", { timeout: 30000 });
 
 // Extract class data from the page
 const classData = await page.evaluate(() => {
-  const rows = document.querySelectorAll('.class-results-row');
-  return Array.from(rows).map(row => ({
-    sectionNumber: row.querySelector('.section-id')?.textContent?.trim(),
+  const rows = document.querySelectorAll(".class-results-row");
+  return Array.from(rows).map((row) => ({
+    sectionNumber: row.querySelector(".section-id")?.textContent?.trim(),
     seatsAvailable: parseInt(
-      row.querySelector('.seats-open')?.textContent || '0'
+      row.querySelector(".seats-open")?.textContent || "0",
     ),
-    instructor: row.querySelector('.instructor-name')?.textContent?.trim()
-      || 'Staff',
+    instructor:
+      row.querySelector(".instructor-name")?.textContent?.trim() || "Staff",
   }));
 });
 ```
@@ -134,13 +146,13 @@ One query fetches all watches. One query updates all changes. The email API supp
 
 Here's what it costs to run PickMyClass for 10,000 users:
 
-| Service | Monthly Cost | Notes |
-|---------|-------------|-------|
-| Oracle Cloud | $0 | Always-free tier for Puppeteer VM |
-| Cloudflare Workers | ~$5 | Beyond free tier at scale |
-| Supabase | $25 | Pro tier for reliability |
-| Resend | ~$4 | Email volume pricing |
-| **Total** | **~$34** | **$0.0034 per user** |
+| Service            | Monthly Cost | Notes                             |
+| ------------------ | ------------ | --------------------------------- |
+| Oracle Cloud       | $0           | Always-free tier for Puppeteer VM |
+| Cloudflare Workers | ~$5          | Beyond free tier at scale         |
+| Supabase           | $25          | Pro tier for reliability          |
+| Resend             | ~$4          | Email volume pricing              |
+| **Total**          | **~$34**     | **$0.0034 per user**              |
 
 Compare that to a traditional AWS setup that would run $200-500/month for the same workload.
 

@@ -6,7 +6,19 @@ coverAlt: "Cloudflare Workers hosting architecture diagram showing zero-cost edg
 date: "2025-11-24"
 dateModified: "2026-04-05"
 excerpt: "Zero hosting costs, global edge deployment, and sub-50ms response times. Here's how I run divkix.me on Cloudflare Workers with Astro 7 and why you should consider ditching Vercel."
-tags: ["Cloudflare Workers", "Next.js", "Edge Computing", "Serverless", "Free Hosting", "OpenNext", "Portfolio", "Web Development", "Cost Optimization", "2025"]
+tags:
+  [
+    "Cloudflare Workers",
+    "Next.js",
+    "Edge Computing",
+    "Serverless",
+    "Free Hosting",
+    "OpenNext",
+    "Portfolio",
+    "Web Development",
+    "Cost Optimization",
+    "2025",
+  ]
 published: true
 tldr: "I host my Astro portfolio on Cloudflare Workers completely free using static output, getting global edge deployment and zero cold starts without paying Vercel's premium."
 keyTakeaways:
@@ -65,16 +77,16 @@ And global edge is just the default on Cloudflare. Vercel charges extra for it. 
 
 Let's compare the actual numbers:
 
-| Feature | Cloudflare Workers | Vercel | Netlify |
-|---------|-------------------|--------|---------|
-| Requests/Day | 100,000 | Unlimited* | Unlimited* |
-| Bandwidth | Unlimited | 100GB | 100GB |
-| Function Invocations | 100K/day | 100 hours compute | 125K/month |
-| Cold Start Time | ~5ms | 200-500ms | 200-500ms |
-| Global Edge | Yes (330+ cities) | $20/mo add-on | Paid plans only |
-| Overage Cost | $0.50/1M requests | Pay-as-you-go | Pay-as-you-go |
+| Feature              | Cloudflare Workers | Vercel            | Netlify         |
+| -------------------- | ------------------ | ----------------- | --------------- |
+| Requests/Day         | 100,000            | Unlimited\*       | Unlimited\*     |
+| Bandwidth            | Unlimited          | 100GB             | 100GB           |
+| Function Invocations | 100K/day           | 100 hours compute | 125K/month      |
+| Cold Start Time      | ~5ms               | 200-500ms         | 200-500ms       |
+| Global Edge          | Yes (330+ cities)  | $20/mo add-on     | Paid plans only |
+| Overage Cost         | $0.50/1M requests  | Pay-as-you-go     | Pay-as-you-go   |
 
-*Vercel/Netlify limit bandwidth, not requests. Hit 100GB and you're throttled or billed.
+\*Vercel/Netlify limit bandwidth, not requests. Hit 100GB and you're throttled or billed.
 
 For a portfolio or blog, you'll never hit 100K requests/day unless you're Hacker News frontpage famous. I average 2-3K requests/day. Not even close.
 
@@ -88,12 +100,12 @@ When the site ran on Next.js, my blog used MDX files read from the filesystem at
 
 ```typescript
 // This DOES NOT WORK on Cloudflare Workers
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 export function getBlogPosts() {
-  const files = fs.readdirSync('content/blog');
-  return files.map(file => {
+  const files = fs.readdirSync("content/blog");
+  return files.map((file) => {
     const content = fs.readFileSync(`content/blog/${file}`);
     return parseMDX(content);
   });
@@ -108,31 +120,31 @@ I wrote a build script that runs before deployment:
 
 ```javascript
 // scripts/generate-posts-metadata.js
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-const postsDir = 'content/blog';
-const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.mdx'));
+const postsDir = "content/blog";
+const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".mdx"));
 
-const posts = files.map(filename => {
-  const content = fs.readFileSync(path.join(postsDir, filename), 'utf8');
+const posts = files.map((filename) => {
+  const content = fs.readFileSync(path.join(postsDir, filename), "utf8");
   const { data } = matter(content);
   return {
-    slug: filename.replace('.mdx', ''),
+    slug: filename.replace(".mdx", ""),
     ...data,
-    readingTime: calculateReadingTime(content)
+    readingTime: calculateReadingTime(content),
   };
 });
 
-fs.writeFileSync('content/blog/posts.json', JSON.stringify(posts, null, 2));
+fs.writeFileSync("content/blog/posts.json", JSON.stringify(posts, null, 2));
 ```
 
 Now at runtime, I just import the JSON:
 
 ```typescript
 // lib/content.ts
-import postsData from '@/content/blog/posts.json';
+import postsData from "@/content/blog/posts.json";
 
 export function getAllPosts() {
   return postsData; // No filesystem needed
@@ -149,10 +161,7 @@ Here's the minimal `wrangler.jsonc` config:
 {
   "name": "divkix-me",
   "compatibility_date": "2025-11-24",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
     "directory": "./dist"
   }
@@ -170,6 +179,7 @@ Astro builds the site to `dist/`, and Wrangler uploads those static assets to Cl
 I ran tests from 5 global locations. Here's reality:
 
 **Homepage (SSG)**
+
 - San Francisco: 23ms
 - London: 31ms
 - Singapore: 28ms
@@ -177,6 +187,7 @@ I ran tests from 5 global locations. Here's reality:
 - São Paulo: 42ms
 
 **Blog Post (SSG)**
+
 - San Francisco: 45ms
 - London: 52ms
 - Singapore: 48ms
@@ -203,6 +214,7 @@ My `package.json` scripts:
 ```
 
 Workflow:
+
 1. `bun run prebuild` - generates posts.json from MDX
 2. `astro build` - Astro builds the static site to `dist/`
 3. `wrangler pages deploy` - uploads `dist/` to Cloudflare
@@ -270,6 +282,7 @@ The free tier isn't a trial. It's permanent. Cloudflare makes money from enterpr
 ---
 
 **Resources:**
+
 - [Astro Documentation](https://docs.astro.build)
 - [Cloudflare Workers Docs](https://developers.cloudflare.com/workers)
 - [My Portfolio Source Code](https://github.com/divkix/divkix.me) (see wrangler.jsonc and prebuild scripts)

@@ -15,6 +15,7 @@
 ### Task 1: Create the MDX file with frontmatter
 
 **Files:**
+
 - Create: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx`
 
 - [ ] **Step 1: Create the skeleton file with complete frontmatter**
@@ -27,7 +28,20 @@ seoDescription: "I ship on Docker/VPS and Cloudflare Workers. Here's the real co
 date: "2026-05-11"
 dateModified: "2026-05-11"
 excerpt: "Real numbers from 30+ projects: Alita Robot (300K users on Docker/Oracle free VPS) vs Clickfolio (Cloudflare Workers + D1 + R2 at $0). Cost comparison, database trade-offs, DDoS horror stories, and a decision framework for when to pick which architecture."
-tags: ["Cloudflare Workers", "Serverless", "VPS", "Docker", "Side Projects", "Cloudflare D1", "Supabase", "PlanetScale", "Cost Optimization", "Backend Architecture", "2026"]
+tags:
+  [
+    "Cloudflare Workers",
+    "Serverless",
+    "VPS",
+    "Docker",
+    "Side Projects",
+    "Cloudflare D1",
+    "Supabase",
+    "PlanetScale",
+    "Cost Optimization",
+    "Backend Architecture",
+    "2026",
+  ]
 published: true
 featured: true
 tldr: "Serverless (Cloudflare Workers) gives you $0 global hosting and push-and-forget deployment. Traditional servers (Docker/VPS) give you full control and fixed pricing. Here's when to pick which, backed by real projects and real bills."
@@ -75,6 +89,7 @@ Expected: matches (only lowercase letters, digits, hyphens)
 ### Task 2: Write Sections 1–3 — Intro, Origin Story, Docker Era
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` (append after frontmatter)
 
 - [ ] **Step 1: Write Section 1 — The Two Camps I've Actually Shipped In**
@@ -86,12 +101,12 @@ I've shipped on both sides of this divide. Docker Compose on a VPS. Cloudflare W
 
 Here's the quick tour of what I'm comparing:
 
-| Project | Architecture | Infrastructure | Cost/Month | Users |
-|---|---|---|---|---|
-| Alita Robot | Traditional | Docker Compose (Dokploy) + Postgres + Redis on Oracle free VPS | $0 (was $7 on Heroku) | 300K+ |
-| Logwell | Traditional | Docker (Fly.io) + Postgres | $0 (free tier) | Self-hosted log pipeline |
-| Clickfolio | Serverless | Cloudflare Workers + D1 + R2 + Queues + Durable Objects | $0 (free tier) | 500+ MAU |
-| PickMyClass | Hybrid | Cloudflare Workers + Supabase | $0 (free tier) | Thousands ASU students |
+| Project     | Architecture | Infrastructure                                                 | Cost/Month            | Users                    |
+| ----------- | ------------ | -------------------------------------------------------------- | --------------------- | ------------------------ |
+| Alita Robot | Traditional  | Docker Compose (Dokploy) + Postgres + Redis on Oracle free VPS | $0 (was $7 on Heroku) | 300K+                    |
+| Logwell     | Traditional  | Docker (Fly.io) + Postgres                                     | $0 (free tier)        | Self-hosted log pipeline |
+| Clickfolio  | Serverless   | Cloudflare Workers + D1 + R2 + Queues + Durable Objects        | $0 (free tier)        | 500+ MAU                 |
+| PickMyClass | Hybrid       | Cloudflare Workers + Supabase                                  | $0 (free tier)        | Thousands ASU students   |
 
 Four projects. Three architectures. One conclusion: there's no universal answer — but there absolutely is a right answer for your specific project.
 ```
@@ -124,13 +139,15 @@ Add after Section 2:
 Oracle Cloud's Always Free tier is absurdly generous: 4 ARM cores (Ampere Altra), 24GB RAM, 200GB block storage. No credit card tricks. No 12-month limit. Just free.
 
 I learned about it from a Reddit thread and immediately migrated Alita off Heroku. The stack:
-
 ```
+
 docker-compose.yml:
-  - Go binary (compiled, statically linked)
-  - Postgres 18 Alpine
-  - Redis 7 Alpine
-  - Dokploy for deployment UI
+
+- Go binary (compiled, statically linked)
+- Postgres 18 Alpine
+- Redis 7 Alpine
+- Dokploy for deployment UI
+
 ```
 
 **What works:**
@@ -157,6 +174,7 @@ I've woken up to Telegram messages saying "bot not responding" more times than I
 ### Task 3: Write Sections 4–5 — Serverless Pivot, Cost Comparison
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` (append)
 
 - [ ] **Step 1: Write Section 4 — The Serverless Pivot: Cloudflare Workers**
@@ -169,12 +187,13 @@ Add after Section 3:
 Around the same time I was maintaining Alita on a VPS, I started building Clickfolio — a portfolio builder with AI features. I picked Cloudflare Workers for the entire backend.
 
 The stack:
-
 ```
+
 Cloudflare Workers (Hono framework) → D1 (SQLite) + R2 (storage)
-                                    → Queues (async jobs) + Crons (scheduled tasks)
-                                    → Durable Objects (WebSocket coordination)
-                                    → Workers AI (Gemini Flash Lite, free tier)
+→ Queues (async jobs) + Crons (scheduled tasks)
+→ Durable Objects (WebSocket coordination)
+→ Workers AI (Gemini Flash Lite, free tier)
+
 ```
 
 PickMyClass, another project serving thousands of ASU students, uses a similar pattern but swaps D1 for Supabase.
@@ -205,15 +224,15 @@ Add after Section 4:
 
 Here's what I actually pay, and what you'd pay at each tier:
 
-| Service | Free Tier | Paid Entry | Key Limits (Free) | Overage Cost |
-|---|---|---|---|---|
-| **Cloudflare Workers** | 100K req/day | $5/mo | 10ms CPU, 128MB mem | $0.30/M requests |
-| **Cloudflare D1** | 5M rows read/day | Included in $5 | 100K writes/day | $1.00/M writes |
-| **Cloudflare R2** | 10GB storage | $0.015/GB-mo | Class A ops free, B $0.36/M | $0.36/M ops |
-| **Oracle Cloud VPS** | 4 OCPU, 24GB RAM | Always free | 200GB block, 10TB egress | None (hard cap) |
-| **Hetzner VPS** | N/A | ~$5/mo | 2 vCPU, 4GB RAM | Fixed price |
-| **Supabase** | 500MB DB, 50K MAU | $25/mo | 2GB file storage | $0.00326/GB egress |
-| **PlanetScale** | No free plan | $5/mo | Single node, 512MB | Row-based |
+| Service                | Free Tier         | Paid Entry     | Key Limits (Free)           | Overage Cost       |
+| ---------------------- | ----------------- | -------------- | --------------------------- | ------------------ |
+| **Cloudflare Workers** | 100K req/day      | $5/mo          | 10ms CPU, 128MB mem         | $0.30/M requests   |
+| **Cloudflare D1**      | 5M rows read/day  | Included in $5 | 100K writes/day             | $1.00/M writes     |
+| **Cloudflare R2**      | 10GB storage      | $0.015/GB-mo   | Class A ops free, B $0.36/M | $0.36/M ops        |
+| **Oracle Cloud VPS**   | 4 OCPU, 24GB RAM  | Always free    | 200GB block, 10TB egress    | None (hard cap)    |
+| **Hetzner VPS**        | N/A               | ~$5/mo         | 2 vCPU, 4GB RAM             | Fixed price        |
+| **Supabase**           | 500MB DB, 50K MAU | $25/mo         | 2GB file storage            | $0.00326/GB egress |
+| **PlanetScale**        | No free plan      | $5/mo          | Single node, 512MB          | Row-based          |
 
 **Real stories behind these numbers:**
 
@@ -238,6 +257,7 @@ The pattern across all these stories: **serverless bills can spike without warni
 ### Task 4: Write Sections 6–7 — Database Trade-offs, Middle Ground
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` (append)
 
 - [ ] **Step 1: Write Section 6 — Database Trade-offs**
@@ -290,6 +310,7 @@ This is my default stack recommendation for 2026: Cloudflare Workers + Supabase.
 ### Task 5: Write Sections 8–10 — Decision Framework, Horror Stories, FAQ
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` (append)
 
 - [ ] **Step 1: Write Section 8 — Decision Framework**
@@ -302,6 +323,7 @@ Add after Section 7:
 Here's how I decide:
 
 ### Use Cloudflare Workers (pure serverless) if:
+
 - You want **$0 hosting** with global edge distribution
 - Your write volume is **low** (under 100K D1 writes/day)
 - You don't need real Postgres features (JSON operators, RLS, extensions)
@@ -310,12 +332,14 @@ Here's how I decide:
 - Your traffic patterns are **unpredictable** (Workers auto-scale to zero and to millions)
 
 ### Use Workers + Supabase/PlanetScale (hybrid) if:
+
 - You need **real Postgres** but want serverless compute
 - You want managed auth, storage, and realtime in one platform
 - You have moderate write volume and need cost controls
 - Your project might grow beyond free tiers eventually
 
 ### Use Docker/VPS (traditional) if:
+
 - Your app runs **24/7** — Telegram bots, cron-heavy services, WebSocket servers that can't hibernate
 - You need **unlimited CPU time** — background processing, video encoding, long-running computations
 - You want **full database control** — extensions, custom configs, direct `psql` access
@@ -336,12 +360,14 @@ Add after Section 8:
 Both sides have sharp edges. Here's what I learned the hard way:
 
 **Serverless surprises:**
+
 - D1 bills can bankrupt you in seconds. A missing WHERE clause, a loop that wasn't supposed to loop — and you're looking at thousands of dollars. D1 has no query cost limits and no real-time alerts. Add rate limiting and WHERE clause validation before you deploy
 - Workers debugging is harder than `docker compose logs`. Production V8 isolates run differently than local. Tracing a request across Workers, Queues, and Durable Objects means checking three separate dashboards
 - "At least once" delivery on Queues means messages can duplicate or go missing. You need orphan recovery crons for production apps
 - Cloudflare's free tier is permanent and generous, but the upsell to Enterprise can be aggressive. One user was told to pay $120K/year or get kicked off within 24 hours
 
 **Traditional server surprises:**
+
 - Your server will crash at 3 AM and nobody will fix it but you. Docker container restarts, Postgres connection pools exhausting, disk filling up — all happen while you're asleep
 - DDoS protection is your problem. Cloudflare absorbs 200+ Tbps attacks. Your VPS absorbs maybe 1 Gbps before it keels over
 - Single-region latency is real. Users in India don't care that your server is in Ashburn, Virginia — they care that it takes 300ms to respond
@@ -371,6 +397,7 @@ I default to Workers + Supabase for new projects. I keep Docker around for the b
 ### Task 6: Add JSON-LD Schema and Cross-Links
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx` (append at end)
 
 - [ ] **Step 1: Add JSON-LD schema markup at the bottom of the file**
@@ -489,6 +516,7 @@ Add after the schema scripts:
 ### Task 7: Humanizer Pass — Remove AI Writing Patterns
 
 **Files:**
+
 - Modify: `src/content/blog/serverless-vs-traditional-servers-cloudflare-workers-docker.mdx`
 
 - [ ] **Step 1: Scan and fix AI vocabulary**
@@ -514,6 +542,7 @@ Review the entire file and replace these patterns. The draft above was written w
 - [ ] **Step 3: Verify no hedging or filler**
 
 Remove if found:
+
 - "In order to" → "To"
 - "Due to the fact that" → "Because"
 - "It is important to note that" → (remove, just state the fact)
@@ -524,6 +553,7 @@ Remove if found:
 ### Task 8: Verify Content Completeness and Build
 
 **Files:**
+
 - No file changes. Verification only.
 
 - [ ] **Step 1: Check spec coverage**
@@ -544,6 +574,7 @@ Verify the post covers every section from the spec:
 - [ ] **Step 2: Verify all pricing is current (May 2026)**
 
 Check against spec sources:
+
 - [ ] Workers free: 100K req/day, 10ms CPU
 - [ ] Workers paid ($5/mo): 10M req/month
 - [ ] D1 free: 5M rows read/day, 100K writes/day
@@ -555,6 +586,7 @@ Check against spec sources:
 ```bash
 bun run prebuild
 ```
+
 Expected: runs without errors, `content/blog/posts.json` updated with new post
 
 - [ ] **Step 4: Full production build**
@@ -562,6 +594,7 @@ Expected: runs without errors, `content/blog/posts.json` updated with new post
 ```bash
 bun run build
 ```
+
 Expected: build succeeds, no TypeScript errors, no MDX parsing errors, no Zod validation errors
 
 - [ ] **Step 5: Validate MDX parses correctly**
@@ -569,6 +602,7 @@ Expected: build succeeds, no TypeScript errors, no MDX parsing errors, no Zod va
 ```bash
 grep -c "serverless-vs-traditional" content/blog/posts.json
 ```
+
 Expected: returns 1 (post is in the generated metadata)
 
 ---
@@ -576,6 +610,7 @@ Expected: returns 1 (post is in the generated metadata)
 ### Task 9: Optional — Cross-Link From Existing Posts
 
 **Files:**
+
 - Modify: `src/content/blog/side-project-stack-2026-grad-student.mdx` (add link near end)
 - Modify: `src/content/blog/clickfolio-fullstack-cloudflare-workers.mdx` (if exists, add link near end)
 - Modify: `src/content/blog/zero-cost-portfolio-cloudflare-workers.mdx` (if exists, add link near end)
@@ -607,6 +642,7 @@ Same link format, placed at the end of the post.
 ```bash
 bun run build
 ```
+
 Expected: build succeeds
 
 ---
