@@ -184,8 +184,8 @@ const articleMeta = {
 
       {/* Desktop TOC - Fixed sidebar (top offset clears the 145px sticky masthead) */}
       <aside class="hidden xl:block fixed top-40 left-[max(2rem,calc((100vw-72rem)/2))] w-64 max-h-[calc(100vh-12rem)] overflow-y-auto">
-        <nav class="space-y-2 text-sm">
-          <h3 class="font-semibold mb-4">Table of Contents</h3>
+        <nav class="space-y-2 text-sm" aria-label="Table of Contents">
+          <p class="font-semibold mb-4 text-sm" aria-hidden="true">Table of Contents</p>
           <ul class="space-y-2">
             {toc.map((item: { id: string; text: string; level: number }) => (
               <li style={`padding-left: ${(item.level - 1) * 0.75}rem`}>
@@ -263,7 +263,7 @@ const articleMeta = {
                   {tag}
                 </a>
               ) : (
-                <span class="text-xs px-2 py-1 border border-border/60 rounded text-foreground/40">
+                <span class="text-xs px-2 py-1 border border-border/60 rounded text-foreground/70">
                   {tag}
                 </span>
               )
@@ -323,7 +323,7 @@ const articleMeta = {
         </div>
       )}
 
-      <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
+      <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-40 md:prose-headings:scroll-mt-32">
         <Content />
       </div>
 

@@ -13,7 +13,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={cn("space-y-3 min-w-0", className)}>
-      <h2 className="font-display text-(length:--text-display-s) leading-[1.05] text-foreground overflow-wrap-anywhere">
+      <h2 className="font-display text-(length:--text-display-s) leading-[1.05] text-foreground overflow-wrap-anywhere scroll-mt-40 md:scroll-mt-32">
         {title}
       </h2>
       {description && (

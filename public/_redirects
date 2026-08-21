@@ -1,3 +1,12 @@
 /sitemap.xml /sitemap-index.xml 301
 /resume.pdf /Divanshu_Chauhan_Resume.pdf 301
+/about/  /about  301
+/blog/  /blog  301
+/blog/*  /blog/:splat  301
+/divkix/  /divkix  301
+/pricing/  /pricing  301
+/privacy/  /privacy  301
+/resume/  /resume  301
+/socials/  /socials  301
+/mentions/  /mentions  301
 

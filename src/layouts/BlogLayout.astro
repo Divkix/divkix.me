@@ -54,7 +54,7 @@ const baseLayoutProps = {
     <ReadingProgress client:only="react" readingTime={readingTime} />
   )}
 
-  <main id="main-content" class="min-h-screen pt-20">
+  <main id="main-content" tabindex="-1" class="min-h-screen pt-20 focus:outline-none">
     <slot />
   </main>
 

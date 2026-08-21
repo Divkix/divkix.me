@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/markdown-remark": "^7.2.4",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
@@ -69,6 +70,7 @@
     "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
     "png-to-ico": "^3.0.2",
+    "rehype-external-links": "^3.0.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.12",
     "typescript": "^6.0.3",

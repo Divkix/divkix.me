@@ -9,9 +9,9 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { siteConfig } from "@/data/site.config";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string().trim().min(2, "Name must be at least 2 characters.").max(100, "Name must be at most 100 characters."),
+  email: z.string().trim().max(254).pipe(z.email("Invalid email address.")),
+  message: z.string().trim().min(10, "Message must be at least 10 characters.").max(2000, "Message must be at most 2000 characters."),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -84,7 +84,7 @@ function Contact() {
   const socialLinks = siteConfig.socials.filter((s) => s.label !== "Email");
 
   return (
-    <section id="contact" className="text-band min-w-0">
+    <section id="contact" className="text-band min-w-0 scroll-mt-40 md:scroll-mt-32">
       <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-(--space-xl) items-start min-w-0">
         <div className="min-w-0 space-y-(--space-md)">
           <SectionHeading
@@ -166,6 +166,8 @@ function Contact() {
                       type="text"
                       placeholder="Your name"
                       autoComplete="name"
+                      required
+                      maxLength={100}
                       className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       aria-required="true"
                       aria-describedby={
@@ -198,6 +200,8 @@ function Contact() {
                       type="email"
                       placeholder="your@email.com"
                       autoComplete="email"
+                      required
+                      maxLength={254}
                       className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground"
                       aria-required="true"
                       aria-describedby={
@@ -229,6 +233,8 @@ function Contact() {
                       id="contact-message"
                       placeholder="What's on your mind?"
                       rows={5}
+                      required
+                      maxLength={2000}
                       className="input-focus-ring w-full rounded-(--radius-input) border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground resize-none"
                       aria-required="true"
                       aria-describedby={

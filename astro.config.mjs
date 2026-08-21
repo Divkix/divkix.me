@@ -3,7 +3,9 @@ import astroLlmsTxt from "@4hse/astro-llms-txt";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
+import rehypeExternalLinks from "rehype-external-links";
 import { defineConfig } from "astro/config";
 import { NOINDEX_PATHS } from "./src/data/site.config.ts";
 
@@ -209,6 +211,11 @@ Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling 
       theme: "github-dark-dimmed",
       wrap: true,
     },
+    processor: unified({
+      rehypePlugins: [
+        [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
+      ],
+    }),
   },
   vite: {
     plugins: [tailwindcss()],

@@ -92,14 +92,27 @@ function Navbar() {
 
     if (href.startsWith("/#") && pathname === "/") {
       e.preventDefault();
-      const id = href.replace("/#", "");
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      const id = href.slice(2);
+      history.pushState(null, "", `#${id}`);
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.slice(1);
+        // delay to allow layout to settle (fonts, images)
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ block: "start" });
+        }, 100);
+      }
+    };
+    scrollToHash();
+    document.addEventListener("astro:page-load", scrollToHash);
+    return () => document.removeEventListener("astro:page-load", scrollToHash);
+  }, []);
   const getIsActive = (href: string) =>
     isNavItemActive(href, pathname, activeSection);
 
@@ -283,8 +296,16 @@ function MobileNavDialog({
     prevIsOpen.current = isOpen;
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)");
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches && isOpen) onCloseRef.current();
+    };
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [isOpen]);
 
+  if (!isOpen) return null;
   return (
     <div
       ref={dialogRef}
@@ -293,6 +314,9 @@ function MobileNavDialog({
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onCloseRef.current();
+      }}
     >
       <div className="flex h-14 items-center justify-between border-b border-border px-(--page-gutter) gap-2">
         <span className="font-display text-base text-foreground truncate min-w-0">

@@ -107,6 +107,18 @@
     letter-spacing: 0.01em;
   }
 
+  /* BUGFIX: allow prose tables to swipe at 320 while keeping page clip */
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .prose thead,
+  .prose tbody {
+    min-width: max-content;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }

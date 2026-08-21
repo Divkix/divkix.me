@@ -41,7 +41,7 @@ const {
 
   {showScrollProgress && <ScrollProgress client:idle />}
 
-  <main id="main-content" class="min-h-screen">
+  <main id="main-content" tabindex="-1" class="min-h-screen focus:outline-none">
     <slot />
   </main>
 
