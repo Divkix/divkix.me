@@ -89,7 +89,10 @@ export function Projects() {
   const featured = siteConfig.projects.filter(isFeatured);
 
   return (
-    <section id="projects" className="text-band min-w-0 scroll-mt-40 md:scroll-mt-32">
+    <section
+      id="projects"
+      className="text-band min-w-0 scroll-mt-40 md:scroll-mt-32"
+    >
       <SectionHeading
         title="Selected work"
         description="Four projects I keep coming back to. Edge infrastructure at Cloudflare, a logging tool I built because Datadog priced me out, an AI portfolio generator, and the Telegram bot that taught me what shipping at scale really means."

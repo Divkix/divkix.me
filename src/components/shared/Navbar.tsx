@@ -94,7 +94,9 @@ function Navbar() {
       e.preventDefault();
       const id = href.slice(2);
       history.pushState(null, "", `#${id}`);
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -258,6 +260,10 @@ function MobileNavDialog({
     });
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onCloseRef.current();
+        return;
+      }
       if (e.key !== "Tab") return;
 
       const dialog = dialogRef.current;
@@ -314,11 +320,15 @@ function MobileNavDialog({
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onCloseRef.current();
-      }}
     >
-      <div className="flex h-14 items-center justify-between border-b border-border px-(--page-gutter) gap-2">
+      {/* Decorative tap-outside layer; keyboard users close via Esc or the
+          focused Close button, so both interaction rules stay satisfied. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        onClick={() => onCloseRef.current()}
+      />
+      <div className="relative flex h-14 items-center justify-between border-b border-border px-(--page-gutter) gap-2">
         <span className="font-display text-base text-foreground truncate min-w-0">
           {siteConfig.name}
         </span>
@@ -333,7 +343,7 @@ function MobileNavDialog({
         </button>
       </div>
       <nav
-        className="flex flex-1 flex-col items-center justify-center gap-5 px-8"
+        className="relative flex flex-1 flex-col items-center justify-center gap-5 px-8"
         aria-label="Mobile navigation menu"
       >
         {allNavItems.map((item) => {
