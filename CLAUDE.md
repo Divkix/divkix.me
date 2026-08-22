@@ -28,6 +28,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── scripts/                  # Build pipeline + manual QA scripts (see below)
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
+├── worker/index.ts           # Edge Worker: markdown negotiation (Accept: text/markdown) + Vary
 ├── .github/                  # dependabot.yml + opencode.yml (AI bot trigger; no build CI)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
 ├── .oxlintrc.json            # Oxlint rules (JS/TS/React/a11y)
@@ -60,7 +61,9 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
    - `node scripts/generate-og-images.js` — Generates OG images into `public/og/`
 2. `pnpm run scripts/validate-content.ts` — Validates published MDX matches `posts.json`
 3. `astro build` — Static build to `dist/`
-4. `pnpm run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
+4. `node scripts/generate-flat-sitemap.js` — Merges sitemap chunks into a flat `dist/sitemap.xml` (serves all URLs at `/sitemap.xml`)
+5. `node scripts/generate-markdown.js` — Generates a markdown variant (`index.md`) for every page so `worker/index.ts` can serve `Accept: text/markdown` requests
+6. `pnpm run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
 
 **Manual scripts (not in the build):** `check-citation-density.ts`, `seo-production-audit.ts`, and `generate-favicons.ts`.
 
@@ -135,7 +138,7 @@ After adding/modifying blog posts, run `bun run prebuild` to regenerate `posts.j
 
 ## Deployment
 
-- Platform: Cloudflare (Workers static assets via `wrangler.jsonc`, serving `./dist`).
+- Platform: Cloudflare Workers (`wrangler.jsonc`) — a small edge Worker (`worker/index.ts`, markdown content negotiation + `Vary: Accept`) in front of static assets serving `./dist` with `html_handling: "drop-trailing-slash"` (URLs have no trailing slash; `/about/` 301s to `/about`).
 - Output: Static (`output: "static"`, `trailingSlash: "never"` in `astro.config.mjs`).
 - Security/caching headers and redirects: `public/_headers` and `public/_redirects` (includes a CSP allowing `formspree.io` for the contact form and `analytics.divkix.me`).
 - No GitHub Actions build/deploy workflow — Cloudflare builds from Git. `.github/workflows/opencode.yml` is only an AI-assistant comment trigger.

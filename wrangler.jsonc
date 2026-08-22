@@ -1,7 +1,17 @@
 {
   "name": "divkix-me",
   "compatibility_date": "2025-12-25",
+  "main": "./worker/index.ts",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    // Serve /about (Astro trailingSlash: "never") instead of redirecting to
+    // /about/ — the previous default ("auto-trailing-slash") fought the
+    // _redirects rules and produced an infinite /about <-> /about/ loop.
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page",
+    // Every request must hit the Worker first so Accept: text/markdown
+    // negotiation can happen before a static asset is served.
+    "run_worker_first": true,
   },
 }

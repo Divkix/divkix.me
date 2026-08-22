@@ -24,7 +24,7 @@
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-og-images.js",
-    "build": "pnpm run prebuild && tsx scripts/validate-content.ts && astro build && tsx scripts/submit-indexnow.ts",
+    "build": "pnpm run prebuild && tsx scripts/validate-content.ts && astro build && node scripts/generate-flat-sitemap.js && node scripts/generate-markdown.js && tsx scripts/submit-indexnow.ts",
     "preview": "astro preview",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
@@ -73,6 +73,8 @@
     "rehype-external-links": "^3.0.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.12",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^6.0.3",
     "vite-plus": "catalog:"
   },
