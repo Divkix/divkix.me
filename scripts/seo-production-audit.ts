@@ -133,6 +133,11 @@ assert(
   "Space-encoded tag URLs should 301 to hyphenated slugs.",
 );
 assert(
+  canonicalRedirectPath("/blog/tags/%zz") === null &&
+    canonicalRedirectPath("/blog/tags/%E0%A4") === null,
+  "Malformed percent-encoded tag URLs should not throw; they 404 instead of 500.",
+);
+assert(
   canonicalRedirectPath("/sitemap-index.xml") === "/sitemap.xml" &&
     canonicalRedirectPath("/sitemap-0.xml") === "/sitemap.xml" &&
     canonicalRedirectPath("/projects") === "/" &&
@@ -145,6 +150,21 @@ assert(
   ).length <= META_DESCRIPTION_MAX,
   "clipMetaDescription should keep meta descriptions at ~160 characters.",
 );
+{
+  const noSentence = "word ".repeat(50).trim();
+  const clipped = clipMetaDescription(noSentence);
+  assert(
+    clipped.length <= META_DESCRIPTION_MAX && clipped.endsWith("…"),
+    "clipMetaDescription ellipsis path must stay within META_DESCRIPTION_MAX.",
+  );
+  const noBreak = "x".repeat(200);
+  const clippedNoBreak = clipMetaDescription(noBreak);
+  assert(
+    clippedNoBreak.length <= META_DESCRIPTION_MAX &&
+      clippedNoBreak.endsWith("…"),
+    "clipMetaDescription must not exceed max when the fallback slice has no break.",
+  );
+}
 for (const path of ["/blog/", "/about/", "/privacy/", "/socials/"]) {
   const stripTrailingSlashRule = new RegExp(
     `^${path.replace(/\//g, "\\/")}\\s+\\S+\\s+30[12]`,

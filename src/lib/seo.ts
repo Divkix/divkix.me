@@ -51,7 +51,7 @@ export function clipMetaDescription(
     return normalized.slice(0, lastGoodSentence).trimEnd();
   }
 
-  const slice = normalized.slice(0, max);
+  const slice = normalized.slice(0, max - 1);
   const breakAt = Math.max(
     slice.lastIndexOf("; "),
     slice.lastIndexOf(", "),

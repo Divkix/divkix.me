@@ -17,9 +17,15 @@ export function canonicalRedirectPath(pathname: string): string | null {
   }
 
   if (path.startsWith("/blog/tags/")) {
-    const raw = decodeURIComponent(
-      path.slice("/blog/tags/".length).replace(/\+/g, " "),
-    );
+    let raw: string;
+    try {
+      raw = decodeURIComponent(
+        path.slice("/blog/tags/".length).replace(/\+/g, " "),
+      );
+    } catch {
+      // Malformed percent-encoding must 404, not 500 the Worker.
+      return null;
+    }
     const slug = slugifyTag(raw);
     if (slug !== "" && slug !== raw) {
       return `/blog/tags/${slug}`;
