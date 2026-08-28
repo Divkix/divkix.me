@@ -2,12 +2,16 @@
  * Edge Worker in front of the static assets.
  *
  * Responsibilities:
- * 1. Markdown content negotiation (acceptmarkdown.com): when a request sends
+ * 1. 301 stale aliases to their canonical path (sitemap index/chunks,
+ *    /projects and /contact, space-encoded blog tag slugs).
+ * 2. Markdown content negotiation (acceptmarkdown.com): when a request sends
  *    `Accept: text/markdown`, serve the prebuilt markdown variant of the page
  *    (generated at build time into dist/) with a correct `Vary: Accept`.
- * 2. Ensure HTML responses also declare `Vary: Accept` so shared caches never
+ * 3. Ensure HTML responses also declare `Vary: Accept` so shared caches never
  *    mix the HTML and markdown variants for the same URL.
  */
+
+import { canonicalRedirectPath } from "../src/lib/seoRedirects";
 
 interface Env {
   ASSETS: {
@@ -25,6 +29,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const pathname = url.pathname.replace(/\/+$/, "") || "/";
+
+    const redirectTo = canonicalRedirectPath(pathname);
+    if (redirectTo !== null) {
+      return Response.redirect(new URL(redirectTo, url.origin), 301);
+    }
 
     if ((request.headers.get("Accept") ?? "").includes("text/markdown")) {
       for (const candidate of markdownCandidates(pathname)) {

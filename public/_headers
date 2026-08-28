@@ -56,7 +56,7 @@
   Content-Type: text/html; charset=utf-8
   # Agent discovery: Link headers per RFC 8288
   Link: </llms.txt>; rel="describedby"; title="LLMs.txt"
-  Link: </sitemap-index.xml>; rel="sitemap"; title="Sitemap"
+  Link: </sitemap.xml>; rel="sitemap"; title="Sitemap"
   Link: </rss.xml>; rel="alternate"; type="application/rss+xml"; title="Blog RSS Feed"
   Link: <mailto:divkix@divkix.me>; rel="author"; title="Contact"
 

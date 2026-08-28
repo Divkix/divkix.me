@@ -3,8 +3,10 @@
 /**
  * Build step: merge the @astrojs/sitemap chunks (sitemap-0.xml, ...) into a
  * single flat sitemap at dist/sitemap.xml listing every indexable URL.
- * AI agents and the is-agentic scan expect a valid sitemap AT /sitemap.xml;
- * the index file alone does not list URLs directly.
+ *
+ * /sitemap.xml is the canonical sitemap (urlset). robots.txt, <link rel="sitemap">,
+ * IndexNow, and llms.txt all point here. The Astro index at sitemap-index.xml
+ * and chunk files 301 to /sitemap.xml at the edge so crawlers see one story.
  */
 
 const fs = require("node:fs");
@@ -41,6 +43,7 @@ for (const chunk of chunks) {
 
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
+  '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...urls,
   "</urlset>",

@@ -427,7 +427,7 @@ export function generateBlogPostingSchema(
 ) {
   const blogPostingSchema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": ["Article", "BlogPosting"],
     "@id": `${baseUrl}/blog/${post.id}#article`,
     headline: post.title,
     description: post.excerpt,

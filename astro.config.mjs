@@ -8,6 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 import rehypeExternalLinks from "rehype-external-links";
 import { defineConfig } from "astro/config";
 import { NOINDEX_PATHS } from "./src/data/site.config.ts";
+import { slugifyTag } from "./src/lib/seo.ts";
 
 // Note: Tailwind v4 is configured via the @tailwindcss/vite plugin (below).
 // No @astrojs/tailwind needed - it's only for Tailwind v3. The PostCSS variant
@@ -34,7 +35,7 @@ try {
   );
 }
 
-const multiPostTags = new Set();
+const multiPostTagSlugs = new Set();
 if (postsData) {
   const tagCounts = new Map();
   for (const post of postsData.posts) {
@@ -47,7 +48,7 @@ if (postsData) {
   }
   for (const [tag, count] of tagCounts) {
     if (count >= 2) {
-      multiPostTags.add(tag);
+      multiPostTagSlugs.add(slugifyTag(tag));
     }
   }
 }
@@ -76,10 +77,10 @@ export default defineConfig({
         }
         // Exclude thin tag pages (tags with fewer than 2 posts)
         if (path.includes("/blog/tags/")) {
-          const tag = decodeURIComponent(
-            path.split("/blog/tags/")[1] || "",
-          ).toLowerCase();
-          return multiPostTags.has(tag);
+          const tag = slugifyTag(
+            decodeURIComponent(path.split("/blog/tags/")[1] || ""),
+          );
+          return multiPostTagSlugs.has(tag);
         }
         return true;
       },
@@ -202,7 +203,7 @@ variants; subscribe to /rss.xml to track new posts.
         },
         {
           label: "Sitemap",
-          url: "https://divkix.me/sitemap-index.xml",
+          url: "https://divkix.me/sitemap.xml",
           description: "Full site index for crawlers",
         },
         {

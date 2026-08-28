@@ -29,7 +29,7 @@ Content-Signal: ai-search=yes
 Content-Signal: ai-synth=yes
 
 # Sitemap location
-Sitemap: ${baseUrl}/sitemap-index.xml
+Sitemap: ${baseUrl}/sitemap.xml
 `.trim();
 
   return new Response(robotsTxt, {
