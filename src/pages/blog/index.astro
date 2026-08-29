@@ -1,13 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import Breadcrumbs from "@/components/shared/Breadcrumbs.astro";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import {
   generateBreadcrumbSchema,
   generateCollectionPageSchema,
   generateFAQPageSchema,
 } from "@/lib/schema";
-import { baseUrl } from "@/lib/seo";
+import { baseUrl, tagPath } from "@/lib/seo";
 import {
   calculateReadingTime,
   formatDate,
@@ -105,6 +106,12 @@ const blogFaqSchema = generateFAQPageSchema(
   />
   <div class="text-band pt-(--space-xl)! pb-(--space-3xl) space-y-(--space-xl) min-w-0">
       <header class="space-y-(--space-sm) border-b border-border pb-(--space-lg)">
+        <Breadcrumbs
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Blog", href: "/blog" },
+          ]}
+        />
         <p class="mast-line">From the notebook</p>
         <h1 class="font-display text-(length:--text-display-s) leading-[1.05] tracking-(--tracking-display) m-0">Stuff I want to share</h1>
         <p class="prose-measure text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -144,7 +151,7 @@ const blogFaqSchema = generateFAQPageSchema(
                       {item.post.data.tags.map((tag: string) => (
                         multiPostTags.has(tag.toLowerCase()) ? (
                           <a
-                            href={`/blog/tags/${encodeURIComponent(tag.toLowerCase())}`}
+                            href={tagPath(tag)}
                             class="hover:text-primary transition-colors link-underline-grow mr-(--space-sm) last:mr-0 uppercase tracking-widest"
                           >
                             {tag}

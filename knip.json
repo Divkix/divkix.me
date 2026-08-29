@@ -5,7 +5,11 @@
     "tw-animate-css",
     "tailwindcss"
   ],
-  "entry": ["src/pages/**/*.{astro,ts}", "scripts/**/*.{js,ts}"],
+  "entry": [
+    "src/pages/**/*.{astro,ts}",
+    "scripts/**/*.{js,ts}",
+    "worker/index.ts"
+  ],
   "project": ["src/**/*.{ts,tsx,astro}"],
   "ignore": [],
   "astro": {

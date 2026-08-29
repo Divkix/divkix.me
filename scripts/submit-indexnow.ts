@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 const API_KEY = "b8f4e2a1c9d7e3f5";
 const HOST = "divkix.me";
-const SITEMAP_PATH = join(process.cwd(), "dist/sitemap-0.xml");
+const SITEMAP_PATH = join(process.cwd(), "dist/sitemap.xml");
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 async function submitIndexNow(): Promise<void> {

@@ -4,7 +4,7 @@ This file provides guidance for AI assistants working with the divkix.me portfol
 
 ## Project Overview
 
-Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, and **React islands**. Deployed to Cloudflare as static output served via Workers static assets. Features a single-page homepage (Hero, Highlights, Projects, Recent Writing, Contact), additional marketing/profile pages (`/about`, `/resume`, `/divkix`, `/pricing`, `/socials`, `/mentions`, `/privacy`), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data (JSON-LD, OG images, IndexNow, `llms.txt`).
+Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, and **React islands**. Deployed to Cloudflare as static output served via Workers static assets. Features a single-page homepage (Hero, Highlights, Projects, Recent Writing, Contact), additional marketing/profile pages (`/about`, `/resume`, `/divkix`, `/pricing`, `/socials`, `/mentions`, `/privacy`), a blog system using Astro Content Collections with MDX, and comprehensive SEO/structured data (JSON-LD, OG images, IndexNow, `llms.txt`). `/projects` and `/contact` 301 to the homepage sections; blog tag URLs are hyphenated (`/blog/tags/claude-code`).
 
 ## Project Structure
 
@@ -28,7 +28,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── scripts/                  # Build pipeline + manual QA scripts (see below)
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
-├── worker/index.ts           # Edge Worker: markdown negotiation (Accept: text/markdown) + Vary
+├── worker/index.ts           # Edge Worker: markdown negotiation + Vary, 301 aliases (sitemap index/chunks, /projects, /contact, space-encoded tag slugs)
 ├── .github/                  # dependabot.yml + opencode.yml (AI bot trigger; no build CI)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
 ├── .oxlintrc.json            # Oxlint rules (JS/TS/React/a11y)
@@ -61,7 +61,7 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
    - `node scripts/generate-og-images.js` — Generates OG images into `public/og/`
 2. `pnpm run scripts/validate-content.ts` — Validates published MDX matches `posts.json`
 3. `astro build` — Static build to `dist/`
-4. `node scripts/generate-flat-sitemap.js` — Merges sitemap chunks into a flat `dist/sitemap.xml` (serves all URLs at `/sitemap.xml`)
+4. `node scripts/generate-flat-sitemap.js` — Merges sitemap chunks into a flat `dist/sitemap.xml` (canonical sitemap at `/sitemap.xml`; index/chunks 301 there)
 5. `node scripts/generate-markdown.js` — Generates a markdown variant (`index.md`) for every page so `worker/index.ts` can serve `Accept: text/markdown` requests
 6. `pnpm run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
 
@@ -92,6 +92,7 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
 - Components: PascalCase (`Hero.astro`, `Contact.tsx`)
 - Utilities: camelCase (`throttledScroll.ts`, `skillsUtils.ts`)
 - Blog slugs: kebab-case, URL-safe (`/^[a-z0-9-]+$/`)
+- Tag slugs: hyphenated from the tag name (`Claude Code` → `/blog/tags/claude-code`); space/`%20` URLs 301 to the hyphenated slug
 
 **Import Paths:**
 
@@ -138,8 +139,9 @@ After adding/modifying blog posts, run `bun run prebuild` to regenerate `posts.j
 
 ## Deployment
 
-- Platform: Cloudflare Workers (`wrangler.jsonc`) — a small edge Worker (`worker/index.ts`, markdown content negotiation + `Vary: Accept`) in front of static assets serving `./dist` with `html_handling: "drop-trailing-slash"` (URLs have no trailing slash; `/about/` 301s to `/about`).
+- Platform: Cloudflare Workers (`wrangler.jsonc`) — a small edge Worker (`worker/index.ts`: markdown content negotiation + `Vary: Accept`, plus 301s for `/sitemap-index.xml`/`sitemap-N.xml` → `/sitemap.xml`, `/projects`/`/contact` → `/`, and space-encoded tag slugs) in front of static assets serving `./dist` with `html_handling: "drop-trailing-slash"` (URLs have no trailing slash; `/about/` 301s to `/about`).
 - Output: Static (`output: "static"`, `trailingSlash: "never"` in `astro.config.mjs`).
+- Canonical sitemap: `/sitemap.xml` (flat urlset). `robots.txt`, `<link rel="sitemap">`, and IndexNow all point there; the Astro sitemap index is an alias.
 - Security/caching headers and redirects: `public/_headers` and `public/_redirects` (includes a CSP allowing `formspree.io` for the contact form and `analytics.divkix.me`).
 - No GitHub Actions build/deploy workflow — Cloudflare builds from Git. `.github/workflows/opencode.yml` is only an AI-assistant comment trigger.
 - `CF_PAGES_BRANCH=main` (injected by the Cloudflare environment) gates the IndexNow submission step.
