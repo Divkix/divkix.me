@@ -89,6 +89,32 @@ assert(
   "LLM discovery metadata should reflect current Cloudflare role and full-time SWE search.",
 );
 assert(
+  astroConfig.includes("Currently open to full-time SWE") &&
+    !astroConfig.includes("starting May") &&
+    !astroConfig.includes("starting May/June"),
+  "LLM discovery metadata should describe the full-time search in present tense, not a past start date.",
+);
+const siteConfigSource = read("src/data/site.config.ts");
+assert(
+  siteConfigSource.includes('jobTitle: "Software Engineer Intern"'),
+  "JSON-LD jobTitle should be Software Engineer Intern, not a full-time Software Engineer title.",
+);
+assert(
+  !/software engineer at Cloudflare/i.test(siteConfigSource) &&
+    !/Software engineer at Cloudflare/.test(
+      read("src/layouts/BaseLayout.astro"),
+    ) &&
+    !/Software engineer at Cloudflare/.test(
+      read("src/layouts/SiteLayout.astro"),
+    ),
+  "Public copy should not present Divanshu as a full-time software engineer at Cloudflare.",
+);
+assert(
+  !read("src/pages/about.astro").includes("starting May 2026") &&
+    siteConfigSource.includes("Currently open to full-time"),
+  "Open-to-work copy should be present tense, with no leftover starting May 2026.",
+);
+assert(
   astroConfig.includes('trailingSlash: "never"'),
   'astro.config.mjs should keep trailingSlash: "never" for canonical URLs.',
 );
@@ -146,7 +172,7 @@ assert(
 );
 assert(
   clipMetaDescription(
-    "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
+    "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare and a Vinext contributor, currently open to full-time SWE roles. He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
   ).length <= META_DESCRIPTION_MAX,
   "clipMetaDescription should keep meta descriptions at ~160 characters.",
 );

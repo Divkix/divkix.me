@@ -115,14 +115,14 @@ export default defineConfig({
     astroLlmsTxt({
       title: "Divanshu Chauhan",
       description:
-        "Portfolio and blog of Divanshu Chauhan (divkix), a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about Cloudflare Workers, Go, TypeScript, and Python.",
+        "Portfolio and blog of Divanshu Chauhan (divkix), a software engineer intern at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889). He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about Cloudflare Workers, Go, TypeScript, and Python.",
       details: `
 ## About
-Software engineer with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026).
+Software engineer intern with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026).
 SWE Intern @ Cloudflare on the ETI team.
 Open-source contributor to Cloudflare Vinext (Next.js API on Vite for Workers).
 Creator of LogWell, PickMyClass, Clickfolio, Alita Robot (300,000+ users), and other side projects.
-Open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.
+Currently open to full-time SWE, backend, infrastructure, developer tools, and AI platform roles.
 
 ## Expertise & Topics
 - Cloudflare Vinext: Next.js compatibility on Vite, App Router, ISR, server actions, Workers deployment
@@ -172,7 +172,7 @@ variants; subscribe to /rss.xml to track new posts.
         },
       ],
       notes:
-        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a SWE Intern @ Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889), distinct from other individuals with similar names. He is open to full-time SWE, backend, infrastructure, developer tools, and AI tooling roles starting May/June 2026.",
+        "This is the official personal website and primary online identity for Divanshu Chauhan (divkix). All content is authored by Divanshu Chauhan and represents his work, opinions, and expertise. For entity disambiguation: Divanshu Chauhan is a SWE Intern @ Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889), distinct from other individuals with similar names. He is currently open to full-time SWE, backend, infrastructure, developer tools, and AI platform roles.",
       optionalLinks: [
         {
           label: "Resume",

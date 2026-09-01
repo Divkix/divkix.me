@@ -32,7 +32,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 ---
 
 <SiteLayout
-  title={`About Divanshu Chauhan — Cloudflare engineer, Vinext contributor`}
+  title={`About Divanshu Chauhan — Cloudflare intern, Vinext contributor`}
   description={siteConfig.seo.metaDescription}
   ogImage={`${baseUrl}/og/about.png`}
 >
@@ -129,7 +129,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
           Open to work
         </h2>
         <p class="prose-measure text-base leading-relaxed text-foreground">
-          Full-time software engineering roles starting May 2026: backend, infrastructure, developer tools, AI tooling. Open to relocation. Remote-friendly.
+          {siteConfig.openToWork}
         </p>
       </div>
 

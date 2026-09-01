@@ -100,7 +100,7 @@ function Contact() {
         <div className="min-w-0 space-y-(--space-md)">
           <SectionHeading
             title="Say hello"
-            description="Open to full-time software engineering roles — backend, infrastructure, developer tools, AI platforms. Also happy to talk side projects, Cloudflare Workers, or something you're stuck on."
+            description="Currently open to full-time software engineering roles — backend, infrastructure, developer tools, AI platforms. Also happy to talk side projects, Cloudflare Workers, or something you're stuck on."
           />
 
           <p className="text-sm text-muted-foreground leading-relaxed max-w-prose">
