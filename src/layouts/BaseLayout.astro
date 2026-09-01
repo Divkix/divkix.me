@@ -25,14 +25,14 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.name} — Software engineer at Cloudflare, Vinext contributor`,
+  title = siteConfig.seo.defaultTitle,
   description = siteConfig.seo.metaDescription,
   ogImage = `${baseUrl}/og-image.webp`,
   canonical = `${baseUrl}${Astro.url.pathname}`,
   ogType = "website",
   articleMeta,
   dateModified,
-  ogImageAlt = `${siteConfig.name} — Software Engineer & Blogger`,
+  ogImageAlt = `${siteConfig.name} — Software Engineer Intern & Blogger`,
   noindex,
 } = Astro.props;
 

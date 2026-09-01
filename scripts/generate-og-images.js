@@ -286,13 +286,13 @@ async function generateStaticPageOGImages() {
     {
       slug: "about",
       title: "About Divanshu Chauhan",
-      description: "Cloudflare engineer, Vinext contributor, ASU MS CS",
+      description: "Cloudflare intern, Vinext contributor, ASU MS CS",
       label: "About",
     },
     {
       slug: "resume",
       title: "Resume | Divanshu Chauhan",
-      description: "Software Engineer & Builder",
+      description: "Software Engineer Intern, open to work",
       label: "Resume",
     },
     {
@@ -304,7 +304,7 @@ async function generateStaticPageOGImages() {
     {
       slug: "divkix",
       title: "divkix | Divanshu Chauhan",
-      description: "Software Engineer & Open Source Contributor",
+      description: "Software Engineer Intern & Open Source Contributor",
       label: "Profile",
     },
     {
@@ -372,8 +372,8 @@ async function generateStaticPageOGImages() {
     try {
       const homeSvg = generateStaticPageSvg({
         slug: "home",
-        title: "Divanshu Chauhan — Software Engineer & Builder",
-        description: "Cloudflare engineer, Vinext contributor, ASU MS CS",
+        title: "Divanshu Chauhan — Software Engineer Intern & Builder",
+        description: "Cloudflare intern, Vinext contributor, ASU MS CS",
         label: "Home",
       });
       await sharp(Buffer.from(homeSvg))

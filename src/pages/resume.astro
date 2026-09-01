@@ -19,9 +19,11 @@ const faqPageSchema = generateFAQPageSchema(
   `${baseUrl}/resume`,
 );
 
+const resumeDescription = `Resume of ${siteConfig.name} — software engineer intern at Cloudflare, currently open to full-time SWE roles.`;
+
 const resumePageSchema = generateProfilePageSchema(
   `Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`,
-  `Resume of ${siteConfig.name} — ${siteConfig.tagline}`,
+  resumeDescription,
   `${baseUrl}/resume`,
   {
     datePublished: "2025-01-01",
@@ -32,7 +34,7 @@ const resumePageSchema = generateProfilePageSchema(
 
 <SiteLayout
   title={`Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`}
-  description={`Resume of ${siteConfig.name} — ${siteConfig.tagline}`}
+  description={resumeDescription}
   ogImage={`${baseUrl}/og/resume.png`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(resumePageSchema)} />
@@ -61,6 +63,10 @@ const resumePageSchema = generateProfilePageSchema(
 
       <p class="prose-measure text-(length:--text-md) md:text-lg text-foreground/85 leading-relaxed mt-(--space-md)">
         {siteConfig.tagline}
+      </p>
+
+      <p class="prose-measure text-base text-foreground/85 leading-relaxed mt-(--space-md)">
+        {siteConfig.openToWork}
       </p>
 
       <div class="accent-line mt-(--space-xl)! mb-0!" aria-hidden="true"></div>

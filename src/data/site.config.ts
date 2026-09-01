@@ -2,13 +2,13 @@ export const siteConfig = {
   name: "Divanshu Chauhan",
   handle: "Divkix",
   tagline:
-    "Software engineer at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
+    "Software engineer intern at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
     "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
   heroSummary:
-    "Software engineer at Cloudflare. MS in Computer Science from ASU. I build edge infrastructure by day and side projects people actually open at night.",
+    "Software engineer intern at Cloudflare. MS in Computer Science from ASU. I build edge infrastructure by day and side projects people actually open at night. Currently open to full-time backend, infrastructure, developer tools, and AI platform roles.",
   heroProof:
     "Alita Robot serves 300k+ Telegram users. I contribute to Vinext, Cloudflare's open-source Next.js-on-Workers stack.",
   founderPov:
@@ -24,10 +24,15 @@ export const siteConfig = {
   },
 
   seo: {
-    jobTitle: "Software Engineer",
+    jobTitle: "Software Engineer Intern",
+    defaultTitle:
+      "Divanshu Chauhan — Software engineer intern at Cloudflare, Vinext contributor",
     metaDescription:
-      "Divanshu Chauhan (divkix) is a software engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State (GPA 3.889).",
+      "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare and a Vinext contributor, currently open to full-time SWE roles.",
   },
+
+  openToWork:
+    "Currently open to full-time software engineering roles: backend, infrastructure, developer tools, AI platforms. Open to relocation. Remote-friendly.",
 
   /** Compact homepage proof points — outcomes, not skill tags */
   proofPoints: [
@@ -48,7 +53,7 @@ export const siteConfig = {
   faq: [
     {
       q: "Who is Divanshu Chauhan?",
-      a: "Divanshu Chauhan (divkix) is a software engineer at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
+      a: "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He is currently open to full-time backend, infrastructure, developer tools, and AI platform roles. He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
     },
     {
       q: "What is Divanshu Chauhan's education?",

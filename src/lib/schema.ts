@@ -36,7 +36,7 @@ export function generatePersonSchema() {
     description: siteConfig.seo.metaDescription,
     url: baseUrl,
     mainEntityOfPage: `${baseUrl}/about`,
-    disambiguatingDescription: `Software Engineer and blogger based in ${siteConfig.address.locality}, ${siteConfig.address.region}`,
+    disambiguatingDescription: `Software Engineer Intern at Cloudflare and blogger based in ${siteConfig.address.locality}, ${siteConfig.address.region}`,
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
     nationality: siteConfig.nationality,
