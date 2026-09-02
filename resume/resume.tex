@@ -1,0 +1,159 @@
+%------------------------------------------------------------------------------
+% Divanshu Chauhan — 1-page new-grad SWE resume
+% Same family as the previous Overleaf (Jake's Resume / Audric Serador) PDF.
+% Compile: bash scripts/generate-resume-pdf.sh
+%------------------------------------------------------------------------------
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\begin{center}
+  \textbf{\Huge \scshape Divanshu Chauhan} \\ \vspace{2pt}
+  \small
+  \href{mailto:chauhan.divanshu@gmail.com}{chauhan.divanshu@gmail.com} $|$
+  \href{tel:+16029180541}{602-918-0541} $|$
+  \href{https://divkix.me}{divkix.me} $|$
+  \href{https://github.com/Divkix}{github.com/Divkix} $|$
+  \href{https://www.linkedin.com/in/divkix/}{linkedin.com/in/divkix} \\
+  \vspace{2pt}
+  F-1 OPT (STEM-eligible), authorized to work in the US, will need H-1B sponsorship.
+\end{center}
+
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Arizona State University}{Tempe, AZ}
+      {M.S. Computer Science --- GPA 3.889/4.00}{Aug. 2025 -- May 2026}
+    \resumeItemListStart
+      \resumeItem{B.S. Computer Science --- Magna Cum Laude, GPA 3.78/4.00 (Jan. 2022 -- May 2025)}
+    \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Cloudflare}{Austin, TX / Remote}
+      {Software Engineer Intern, Emerging Technology \& Incubation}{June 2026 -- Sep. 11, 2026}
+      \resumeItemListStart
+        \resumeItem{Shipped 87 merged PRs on \href{https://github.com/cloudflare/vinext}{cloudflare/vinext} (4th contributor): App Router rendering, ISR caching, image optimization, and server-action forwarding so Next.js apps run on Vite and Cloudflare Workers.}
+        \resumeItem{Dogfooded Vinext in production on Clickfolio and PickMyClass (App Router on Workers).}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Arizona State University}{Tempe, AZ}
+      {Engineering Tutor, Instructional Aide, and Undergraduate TA}{Aug. 2023 -- May 2026}
+      \resumeItemListStart
+        \resumeItem{Tutored eight CS courses (CSE110, CSE205, CSE230, CSE240, CSE310, CSE330, CSE360), including CSE110 support for 456 students.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+\section{Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{Alita Robot} $|$ \emph{Go, MongoDB, Docker} $|$ \href{https://github.com/Divkix/Alita_Robot}{github.com/Divkix/Alita\_Robot}}{Feb. 2020 -- Present}
+          \resumeItemListStart
+            \resumeItem{Open-source Telegram group-management bot (247 GitHub stars) serving 300k+ users since 2020.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{LogWell} $|$ \emph{TypeScript, PostgreSQL, Docker, OTLP} $|$ \href{https://github.com/Divkix/Logwell}{github.com/Divkix/Logwell}}{2024 -- Present}
+          \resumeItemListStart
+            \resumeItem{Self-hosted logging platform with OTLP ingestion and real-time streaming; one Docker Compose file to deploy.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Clickfolio} $|$ \emph{Workers, D1, R2, Queues, Durable Objects} $|$ \href{https://clickfolio.me}{clickfolio.me}}{2024 -- Present}
+          \resumeItemListStart
+            \resumeItem{Resume-to-portfolio app on Cloudflare Workers, D1, R2, and Queues; Vinext App Router in production.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{PickMyClass} $|$ \emph{TypeScript, Vinext, Workers} $|$ \href{https://pickmyclass.app}{pickmyclass.app}}{2024 -- Present}
+          \resumeItemListStart
+            \resumeItem{ASU class-availability tracker; Vinext App Router on Workers in production.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{WarpDL} $|$ \emph{Go} $|$ \href{https://github.com/warpdl/warpdl}{github.com/warpdl/warpdl}}{May 2023 -- Present}
+          \resumeItemListStart
+            \resumeItem{Cross-platform download manager in Go (103 GitHub stars) with concurrent high-throughput downloads.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: TypeScript, JavaScript, Python, Go, Java, C/C++} \\
+     \textbf{Frameworks}{: React, Next.js, Node.js, Express, Vite, Astro, REST APIs} \\
+     \textbf{Cloud \& Infrastructure}{: Cloudflare Workers, D1, R2, Queues, Durable Objects, Docker, Linux} \\
+     \textbf{Data \& Systems}{: PostgreSQL, SQLite, MongoDB, WebSockets, SSE, Observability, Git, Gemini API}
+    }}
+ \end{itemize}
+
+\end{document}

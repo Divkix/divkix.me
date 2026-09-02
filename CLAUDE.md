@@ -26,8 +26,9 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 │   ├── env.d.ts              # Astro/font module + ImportMetaEnv types
 │   └── styles/               # tokens.css, globals.css (Tailwind v4 entry), animations.css
 ├── scripts/                  # Build pipeline + manual QA scripts (see below)
+├── resume/                   # LaTeX source for the 1-page PDF (`resume.tex`)
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
-├── public/                   # Static assets, OG images, _headers, _redirects, favicons
+├── public/                   # Static assets, OG images, resume PDF, _headers, _redirects, favicons
 ├── worker/index.ts           # Edge Worker: markdown negotiation + Vary, 301 aliases (sitemap index/chunks, /projects, /contact, space-encoded tag slugs)
 ├── .github/                  # dependabot.yml + opencode.yml (AI bot trigger; no build CI)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
@@ -65,7 +66,7 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
 5. `node scripts/generate-markdown.js` — Generates a markdown variant (`index.md`) for every page so `worker/index.ts` can serve `Accept: text/markdown` requests
 6. `pnpm run scripts/submit-indexnow.ts` — Submits sitemap URLs to IndexNow (only when `CF_PAGES_BRANCH=main`; never fails the build)
 
-**Manual scripts (not in the build):** `check-citation-density.ts`, `seo-production-audit.ts`, and `generate-favicons.ts`.
+**Manual scripts (not in the build):** `check-citation-density.ts`, `seo-production-audit.ts`, `generate-favicons.ts`, and `generate-resume-pdf.sh` (compiles `resume/resume.tex` → `public/Divanshu_Chauhan_Resume.pdf`; requires TeX Live `pdflatex`; asserts the PDF is exactly 1 page). After resume copy changes, run `bash scripts/generate-resume-pdf.sh` so the vendored PDF stays in sync with `/resume` (driven by `src/data/site.config.ts`).
 
 **Critical:** If you add/remove/rename a blog post, run `pnpm run prebuild` to regenerate `posts.json` or the build fails at step 2 with a count/slug mismatch.
 
