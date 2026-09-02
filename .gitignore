@@ -51,3 +51,11 @@ examples/**/env.d.ts
 # https://github.com/withastro/astro/pull/11759#discussion_r1721444711)
 *.code-workspace
 .worktrees/
+
+# LaTeX resume build artifacts (vendored PDF lives in public/)
+resume/*.aux
+resume/*.out
+resume/*.synctex.gz
+resume/*.fls
+resume/*.fdb_latexmk
+resume/*.pdf

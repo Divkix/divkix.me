@@ -34,6 +34,17 @@ export const siteConfig = {
   openToWork:
     "Currently open to full-time software engineering roles: backend, infrastructure, developer tools, AI platforms. Open to relocation. Remote-friendly.",
 
+  /** 1-page PDF header (`resume/resume.tex` → `/Divanshu_Chauhan_Resume.pdf`) */
+  resume: {
+    email: "chauhan.divanshu@gmail.com",
+    phone: "602-918-0541",
+    github: "https://github.com/Divkix",
+    linkedin: "https://www.linkedin.com/in/divkix/",
+    site: "https://divkix.me",
+    workAuthorization:
+      "F-1 OPT (STEM-eligible), authorized to work in the US, will need H-1B sponsorship.",
+  },
+
   /** Compact homepage proof points — outcomes, not skill tags */
   proofPoints: [
     {
@@ -61,11 +72,11 @@ export const siteConfig = {
     },
     {
       q: "What is Divanshu Chauhan working on at Cloudflare?",
-      a: "Divanshu is a software engineer intern on Cloudflare's ETI team and an open-source contributor to Vinext, Cloudflare's Vite-based reimplementation of the Next.js API surface for deployment on Workers and other runtimes.",
+      a: "Divanshu is a software engineer intern on Cloudflare's ETI team (June 2026 – Sep. 11, 2026) and an open-source contributor to Vinext (87 merged PRs, 4th contributor). He works on App Router rendering, ISR caching, image optimization, and server-action forwarding, and dogfoods Vinext in production on Clickfolio and PickMyClass.",
     },
     {
       q: "What is Vinext?",
-      a: "Vinext is Cloudflare's open-source Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. Divanshu Chauhan contributes to App Router rendering, ISR caching, image optimization, and server action forwarding.",
+      a: "Vinext is Cloudflare's open-source Vite plugin that reimplements the Next.js API surface for Workers and other runtimes. Divanshu Chauhan contributes to App Router rendering, ISR caching, image optimization, and server action forwarding. Clickfolio and PickMyClass run Vinext in production.",
     },
     {
       q: "What projects has Divanshu Chauhan built?",
@@ -87,6 +98,7 @@ export const siteConfig = {
     { name: "Java", category: "Languages" },
     { name: "C/C++", category: "Languages" },
     { name: "React", category: "Frameworks" },
+    { name: "Next.js", category: "Frameworks" },
     { name: "Node.js", category: "Frameworks" },
     { name: "Express", category: "Frameworks" },
     { name: "Vite", category: "Frameworks" },
@@ -117,14 +129,14 @@ export const siteConfig = {
       company: "Cloudflare",
       url: "https://www.cloudflare.com",
       location: "Austin, TX / Remote",
-      duration: "June 2026 – Present",
+      duration: "June 2026 – Sep. 11, 2026",
       positions: [
         {
           title: "Software Engineer Intern",
-          year: "June 2026 – Present",
+          year: "June 2026 – Sep. 11, 2026",
           highlights: [
-            "Work on engineering tooling and platform systems within Cloudflare’s Emerging Technology & Incubation team",
-            "Build developer-experience and infrastructure systems for production-grade workloads in the Cloudflare ecosystem",
+            "Shipped 87 merged PRs on cloudflare/vinext (4th contributor): App Router rendering, ISR caching, image optimization, and server-action forwarding so Next.js apps run on Vite and Cloudflare Workers",
+            "Dogfooded Vinext in production on Clickfolio and PickMyClass (App Router on Workers)",
           ],
         },
       ],
@@ -139,9 +151,7 @@ export const siteConfig = {
           title: "Engineering Tutor, Instructional Aide, and Undergraduate TA",
           year: "Aug. 2023 – May 2026",
           highlights: [
-            "Tutored CSE205, CSE230, CSE240, CSE310, CSE330, and CSE360 across object-oriented programming, data structures, programming languages, and core computer science",
-            "Supported CSE110 classes for 456 students, collaborated with five professors on instructional materials, and provided one-on-one programming instruction",
-            "Managed grading, attendance, lab sessions, and course support for 100+ students",
+            "Tutored eight CS courses (CSE110, CSE205, CSE230, CSE240, CSE310, CSE330, CSE360), including CSE110 support for 456 students",
           ],
         },
       ],
@@ -158,21 +168,6 @@ export const siteConfig = {
           highlights: [
             "Collaborated with marketing, industry, and development teams",
             "Coordinated events to boost member engagement and industry relations",
-          ],
-        },
-      ],
-    },
-    {
-      company: "Xrossways INC.",
-      url: "https://xrossways.com",
-      location: "Gurugram, Haryana, India",
-      duration: "May 2022 – Aug. 2022",
-      positions: [
-        {
-          title: "Finance and Technology Intern",
-          year: "May 2022 – Aug. 2022",
-          highlights: [
-            "Conducted financial analysis, developed the company website, automated key processes, and contributed to three solar rooftop projects",
           ],
         },
       ],
@@ -260,7 +255,7 @@ export const siteConfig = {
   projects: [
     {
       name: "Vinext",
-      desc: "Contribute to Cloudflare Vinext, a Vite plugin that reimplements the Next.js API surface for Workers and other runtimes; work spans App Router rendering, ISR caching, image optimization, and server-action forwarding.",
+      desc: "Intern contribution to Cloudflare Vinext (87 merged PRs, 4th contributor): App Router rendering, ISR caching, image optimization, and server-action forwarding. Clickfolio and PickMyClass run it in production.",
       image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
       tags: [
         "TypeScript",
@@ -285,7 +280,7 @@ export const siteConfig = {
     },
     {
       name: "Clickfolio",
-      desc: "Built an end-to-end resume-to-portfolio platform with PDF upload, Gemini parsing, queue-backed processing, live WebSocket status, and generated portfolio sites on Cloudflare’s stack.",
+      desc: "Built an end-to-end resume-to-portfolio platform with PDF upload, Gemini parsing, queue-backed processing, live WebSocket status, and generated portfolio sites on Cloudflare Workers, D1, R2, and Queues. Vinext App Router in production.",
       image: "/og/blog/clickfolio-full-stack-cloudflare-workers.webp",
       tags: [
         "Workers",
@@ -305,7 +300,7 @@ export const siteConfig = {
     },
     {
       name: "Alita Robot",
-      desc: "Maintain an open-source Telegram moderation bot serving 300,000+ users across real communities, with anti-spam, scheduling, role management, locale support, and self-hosting.",
+      desc: "Open-source Telegram group-management bot in Go (247 GitHub stars) serving 300,000+ users since 2020, with anti-spam, scheduling, role management, locale support, and self-hosting.",
       image: "/og/blog/scaling-telegram-bot-300k-users.webp",
       tags: ["Go", "MongoDB", "Telegram Bot API", "Docker"],
       period: "Feb. 2020 – Present",
@@ -315,7 +310,7 @@ export const siteConfig = {
     },
     {
       name: "PickMyClass",
-      desc: "Class availability tracker for ASU. It watches the registrar for open seats and pings you when one frees up. I built it because I was personally tired of refreshing the page at 11:59pm during registration week.",
+      desc: "Class availability tracker for ASU. Vinext App Router on Cloudflare Workers in production. It watches the registrar for open seats and pings you when one frees up.",
       image: "/og/blog/pickmyclass-never-miss-your-dream-class.webp",
       tags: ["TypeScript", "React", "Node.js", "Automation"],
       period: "2024 – Present",
@@ -337,7 +332,7 @@ export const siteConfig = {
     },
     {
       name: "WarpDL",
-      desc: "Cross-platform download manager written in Go. Handles high-throughput concurrent downloads. Started as a weekend project, kept it alive because people kept opening issues.",
+      desc: "Cross-platform download manager in Go (103 GitHub stars) with concurrent high-throughput downloads.",
       tags: ["Go", "MongoDB"],
       period: "May 2023 – Present",
       links: [{ label: "GitHub", href: "https://github.com/warpdl/warpdl" }],

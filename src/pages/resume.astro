@@ -9,17 +9,19 @@ const faqPageSchema = generateFAQPageSchema(
   [
     {
       q: "What is your experience?",
-      a: "Software Engineer Intern at Cloudflare (Emerging Technology & Incubation, June 2026 – Present) building engineering tooling and developer-experience infrastructure for production Workers workloads. Previously Engineering Tutor, Instructional Aide, and Undergraduate TA at Arizona State University (Aug. 2023 – May 2026) tutoring CSE205, CSE230, CSE240, CSE310, CSE330, CSE360 and supporting CSE110 for 456 students. Earlier Finance and Technology Intern at Xrossways INC. (May 2022 – Aug. 2022). MS in Computer Science, ASU, Aug. 2025 – May 2026 (GPA 3.889/4.00); BS, ASU, Jan. 2022 – May 2025 (Magna Cum Laude, GPA 3.78/4.00).",
+      a: "Software Engineer Intern at Cloudflare (Emerging Technology & Incubation, June 2026 – Sep. 11, 2026). Shipped 87 merged PRs on cloudflare/vinext (4th contributor) covering App Router, ISR, image optimization, and server actions; Clickfolio and PickMyClass run Vinext in production. Previously Engineering Tutor, Instructional Aide, and Undergraduate TA at Arizona State University (Aug. 2023 – May 2026) tutoring eight CS courses and supporting CSE110 for 456 students. MS in Computer Science, ASU, Aug. 2025 – May 2026 (GPA 3.889/4.00); BS, ASU, Jan. 2022 – May 2025 (Magna Cum Laude, GPA 3.78/4.00). F-1 OPT (STEM-eligible), authorized to work in the US, will need H-1B sponsorship.",
     },
     {
       q: "What technologies do you use?",
-      a: "Languages: TypeScript, JavaScript, Python, Go, Java, C/C++. Frameworks: React, Node.js, Express, Vite, Astro, REST APIs. Cloud & Infrastructure: Cloudflare Workers, D1, R2, Queues, Durable Objects, Docker, Linux. Data & Systems: PostgreSQL, SQLite, MongoDB, WebSockets, SSE, Observability, Git, Gemini API, LLM workflows.",
+      a: "Languages: TypeScript, JavaScript, Python, Go, Java, C/C++. Frameworks: React, Next.js, Node.js, Express, Vite, Astro, REST APIs. Cloud & Infrastructure: Cloudflare Workers, D1, R2, Queues, Durable Objects, Docker, Linux. Data & Systems: PostgreSQL, SQLite, MongoDB, WebSockets, SSE, Observability, Git, Gemini API, LLM workflows.",
     },
   ],
   `${baseUrl}/resume`,
 );
 
 const resumeDescription = `Resume of ${siteConfig.name} — software engineer intern at Cloudflare, currently open to full-time SWE roles.`;
+
+const resumeTel = `+1${siteConfig.resume.phone.replaceAll("-", "")}`;
 
 const resumePageSchema = generateProfilePageSchema(
   `Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`,
@@ -63,6 +65,30 @@ const resumePageSchema = generateProfilePageSchema(
 
       <p class="prose-measure text-(length:--text-md) md:text-lg text-foreground/85 leading-relaxed mt-(--space-md)">
         {siteConfig.tagline}
+      </p>
+
+      <p class="prose-measure text-sm text-foreground/85 leading-relaxed mt-(--space-md)">
+        <a href={`mailto:${siteConfig.resume.email}`} class="link-underline-grow">
+          {siteConfig.resume.email}
+        </a>
+        {" · "}
+        <a href={`tel:${resumeTel}`} class="link-underline-grow">
+          {siteConfig.resume.phone}
+        </a>
+        {" · "}
+        <a href={siteConfig.resume.site} class="link-underline-grow">divkix.me</a>
+        {" · "}
+        <a href={siteConfig.resume.github} class="link-underline-grow" rel="noopener noreferrer">
+          github.com/Divkix
+        </a>
+        {" · "}
+        <a href={siteConfig.resume.linkedin} class="link-underline-grow" rel="noopener noreferrer">
+          linkedin.com/in/divkix
+        </a>
+      </p>
+
+      <p class="prose-measure text-sm text-muted-foreground leading-relaxed mt-(--space-xs)">
+        {siteConfig.resume.workAuthorization}
       </p>
 
       <p class="prose-measure text-base text-foreground/85 leading-relaxed mt-(--space-md)">
