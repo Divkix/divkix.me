@@ -11,6 +11,14 @@ updates:
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # vite-plus toolchain moves in lockstep via `vp migrate` only — solo bumps desync it and break the build.
+      - dependency-name: "vite-plus"
+      - dependency-name: "vite"
+      - dependency-name: "vitest"
+      - dependency-name: "@vitest/*"
+      - dependency-name: "@voidzero-dev/vite-plus-core"
+      - dependency-name: "@voidzero-dev/vite-plus-test"
     groups:
       # Group React ecosystem updates
       react:

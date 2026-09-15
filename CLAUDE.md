@@ -29,7 +29,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
 ├── worker/index.ts           # Edge Worker: markdown negotiation + Vary, 301 aliases (sitemap index/chunks, /projects, /contact, space-encoded tag slugs)
-├── .github/                  # dependabot.yml + opencode.yml (AI bot trigger; no build CI)
+├── .github/                  # dependabot.yml (ignores vite-plus toolchain — bump via `vp migrate` only) + opencode.yml (AI bot trigger; no build CI)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
 ├── .oxlintrc.json            # Oxlint rules (JS/TS/React/a11y)
 ├── .oxfmtrc.json             # Oxfmt formatting (80 width, 2-space, double quotes)
@@ -53,7 +53,7 @@ pnpm run audit:seo       # Assert production SEO/config invariants (manual)
 pnpx knip                # Detect unused exports/dependencies
 ````
 
-Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,jsx,ts,tsx,json,css,md}` files run `oxlint --fix` + `oxfmt --write` via `vite-plus` staged hooks (`vite.config.ts`).
+Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,jsx,ts,tsx,json,css,md}` files run `vp lint --fix` + `vp fmt --write` via `vite-plus` staged hooks (`vite.config.ts`).
 **Build Pipeline (`pnpm run build`, `&&`-chained — any failure aborts):**
 
 1. `prebuild`:
