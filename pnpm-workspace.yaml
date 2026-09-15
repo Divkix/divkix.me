@@ -9,6 +9,9 @@ overrides:
   # ship yet. Pin to latest 6.x until astro check supports TS 7.
   typescript: ^6.0.3
   vite@*: "catalog:"
+  # Transitive via ajv; pnpm update won't re-resolve it. ^3.1.7 covers
+  # 5 high fast-uri CVEs (fixed in 3.1.5/3.1.6).
+  fast-uri: ^3.1.7
 peerDependencyRules:
   allowAny:
     - vite
