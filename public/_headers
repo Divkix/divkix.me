@@ -68,7 +68,7 @@
 /blog/*
   Cache-Control: public, max-age=86400, must-revalidate
 
-# Markdown pricing file
+# pricing.md is a hand-authored static file served as-is
 /pricing.md
   Cache-Control: public, max-age=86400, must-revalidate
   Content-Type: text/markdown; charset=utf-8

@@ -3,4 +3,17 @@
 /contact / 301
 /sitemap-index.xml /sitemap.xml 301
 /sitemap-0.xml /sitemap.xml 301
+/blog/tags/side%20projects /blog/tags/side-projects 301
+/blog/tags/cloudflare%20workers /blog/tags/cloudflare-workers 301
+/blog/tags/open%20source /blog/tags/open-source 301
+/blog/tags/claude%20code /blog/tags/claude-code 301
+/blog/tags/cost%20optimization /blog/tags/cost-optimization 301
+/blog/tags/developer%20tools /blog/tags/developer-tools 301
+/blog/tags/full%20stack /blog/tags/full-stack 301
+/blog/tags/edge%20computing /blog/tags/edge-computing 301
+/blog/tags/developer%20life /blog/tags/developer-life 301
+/blog/tags/building%20in%20public /blog/tags/building-in-public 301
+/blog/tags/ai%20coding%20assistant /blog/tags/ai-coding-assistant 301
+/blog/tags/github%20copilot /blog/tags/github-copilot 301
+/blog/tags/lm%20studio /blog/tags/lm-studio 301
 

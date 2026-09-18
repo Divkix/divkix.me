@@ -1,11 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import {
-  clipMetaDescription,
-  META_DESCRIPTION_MAX,
-  slugifyTag,
-} from "../src/lib/seo.ts";
-import { canonicalRedirectPath } from "../src/lib/seoRedirects.ts";
+import { clipMetaDescription, META_DESCRIPTION_MAX, slugifyTag } from "../src/lib/seo.ts";
 
 const root = process.cwd();
 const failures: string[] = [];
@@ -32,16 +27,10 @@ const hasHeroCta =
   hero.includes('href="/Divanshu_Chauhan_Resume.pdf"') ||
   hero.includes('href="/resume"') ||
   hero.includes('href="/resume/"');
-assert(
-  hasHeroCta,
-  "Hero should contain a resume CTA pointing to the PDF or a /resume path.",
-);
+assert(hasHeroCta, "Hero should contain a resume CTA pointing to the PDF or a /resume path.");
 
 if (hero.includes('href="/resume"') || hero.includes('href="/resume/"')) {
-  assert(
-    hasResumePage,
-    "Hero CTA references /resume, but the resume page is missing.",
-  );
+  assert(hasResumePage, "Hero CTA references /resume, but the resume page is missing.");
 } else if (hero.includes('href="/Divanshu_Chauhan_Resume.pdf"')) {
   assert(
     redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
@@ -54,16 +43,10 @@ const hasContactCta =
   contact.includes('href="/Divanshu_Chauhan_Resume.pdf"') ||
   contact.includes('href="/resume"') ||
   contact.includes('href="/resume/"');
-assert(
-  hasContactCta,
-  "Contact should contain a resume CTA pointing to the PDF or a /resume path.",
-);
+assert(hasContactCta, "Contact should contain a resume CTA pointing to the PDF or a /resume path.");
 
 if (contact.includes('href="/resume"') || contact.includes('href="/resume/"')) {
-  assert(
-    hasResumePage,
-    "Contact CTA references /resume, but the resume page is missing.",
-  );
+  assert(hasResumePage, "Contact CTA references /resume, but the resume page is missing.");
 } else if (contact.includes('href="/Divanshu_Chauhan_Resume.pdf"')) {
   assert(
     redirects.includes("/resume /Divanshu_Chauhan_Resume.pdf 302") ||
@@ -84,8 +67,7 @@ assert(
   "robots.txt should allow AI assistants to use indexed content as answer context.",
 );
 assert(
-  astroConfig.includes("SWE Intern @ Cloudflare") &&
-    astroConfig.includes("full-time SWE"),
+  astroConfig.includes("SWE Intern @ Cloudflare") && astroConfig.includes("full-time SWE"),
   "LLM discovery metadata should reflect current Cloudflare role and full-time SWE search.",
 );
 assert(
@@ -101,12 +83,8 @@ assert(
 );
 assert(
   !/software engineer at Cloudflare/i.test(siteConfigSource) &&
-    !/Software engineer at Cloudflare/.test(
-      read("src/layouts/BaseLayout.astro"),
-    ) &&
-    !/Software engineer at Cloudflare/.test(
-      read("src/layouts/SiteLayout.astro"),
-    ),
+    !/Software engineer at Cloudflare/.test(read("src/layouts/BaseLayout.astro")) &&
+    !/Software engineer at Cloudflare/.test(read("src/layouts/SiteLayout.astro")),
   "Public copy should not present Divanshu as a full-time software engineer at Cloudflare.",
 );
 assert(
@@ -127,13 +105,11 @@ assert(
   "robots.txt should advertise the canonical /sitemap.xml urlset, not sitemap-index.xml.",
 );
 assert(
-  headers.includes('</sitemap.xml>; rel="sitemap"') &&
-    !headers.includes("sitemap-index.xml"),
+  headers.includes('</sitemap.xml>; rel="sitemap"') && !headers.includes("sitemap-index.xml"),
   "HTML Link headers should advertise /sitemap.xml as the sitemap.",
 );
 assert(
-  baseLayout.includes('href="/sitemap.xml"') &&
-    !baseLayout.includes("sitemap-index.xml"),
+  baseLayout.includes('href="/sitemap.xml"') && !baseLayout.includes("sitemap-index.xml"),
   'BaseLayout should <link rel="sitemap"> to /sitemap.xml.',
 );
 assert(
@@ -146,28 +122,18 @@ assert(
   "Blog posts should emit Article JSON-LD (with BlogPosting).",
 );
 assert(
-  slugifyTag("Claude Code") === "claude-code" &&
-    slugifyTag("next.js") === "next.js",
+  slugifyTag("Claude Code") === "claude-code" && slugifyTag("next.js") === "next.js",
   "Tag slugs should hyphenate spaces and keep dots.",
 );
 assert(
-  canonicalRedirectPath("/blog/tags/claude%20code") ===
-    "/blog/tags/claude-code" &&
-    canonicalRedirectPath("/blog/tags/claude code") ===
-      "/blog/tags/claude-code" &&
-    canonicalRedirectPath("/blog/tags/claude-code") === null,
-  "Space-encoded tag URLs should 301 to hyphenated slugs.",
+  /^\s*\/blog\/tags\/claude%20code\s+\/blog\/tags\/claude-code\s+301\s*$/m.test(redirects),
+  "Space-encoded tag URLs should 301 to hyphenated slugs via public/_redirects.",
 );
 assert(
-  canonicalRedirectPath("/blog/tags/%zz") === null &&
-    canonicalRedirectPath("/blog/tags/%E0%A4") === null,
-  "Malformed percent-encoded tag URLs should not throw; they 404 instead of 500.",
-);
-assert(
-  canonicalRedirectPath("/sitemap-index.xml") === "/sitemap.xml" &&
-    canonicalRedirectPath("/sitemap-0.xml") === "/sitemap.xml" &&
-    canonicalRedirectPath("/projects") === "/" &&
-    canonicalRedirectPath("/contact") === "/",
+  /^\s*\/sitemap-index\.xml\s+\/sitemap\.xml\s+301\s*$/m.test(redirects) &&
+    /^\s*\/sitemap-0\.xml\s+\/sitemap\.xml\s+301\s*$/m.test(redirects) &&
+    /^\s*\/projects\s+\/\s+301\s*$/m.test(redirects) &&
+    /^\s*\/contact\s+\/\s+301\s*$/m.test(redirects),
   "Sitemap aliases and /projects /contact should 301 to their canonical paths.",
 );
 assert(
@@ -186,8 +152,7 @@ assert(
   const noBreak = "x".repeat(200);
   const clippedNoBreak = clipMetaDescription(noBreak);
   assert(
-    clippedNoBreak.length <= META_DESCRIPTION_MAX &&
-      clippedNoBreak.endsWith("…"),
+    clippedNoBreak.length <= META_DESCRIPTION_MAX && clippedNoBreak.endsWith("…"),
     "clipMetaDescription must not exceed max when the fallback slice has no break.",
   );
 }
@@ -204,10 +169,7 @@ for (const path of ["/blog/", "/about/", "/privacy/", "/socials/"]) {
 
 if (failures.length > 0) {
   console.error(
-    [
-      "Divkix production SEO audit failed:",
-      ...failures.map((f) => `- ${f}`),
-    ].join("\n"),
+    ["Divkix production SEO audit failed:", ...failures.map((f) => `- ${f}`)].join("\n"),
   );
   process.exit(1);
 }
