@@ -48,7 +48,7 @@ const baseLayoutProps = {
 ---
 
 <BaseLayout {...baseLayoutProps}>
-  <NavbarWithBoundary client:load />
+  <NavbarWithBoundary client:idle />
 
   {showReadingProgress && (
     <ReadingProgress client:only="react" readingTime={readingTime} />

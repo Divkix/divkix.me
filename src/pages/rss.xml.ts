@@ -24,10 +24,7 @@ export async function GET(context: APIContext) {
       pubDate: new Date(post.data.date),
       link: `/blog/${post.id}`,
       categories: post.data.tags,
-      author: post.data.author,
-      customData: post.data.dateModified
-        ? `<lastModified>${new Date(post.data.dateModified).toUTCString()}</lastModified>`
-        : undefined,
+      author: siteConfig.email,
     })),
     customData: `<language>en-us</language>
 <copyright>Copyright ${new Date().getFullYear()} ${siteConfig.name}</copyright>

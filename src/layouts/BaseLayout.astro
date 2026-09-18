@@ -185,6 +185,9 @@ const websiteSchema = generateWebSiteSchema();
       id="scroll-to-top"
       class="scroll-to-top fixed bottom-4 right-4 z-50 p-3 bg-primary text-primary-foreground rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300"
       aria-label="Scroll to top"
+      hidden
+      tabindex="-1"
+      aria-hidden="true"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -214,10 +217,25 @@ const websiteSchema = generateWebSiteSchema();
           visible = show;
           btn.classList.toggle("opacity-0", !show);
           btn.classList.toggle("pointer-events-none", !show);
+          if (show) {
+            btn.removeAttribute("hidden");
+            btn.removeAttribute("tabindex");
+            btn.setAttribute("aria-hidden", "false");
+          } else {
+            btn.setAttribute("hidden", "");
+            btn.setAttribute("tabindex", "-1");
+            btn.setAttribute("aria-hidden", "true");
+          }
         }
 
         btn.addEventListener("click", function () {
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          window.scrollTo({
+            top: 0,
+            behavior: reduceMotion ? "auto" : "smooth",
+          });
         });
 
         window.addEventListener("scroll", onScroll, { passive: true });

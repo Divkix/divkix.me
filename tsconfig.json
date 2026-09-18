@@ -19,6 +19,6 @@
     "strictNullChecks": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "astro.config.mjs"],
+  "include": ["src/**/*", "astro.config.mjs", "scripts/**/*", "worker/**/*"],
   "exclude": ["node_modules", "dist"]
 }
