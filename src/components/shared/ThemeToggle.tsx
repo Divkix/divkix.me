@@ -1,19 +1,42 @@
 import { Moon, Sun } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/utils";
 
+function subscribeToTheme(onStoreChange: () => void) {
+  const observer = new MutationObserver(onStoreChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  return () => observer.disconnect();
+}
+
+function getThemeSnapshot(): "light" | "dark" {
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function getServerThemeSnapshot(): "light" | "dark" {
+  return "light";
+}
+
+function subscribeToHydration() {
+  return () => {};
+}
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
+  const mounted = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
   const isTransitioningRef = useRef(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
-  }, []);
 
   const toggleTheme = useCallback(async () => {
     if (isTransitioningRef.current) return;
@@ -24,11 +47,13 @@ export function ThemeToggle() {
       "startViewTransition" in document &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!supportsViewTransitions || !buttonRef.current) {
-      // Fallback: instant toggle
-      setTheme(newTheme);
+    const applyTheme = () => {
       localStorage.setItem("theme", newTheme);
       document.documentElement.classList.toggle("dark", newTheme === "dark");
+    };
+
+    if (!supportsViewTransitions || !buttonRef.current) {
+      applyTheme();
       return;
     }
 
@@ -44,9 +69,7 @@ export function ThemeToggle() {
     );
 
     const transition = document.startViewTransition(() => {
-      setTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
-      document.documentElement.classList.toggle("dark", newTheme === "dark");
+      applyTheme();
     });
 
     try {
