@@ -30,9 +30,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
 ├── .github/                  # dependabot.yml (ignores vite-plus toolchain — bump via `vp migrate` only) + opencode.yml (AI bot trigger; no build CI)
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
-├── .oxlintrc.json            # Oxlint rules (JS/TS/React/a11y)
-├── .oxfmtrc.json             # Oxfmt formatting (80 width, 2-space, double quotes)
-├── vite.config.ts            # vite-plus: lint/staged + fmt config
+├── vite.config.ts            # vite-plus: Oxlint, Oxfmt, and staged hooks
 └── knip.json                 # Unused export/dependency detection
 
 > Note: There is **no** `src/components/ui/` (shadcn) or `src/components/providers/` directory. Component groups are only `blog/`, `sections/` (with `experience/` and `skills/`), and `shared/`. The content config lives at `src/content.config.ts` (not `src/content/config.ts`).
@@ -70,7 +68,7 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
 **Languages & Tools:**
 
 - TypeScript extending `astro/tsconfigs/strict` with extra flags: `noUnusedLocals`, `noUnusedParameters`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noFallthroughCasesInSwitch`. (`ignoreDeprecations: "6.0"` for TypeScript 6.)
-- Oxlint for linting + Oxfmt for formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80. Config in `.oxlintrc.json` / `.oxfmtrc.json`.
+- Oxlint for linting + Oxfmt for formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80. Config is the `lint` and `fmt` blocks in `vite.config.ts` (`vp lint` / `vp fmt` do not read `.oxlintrc.json` or `.oxfmtrc.json`).
 - Tailwind CSS v4 via the `@tailwindcss/vite` plugin (registered in `astro.config.mjs` under `vite.plugins`) — there is no `tailwind.config.js`, no `postcss.config.mjs`, and no `@astrojs/tailwind`.
   **Component Architecture:**
 - **Static sections:** Use `.astro` files (zero client JS) — e.g., `Hero.astro`, `RecentWriting.astro`, `Footer.astro`, `ExperienceBentoStatic.astro`.
@@ -133,7 +131,7 @@ howToSteps: # Optional (HowTo schema)
 
 After adding/modifying blog posts, run `bun run prebuild` to regenerate `posts.json`.
 
-5. **Oxlint/Oxfmt Exclusions:** `.astro` files are NOT linted (via `ignorePatterns` in `.oxlintrc.json`); only JS/TS/TSX is. `content/blog/posts.json` and `public/` are excluded from formatting (via `ignorePatterns` in `.oxfmtrc.json`).
+5. **Oxlint/Oxfmt Exclusions:** `.astro` files are not linted (`ignorePatterns` in the `lint` block of `vite.config.ts`). `content/blog/posts.json` and `public/` are excluded from formatting (`fmt.ignorePatterns` in the same file).
 
 ## Deployment
 

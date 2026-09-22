@@ -210,7 +210,9 @@ export function generateSoftwareApplicationSchema(
     applicationCategory: options?.applicationCategory ?? "DeveloperApplication",
     isAccessibleForFree: options?.isFree ?? true,
     keywords:
-      options?.keywords && options.keywords.length > 0 ? options.keywords.join(", ") : undefined,
+      options?.keywords && options.keywords.length > 0
+        ? options.keywords.join(", ")
+        : undefined,
     codeRepository: options?.codeRepository ?? undefined,
   };
 }
@@ -241,7 +243,9 @@ export function generateCollectionPageSchema(
     inLanguage: "en-US",
     ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
     ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
-    ...(options?.articleSection ? { articleSection: options.articleSection } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
   };
 }
 
@@ -271,11 +275,17 @@ export function generateProfilePageSchema(
     inLanguage: "en-US",
     ...(options?.dateModified ? { dateModified: options.dateModified } : {}),
     ...(options?.datePublished ? { datePublished: options.datePublished } : {}),
-    ...(options?.articleSection ? { articleSection: options.articleSection } : {}),
+    ...(options?.articleSection
+      ? { articleSection: options.articleSection }
+      : {}),
   };
 }
 
-export function generateOfferSchema(service: { name: string; description: string; price: string }) {
+export function generateOfferSchema(service: {
+  name: string;
+  description: string;
+  price: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "Offer",
@@ -314,7 +324,10 @@ function generateBlogAuthorSchema(authorName?: string) {
  * Generate Speakable schema for AEO (Answer Engine Optimization)
  * Identifies content that can be spoken by voice assistants
  */
-export function generateSpeakableSchema(articleId: string, cssSelector: string) {
+export function generateSpeakableSchema(
+  articleId: string,
+  cssSelector: string,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -330,7 +343,10 @@ export function generateSpeakableSchema(articleId: string, cssSelector: string) 
  * Generate FAQPage schema for posts with FAQ sections
  * Enhances visibility in search results with rich FAQ snippets
  */
-export function generateFAQPageSchema(faqs: Array<{ q: string; a: string }>, pageUrl: string) {
+export function generateFAQPageSchema(
+  faqs: Array<{ q: string; a: string }>,
+  pageUrl: string,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -350,7 +366,10 @@ export function generateFAQPageSchema(faqs: Array<{ q: string; a: string }>, pag
  * Generate reviewedBy schema for technical posts
  * Signals editorial review process for E-E-A-T
  */
-function generateReviewedBySchema(reviewerName: string, reviewerCredentials?: string) {
+function generateReviewedBySchema(
+  reviewerName: string,
+  reviewerCredentials?: string,
+) {
   return {
     "@type": "Person",
     name: reviewerName,
@@ -414,7 +433,9 @@ export function generateBlogPostingSchema(
     description: post.excerpt,
     url: `${baseUrl}/blog/${post.id}`,
     datePublished: `${post.date}T00:00:00Z`,
-    dateModified: post.dateModified ? `${post.dateModified}T00:00:00Z` : `${post.date}T00:00:00Z`,
+    dateModified: post.dateModified
+      ? `${post.dateModified}T00:00:00Z`
+      : `${post.date}T00:00:00Z`,
     author: generateBlogAuthorSchema(post.author),
     publisher: {
       "@type": "Organization",
@@ -448,7 +469,12 @@ export function generateBlogPostingSchema(
 
   const howToSchema =
     post.howToSteps && post.howToSteps.length > 0
-      ? generateHowToSchema(post.title, post.excerpt, post.howToSteps, `PT${readingTimeMinutes}M`)
+      ? generateHowToSchema(
+          post.title,
+          post.excerpt,
+          post.howToSteps,
+          `PT${readingTimeMinutes}M`,
+        )
       : null;
 
   return { blogPostingSchema, howToSchema };
