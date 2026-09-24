@@ -8,7 +8,7 @@ on:
 
 jobs:
   verify:
-    name: Type-check, lint, build, audit
+    name: Verify, build, audit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -19,18 +19,14 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 22.22.1
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type-check
-        run: pnpm run type-check
-
-      - name: Lint
-        run: pnpm run lint
-
+      - name: Vite+ check, Knip, and Astro type-check
+        run: pnpm run verify
       - name: Build
         run: pnpm run build
         env:

@@ -26,6 +26,9 @@
     "prebuild": "node scripts/generate-posts-metadata.js && node scripts/generate-og-images.js",
     "build": "pnpm run prebuild && tsx scripts/validate-content.ts && astro build && node scripts/generate-flat-sitemap.js && tsx scripts/submit-indexnow.ts",
     "preview": "astro preview",
+    "check": "vp check",
+    "knip": "knip",
+    "verify": "pnpm run check && pnpm run knip && pnpm run type-check",
     "lint": "vp lint .",
     "lint:fix": "vp lint --fix .",
     "type-check": "astro check && tsc --noEmit",
@@ -33,7 +36,7 @@
     "format:check": "vp fmt --check .",
     "check:citations": "tsx scripts/check-citation-density.ts",
     "audit:seo": "tsx scripts/seo-production-audit.ts",
-    "prepare": "vp config || true"
+    "prepare": "vp config"
   },
   "dependencies": {
     "@4hse/astro-llms-txt": "^1.0.5",
@@ -83,5 +86,5 @@
     "not IE 11",
     "not dead"
   ],
-  "packageManager": "pnpm@11.10.0"
+  "packageManager": "pnpm@12.6.0"
 }
