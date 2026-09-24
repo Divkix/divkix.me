@@ -93,6 +93,12 @@ export default defineConfig({
     singleAttributePerLine: false,
   },
   staged: {
-    "*.{js,jsx,ts,tsx,json,css,md,mjs}": ["vp lint --fix", "vp fmt --write"],
+    // JSON, CSS, and Markdown are not lint targets. Ignored paths (and
+    // non-source files) must not fail the hook with "no files found".
+    "*.{js,jsx,ts,tsx,mjs}": [
+      "vp lint --fix --no-error-on-unmatched-pattern",
+      "vp fmt --write --no-error-on-unmatched-pattern",
+    ],
+    "*.{json,css,md}": ["vp fmt --write --no-error-on-unmatched-pattern"],
   },
 });

@@ -2,8 +2,8 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.3.1
-  vite-plus: 0.3.1
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.3
+  vite-plus: 0.3.3
 overrides:
   # astro check relies on TypeScript's programmatic API, which TS 7.0 does not
   # ship yet. Pin to latest 6.x until astro check supports TS 7.
