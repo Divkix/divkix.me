@@ -28,7 +28,7 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 ├── scripts/                  # Build pipeline + manual QA scripts (see below)
 ├── content/blog/posts.json   # Generated metadata (consumed by scripts + astro.config.mjs)
 ├── public/                   # Static assets, OG images, _headers, _redirects, favicons
-├── .github/                  # dependabot.yml (ignores vite-plus toolchain — bump via `vp migrate` only) + opencode.yml (AI bot trigger; no build CI)
+├── .github/                  # CI workflow, Dependabot, and OpenCode bot workflow
 ├── tsconfig.json             # Strict TypeScript (extends astro/tsconfigs/strict)
 ├── vite.config.ts            # vite-plus: Oxlint, Oxfmt, and staged hooks
 └── knip.json                 # Unused export/dependency detection
@@ -40,17 +40,19 @@ Portfolio and blog built with **Astro 7**, **TypeScript**, **Tailwind CSS v4**, 
 pnpm run dev             # Start dev server (astro dev) on localhost:4321
 pnpm run build           # Full production build (4-step pipeline)
 pnpm run preview         # Preview production build locally
-pnpm run lint            # Lint with Oxlint (oxlint .)
-pnpm run lint:fix        # Auto-fix lint issues (oxlint --fix .)
-pnpm run format          # Format with Oxfmt (oxfmt --write .)
-pnpm run format:check    # Check formatting (oxfmt --check .)
+pnpm run check           # Vite+ formatting and lint checks
+pnpm run knip            # Detect unused exports and dependencies
+pnpm run verify          # Shared pre-commit/CI gate, including Astro check
+pnpm run lint            # Lint with Vite+ (Oxlint)
+pnpm run lint:fix        # Auto-fix lint issues with Vite+
+pnpm run format          # Format with Vite+ (Oxfmt)
+pnpm run format:check    # Check formatting with Vite+ (Oxfmt)
 pnpm run type-check      # astro check && tsc --noEmit
 pnpm run check:citations # GEO/SEO: enforce citation density in posts (manual)
 pnpm run audit:seo       # Assert production SEO/config invariants (manual)
-pnpx knip                # Detect unused exports/dependencies
 ````
 
-Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,jsx,ts,tsx,json,css,md}` files run `vp lint --fix` + `vp fmt --write` via `vite-plus` staged hooks (`vite.config.ts`).
+Package manager is pnpm@12.6.0. prepare runs vp config; staged *.{js,jsx,ts,tsx,json,css,md} files run vp lint --fix + vp fmt --write via Vite+ staged hooks (vite.config.ts). The pre-commit hook runs those fixes, then pnpm run verify; CI runs the same gate independently.
 **Build Pipeline (`pnpm run build`, `&&`-chained — any failure aborts):**
 
 1. `prebuild`:
@@ -68,7 +70,7 @@ Package manager is **pnpm@11.10.0**. `prepare` runs `vp config`; staged `*.{js,j
 **Languages & Tools:**
 
 - TypeScript extending `astro/tsconfigs/strict` with extra flags: `noUnusedLocals`, `noUnusedParameters`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noFallthroughCasesInSwitch`. (`ignoreDeprecations: "6.0"` for TypeScript 6.)
-- Oxlint for linting + Oxfmt for formatting: 2-space indent, double quotes, trailing commas (`all`), semicolons always, line width 80. Config is the `lint` and `fmt` blocks in `vite.config.ts` (`vp lint` / `vp fmt` do not read `.oxlintrc.json` or `.oxfmtrc.json`).
+- Vite+ check uses Oxlint and Oxfmt for linting and formatting: 2-space indent, double quotes, trailing commas (all), semicolons always, line width 80. Config is the lint and fmt blocks in vite.config.ts (vp lint / vp fmt do not read .oxlintrc.json or .oxfmtrc.json).
 - Tailwind CSS v4 via the `@tailwindcss/vite` plugin (registered in `astro.config.mjs` under `vite.plugins`) — there is no `tailwind.config.js`, no `postcss.config.mjs`, and no `@astrojs/tailwind`.
   **Component Architecture:**
 - **Static sections:** Use `.astro` files (zero client JS) — e.g., `Hero.astro`, `RecentWriting.astro`, `Footer.astro`, `ExperienceBentoStatic.astro`.

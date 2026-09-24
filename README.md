@@ -51,9 +51,12 @@ pnpm run dev
 | `pnpm run dev`             | Start dev server                                                                                                |
 | `pnpm run build`           | Full production build (regenerates metadata, validates content, builds static files, submits to search engines) |
 | `pnpm run preview`         | Preview the production build locally                                                                            |
-| `pnpm run lint`            | Run Oxlint                                                                                                      |
-| `pnpm run lint:fix`        | Auto-fix lint issues                                                                                            |
-| `pnpm run format`          | Format everything with Oxfmt                                                                                    |
+| `pnpm run check`           | Run Vite+ formatting and lint checks                                                                            |
+| `pnpm run knip`            | Detect unused exports and dependencies                                                                          |
+| `pnpm run verify`          | Run Vite+ checks, Knip, Astro check, and TypeScript checks                                                      |
+| `pnpm run lint`            | Lint with Vite+ (Oxlint)                                                                                        |
+| `pnpm run lint:fix`        | Auto-fix lint issues with Vite+                                                                                 |
+| `pnpm run format`          | Format everything with Vite+ (Oxfmt)                                                                            |
 | `pnpm run type-check`      | TypeScript + Astro type checking                                                                                |
 | `pnpm run check:citations` | Check blog post citation density                                                                                |
 | `pnpm run audit:seo`       | Run SEO production audit                                                                                        |
