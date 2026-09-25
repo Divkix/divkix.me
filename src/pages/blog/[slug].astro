@@ -150,10 +150,9 @@ const articleMeta = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
   )}
 
-  <!-- Table of Contents - Fixed sidebar on xl screens, mobile toggle below -->
+  <!-- Table of Contents - sticky sidebar on xl screens, mobile toggle below -->
   {showToc && (
-    <>
-      {/* Mobile TOC Toggle */}
+      /* Mobile TOC Toggle */
       <div class="xl:hidden container mx-auto px-4 pt-4">
         <details id="toc-details" class="surface-raised rounded-none border border-border/40">
           <summary
@@ -183,10 +182,15 @@ const articleMeta = {
           </nav>
         </details>
       </div>
+  )}
 
-      {/* Desktop TOC - Fixed sidebar (top offset clears the 145px sticky masthead) */}
-      <aside class="hidden xl:block fixed top-40 left-[max(2rem,calc((100vw-72rem)/2))] w-64 max-h-[calc(100vh-12rem)] overflow-y-auto">
-        <nav class="space-y-2 text-sm" aria-label="Table of Contents">
+  <div class="relative">
+  {showToc && (
+      /* Desktop TOC - sidebar column spanning the article; the nav is sticky
+         (top offset clears the 145px masthead) so it stops at the article end
+         instead of overlapping the footer */
+      <aside class="hidden xl:block absolute inset-y-0 left-[max(2rem,calc((100vw-72rem)/2))] w-64 pb-(--space-3xl)">
+        <nav class="sticky top-40 max-h-[calc(100vh-12rem)] overflow-y-auto space-y-2 text-sm" aria-label="Table of Contents">
           <p class="font-semibold mb-4 text-sm" aria-hidden="true">Table of Contents</p>
           <ul class="space-y-2">
             {toc.map((item: { id: string; text: string; level: number }) => (
@@ -202,7 +206,6 @@ const articleMeta = {
           </ul>
         </nav>
       </aside>
-    </>
   )}
 
   <article id="blog-article" class="text-band pt-(--space-xl)! pb-(--space-3xl) min-w-0 xl:pl-88!">
@@ -400,6 +403,7 @@ const articleMeta = {
       </div>
     </div>
   </article>
+  </div>
 
   <script is:inline>
     (function () {
