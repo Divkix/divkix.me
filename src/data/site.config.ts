@@ -367,4 +367,4 @@ export const siteConfig = {
   ],
 } as const;
 
-export const NOINDEX_PATHS = ["/mentions"] as const;
+export const NOINDEX_PATHS = ["/mentions", "/pricing"] as const;

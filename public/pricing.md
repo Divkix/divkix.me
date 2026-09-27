@@ -1,5 +1,7 @@
 # Pricing — Divkix
 
+> Not accepting new freelance projects right now. Rates are listed for reference.
+
 ## Services
 - **Web Development**: Starting at $2,000 per project
 - **Technical Consulting**: $150/hour
