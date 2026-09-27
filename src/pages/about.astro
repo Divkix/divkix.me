@@ -144,8 +144,29 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
       <ExperienceBentoStatic />
     </div>
 
-    <div class="text-band pt-(--space-md)! pb-(--space-3xl)">
+    <div class="text-band pt-(--space-md)!">
       <Skills client:visible />
     </div>
+
+    <section
+      class="text-band pt-(--space-md)! pb-(--space-3xl) space-y-(--space-md)"
+      aria-labelledby="about-faq-heading"
+    >
+      <hr class="hairline-rule mb-(--space-xl)" />
+      <h2
+        id="about-faq-heading"
+        class="font-display text-(length:--text-xl) leading-tight text-foreground m-0"
+      >
+        Common questions
+      </h2>
+      <dl class="prose-measure space-y-(--space-md)">
+        {siteConfig.faq.map((item) => (
+          <div class="space-y-(--space-xs)">
+            <dt class="font-semibold text-foreground">{item.q}</dt>
+            <dd class="text-base leading-relaxed text-muted-foreground m-0">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   </article>
 </SiteLayout>
