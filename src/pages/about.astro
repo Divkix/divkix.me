@@ -12,10 +12,12 @@ import {
 import { baseUrl } from "@/lib/seo";
 
 const aboutUrl = `${baseUrl}/about`;
+const aboutDescription =
+  "About Divanshu Chauhan: MS CS grad, Cloudflare software engineer intern, and Vinext contributor. Experience, skills, education, and the projects behind them.";
 
 const aboutPageSchema = generateProfilePageSchema(
   `About ${siteConfig.name}`,
-  siteConfig.seo.metaDescription,
+  aboutDescription,
   aboutUrl,
   {
     articleSection: "About",
@@ -31,8 +33,8 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 ---
 
 <SiteLayout
-  title={`About Divanshu Chauhan — Cloudflare intern, Vinext contributor`}
-  description={siteConfig.seo.metaDescription}
+  title="About Divanshu Chauhan (divkix): Cloudflare SWE Intern"
+  description={aboutDescription}
   ogImage={`${baseUrl}/og/about.png`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />

@@ -26,7 +26,7 @@ export const siteConfig = {
   seo: {
     jobTitle: "Software Engineer Intern",
     defaultTitle:
-      "Divanshu Chauhan — Software engineer intern at Cloudflare, Vinext contributor",
+      "Divanshu Chauhan — Cloudflare SWE Intern, Vinext Contributor",
     metaDescription:
       "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare and a Vinext contributor, currently open to full-time SWE roles.",
   },
