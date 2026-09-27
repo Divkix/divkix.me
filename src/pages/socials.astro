@@ -9,19 +9,26 @@ import {
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
-const faqPageSchema = generateFAQPageSchema(
-  [
-    {
-      q: "How do I contact you?",
-      a: "You can email me at the address listed on this page or connect via LinkedIn.",
-    },
-    {
-      q: "Where can I find your work?",
-      a: "My projects are on GitHub, and my writing is on the blog.",
-    },
-  ],
-  `${baseUrl}/socials`,
-);
+const socialsFaq = [
+  {
+    q: "What's the best way to reach you?",
+    a: "Email is the most reliable way to reach me, since it doesn't depend on any one platform's inbox. For hiring conversations, LinkedIn works well too.",
+  },
+  {
+    q: "Where can I find your work?",
+    a: "Code and open-source projects live on GitHub, including Alita Robot, Logwell, and Clickfolio. Longer write-ups on how I built and scaled them are on the blog.",
+  },
+  {
+    q: "Are you open to new roles?",
+    a: siteConfig.openToWork,
+  },
+  {
+    q: "Is divkix you on every platform?",
+    a: `Yes. ${siteConfig.handle.toLowerCase()} is my handle on almost every platform. The profiles listed on this page are the official ones.`,
+  },
+];
+
+const faqPageSchema = generateFAQPageSchema(socialsFaq, `${baseUrl}/socials`);
 
 // Map social labels to their descriptive action text for SEO
 const socialActions: Record<string, string> = {
@@ -152,6 +159,32 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           </a>
         )}
       </nav>
+
+      <section class="space-y-(--space-sm)" aria-labelledby="socials-about-heading">
+        <h2 id="socials-about-heading" class="font-display text-(length:--text-xl)">
+          Who's behind these accounts
+        </h2>
+        <p class="text-foreground/70 leading-relaxed">{siteConfig.about}</p>
+        <p>
+          <a href="/about" class="text-primary link-underline-grow">
+            More about {siteConfig.name}
+          </a>
+        </p>
+      </section>
+
+      <section class="space-y-(--space-md)" aria-labelledby="socials-faq-heading">
+        <h2 id="socials-faq-heading" class="font-display text-(length:--text-xl)">
+          Common questions
+        </h2>
+        <dl class="space-y-(--space-md)">
+          {socialsFaq.map((item) => (
+            <div class="space-y-(--space-xs)">
+              <dt class="font-semibold">{item.q}</dt>
+              <dd class="text-foreground/70 leading-relaxed">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <!-- Additional context for SEO -->
       <div class="text-center text-foreground/60 text-sm space-y-(--space-sm)">

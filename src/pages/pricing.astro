@@ -3,16 +3,19 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
+  generateFAQPageSchema,
   generateOfferSchema,
   generateProfilePageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 const pricingUrl = `${baseUrl}/pricing`;
+const pricingDescription =
+  "Freelance rates from Divanshu Chauhan: web development from $2,000, consulting at $150/hour, code audits, technical SEO, and AI integration work.";
 
 const pricingPageSchema = generateProfilePageSchema(
   "Freelance Services & Pricing",
-  `Services and pricing for ${siteConfig.name}`,
+  pricingDescription,
   pricingUrl,
   {
     datePublished: "2025-01-01",
@@ -57,16 +60,42 @@ const services = [
       "LLM-powered features, AI agent workflows, and intelligent automation.",
   },
 ];
+
+const pricingFaq = [
+  {
+    q: "How do I get a quote?",
+    a: `Email ${siteConfig.email} with what you want built, your timeline, and your budget range. I'll reply with either a fixed project quote or an hourly estimate before any work starts.`,
+  },
+  {
+    q: 'What does "starting at" mean?',
+    a: "It's the floor for a small, well-scoped project. The final price depends on scope, integrations, and deadline, and is agreed in writing up front so there are no surprise invoices.",
+  },
+  {
+    q: "What stack do you build with?",
+    a: "Mostly TypeScript, with Cloudflare Workers or a small VPS for hosting and PostgreSQL or D1 for data. If you already have a stack, I'll work in it.",
+  },
+  {
+    q: "Why is AI integration custom-priced?",
+    a: "Costs swing widely with model choice, data volume, and how much evaluation the feature needs. A short consulting call usually pins down the scope before I quote it.",
+  },
+  {
+    q: "Are you available for full-time roles?",
+    a: siteConfig.openToWork,
+  },
+];
+
+const pricingFaqSchema = generateFAQPageSchema(pricingFaq, pricingUrl);
 ---
 
 <SiteLayout
   title="Freelance Services & Pricing — Divanshu Chauhan"
-  description={`Services and pricing for ${siteConfig.name}`}
+  description={pricingDescription}
   ogImage={`${baseUrl}/og/pricing.png`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(services.map((service) => generateOfferSchema(service)))} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingFaqSchema)} />
 
   <div class="text-band space-y-(--space-xl)">
     <!-- Header -->
@@ -90,6 +119,21 @@ const services = [
         </div>
       ))}
     </div>
+
+    <!-- FAQ -->
+    <section class="space-y-(--space-md)" aria-labelledby="pricing-faq-heading">
+      <h2 id="pricing-faq-heading" class="font-display text-(length:--text-xl)">
+        Common questions
+      </h2>
+      <dl class="space-y-(--space-md)">
+        {pricingFaq.map((item) => (
+          <div class="space-y-(--space-xs)">
+            <dt class="font-semibold">{item.q}</dt>
+            <dd class="text-foreground/70 leading-relaxed">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
 
     <!-- Download Link -->
     <div class="text-center">
