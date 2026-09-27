@@ -3,16 +3,19 @@ import { siteConfig } from "@/data/site.config";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import {
   generateBreadcrumbSchema,
+  generateFAQPageSchema,
   generateOfferSchema,
   generateProfilePageSchema,
 } from "@/lib/schema";
 import { baseUrl } from "@/lib/seo";
 
 const pricingUrl = `${baseUrl}/pricing`;
+const pricingDescription =
+  "Freelance rates from Divanshu Chauhan for web development, consulting, code audits, SEO, and AI work. Not accepting new projects right now.";
 
 const pricingPageSchema = generateProfilePageSchema(
   "Freelance Services & Pricing",
-  `Services and pricing for ${siteConfig.name}`,
+  pricingDescription,
   pricingUrl,
   {
     datePublished: "2025-01-01",
@@ -57,16 +60,46 @@ const services = [
       "LLM-powered features, AI agent workflows, and intelligent automation.",
   },
 ];
+
+const pricingFaq = [
+  {
+    q: "Are you taking freelance work right now?",
+    a: "Not right now. I'm focused on landing a full-time software engineering role, so I'm not accepting new freelance projects. The rates on this page are listed for reference.",
+  },
+  {
+    q: "How is a project quoted?",
+    a: "Every project starts with a short discovery call to pin down scope, timeline, and constraints. After that call I send a written quote.",
+  },
+  {
+    q: 'What does "starting at" mean?',
+    a: "It's the floor for a small, well-scoped project. The final price depends on scope, integrations, and deadline, and is set in the quote after the discovery call.",
+  },
+  {
+    q: "What stack do you build with?",
+    a: "Mostly TypeScript, Go, and Python, with Cloudflare Workers or a small VPS for hosting and PostgreSQL or D1 for data. If you already have a stack, I'll work in it.",
+  },
+  {
+    q: "Why is AI integration custom-priced?",
+    a: "Costs swing widely with model choice, data volume, and how much evaluation the feature needs. The discovery call pins down that scope before I quote it.",
+  },
+  {
+    q: "Are you available for full-time roles?",
+    a: siteConfig.openToWork,
+  },
+];
+
+const pricingFaqSchema = generateFAQPageSchema(pricingFaq, pricingUrl);
 ---
 
 <SiteLayout
   title="Freelance Services & Pricing — Divanshu Chauhan"
-  description={`Services and pricing for ${siteConfig.name}`}
+  description={pricingDescription}
   ogImage={`${baseUrl}/og/pricing.png`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingPageSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(services.map((service) => generateOfferSchema(service)))} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingFaqSchema)} />
 
   <div class="text-band space-y-(--space-xl)">
     <!-- Header -->
@@ -75,6 +108,10 @@ const services = [
       <h1 class="font-display text-(length:--text-display)">Freelance Services & Pricing</h1>
       <p class="text-(length:--text-xl) text-foreground/70">
         Services and rates for freelance work
+      </p>
+      <p class="surface-raised p-(--space-md) text-foreground/80" role="note">
+        Not accepting new freelance projects right now. I'm focused on
+        full-time roles, so these rates are listed for reference only.
       </p>
     </div>
 
@@ -90,6 +127,21 @@ const services = [
         </div>
       ))}
     </div>
+
+    <!-- FAQ -->
+    <section class="space-y-(--space-md)" aria-labelledby="pricing-faq-heading">
+      <h2 id="pricing-faq-heading" class="font-display text-(length:--text-xl)">
+        Common questions
+      </h2>
+      <dl class="space-y-(--space-md)">
+        {pricingFaq.map((item) => (
+          <div class="space-y-(--space-xs)">
+            <dt class="font-semibold">{item.q}</dt>
+            <dd class="text-foreground/70 leading-relaxed">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
 
     <!-- Download Link -->
     <div class="text-center">

@@ -27,10 +27,12 @@ const faqPageSchema = generateFAQPageSchema(
 );
 
 const lastUpdated = "May 20, 2026";
+const privacyDescription =
+  "Privacy policy for divkix.me: what the contact form, analytics, and cookies collect, how that data is used, and how to request its deletion.";
 
 const privacyPageSchema = generateProfilePageSchema(
   "Privacy Policy",
-  `Privacy Policy for ${siteConfig.name}'s portfolio website`,
+  privacyDescription,
   `${baseUrl}/privacy`,
   {
     datePublished: "2025-01-01",
@@ -45,8 +47,8 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 ---
 
 <SiteLayout
-  title="Privacy Policy"
-  description={`Privacy Policy for ${siteConfig.name}'s portfolio website`}
+  title="Privacy Policy | Divanshu Chauhan (divkix.me)"
+  description={privacyDescription}
   ogImage={`${baseUrl}/og/privacy.png`}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(privacyPageSchema)} />

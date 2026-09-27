@@ -98,7 +98,7 @@ Package manager is pnpm@12.6.0. prepare runs vp config; staged *.{js,jsx,ts,tsx,
 
 ## Centralized Content
 
-`src/data/site.config.ts` exports `siteConfig` (`as const`) — bio strings, `address`, `seo`, `faq`, `facts`, `skills`, `experience`, `education`, `projects`, `socials` — plus `NOINDEX_PATHS` (currently `["/mentions"]`, consumed by the sitemap filter and page noindex meta). Edit content here rather than in components.
+`src/data/site.config.ts` exports `siteConfig` (`as const`) — bio strings, `address`, `seo`, `faq`, `facts`, `skills`, `experience`, `education`, `projects`, `socials` — plus `NOINDEX_PATHS` (currently `["/mentions", "/pricing"]`, consumed by the sitemap filter and page noindex meta). Edit content here rather than in components.
 
 ## Blog Content Guidelines
 
