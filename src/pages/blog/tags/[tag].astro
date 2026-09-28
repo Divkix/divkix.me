@@ -112,7 +112,7 @@ const pageTitle = `Posts tagged "${displayTag}" — Blog`;
 const pageDescription = `Browse ${posts.length} blog posts tagged with "${tag}". Articles about software development, AI, and engineering.`;
 ---
 
-<BlogLayout title={pageTitle} description={pageDescription}>
+<BlogLayout title={pageTitle} description={pageDescription} noindex>
   <script
     is:inline
     type="application/ld+json"
