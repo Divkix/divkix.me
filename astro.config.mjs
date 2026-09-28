@@ -34,7 +34,6 @@ try {
   );
 }
 
-
 export default defineConfig({
   site: "https://divkix.me",
   output: "static",
