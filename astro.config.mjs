@@ -8,7 +8,6 @@ import tailwindcss from "@tailwindcss/vite";
 import rehypeExternalLinks from "rehype-external-links";
 import { defineConfig } from "astro/config";
 import { NOINDEX_PATHS } from "./src/data/site.config.ts";
-import { slugifyTag } from "./src/lib/seo.ts";
 
 // Note: Tailwind v4 is configured via the @tailwindcss/vite plugin (below).
 // No @astrojs/tailwind needed - it's only for Tailwind v3. The PostCSS variant
@@ -35,24 +34,6 @@ try {
   );
 }
 
-const multiPostTagSlugs = new Set();
-if (postsData) {
-  const tagCounts = new Map();
-  for (const post of postsData.posts) {
-    if (post.published && post.tags) {
-      for (const tag of post.tags) {
-        const normalized = tag.toLowerCase();
-        tagCounts.set(normalized, (tagCounts.get(normalized) || 0) + 1);
-      }
-    }
-  }
-  for (const [tag, count] of tagCounts) {
-    if (count >= 2) {
-      multiPostTagSlugs.add(slugifyTag(tag));
-    }
-  }
-}
-
 export default defineConfig({
   site: "https://divkix.me",
   output: "static",
@@ -72,15 +53,12 @@ export default defineConfig({
       // flags as "Submitted URL marked noindex".
       filter: (page) => {
         const path = new URL(page).pathname.replace(/\/$/, "");
-        if (path.includes("/draft") || NOINDEX_PATHS.includes(path)) {
+        if (
+          path.includes("/draft") ||
+          path.startsWith("/blog/tags/") ||
+          NOINDEX_PATHS.includes(path)
+        ) {
           return false;
-        }
-        // Exclude thin tag pages (tags with fewer than 2 posts)
-        if (path.includes("/blog/tags/")) {
-          const tag = slugifyTag(
-            decodeURIComponent(path.split("/blog/tags/")[1] || ""),
-          );
-          return multiPostTagSlugs.has(tag);
         }
         return true;
       },

@@ -22,6 +22,15 @@ User-agent: Meta-ExternalAgent
 User-agent: cohere-ai
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 # Content Signals - AI content usage preferences per draft-romm-aipref-contentsignals
 # https://contentsignals.org/
 Content-Signal: ai-train=yes, search=yes, ai-input=yes
