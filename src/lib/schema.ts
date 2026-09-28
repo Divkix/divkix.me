@@ -34,8 +34,8 @@ export function generatePersonSchema() {
     familyName: siteConfig.name.split(" ")[1],
     jobTitle: getJobTitle(),
     description: siteConfig.seo.metaDescription,
-    url: baseUrl,
-    mainEntityOfPage: `${baseUrl}/about`,
+    url: `${baseUrl}/divkix`,
+    mainEntityOfPage: `${baseUrl}/divkix`,
     disambiguatingDescription: `Software Engineer Intern at Cloudflare and blogger based in ${siteConfig.address.locality}, ${siteConfig.address.region}`,
     email: siteConfig.email,
     image: `${baseUrl}/divanshu-chauhan.webp`,
@@ -310,7 +310,7 @@ function generateBlogAuthorSchema(authorName?: string) {
       "@id": `${baseUrl}/#author`,
       name: siteConfig.name,
       alternateName: siteConfig.handle,
-      url: baseUrl,
+      url: `${baseUrl}/divkix`,
     };
   }
 
