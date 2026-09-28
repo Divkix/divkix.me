@@ -47,7 +47,6 @@ export default defineConfig({
     react(),
     mdx(),
     sitemap({
-      xslURL: "/sitemap.xsl",
       // Exclude draft routes and any noindexed pages — submitting a noindexed
       // URL in the sitemap is a self-contradicting signal Google Search Console
       // flags as "Submitted URL marked noindex".
