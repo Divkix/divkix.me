@@ -23,7 +23,7 @@ async function submitIndexNow(): Promise<void> {
     sitemap = readFileSync(SITEMAP_PATH, "utf-8");
   } catch (error) {
     console.error(
-      `⚠️  IndexNow: Failed to read sitemap: ${error instanceof Error ? error.message : error}`,
+      `⚠️  IndexNow: Failed to read sitemap: ${error instanceof Error ? error.message : String(error)}`,
     );
     return; // Don't fail build
   }
@@ -64,10 +64,12 @@ async function submitIndexNow(): Promise<void> {
     }
   } catch (error) {
     console.warn(
-      `⚠️  IndexNow: Failed to submit: ${error instanceof Error ? error.message : error}`,
+      `⚠️  IndexNow: Failed to submit: ${error instanceof Error ? error.message : String(error)}`,
     );
     // Don't fail build - IndexNow is optional
   }
 }
 
-submitIndexNow();
+submitIndexNow().catch((error: unknown) => {
+  console.warn("IndexNow: Failed to submit:", error);
+});

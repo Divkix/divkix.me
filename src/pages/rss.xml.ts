@@ -8,7 +8,7 @@ import { baseUrl } from "@/lib/seo";
 export async function GET(context: APIContext) {
   const posts = await getCollection("blog");
   const publishedPosts = posts
-    .filter((post: CollectionEntry<"blog">) => post.data.published === true)
+    .filter((post: CollectionEntry<"blog">) => post.data.published)
     .sort(
       (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
         new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
