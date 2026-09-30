@@ -6,9 +6,9 @@
  * Includes TOC extraction, related posts calculation, and extended frontmatter
  */
 
-const fs = require("node:fs");
-const path = require("node:path");
-const matter = require("gray-matter");
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog");
 const OUTPUT_FILE = path.join(process.cwd(), "content", "blog", "posts.json");
@@ -51,7 +51,7 @@ function calculateTagSimilarity(tags1 = [], tags2 = []) {
   return intersection;
 }
 
-function getAllPosts() {
+export function getAllPosts() {
   console.log("📚 Generating blog posts metadata...");
 
   if (!fs.existsSync(CONTENT_DIR)) {
@@ -132,7 +132,7 @@ function getAllPosts() {
 }
 
 // Run if called directly
-if (require.main === module) {
+if (import.meta.main) {
   try {
     getAllPosts();
     process.exit(0);
@@ -141,5 +141,3 @@ if (require.main === module) {
     process.exit(1);
   }
 }
-
-module.exports = { getAllPosts };

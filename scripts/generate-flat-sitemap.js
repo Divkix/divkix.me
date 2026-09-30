@@ -9,8 +9,8 @@
  * and chunk files 301 to /sitemap.xml at the edge so crawlers see one story.
  */
 
-const fs = require("node:fs");
-const path = require("node:path");
+import fs from "node:fs";
+import path from "node:path";
 
 const DIST = path.join(process.cwd(), "dist");
 
