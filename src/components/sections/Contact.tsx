@@ -24,6 +24,11 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+const contactErrorSchema = z.object({
+  message: z.string().optional(),
+  errors: z.array(z.object({ message: z.string() })).optional(),
+});
+
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -60,15 +65,13 @@ function Contact() {
         });
         setTimeout(() => setIsSuccess(false), 5000);
       } else {
-        const errorData = (await response
-          .json()
-          .catch(() => ({ message: "Unknown error" }))) as {
-          message?: string;
-          errors?: Array<{ message: string }>;
-        };
+        const errorResult = contactErrorSchema.safeParse(
+          await response.json().catch(() => ({ message: "Unknown error" })),
+        );
+        const errorData = errorResult.success ? errorResult.data : undefined;
         const errorMessage =
-          errorData.errors?.[0]?.message ||
-          errorData.message ||
+          errorData?.errors?.[0]?.message ||
+          errorData?.message ||
           "Please try again later.";
         setServerError(errorMessage);
         toast.error("Failed to send message", {

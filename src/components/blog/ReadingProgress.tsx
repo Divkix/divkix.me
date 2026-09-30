@@ -13,7 +13,7 @@ export function ReadingProgress({ readingTime }: ReadingProgressProps) {
 
   useEffect(() => {
     const article = document.querySelector("article");
-    if (!article) return;
+    if (!article) return undefined;
 
     // Cache layout properties to avoid reflow
     const articleTop = article.offsetTop;

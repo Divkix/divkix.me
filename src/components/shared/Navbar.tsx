@@ -57,7 +57,7 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (pathname !== "/") return undefined;
 
     const sections = ["hero", "highlights", "projects", "writing", "contact"];
 
@@ -244,7 +244,7 @@ function MobileNavDialog({
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onCloseRef.current();
     };
@@ -253,7 +253,7 @@ function MobileNavDialog({
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     requestAnimationFrame(() => {
       closeButtonRef.current?.focus();
