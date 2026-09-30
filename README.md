@@ -1,9 +1,9 @@
 # divkix.me
 
-My personal site. Built with Astro, TypeScript, Tailwind v4, and an embarrassing amount of coffee. It's a static portfolio + blog that lives on Cloudflare Pages.
+My personal site. Built with Astro, TypeScript, Tailwind v4, and an embarrassing amount of coffee. It's a static portfolio + blog that lives on Cloudflare Workers static assets.
 
-[![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Astro](https://img.shields.io/badge/Astro-7-BC52EE?logo=astro&logoColor=white)](https://astro.build)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -17,17 +17,17 @@ My personal site. Built with Astro, TypeScript, Tailwind v4, and an embarrassing
 
 ## Tech stack
 
-| Thing           | Choice                                    |
-| --------------- | ----------------------------------------- |
-| Framework       | Astro 5                                   |
-| Language        | TypeScript (strict mode, because why not) |
-| Styling         | Tailwind CSS v4 via PostCSS               |
-| UI              | shadcn/ui primitives                      |
-| Forms           | React Hook Form + Zod                     |
-| Icons           | Lucide React                              |
-| Linting         | Oxlint + Oxfmt                            |
-| Package manager | pnpm                                      |
-| Hosting         | Cloudflare Pages                          |
+| Thing           | Choice                                         |
+| --------------- | ---------------------------------------------- |
+| Framework       | Astro 7                                        |
+| Language        | TypeScript 6 (strictest mode, because why not) |
+| Styling         | Tailwind CSS v4 via @tailwindcss/vite          |
+| UI              | React 19 islands                               |
+| Forms           | React Hook Form + Zod                          |
+| Icons           | Lucide React                                   |
+| Linting         | Vite+ (Oxlint + Oxfmt)                         |
+| Package manager | pnpm 12.6.0                                    |
+| Hosting         | Cloudflare Workers static assets (no adapter)  |
 
 ## Getting started
 
@@ -37,7 +37,7 @@ git clone https://github.com/divkix/divkix.me.git
 cd divkix.me
 
 # Install deps
-pnpm install
+pnpm install --frozen-lockfile
 
 # Dev server
 pnpm run dev
@@ -63,12 +63,13 @@ pnpm run dev
 
 ### Build pipeline scripts (in `/scripts/`)
 
-These run automatically during `pnpm run build`, but you can run them individually:
+The build pipeline scripts run automatically during `pnpm run build`; the other tools run manually:
 
 | Script                       | What it does                                            |
 | ---------------------------- | ------------------------------------------------------- |
 | `generate-posts-metadata.js` | Parse MDX frontmatter → `content/blog/posts.json`       |
 | `generate-og-images.js`      | Generate OG images for each blog post                   |
+| `generate-flat-sitemap.js`   | Merge sitemap chunks into the canonical sitemap         |
 | `generate-favicons.ts`       | Generate favicons from the SVG source                   |
 | `validate-content.ts`        | Make sure MDX files and `posts.json` are in sync        |
 | `submit-indexnow.ts`         | Tell search engines about new content (production only) |
@@ -86,6 +87,8 @@ src/
     blog/             # Blog listing + posts
     about.astro       # About page
     divkix.astro      # Quick links / bio page
+    pricing.astro     # Pricing page
+    resume.astro      # Resume page
     privacy.astro     # Privacy policy
     socials.astro     # Social links page
     404.astro         # 404 page
@@ -99,24 +102,27 @@ src/
     sections/         # Homepage sections (Hero, Projects, ExperienceBento, etc.)
     shared/           # Navbar, Footer, ThemeToggle, Toaster, etc.
     blog/             # Blog-specific components
-    ui/               # shadcn-style primitives
-    providers/        # React context providers
   content/
     blog/*.mdx        # Blog post files
+  content.config.ts   # Content Collection schema
+  middleware.ts       # Dev/build trailing-slash redirects
   data/
     site.config.ts    # All site content (skills, projects, experience, etc.)
   lib/
     utils.ts          # Helper functions
     schema.ts         # JSON-LD structured data
     seo.ts            # SEO utilities
-    hooks/            # React hooks
-    examples/         # Code examples
   styles/
     globals.css       # Tailwind v4, OKLCH colors, custom utilities
+    tokens.css        # Design tokens
+    animations.css    # Animation utilities
 scripts/              # Build pipeline scripts
 public/               # Static assets (favicons, images)
 content/blog/
   posts.json          # Generated metadata (consumed by astro.config.mjs)
+astro.config.mjs      # Static build and integrations
+vite.config.ts        # Vite+ lint, format, and staged checks
+wrangler.jsonc        # Cloudflare Workers static asset configuration
 ```
 
 ## Want to fork this?
@@ -199,18 +205,18 @@ Your content here...
 
 **Images:**
 
-- Replace `/public/divanshu-chauhan.jpeg` with your photo
+- Replace `/public/divanshu-chauhan.webp` with your photo
 - Update `/public/og-image.png` (the site-wide OG image is generated by `scripts/generate-og-images.js` during build)
-- Regenerate favicons with `pnpm run scripts/generate-favicons.ts`
+- Regenerate favicons with `pnpm exec tsx scripts/generate-favicons.ts`
 
 ### 7. Deploy
 
-**Cloudflare Pages (what I use):**
+**Cloudflare Workers static assets (what I use):**
 
 1. Push to GitHub
-2. Connect repo at [pages.cloudflare.com](https://pages.cloudflare.com)
+2. Connect the repo to a Worker under Workers & Pages in the [Cloudflare dashboard](https://dash.cloudflare.com)
 3. Build command: `pnpm run build`
-4. Output directory: `dist`
+4. Deploy command: `pnpm dlx wrangler deploy` — `wrangler.jsonc` serves `./dist` as static assets, with no Worker script or Astro adapter
 
 **Vercel:** Import at [vercel.com](https://vercel.com), framework preset: Astro, build command: `pnpm run build`, output: `dist`.
 
@@ -220,11 +226,11 @@ Your content here...
 
 ## Why I chose this stack
 
-**Cloudflare Pages:** Global edge network, zero cold starts, free tier, automatic HTTPS. Basically it just works and I don't have to think about it.
+**Cloudflare Workers static assets:** Global edge network, zero cold starts, free tier, automatic HTTPS. Basically it just works and I don't have to think about it.
 
 **Astro Islands:** Ships zero JS by default. Only the interactive bits (contact form, theme toggle) get hydrated. The site is fast without me having to do anything special.
 
-**Tailwind v4:** Native CSS variables, smaller pnpmdle, OKLCH colors, and it works with PostCSS without fighting me.
+**Tailwind v4:** Native CSS variables, smaller bundle, OKLCH colors, and it works with the Vite plugin without fighting me.
 
 **Static output:** No server needed. Deploy anywhere. It's fast, secure, and hosting is free pretty much everywhere.
 
