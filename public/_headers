@@ -5,50 +5,40 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.divkix.me; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://analytics.divkix.me https://formspree.io; font-src 'self'; form-action 'self' https://formspree.io
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.divkix.me; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://analytics.divkix.me https://formspree.io; font-src 'self'; form-action 'self' https://formspree.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 
-# Cache headers for Cloudflare Pages static export
-# Immutable caching for static assets with hashed filenames
-
-# Cache CSS files
-/*.css
+# Cache headers for Cloudflare Workers static assets
+# Immutable caching only for Astro content-hashed output
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Cache JavaScript files
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
+# Named public assets can change without a filename change
+/og/*
+  Cache-Control: public, max-age=86400, must-revalidate
 
-# Cache font files
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
+/favicon*
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.woff
-  Cache-Control: public, max-age=31536000, immutable
+/android-chrome-*
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.ttf
-  Cache-Control: public, max-age=31536000, immutable
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400, must-revalidate
 
-# Cache image files
-/*.png
-  Cache-Control: public, max-age=31536000, immutable
+/full-logo.png
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
+/divanshu-chauhan.webp
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.jpeg
-  Cache-Control: public, max-age=31536000, immutable
+/transparent-text*
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
+/Divanshu_Chauhan_Resume.pdf
+  Cache-Control: public, max-age=86400, must-revalidate
 
-/*.avif
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.svg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.ico
-  Cache-Control: public, max-age=31536000, immutable
+/site.webmanifest
+  Cache-Control: public, max-age=86400, must-revalidate
 
 # Revalidation cache for HTML pages (1 hour)
 /
@@ -64,9 +54,9 @@
   Cache-Control: public, max-age=3600, must-revalidate
   Content-Type: text/html; charset=utf-8
 
-# Cache blog posts (1 day, revalidate)
+# Cache blog HTML with short-lived revalidation
 /blog/*
-  Cache-Control: public, max-age=86400, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 # pricing.md is a hand-authored static file served as-is
 /pricing.md
