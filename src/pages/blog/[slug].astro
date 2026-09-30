@@ -59,7 +59,7 @@ const multiPostTags = getMultiPostTags(
 
 const readingTimeMinutes = calculateReadingTime(post.body);
 const readingTime = `${readingTimeMinutes} min read`;
-const wordCount = post.body.trim().split(/\s+/).length;
+const wordCount = (post.body ?? "").trim().split(/\s+/).length;
 
 const toc = headings.map((h: Heading) => ({
   id: h.slug,

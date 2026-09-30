@@ -391,7 +391,7 @@ function generateReviewedBySchema(
 function generateHowToSchema(
   title: string,
   description: string,
-  steps: Array<{ name: string; text: string; url?: string }>,
+  steps: Array<{ name: string; text: string; url?: string | undefined }>,
   totalTime?: string,
 ) {
   return {
@@ -416,11 +416,13 @@ export function generateBlogPostingSchema(
     title: string;
     excerpt: string;
     date: string;
-    dateModified?: string;
-    author?: string;
+    dateModified?: string | undefined;
+    author?: string | undefined;
     tags: string[];
-    reviewedBy?: string;
-    howToSteps?: Array<{ name: string; text: string; url?: string }>;
+    reviewedBy?: string | undefined;
+    howToSteps?:
+      | Array<{ name: string; text: string; url?: string | undefined }>
+      | undefined;
   },
   readingTimeMinutes: number,
   wordCount: number,
