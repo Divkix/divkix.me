@@ -1,23 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
     },
-    "ignoreDeprecations": "6.0",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true
+    "jsxImportSource": "react"
   },
-  "include": ["src/**/*", "astro.config.mjs", "scripts/**/*"],
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "astro.config.mjs",
+    "scripts/**/*"
+  ],
   "exclude": ["node_modules", "dist"]
 }

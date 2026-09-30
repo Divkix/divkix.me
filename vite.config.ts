@@ -19,6 +19,7 @@ const ignorePatterns = [
 
 export default defineConfig({
   lint: {
+    options: { typeAware: true, typeCheck: true },
     plugins: ["typescript", "unicorn", "oxc", "react", "jsx-a11y", "import"],
     ignorePatterns,
     env: {

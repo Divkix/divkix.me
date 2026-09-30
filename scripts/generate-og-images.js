@@ -5,9 +5,9 @@
  * Creates 1200x630 images with post title and metadata
  */
 
-const sharp = require("sharp");
-const path = require("node:path");
-const fs = require("node:fs");
+import sharp from "sharp";
+import path from "node:path";
+import fs from "node:fs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
 const POSTS_JSON = path.join(CONTENT_DIR, "posts.json");
@@ -392,7 +392,7 @@ async function generateStaticPageOGImages() {
   );
 }
 
-async function generateOGImages() {
+export async function generateOGImages() {
   console.log("Generating blog post OG images...");
 
   if (!fs.existsSync(POSTS_JSON)) {
@@ -487,7 +487,7 @@ async function generateOGImages() {
 }
 
 // Run if called directly
-if (require.main === module) {
+if (import.meta.main) {
   generateOGImages()
     .then(() => {
       console.log("OG image generation complete!");
@@ -498,5 +498,3 @@ if (require.main === module) {
       process.exit(1);
     });
 }
-
-module.exports = { generateOGImages };

@@ -172,7 +172,6 @@ catalogs:
       version: 1.0.0-rc.0
 
 overrides:
-  typescript: ^6.0.3
   vite@*: npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0
   fast-uri: ^3.1.7
 
@@ -182,18 +181,18 @@ importers:
     dependencies:
       '@4hse/astro-llms-txt':
         specifier: ^1.0.5
-        version: 1.0.5(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+        version: 1.0.5(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@astrojs/mdx':
         specifier: 8.0.2
-        version: 8.0.2(@astrojs/markdown-remark@7.3.1)(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+        version: 8.0.2(@astrojs/markdown-remark@7.3.1)(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@astrojs/react':
         specifier: 7.0.0
-        version: 7.0.0(@types/node@26.6.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+        version: 7.0.0(@types/node@26.6.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
       '@astrojs/rss':
         specifier: ^4.0.19
         version: 4.0.19
       '@astrojs/sitemap':
-        specifier: ^3.7.4
+        specifier: 3.7.4
         version: 3.7.4
       '@fontsource/geist-mono':
         specifier: ^5.3.0
@@ -207,12 +206,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.9.1
         version: 5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.88.0(react@19.3.0))(zod@4.6.5)
-      '@tailwindcss/typography':
-        specifier: ^0.5.20
-        version: 0.5.20(tailwindcss@4.3.3)
       astro:
         specifier: 7.3.5
-        version: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+        version: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -223,17 +219,14 @@ importers:
         specifier: ^1.48.0
         version: 1.48.0(react@19.3.0)
       react:
-        specifier: ^19.3.0
+        specifier: 19.3.0
         version: 19.3.0
       react-dom:
-        specifier: ^19.3.0
+        specifier: 19.3.0
         version: 19.3.0(react@19.3.0)
       react-hook-form:
         specifier: ^7.88.0
         version: 7.88.0(react@19.3.0)
-      sharp:
-        specifier: ^0.35.4
-        version: 0.35.4(@types/node@26.6.2)
       sonner:
         specifier: ^2.0.8
         version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -248,22 +241,25 @@ importers:
         version: 4.6.5
     devDependencies:
       '@astrojs/check':
-        specifier: ^0.9.10
+        specifier: 0.9.10
         version: 0.9.10(prettier@3.9.6)(typescript@6.0.3)
       '@astrojs/markdown-remark':
         specifier: ^7.3.1
         version: 7.3.1
+      '@tailwindcss/typography':
+        specifier: ^0.5.20
+        version: 0.5.20(tailwindcss@4.3.3)
       '@tailwindcss/vite':
         specifier: ^4.3.3
-        version: 4.3.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+        version: 4.3.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@types/node':
         specifier: ^26.6.2
         version: 26.6.2
       '@types/react':
-        specifier: ^19.3.0
+        specifier: 19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: ^19.3.0
+        specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
       knip:
         specifier: ^6.38.0
@@ -274,21 +270,24 @@ importers:
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
+      sharp:
+        specifier: ^0.35.4
+        version: 0.35.4(@types/node@26.6.2)
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
       tsx:
-        specifier: ^4.23.13
-        version: 4.23.13
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
       vite:
         specifier: 'catalog:'
-        version: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+        version: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
       vite-plus:
         specifier: 'catalog:'
-        version: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+        version: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
 
 packages:
 
@@ -305,7 +304,7 @@ packages:
     resolution: {integrity: sha512-zgx/UQMozdjOa3bOxjgeCFdtpE3c9rRX6xHwa+2QXvy8z8Akifu2AtubHyv/zzC2znO8dl8fFWL4K+Ba9kS8HQ==}
     hasBin: true
     peerDependencies:
-      typescript: ^6.0.3
+      typescript: ^5.0.0 || ^6.0.0
 
   '@astrojs/compiler-binding-android-arm64@0.5.1':
     resolution: {integrity: sha512-nMb2nMIJtcWLNH+fV75Enmi+jp4tIOYOfsv4XtpgdOWkqc9P4uSSdK5u1xb340AzrXo5V18SxLl/nc3vcqtamQ==}
@@ -1895,7 +1894,7 @@ packages:
       sugarss: ^5.0.0
       terser: ^5.16.0
       tsx: ^4.8.1
-      typescript: ^6.0.3
+      typescript: ^5.0.0 || ^6.0.0 || ^7.0.0
       unplugin-unused: '>=0.5.0'
       unrun: '*'
       yaml: ^2.4.2
@@ -1990,22 +1989,37 @@ packages:
   '@volar/kit@2.4.28':
     resolution: {integrity: sha512-cKX4vK9dtZvDRaAzeoUdaAJEew6IdxHNCRrdp5Kvcl6zZOqb6jTOfk3kXkIkG3T7oTFXguEMt5+9ptyqYR84Pg==}
     peerDependencies:
-      typescript: ^6.0.3
+      typescript: '*'
 
   '@volar/language-core@2.4.28':
     resolution: {integrity: sha512-w4qhIJ8ZSitgLAkVay6AbcnC7gP3glYM3fYwKV3srj8m494E3xtrCv6E+bWviiK/8hs6e6t1ij1s2Endql7vzQ==}
 
   '@volar/language-server@2.4.28':
     resolution: {integrity: sha512-NqcLnE5gERKuS4PUFwlhMxf6vqYo7hXtbMFbViXcbVkbZ905AIVWhnSo0ZNBC2V127H1/2zP7RvVOVnyITFfBw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@volar/language-service@2.4.28':
     resolution: {integrity: sha512-Rh/wYCZJrI5vCwMk9xyw/Z+MsWxlJY1rmMZPsxUoJKfzIRjS/NF1NmnuEcrMbEVGja00aVpCsInJfixQTMdvLw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@volar/source-map@2.4.28':
     resolution: {integrity: sha512-yX2BDBqJkRXfKw8my8VarTyjv48QwxdJtvRgUpNE5erCsgEUdI2DsLbpa+rOQVAJYshY99szEcRDmyHbF10ggQ==}
 
   '@volar/typescript@2.4.28':
     resolution: {integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@vscode/emmet-helper@2.11.0':
     resolution: {integrity: sha512-QLxjQR3imPZPQltfbWRnHU6JecWTF1QSWhx3GAKQpslx7y3Dp6sIIXhKjiUJ/BR9FX8PVthjr9PD6pNwOJfAzw==}
@@ -3648,8 +3662,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tsx@4.23.13:
-    resolution: {integrity: sha512-BL5MGkRln6aDYhb0xbQlEAGw743BaZYWdbWtdJOBriYJboKgUUYCadFp2/FpBBZquBC/ezNBn7wMMPx7FDZUDw==}
+  tsx@4.23.15:
+    resolution: {integrity: sha512-Yiex1Ovn8z2xPpOWckIiysV1SSyRMY9BkLF++q0yKiDxCqRhosKfMg3janKkiLBwZ5c/YryloKwGZcrEmtwxKw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3911,16 +3925,22 @@ packages:
     resolution: {integrity: sha512-9K2k72s4n7rV9s4bX0MyjbX9iBribvKZbBJKuEmTCZfeWJXs6Yh7bGpY4eoc7UufAjvpheBqwyZCOIPBvxCv0A==}
     peerDependencies:
       '@volar/language-service': ~2.4.0
+      typescript: '*'
     peerDependenciesMeta:
       '@volar/language-service':
+        optional: true
+      typescript:
         optional: true
 
   volar-service-typescript@0.0.71:
     resolution: {integrity: sha512-yTtM/BVT6hoyEYnDtaCyAtNhdNeS/mhTTABlBOdw3NNiRBUin3IznFJpgfjer4c6RYopiPjjQjc9VFhxVl1mLw==}
     peerDependencies:
       '@volar/language-service': ~2.4.0
+      typescript: '*'
     peerDependenciesMeta:
       '@volar/language-service':
+        optional: true
+      typescript:
         optional: true
 
   volar-service-yaml@0.0.71:
@@ -4084,13 +4104,13 @@ packages:
 
 snapshots:
 
-  '@4hse/astro-llms-txt@1.0.5(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@4hse/astro-llms-txt@1.0.5(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
-      '@astrojs/mdx': 4.3.14(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      '@astrojs/mdx': 4.3.14(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@types/hast': 3.0.5
       '@types/jsdom': 21.1.7
       '@types/micromatch': 4.0.10
-      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
       github-slugger: 2.0.0
       hast-util-select: 6.0.4
       jsdom: 26.1.0
@@ -4199,17 +4219,17 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
       '@volar/kit': 2.4.28(typescript@6.0.3)
       '@volar/language-core': 2.4.28
-      '@volar/language-server': 2.4.28
-      '@volar/language-service': 2.4.28
+      '@volar/language-server': 2.4.28(typescript@6.0.3)
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
       muggle-string: 0.4.1
       tinyglobby: 0.2.17
-      volar-service-css: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-emmet: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-html: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-prettier: 0.0.71(@volar/language-service@2.4.28)(prettier@3.9.6)
-      volar-service-typescript: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-typescript-twoslash-queries: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-yaml: 0.0.71(@volar/language-service@2.4.28)
+      volar-service-css: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))
+      volar-service-emmet: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))
+      volar-service-html: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))
+      volar-service-prettier: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(prettier@3.9.6)
+      volar-service-typescript: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(typescript@6.0.3)
+      volar-service-typescript-twoslash-queries: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(typescript@6.0.3)
+      volar-service-yaml: 0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))
       vscode-html-languageservice: 5.6.2
       vscode-uri: 3.1.0
     optionalDependencies:
@@ -4277,12 +4297,12 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
-  '@astrojs/mdx@4.3.14(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@astrojs/mdx@4.3.14(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.11
       '@mdx-js/mdx': 3.1.1
       acorn: 8.18.0
-      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -4296,11 +4316,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@8.0.2(@astrojs/markdown-remark@7.3.1)(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@astrojs/mdx@8.0.2(@astrojs/markdown-remark@7.3.1)(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@astrojs/markdown-satteri': 0.4.2
-      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+      astro: 7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
       es-module-lexer: 2.3.2
     optionalDependencies:
       '@astrojs/markdown-remark': 7.3.1
@@ -4313,17 +4333,17 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@7.0.0(@types/node@26.6.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)':
+  '@astrojs/react@7.0.0(@types/node@26.6.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
-      '@vitejs/plugin-react': 6.1.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      '@vitejs/plugin-react': 6.1.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       devalue: 5.9.4
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
       ultrahtml: 1.7.0
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
     transitivePeerDependencies:
       - '@arethetypeswrong/core'
       - '@rolldown/plugin-babel'
@@ -5202,12 +5222,12 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 4.3.3
 
-  '@tailwindcss/vite@4.3.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@tailwindcss/vite@4.3.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
       tailwindcss: 4.3.3
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
 
   '@testing-library/dom@10.4.1':
     dependencies:
@@ -5310,34 +5330,34 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@vitejs/plugin-react@6.1.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@vitejs/plugin-react@6.1.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
 
-  '@vitest/browser-preview@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)':
+  '@vitest/browser-preview@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)':
     dependencies:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.7(@testing-library/dom@10.4.1)
-      '@vitest/browser': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
-      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
+      '@vitest/browser': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
+      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)':
+  '@vitest/browser@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)':
     dependencies:
       '@blazediff/core': 1.10.0
-      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@vitest/ui': 5.0.1(vitest@5.0.1)
       '@vitest/utils': 5.0.1
       magic-string: 1.4.1
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
+      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
       ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
@@ -5345,14 +5365,14 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/mocker@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))':
+  '@vitest/mocker@5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.1
       estree-walker: 3.0.3
       magic-string: 1.4.1
     optionalDependencies:
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
 
   '@vitest/pretty-format@5.0.1':
     dependencies:
@@ -5375,7 +5395,7 @@ snapshots:
       pathe: 2.0.3
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
+      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
 
   '@vitest/utils@5.0.1':
     dependencies:
@@ -5383,7 +5403,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)':
+  '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)':
     dependencies:
       '@oxc-project/runtime': 0.151.0
       '@oxc-project/types': 0.151.0
@@ -5404,7 +5424,7 @@ snapshots:
       esbuild: 0.28.2
       fsevents: 2.3.3
       jiti: 2.7.0
-      tsx: 4.23.13
+      tsx: 4.23.15
       typescript: 6.0.3
       yaml: 2.9.1
 
@@ -5434,8 +5454,8 @@ snapshots:
 
   '@volar/kit@2.4.28(typescript@6.0.3)':
     dependencies:
-      '@volar/language-service': 2.4.28
-      '@volar/typescript': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
+      '@volar/typescript': 2.4.28(typescript@6.0.3)
       typesafe-path: 0.2.2
       typescript: 6.0.3
       vscode-languageserver-textdocument: 1.0.12
@@ -5445,32 +5465,38 @@ snapshots:
     dependencies:
       '@volar/source-map': 2.4.28
 
-  '@volar/language-server@2.4.28':
+  '@volar/language-server@2.4.28(typescript@6.0.3)':
     dependencies:
       '@volar/language-core': 2.4.28
-      '@volar/language-service': 2.4.28
-      '@volar/typescript': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
+      '@volar/typescript': 2.4.28(typescript@6.0.3)
       path-browserify: 1.0.1
       request-light: 0.7.0
       vscode-languageserver: 9.0.1
       vscode-languageserver-protocol: 3.18.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 6.0.3
 
-  '@volar/language-service@2.4.28':
+  '@volar/language-service@2.4.28(typescript@6.0.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       vscode-languageserver-protocol: 3.18.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 6.0.3
 
   '@volar/source-map@2.4.28': {}
 
-  '@volar/typescript@2.4.28':
+  '@volar/typescript@2.4.28(typescript@6.0.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 6.0.3
 
   '@vscode/emmet-helper@2.11.0':
     dependencies:
@@ -5618,7 +5644,7 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1):
+  astro@7.3.5(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1):
     dependencies:
       '@astrojs/compiler-rs': 0.5.1
       '@astrojs/internal-helpers': 0.11.0
@@ -5668,8 +5694,8 @@ snapshots:
       unifont: 0.7.5
       unstorage: 1.17.5
       verkit: 0.4.1
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
-      vitefu: 1.1.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
+      vitefu: 1.1.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       xxhash-wasm: 1.1.0
       yargs-parser: 22.0.0
       zod: 4.6.5
@@ -7059,7 +7085,7 @@ snapshots:
       '@oxc-resolver/binding-win32-arm64-msvc': 11.24.2
       '@oxc-resolver/binding-win32-x64-msvc': 11.24.2
 
-  oxfmt@0.70.0(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)):
+  oxfmt@0.70.0(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)):
     dependencies:
       tinypool: 2.1.2
     optionalDependencies:
@@ -7082,7 +7108,7 @@ snapshots:
       '@oxfmt/binding-win32-arm64-msvc': 0.70.0
       '@oxfmt/binding-win32-ia32-msvc': 0.70.0
       '@oxfmt/binding-win32-x64-msvc': 0.70.0
-      vite-plus: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+      vite-plus: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
 
   oxlint-tsgolint@7.0.2002:
     optionalDependencies:
@@ -7093,7 +7119,7 @@ snapshots:
       '@oxlint-tsgolint/win32-arm64': 7.0.2002
       '@oxlint-tsgolint/win32-x64': 7.0.2002
 
-  oxlint@1.85.0(oxlint-tsgolint@7.0.2002)(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)):
+  oxlint@1.85.0(oxlint-tsgolint@7.0.2002)(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.85.0
       '@oxlint/binding-android-arm64': 1.85.0
@@ -7115,7 +7141,7 @@ snapshots:
       '@oxlint/binding-win32-ia32-msvc': 1.85.0
       '@oxlint/binding-win32-x64-msvc': 1.85.0
       oxlint-tsgolint: 7.0.2002
-      vite-plus: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)
+      vite-plus: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)
 
   p-limit@7.3.3:
     dependencies:
@@ -7620,7 +7646,7 @@ snapshots:
   tslib@2.8.1:
     optional: true
 
-  tsx@4.23.13:
+  tsx@4.23.15:
     dependencies:
       esbuild: 0.28.2
     optionalDependencies:
@@ -7750,22 +7776,22 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1):
+  vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1):
     dependencies:
       '@oxc-project/types': 0.151.0
       '@oxlint/plugins': 1.79.0
-      '@vitest/browser': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
-      '@vitest/browser-preview': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
-      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      '@vitest/browser': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
+      '@vitest/browser-preview': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
+      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       '@vitest/pretty-format': 5.0.1
       '@vitest/snapshot': 5.0.1
       '@vitest/spy': 5.0.1
       '@vitest/utils': 5.0.1
-      oxfmt: 0.70.0(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
-      oxlint: 1.85.0(oxlint-tsgolint@7.0.2002)(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      oxfmt: 0.70.0(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
+      oxlint: 1.85.0(oxlint-tsgolint@7.0.2002)(vite-plus@1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(jsdom@26.1.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       oxlint-tsgolint: 7.0.2002
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
-      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
+      vitest: 5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0)
     optionalDependencies:
       '@voidzero-dev/vite-plus-darwin-arm64': 1.0.0-rc.0
       '@voidzero-dev/vite-plus-darwin-x64': 1.0.0-rc.0
@@ -7805,14 +7831,14 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  vitefu@1.1.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)):
+  vitefu@1.1.3(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)):
     optionalDependencies:
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
 
-  vitest@5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0):
+  vitest@5.0.1(@types/node@26.6.2)(@vitest/browser-preview@5.0.1)(@vitest/ui@5.0.1)(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(jsdom@26.1.0):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))
+      '@vitest/mocker': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))
       chai: 6.2.2
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -7823,55 +7849,56 @@ snapshots:
       tinybench: 6.1.4
       tinyexec: 1.3.0
       tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1)'
+      vite: '@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1)'
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 26.6.2
-      '@vitest/browser-preview': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
+      '@vitest/browser-preview': 5.0.1(@voidzero-dev/vite-plus-core@1.0.0-rc.0(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(yaml@2.9.1))(vitest@5.0.1)
       '@vitest/ui': 5.0.1(vitest@5.0.1)
       jsdom: 26.1.0
     transitivePeerDependencies:
       - msw
 
-  volar-service-css@0.0.71(@volar/language-service@2.4.28):
+  volar-service-css@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3)):
     dependencies:
       vscode-css-languageservice: 6.3.10
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
 
-  volar-service-emmet@0.0.71(@volar/language-service@2.4.28):
+  volar-service-emmet@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3)):
     dependencies:
       '@emmetio/css-parser': 0.4.1
       '@emmetio/html-matcher': 1.3.0
       '@vscode/emmet-helper': 2.11.0
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
 
-  volar-service-html@0.0.71(@volar/language-service@2.4.28):
+  volar-service-html@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3)):
     dependencies:
       vscode-html-languageservice: 5.6.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
 
-  volar-service-prettier@0.0.71(@volar/language-service@2.4.28)(prettier@3.9.6):
+  volar-service-prettier@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(prettier@3.9.6):
     dependencies:
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
       prettier: 3.9.6
 
-  volar-service-typescript-twoslash-queries@0.0.71(@volar/language-service@2.4.28):
+  volar-service-typescript-twoslash-queries@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(typescript@6.0.3):
     dependencies:
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
+      typescript: 6.0.3
 
-  volar-service-typescript@0.0.71(@volar/language-service@2.4.28):
+  volar-service-typescript@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3))(typescript@6.0.3):
     dependencies:
       path-browserify: 1.0.1
       semver: 7.8.5
@@ -7880,14 +7907,15 @@ snapshots:
       vscode-nls: 5.2.0
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
+      typescript: 6.0.3
 
-  volar-service-yaml@0.0.71(@volar/language-service@2.4.28):
+  volar-service-yaml@0.0.71(@volar/language-service@2.4.28(typescript@6.0.3)):
     dependencies:
       vscode-uri: 3.1.0
       yaml-language-server: 1.23.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@6.0.3)
 
   vscode-css-languageservice@6.3.10:
     dependencies:

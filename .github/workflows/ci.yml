@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Vite+ check, Knip, and Astro type-check
+      - name: Verify (Vite+ check, Knip, Astro type-check)
         run: pnpm run verify
       - name: Build
         run: pnpm run build

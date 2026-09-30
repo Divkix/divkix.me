@@ -35,7 +35,7 @@ function validateContent(): void {
     mdxFiles = readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
   } catch (error) {
     console.error(
-      `❌ Failed to read content directory: ${error instanceof Error ? error.message : error}`,
+      `❌ Failed to read content directory: ${error instanceof Error ? error.message : String(error)}`,
     );
     process.exit(1);
   }
@@ -58,7 +58,7 @@ function validateContent(): void {
     postsJson = JSON.parse(readFileSync(POSTS_JSON, "utf-8"));
   } catch (error) {
     console.error(
-      `❌ Failed to parse posts.json: ${error instanceof Error ? error.message : error}`,
+      `❌ Failed to parse posts.json: ${error instanceof Error ? error.message : String(error)}`,
     );
     console.error("   The file may be malformed. Try running prebuild again.");
     process.exit(1);

@@ -13,8 +13,8 @@ export function formatDate(date: string) {
   });
 }
 
-export function calculateReadingTime(content: string): number {
-  const words = content.trim().split(/\s+/).length;
+export function calculateReadingTime(content: string | undefined): number {
+  const words = (content ?? "").trim().split(/\s+/).length;
   return Math.ceil(words / 200);
 }
 

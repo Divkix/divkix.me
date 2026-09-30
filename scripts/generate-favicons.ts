@@ -96,4 +96,4 @@ async function generateFavicons() {
   }
 }
 
-generateFavicons();
+await generateFavicons();
