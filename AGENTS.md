@@ -31,7 +31,6 @@ pnpm run lint:fix && pnpm run format   # autofix
 - `scripts/`: the build pipeline plus manual tools. `.js` files are **ESM** (`type: "module"` in `package.json`); `.ts` files run via `tsx`.
 - `public/_headers` (CSP, caching) and `public/_redirects` (301s: `/projects`, `/contact`, sitemap aliases, space-encoded tag URLs).
 - `design.md`: the locked design system (palette tokens, type, spacing, CTA rules). Read it before any visual change.
-- `docs/superpowers/`: past plans/specs. Historical only, not current truth.
 
 ## Conventions
 
