@@ -179,8 +179,8 @@ jobs:
             exit 0
           fi
           # Squash-merge the exact commit that passed the gate. Branch deletion
-          # comes from the repository's delete_branch_on_merge setting, which
-          # also cleans up manually merged major updates; `--delete-branch`
-          # would fail once that setting has already removed the ref.
+          # is left to the repository's delete_branch_on_merge setting, which
+          # also cleans up manually merged major updates, so an extra
+          # `--delete-branch` would only duplicate work that already happened.
           gh pr merge "$PR" --repo "$REPO" --squash --match-head-commit "$HEAD_SHA"
           log "merged $HEAD_SHA"
