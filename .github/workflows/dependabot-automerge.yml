@@ -58,9 +58,11 @@ jobs:
           : "${HEAD_REPO:?}" "${BASE_REF:?}" "${DRAFT:?}" "${REVIEWER:?}"
           UPDATE_TYPE="${UPDATE_TYPE:-}"
 
-          # Our own run's check is excluded from the rollup so the gate cannot
-          # deadlock on itself.
+          # Our own check is excluded so the gate cannot deadlock on itself:
+          # by name, and by the run id that every check run of this workflow
+          # carries in its details URL (GITHUB_RUN_ID is a default env var).
           OWN_CHECK="Merge gate"
+          OWN_RUN_ID="${GITHUB_RUN_ID:-}"
           TIMEOUT="${GATE_TIMEOUT_SECONDS:-2700}"
           POLL="${GATE_POLL_SECONDS:-15}"
           DRY_RUN="${DRY_RUN:-0}"
@@ -102,13 +104,16 @@ jobs:
             # Full rollup, not `gh pr checks --watch`: checks that register
             # later are seen because the required names must be present too.
             rollup="$(gh pr view "$PR" --repo "$REPO" --json statusCheckRollup \
-              --jq '.statusCheckRollup[] | [(.name // .context), (.conclusion // .state // "PENDING")] | @tsv')"
+              --jq '.statusCheckRollup[] | [(.name // .context), (.conclusion // .state // "PENDING"), (.detailsUrl // .targetUrl // "")] | @tsv')"
             [ -n "$rollup" ] || log "no checks or statuses registered yet"
 
             declare -A seen=() pending_check=() bad=()
-            while IFS=$'\t' read -r name state; do
+            while IFS=$'\t' read -r name state url; do
               [ -n "${name:-}" ] || continue
               [ "$name" = "$OWN_CHECK" ] && continue
+              if [ -n "$OWN_RUN_ID" ] && [[ "$url" == *"/actions/runs/$OWN_RUN_ID/"* ]]; then
+                continue
+              fi
               seen["$name"]=1
               case "$state" in
               SUCCESS|NEUTRAL|SKIPPED) ;;
