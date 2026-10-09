@@ -17,6 +17,9 @@ permissions:
   # Needed so the rollup cannot hide a commit status (not just check runs)
   # from the gate; everything observed must be settled successful.
   statuses: read
+  # Needed only to identify this workflow's own runs on the head commit, so a
+  # predecessor cancelled by cancel-in-progress cannot gate the new run.
+  actions: read
 
 # One gate per pull request; a newer event cancels a stale run.
 concurrency:
@@ -32,6 +35,8 @@ jobs:
       github.event.pull_request.base.ref == 'main' &&
       github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    # Bounds a hung `gh` call; the gate's own deadline is 45 minutes.
+    timeout-minutes: 50
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
@@ -58,11 +63,6 @@ jobs:
           : "${HEAD_REPO:?}" "${BASE_REF:?}" "${DRAFT:?}" "${REVIEWER:?}"
           UPDATE_TYPE="${UPDATE_TYPE:-}"
 
-          # Our own check is excluded so the gate cannot deadlock on itself.
-          # Identity comes from the run id every check run of this workflow
-          # carries in its details URL (GITHUB_RUN_ID is a default env var);
-          # a same-named check from another run is not ours and still counts.
-          OWN_RUN_ID="${GITHUB_RUN_ID:-}"
           # Production values; the overrides exist so the gate can be exercised
           # read-only outside Actions (DRY_RUN=1 prints the merge it would run).
           TIMEOUT="${GATE_TIMEOUT_SECONDS:-2700}"
@@ -112,6 +112,21 @@ jobs:
             ;;
           esac
 
+          # Our own checks are excluded so the gate cannot deadlock on itself.
+          # The current run alone is not enough: cancel-in-progress leaves the
+          # predecessor's own cancelled check attached to the same commit, so
+          # every run of THIS workflow on this commit is ours. The workflow is
+          # named by GITHUB_WORKFLOW_REF (the base-branch copy that is actually
+          # running); a same-named check from any other workflow is not ours
+          # and still counts.
+          WORKFLOW_FILE="${GITHUB_WORKFLOW_REF:?GITHUB_WORKFLOW_REF is missing}"
+          WORKFLOW_FILE="${WORKFLOW_FILE##*/.github/workflows/}"
+          PRIOR_RUNS="$(gh api --paginate \
+            "repos/$REPO/actions/workflows/${WORKFLOW_FILE%@*}/runs?head_sha=$HEAD_SHA&per_page=100" \
+            --jq '.workflow_runs[].id')" || die "could not list the runs of this workflow on $HEAD_SHA"
+          OWN_RUN_IDS="|${GITHUB_RUN_ID:-}|"
+          [ -z "$PRIOR_RUNS" ] || OWN_RUN_IDS="${OWN_RUN_IDS}${PRIOR_RUNS//$'\n'/|}|"
+
           while :; do
             assert_unchanged
 
@@ -119,19 +134,36 @@ jobs:
             # later are seen because the required names must be present too.
             # Empty names are dropped, an empty conclusion means still running,
             # and the URL column is never empty so the columns cannot shift.
-            rollup="$(gh pr view "$PR" --repo "$REPO" --json statusCheckRollup \
-              --jq '.statusCheckRollup[]
-                | select(((.name // .context // "") | length) > 0)
-                | [(.name // .context),
-                   ((.conclusion // .state // "PENDING") | if . == "" then "PENDING" else . end),
-                   (.detailsUrl // .targetUrl // "-")] | @tsv')"
+            #
+            # `gh pr view` fetches this over GraphQL, which returns at most 100
+            # contexts. A capped page is partial - a failing check could sit
+            # past the cap and be missed - so refuse it instead of trusting a
+            # list that could silently be incomplete. Upgrade path if that ever
+            # matters: the paginated REST routes
+            # `gh api --paginate repos/$REPO/commits/$HEAD_SHA/check-runs` and
+            # `.../statuses` (unnamed to this workflow, so no extra scopes).
+            raw="$(gh pr view "$PR" --repo "$REPO" --json statusCheckRollup \
+              --jq '[(.statusCheckRollup | length | tostring)]
+                    + [.statusCheckRollup[]
+                       | select(((.name // .context // "") | length) > 0)
+                       | [(.name // .context),
+                          ((.conclusion // .state // "PENDING") | if . == "" then "PENDING" else . end),
+                          (.detailsUrl // .targetUrl // "-")] | @tsv]
+                    | .[]')"
+            mapfile -t rollup_lines <<<"$raw"
+            ROLLUP_CAP=100
+            [ "${rollup_lines[0]:-0}" -lt "$ROLLUP_CAP" ] ||
+              die "rollup reports ${rollup_lines[0]} contexts, the GraphQL cap is $ROLLUP_CAP; refusing a possibly partial page"
+            rollup="$(printf '%s\n' "${rollup_lines[@]:1}")"
             [ -n "$rollup" ] || log "no checks or statuses registered yet"
 
             declare -A seen=() pending_check=() bad=()
             while IFS=$'\t' read -r name state url; do
               [ -n "${name:-}" ] || continue
-              if [ -n "$OWN_RUN_ID" ] && [[ "$url" == *"/actions/runs/$OWN_RUN_ID/"* ]]; then
-                continue
+              if [[ "$url" == *"/actions/runs/"* ]]; then
+                own_id="${url#*/actions/runs/}"
+                own_id="${own_id%%/*}"
+                [ -n "$own_id" ] && [[ "$OWN_RUN_IDS" == *"|$own_id|"* ]] && continue
               fi
               seen["$name"]=1
               case "$state" in
