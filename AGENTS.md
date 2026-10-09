@@ -4,7 +4,7 @@ Personal portfolio + blog for divkix.me. Astro 7 static output (`output: "static
 
 ## Commands
 
-All verified locally 2026-09-27 (pnpm 12.6.0, Node 26; CI uses Node 22.22.1).
+All verified locally 2026-10-09 (pnpm 12.6.0, Node 26; CI uses Node 22.22.1).
 
 ```bash
 pnpm install --frozen-lockfile   # install (CI uses the same flag)
@@ -53,7 +53,8 @@ pnpm run lint:fix && pnpm run format   # autofix
 - `NOINDEX_PATHS` drives both the page `noindex` meta and the sitemap filter. Add new noindex routes there, not ad hoc.
 - `src/middleware.ts` (trailing-slash 301) only runs in dev and at build. In production, `wrangler.jsonc` `html_handling: "drop-trailing-slash"` does that job, so don't switch it back to `auto-trailing-slash` (that causes a redirect loop with `_redirects`).
 - Generated and gitignored, so don't hand-edit them: `content/blog/posts.json`, `public/og/blog/`, `public/og-image*`, `public/llms*.txt`, `public/rss.xml`, `dist/`, `.astro/`. `llms.txt` comes from the `astroLlmsTxt` config in `astro.config.mjs`, so edit it there.
-- TypeScript is declared as `^6.0.3` in `package.json`, with no pnpm override: `astro check` needs the TS 6 API. `vite`/`vite-plus` versions come from the pnpm `catalog:` in `pnpm-workspace.yaml`.
+- TypeScript is declared as `^6.0.3` in `package.json`, with no pnpm override: `astro check` needs the TS 6 API and exits with an error on TS 7.0 (`astro check does not currently support TypeScript 7.0`, re-verified 2026-10-09; `@astrojs/check@0.9.10` also only peers `^5 || ^6`). TS 6.0.3 is the latest 6.x. `vite`/`vite-plus` versions come from the pnpm `catalog:` in `pnpm-workspace.yaml` and must move together.
+- Dependency policy: `package.json` uses caret ranges (never exact pins) resolved by `pnpm-lock.yaml`; `packageManager` stays an exact pin. `pnpm-workspace.yaml` sets no `minimumReleaseAge*`, so pnpm's default release-age window (1440 minutes, non-strict) applies to every dependency — nothing is excluded from it, so a version published within the last day resolves to the previous one.
 - Tailwind must stay on `@tailwindcss/vite`. `@tailwindcss/postcss` breaks under Astro 7's rolldown Vite (see the comment in `astro.config.mjs`). `components.json` is a shadcn leftover; there is no `src/components/ui/`.
 - The pre-commit hook (`.vite-hooks/pre-commit`) runs `vp staged` and then the full `pnpm run verify`, so expect commits to take a few seconds.
 

@@ -44,6 +44,12 @@ pnpm run dev
 # → http://localhost:4321
 ```
 
+### Dependency policy
+
+- `package.json` declares caret ranges only (no exact pins) and resolves them through `pnpm-lock.yaml`; `packageManager` stays an exact pin.
+- No `minimumReleaseAge*` setting anywhere: pnpm's default release-age window (1440 minutes, non-strict) applies to every dependency, with no exclusions. A version published within the last day resolves to the previous release.
+- `typescript` stays on 6.x — `astro check` exits with an error on TypeScript 7.0.
+
 ## Scripts
 
 | Command                    | What it does                                                                                                    |

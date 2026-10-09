@@ -1,11 +1,11 @@
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0
-  vite-plus: 1.0.0-rc.0
+  vite: npm:@voidzero-dev/vite-plus-core@^1.1.0
+  vite-plus: ^1.1.0
 overrides:
   vite@*: "catalog:"
-  # Transitive via ajv; pnpm update won't re-resolve it. ^3.1.7 covers
+  # Transitive via ajv; pnpm update won't re-resolve it. ^3.1.8 covers
   # 5 high fast-uri CVEs (fixed in 3.1.5/3.1.6).
-  fast-uri: ^3.1.7
+  fast-uri: ^3.1.8
 peerDependencyRules:
   allowAny:
     - vite
@@ -14,6 +14,3 @@ peerDependencyRules:
 allowBuilds:
   esbuild: true
   sharp: true
-minimumReleaseAgeExclude:
-  - "@astrojs/telemetry@3.3.3"
-  - astro@7.0.7
