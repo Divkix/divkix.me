@@ -4,22 +4,30 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:00"
       timezone: "UTC"
+    # Wait one day after a release before proposing it (security updates are
+    # exempt). Mirrors pnpm's own 1440-minute default release age; GitHub's
+    # default cooldown is otherwise 3 days.
+    cooldown:
+      default-days: 1
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(deps)"
-    ignore:
-      # vite-plus toolchain moves in lockstep via `vp migrate` only — solo bumps desync it and break the build.
-      - dependency-name: "vite-plus"
-      - dependency-name: "vite"
-      - dependency-name: "vitest"
-      - dependency-name: "@vitest/*"
-      - dependency-name: "@voidzero-dev/vite-plus-core"
-      - dependency-name: "@voidzero-dev/vite-plus-test"
     groups:
+      # The Vite+ toolchain moves in lockstep, so it gets its own minor/patch
+      # group ahead of the catch-all (the first matching group wins).
+      vite-plus-toolchain:
+        patterns:
+          - "vite"
+          - "vite-plus"
+          - "@voidzero-dev/*"
+          - "vitest"
+          - "@vitest/*"
+        update-types:
+          - "minor"
+          - "patch"
       all-minor-patch:
         patterns:
           - "*"
@@ -33,10 +41,11 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:00"
       timezone: "UTC"
+    cooldown:
+      default-days: 1
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(ci)"
