@@ -63,6 +63,8 @@ jobs:
           # carries in its details URL (GITHUB_RUN_ID is a default env var).
           OWN_CHECK="Merge gate"
           OWN_RUN_ID="${GITHUB_RUN_ID:-}"
+          # Production values; the overrides exist so the gate can be exercised
+          # read-only outside Actions (DRY_RUN=1 prints the merge it would run).
           TIMEOUT="${GATE_TIMEOUT_SECONDS:-2700}"
           POLL="${GATE_POLL_SECONDS:-15}"
           DRY_RUN="${DRY_RUN:-0}"
