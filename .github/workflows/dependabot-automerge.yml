@@ -35,7 +35,7 @@ jobs:
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -58,10 +58,10 @@ jobs:
           : "${HEAD_REPO:?}" "${BASE_REF:?}" "${DRAFT:?}" "${REVIEWER:?}"
           UPDATE_TYPE="${UPDATE_TYPE:-}"
 
-          # Our own check is excluded so the gate cannot deadlock on itself:
-          # by name, and by the run id that every check run of this workflow
-          # carries in its details URL (GITHUB_RUN_ID is a default env var).
-          OWN_CHECK="Merge gate"
+          # Our own check is excluded so the gate cannot deadlock on itself.
+          # Identity comes from the run id every check run of this workflow
+          # carries in its details URL (GITHUB_RUN_ID is a default env var);
+          # a same-named check from another run is not ours and still counts.
           OWN_RUN_ID="${GITHUB_RUN_ID:-}"
           # Production values; the overrides exist so the gate can be exercised
           # read-only outside Actions (DRY_RUN=1 prints the merge it would run).
@@ -76,6 +76,21 @@ jobs:
 
           log() { printf '%s %s\n' "$(date -u +%H:%M:%S)" "$*"; }
           die() { log "FAIL: $*"; exit 1; }
+
+          # The run only speaks for the commit and target it was started on:
+          # re-read the pull request's identity from the API every time.
+          assert_unchanged() {
+            local json
+            json="$(gh pr view "$PR" --repo "$REPO" --json headRefOid,baseRefName,isDraft \
+              --jq '[.headRefOid, .baseRefName, (.isDraft | tostring)] | @tsv')" ||
+              die "could not re-read pull request #$PR"
+            local live_sha live_base live_draft
+            IFS=$'\t' read -r live_sha live_base live_draft <<<"$json"
+            [ "$live_sha" = "$HEAD_SHA" ] ||
+              die "head moved from $HEAD_SHA to $live_sha; a newer run gates it"
+            [ "$live_base" = "main" ] || die "base branch changed to '$live_base'"
+            [ "$live_draft" = "false" ] || die "pull request is now a draft"
+          }
 
           # Fail-closed preconditions, mirroring the job-level `if:`.
           [ "$AUTHOR" = "dependabot[bot]" ] || die "author '$AUTHOR' is not dependabot[bot]"
@@ -98,28 +113,30 @@ jobs:
           esac
 
           while :; do
-            # A run only speaks for the commit it was started on.
-            current_sha="$(gh pr view "$PR" --repo "$REPO" --json headRefOid --jq .headRefOid)"
-            [ "$current_sha" = "$HEAD_SHA" ] ||
-              die "head moved from $HEAD_SHA to $current_sha; a newer run gates it"
+            assert_unchanged
 
             # Full rollup, not `gh pr checks --watch`: checks that register
             # later are seen because the required names must be present too.
+            # Empty names are dropped, an empty conclusion means still running,
+            # and the URL column is never empty so the columns cannot shift.
             rollup="$(gh pr view "$PR" --repo "$REPO" --json statusCheckRollup \
-              --jq '.statusCheckRollup[] | [(.name // .context), (.conclusion // .state // "PENDING"), (.detailsUrl // .targetUrl // "")] | @tsv')"
+              --jq '.statusCheckRollup[]
+                | select(((.name // .context // "") | length) > 0)
+                | [(.name // .context),
+                   ((.conclusion // .state // "PENDING") | if . == "" then "PENDING" else . end),
+                   (.detailsUrl // .targetUrl // "-")] | @tsv')"
             [ -n "$rollup" ] || log "no checks or statuses registered yet"
 
             declare -A seen=() pending_check=() bad=()
             while IFS=$'\t' read -r name state url; do
               [ -n "${name:-}" ] || continue
-              [ "$name" = "$OWN_CHECK" ] && continue
               if [ -n "$OWN_RUN_ID" ] && [[ "$url" == *"/actions/runs/$OWN_RUN_ID/"* ]]; then
                 continue
               fi
               seen["$name"]=1
               case "$state" in
-              SUCCESS|NEUTRAL|SKIPPED) ;;
-              FAILURE|ERROR|CANCELLED|TIMED_OUT|ACTION_REQUIRED|STARTUP_FAILURE|STALE)
+              SUCCESS) ;;
+              FAILURE|ERROR|CANCELLED|TIMED_OUT|ACTION_REQUIRED|STARTUP_FAILURE|STALE|NEUTRAL|SKIPPED)
                 bad["$name"]="$state"
                 ;;
               *) pending_check["$name"]="$state" ;;
@@ -154,9 +171,7 @@ jobs:
             sleep "$POLL"
           done
 
-          final_sha="$(gh pr view "$PR" --repo "$REPO" --json headRefOid --jq .headRefOid)"
-          [ "$final_sha" = "$HEAD_SHA" ] ||
-            die "head moved between gate and merge ($HEAD_SHA to $final_sha)"
+          assert_unchanged
 
           log "all required checks successful on $HEAD_SHA"
           if [ "$DRY_RUN" = "1" ]; then
