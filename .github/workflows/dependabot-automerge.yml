@@ -1,0 +1,218 @@
+name: Dependabot automerge
+
+# Metadata-only `pull_request_target`: this job never checks out, installs or
+# runs pull-request code; it reads PR/check metadata and merges through the API
+# with the repository token. The repository Actions policy scopes
+# `pull_request_target` to the dependabot[bot] actor and to exactly this file
+# (https://github.com/Divkix/divkix.me/settings/actions/rules/7004), so an
+# owner-pushed `synchronize` on a Dependabot branch stays blocked.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  # Needed so the rollup cannot hide a commit status (not just check runs)
+  # from the gate; everything observed must be settled successful.
+  statuses: read
+  # Needed only to identify this workflow's own runs on the head commit, so a
+  # predecessor cancelled by cancel-in-progress cannot gate the new run.
+  actions: read
+
+# One gate per pull request; a newer event cancels a stale run.
+concurrency:
+  group: dependabot-automerge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: Merge gate
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    # Bounds a hung `gh` call; the gate's own deadline is 45 minutes.
+    timeout-minutes: 50
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Gate and merge minor/patch updates
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          REVIEWER: Divkix
+        run: |
+          set -euo pipefail
+
+          : "${GH_TOKEN:?}" "${REPO:?}" "${PR:?}" "${HEAD_SHA:?}" "${AUTHOR:?}"
+          : "${HEAD_REPO:?}" "${BASE_REF:?}" "${DRAFT:?}" "${REVIEWER:?}"
+          UPDATE_TYPE="${UPDATE_TYPE:-}"
+
+          # Production values; the overrides exist so the gate can be exercised
+          # read-only outside Actions (DRY_RUN=1 prints the merge it would run).
+          TIMEOUT="${GATE_TIMEOUT_SECONDS:-2700}"
+          POLL="${GATE_POLL_SECONDS:-15}"
+          DRY_RUN="${DRY_RUN:-0}"
+          REQUIRED_CHECKS=(
+            "Verify, build, audit"
+            "GitGuardian Security Checks"
+            "Workers Builds: divkix-me"
+          )
+
+          log() { printf '%s %s\n' "$(date -u +%H:%M:%S)" "$*"; }
+          die() { log "FAIL: $*"; exit 1; }
+
+          # The run only speaks for the commit and target it was started on:
+          # re-read the pull request's identity from the API every time.
+          assert_unchanged() {
+            local json
+            json="$(gh pr view "$PR" --repo "$REPO" --json headRefOid,baseRefName,isDraft \
+              --jq '[.headRefOid, .baseRefName, (.isDraft | tostring)] | @tsv')" ||
+              die "could not re-read pull request #$PR"
+            local live_sha live_base live_draft
+            IFS=$'\t' read -r live_sha live_base live_draft <<<"$json"
+            [ "$live_sha" = "$HEAD_SHA" ] ||
+              die "head moved from $HEAD_SHA to $live_sha; a newer run gates it"
+            [ "$live_base" = "main" ] || die "base branch changed to '$live_base'"
+            [ "$live_draft" = "false" ] || die "pull request is now a draft"
+          }
+
+          # Fail-closed preconditions, mirroring the job-level `if:`.
+          [ "$AUTHOR" = "dependabot[bot]" ] || die "author '$AUTHOR' is not dependabot[bot]"
+          [ "$HEAD_REPO" = "$REPO" ] || die "head repo '$HEAD_REPO' is not in-repo"
+          [ "$BASE_REF" = "main" ] || die "base branch '$BASE_REF' is not main"
+          [ "$DRAFT" = "false" ] || die "PR is a draft"
+
+          case "$UPDATE_TYPE" in
+          version-update:semver-major)
+            log "major update: requesting review from $REVIEWER, never auto-merging"
+            [ "$DRY_RUN" = "1" ] || gh pr edit "$PR" --repo "$REPO" --add-reviewer "$REVIEWER"
+            exit 0
+            ;;
+          version-update:semver-minor|version-update:semver-patch)
+            log "update-type '$UPDATE_TYPE': eligible for the merge gate"
+            ;;
+          *)
+            die "update-type '$UPDATE_TYPE' is not an exact semver-minor/semver-patch"
+            ;;
+          esac
+
+          # Our own checks are excluded so the gate cannot deadlock on itself.
+          # The current run alone is not enough: cancel-in-progress leaves the
+          # predecessor's own cancelled check attached to the same commit, so
+          # every run of THIS workflow on this commit is ours. The workflow is
+          # named by GITHUB_WORKFLOW_REF (the base-branch copy that is actually
+          # running); a same-named check from any other workflow is not ours
+          # and still counts.
+          WORKFLOW_FILE="${GITHUB_WORKFLOW_REF:?GITHUB_WORKFLOW_REF is missing}"
+          WORKFLOW_FILE="${WORKFLOW_FILE##*/.github/workflows/}"
+          PRIOR_RUNS="$(gh api --paginate \
+            "repos/$REPO/actions/workflows/${WORKFLOW_FILE%@*}/runs?head_sha=$HEAD_SHA&per_page=100" \
+            --jq '.workflow_runs[].id')" || die "could not list the runs of this workflow on $HEAD_SHA"
+          OWN_RUN_IDS="|${GITHUB_RUN_ID:-}|"
+          [ -z "$PRIOR_RUNS" ] || OWN_RUN_IDS="${OWN_RUN_IDS}${PRIOR_RUNS//$'\n'/|}|"
+
+          while :; do
+            assert_unchanged
+
+            # Full rollup, not `gh pr checks --watch`: checks that register
+            # later are seen because the required names must be present too.
+            # Empty names are dropped, an empty conclusion means still running,
+            # and the URL column is never empty so the columns cannot shift.
+            #
+            # `gh pr view` fetches this over GraphQL, which returns at most 100
+            # contexts. A capped page is partial - a failing check could sit
+            # past the cap and be missed - so refuse it instead of trusting a
+            # list that could silently be incomplete. Upgrade path if that ever
+            # matters: the paginated REST routes
+            # `gh api --paginate repos/$REPO/commits/$HEAD_SHA/check-runs` and
+            # `.../statuses` (unnamed to this workflow, so no extra scopes).
+            raw="$(gh pr view "$PR" --repo "$REPO" --json statusCheckRollup \
+              --jq '[(.statusCheckRollup | length | tostring)]
+                    + [.statusCheckRollup[]
+                       | select(((.name // .context // "") | length) > 0)
+                       | [(.name // .context),
+                          ((.conclusion // .state // "PENDING") | if . == "" then "PENDING" else . end),
+                          (.detailsUrl // .targetUrl // "-")] | @tsv]
+                    | .[]')"
+            mapfile -t rollup_lines <<<"$raw"
+            ROLLUP_CAP=100
+            [ "${rollup_lines[0]:-0}" -lt "$ROLLUP_CAP" ] ||
+              die "rollup reports ${rollup_lines[0]} contexts, the GraphQL cap is $ROLLUP_CAP; refusing a possibly partial page"
+            rollup="$(printf '%s\n' "${rollup_lines[@]:1}")"
+            [ -n "$rollup" ] || log "no checks or statuses registered yet"
+
+            declare -A seen=() pending_check=() bad=()
+            while IFS=$'\t' read -r name state url; do
+              [ -n "${name:-}" ] || continue
+              if [[ "$url" == *"/actions/runs/"* ]]; then
+                own_id="${url#*/actions/runs/}"
+                own_id="${own_id%%/*}"
+                [ -n "$own_id" ] && [[ "$OWN_RUN_IDS" == *"|$own_id|"* ]] && continue
+              fi
+              seen["$name"]=1
+              case "$state" in
+              SUCCESS) ;;
+              FAILURE|ERROR|CANCELLED|TIMED_OUT|ACTION_REQUIRED|STARTUP_FAILURE|STALE|NEUTRAL|SKIPPED)
+                bad["$name"]="$state"
+                ;;
+              *) pending_check["$name"]="$state" ;;
+              esac
+            done <<< "$rollup"
+
+            if [ "${#bad[@]}" -gt 0 ]; then
+              for name in "${!bad[@]}"; do log "not successful: $name -> ${bad[$name]}"; done
+              die "at least one check or status is not successful"
+            fi
+
+            missing=()
+            for name in "${REQUIRED_CHECKS[@]}"; do
+              [ -n "${seen[$name]:-}" ] || missing+=("$name")
+            done
+
+            if [ "${#missing[@]}" -eq 0 ] && [ "${#pending_check[@]}" -eq 0 ]; then
+              break
+            fi
+
+            if [ "$SECONDS" -ge "$TIMEOUT" ]; then
+              if [ "${#missing[@]}" -gt 0 ]; then
+                for name in "${missing[@]}"; do log "missing required check: $name"; done
+              fi
+              for name in "${!pending_check[@]}"; do
+                log "still pending: $name -> ${pending_check[$name]}"
+              done
+              die "gate timed out after ${TIMEOUT}s; nothing was merged"
+            fi
+
+            log "waiting: ${#missing[@]} required check(s) not registered, ${#pending_check[@]} pending; retry in ${POLL}s"
+            sleep "$POLL"
+          done
+
+          assert_unchanged
+
+          log "all required checks successful on $HEAD_SHA"
+          if [ "$DRY_RUN" = "1" ]; then
+            log "DRY RUN: would run: gh pr merge $PR --repo $REPO --squash --match-head-commit $HEAD_SHA"
+            exit 0
+          fi
+          # Squash-merge the exact commit that passed the gate. Branch deletion
+          # is left to the repository's delete_branch_on_merge setting, which
+          # also cleans up manually merged major updates, so an extra
+          # `--delete-branch` would only duplicate work that already happened.
+          gh pr merge "$PR" --repo "$REPO" --squash --match-head-commit "$HEAD_SHA"
+          log "merged $HEAD_SHA"
