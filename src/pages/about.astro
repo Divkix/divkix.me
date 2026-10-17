@@ -13,7 +13,7 @@ import { baseUrl } from "@/lib/seo";
 
 const aboutUrl = `${baseUrl}/about`;
 const aboutDescription =
-  "About Divanshu Chauhan: MS CS grad, Cloudflare software engineer intern, and Vinext contributor. Experience, skills, education, and the projects behind them.";
+  "About Divanshu Chauhan: MS CS grad, Cloudflare systems engineer, and Vinext contributor. Experience, skills, education, and the projects behind them.";
 
 const aboutPageSchema = generateProfilePageSchema(
   `About ${siteConfig.name}`,
@@ -75,7 +75,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
         >
           <img
             src={siteConfig.authorImage}
-            alt={`Portrait of ${siteConfig.name}, software engineer in Tempe, Arizona`}
+            alt={`Portrait of ${siteConfig.name}, systems engineer in Austin, Texas`}
             class="w-full aspect-4/5 object-cover object-[center_22%]"
             loading="eager"
             decoding="async"
@@ -131,10 +131,10 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
 
       <div class="space-y-(--space-xs)">
         <h2 class="font-display text-(length:--text-xl) leading-tight text-foreground m-0">
-          Open to work
+          Availability
         </h2>
         <p class="prose-measure text-base leading-relaxed text-foreground">
-          {siteConfig.openToWork}
+          {siteConfig.availability}
         </p>
       </div>
 

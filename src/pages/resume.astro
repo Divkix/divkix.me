@@ -9,7 +9,7 @@ const faqPageSchema = generateFAQPageSchema(
   [
     {
       q: "What is your experience?",
-      a: "Software Engineer Intern at Cloudflare (Emerging Technology & Incubation, June 2026 – Present) building engineering tooling and developer-experience infrastructure for production Workers workloads. Previously Engineering Tutor, Instructional Aide, and Undergraduate TA at Arizona State University (Aug. 2023 – May 2026) tutoring CSE205, CSE230, CSE240, CSE310, CSE330, CSE360 and supporting CSE110 for 456 students. Earlier Finance and Technology Intern at Xrossways INC. (May 2022 – Aug. 2022). MS in Computer Science, ASU, Aug. 2025 – May 2026 (GPA 3.889/4.00); BS, ASU, Jan. 2022 – May 2025 (Magna Cum Laude, GPA 3.78/4.00).",
+      a: "Systems Engineer at Cloudflare (Oct. 2026 – Present), after a Software Engineer Intern role on Emerging Technology & Incubation (June 2026 – Sept. 2026) building engineering tooling and developer-experience infrastructure for production Workers workloads. Previously Engineering Tutor, Instructional Aide, and Undergraduate TA at Arizona State University (Aug. 2023 – May 2026) tutoring CSE205, CSE230, CSE240, CSE310, CSE330, CSE360 and supporting CSE110 for 456 students. Earlier Finance and Technology Intern at Xrossways INC. (May 2022 – Aug. 2022). MS in Computer Science, ASU, Aug. 2025 – May 2026 (GPA 3.889/4.00); BS, ASU, Jan. 2022 – May 2025 (Magna Cum Laude, GPA 3.78/4.00).",
     },
     {
       q: "What technologies do you use?",
@@ -19,7 +19,7 @@ const faqPageSchema = generateFAQPageSchema(
   `${baseUrl}/resume`,
 );
 
-const resumeDescription = `Resume of ${siteConfig.name} — software engineer intern at Cloudflare, currently open to full-time SWE roles.`;
+const resumeDescription = `Resume of ${siteConfig.name} — systems engineer at Cloudflare and Vinext contributor.`;
 
 const resumePageSchema = generateProfilePageSchema(
   `Resume | ${siteConfig.name} — ${siteConfig.seo.jobTitle}`,
@@ -65,7 +65,7 @@ const resumePageSchema = generateProfilePageSchema(
       </p>
 
       <p class="prose-measure text-base text-foreground/85 leading-relaxed mt-(--space-md)">
-        {siteConfig.openToWork}
+        {siteConfig.availability}
       </p>
 
       <div class="accent-line mt-(--space-xl)! mb-0!" aria-hidden="true"></div>

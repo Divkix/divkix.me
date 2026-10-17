@@ -83,35 +83,31 @@ assert(
   "robots.txt should allow AI assistants to use indexed content as answer context.",
 );
 assert(
-  astroConfig.includes("SWE Intern @ Cloudflare") &&
-    astroConfig.includes("full-time SWE"),
-  "LLM discovery metadata should reflect current Cloudflare role and full-time SWE search.",
+  astroConfig.includes("Systems Engineer @ Cloudflare") &&
+    !/SWE Intern @ Cloudflare|engineer intern at Cloudflare/i.test(astroConfig),
+  "LLM discovery metadata should reflect the current full-time Cloudflare role, not the internship.",
 );
 assert(
-  astroConfig.includes("Currently open to full-time SWE") &&
-    !astroConfig.includes("starting May") &&
-    !astroConfig.includes("starting May/June"),
-  "LLM discovery metadata should describe the full-time search in present tense, not a past start date.",
+  !/open to full-time/i.test(astroConfig),
+  "LLM discovery metadata should not advertise a job search.",
 );
 const siteConfigSource = read("src/data/site.config.ts");
 assert(
-  siteConfigSource.includes('jobTitle: "Software Engineer Intern"'),
-  "JSON-LD jobTitle should be Software Engineer Intern, not a full-time Software Engineer title.",
+  siteConfigSource.includes('jobTitle: "Systems Engineer"'),
+  "JSON-LD jobTitle should be Systems Engineer.",
 );
 assert(
-  !/software engineer at Cloudflare/i.test(siteConfigSource) &&
-    !/Software engineer at Cloudflare/.test(
-      read("src/layouts/BaseLayout.astro"),
-    ) &&
-    !/Software engineer at Cloudflare/.test(
-      read("src/layouts/SiteLayout.astro"),
-    ),
-  "Public copy should not present Divanshu as a full-time software engineer at Cloudflare.",
+  !/engineer intern at Cloudflare/i.test(siteConfigSource) &&
+    !/Engineer Intern/.test(read("src/layouts/BaseLayout.astro")) &&
+    !/Engineer Intern/.test(read("src/layouts/SiteLayout.astro")) &&
+    !hero.includes("intern"),
+  "Public copy should present Divanshu as a full-time Cloudflare engineer, not an intern.",
 );
 assert(
-  !read("src/pages/about.astro").includes("starting May 2026") &&
-    siteConfigSource.includes("Currently open to full-time"),
-  "Open-to-work copy should be present tense, with no leftover starting May 2026.",
+  !/open to full-time|open to work/i.test(siteConfigSource) &&
+    !/open to full-time|open to work/i.test(hero) &&
+    !/open to full-time/i.test(contact),
+  "Open-to-work copy should be gone now that Divanshu works full-time.",
 );
 assert(
   astroConfig.includes('trailingSlash: "never"'),
@@ -164,7 +160,7 @@ assert(
 );
 assert(
   clipMetaDescription(
-    "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare and a Vinext contributor, currently open to full-time SWE roles. He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
+    "Divanshu Chauhan (divkix) is a systems engineer at Cloudflare and a Vinext contributor with an MS in Computer Science from Arizona State. He builds LogWell, Clickfolio, and Alita Robot, a Telegram bot used by 300,000+ people, and writes about edge computing, developer tools, and shipping side projects.",
   ).length <= META_DESCRIPTION_MAX,
   "clipMetaDescription should keep meta descriptions at ~160 characters.",
 );
