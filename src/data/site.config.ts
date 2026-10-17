@@ -2,13 +2,13 @@ export const siteConfig = {
   name: "Divanshu Chauhan",
   handle: "Divkix",
   tagline:
-    "Software engineer intern at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
+    "Systems engineer at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
   location: "Tempe, Arizona, USA",
   email: "divkix@divkix.me",
   about:
-    "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I intern on Cloudflare's ETI team. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
+    "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I'm now a full-time Systems Engineer at Cloudflare after interning there over the summer. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
   heroSummary:
-    "Software engineer intern at Cloudflare. MS in Computer Science from ASU. I build edge infrastructure by day and side projects people actually open at night. Currently open to full-time backend, infrastructure, developer tools, and AI platform roles.",
+    "Systems engineer at Cloudflare. MS in Computer Science from ASU. I build edge infrastructure by day and side projects people actually open at night.",
   heroProof:
     "Alita Robot serves 300k+ Telegram users. I contribute to Vinext, Cloudflare's open-source Next.js-on-Workers stack.",
   founderPov:
@@ -24,15 +24,15 @@ export const siteConfig = {
   },
 
   seo: {
-    jobTitle: "Software Engineer Intern",
+    jobTitle: "Systems Engineer",
     defaultTitle:
-      "Divanshu Chauhan — Cloudflare SWE Intern, Vinext Contributor",
+      "Divanshu Chauhan — Cloudflare Systems Engineer, Vinext Contributor",
     metaDescription:
-      "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare and a Vinext contributor, currently open to full-time SWE roles.",
+      "Divanshu Chauhan (divkix) is a systems engineer at Cloudflare and a Vinext contributor who builds LogWell, Clickfolio, and Alita Robot.",
   },
 
-  openToWork:
-    "Currently open to full-time software engineering roles: backend, infrastructure, developer tools, AI platforms. Open to relocation. Remote-friendly.",
+  availability:
+    "Working full-time as a Systems Engineer at Cloudflare, so I'm not looking for new roles. Always happy to talk side projects, Cloudflare Workers, or something you're stuck on.",
 
   /** Compact homepage proof points — outcomes, not skill tags */
   proofPoints: [
@@ -53,7 +53,7 @@ export const siteConfig = {
   faq: [
     {
       q: "Who is Divanshu Chauhan?",
-      a: "Divanshu Chauhan (divkix) is a software engineer intern at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He is currently open to full-time backend, infrastructure, developer tools, and AI platform roles. He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
+      a: "Divanshu Chauhan (divkix) is a systems engineer at Cloudflare with an MS in Computer Science from Arizona State University (GPA 3.889, completed May 2026). He builds production tools like LogWell, Clickfolio, and Alita Robot, contributes to Cloudflare Vinext, and writes about developer tools and edge computing on divkix.me.",
     },
     {
       q: "What is Divanshu Chauhan's education?",
@@ -61,7 +61,7 @@ export const siteConfig = {
     },
     {
       q: "What is Divanshu Chauhan working on at Cloudflare?",
-      a: "Divanshu is a software engineer intern on Cloudflare's ETI team and an open-source contributor to Vinext, Cloudflare's Vite-based reimplementation of the Next.js API surface for deployment on Workers and other runtimes.",
+      a: "Divanshu is a full-time Systems Engineer at Cloudflare, which he joined in October 2026 after a summer internship there. He is also an open-source contributor to Vinext, Cloudflare's Vite-based reimplementation of the Next.js API surface for deployment on Workers and other runtimes.",
     },
     {
       q: "What is Vinext?",
@@ -120,11 +120,16 @@ export const siteConfig = {
       duration: "June 2026 – Present",
       positions: [
         {
+          title: "Systems Engineer",
+          year: "Oct. 2026 – Present",
+          highlights: ["Joined full-time after the summer internship"],
+        },
+        {
           title: "Software Engineer Intern",
-          year: "June 2026 – Present",
+          year: "June 2026 – Sept. 2026",
           highlights: [
-            "Work on engineering tooling and platform systems within Cloudflare’s Emerging Technology & Incubation team",
-            "Build developer-experience and infrastructure systems for production-grade workloads in the Cloudflare ecosystem",
+            "Worked on engineering tooling and platform systems within Cloudflare’s Emerging Technology & Incubation team",
+            "Built developer-experience and infrastructure systems for production-grade workloads in the Cloudflare ecosystem",
           ],
         },
       ],
