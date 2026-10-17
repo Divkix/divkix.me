@@ -3,7 +3,7 @@ export const siteConfig = {
   handle: "Divkix",
   tagline:
     "Systems engineer at Cloudflare. MS in Computer Science from Arizona State (GPA 3.889). I ship side projects people actually use.",
-  location: "Tempe, Arizona, USA",
+  location: "Austin, Texas, USA",
   email: "divkix@divkix.me",
   about:
     "I'm Divanshu. I finished my MS in Computer Science at Arizona State University in May 2026 with a 3.889 GPA, and I'm now a full-time Systems Engineer at Cloudflare after interning there over the summer. The side of my work I care about most is the projects people open every day: a Telegram bot now serving 300,000+ users, a self-hosted logging tool I built because Datadog priced me out, and a class tracker I made for ASU students who were tired of refreshing the registrar at midnight. I also contribute to Vinext, Cloudflare's open-source way of running Next.js apps on Vite. I spent two years tutoring eight CS courses at ASU, which is a humbling way to learn that you don't really understand something until you can explain it to someone who is stuck.",
@@ -18,8 +18,8 @@ export const siteConfig = {
   authorImage: "/divanshu-chauhan.webp",
   nationality: "Indian",
   address: {
-    locality: "Tempe",
-    region: "Arizona",
+    locality: "Austin",
+    region: "Texas",
     country: "USA",
   },
 
@@ -116,7 +116,7 @@ export const siteConfig = {
     {
       company: "Cloudflare",
       url: "https://www.cloudflare.com",
-      location: "Austin, TX / Remote",
+      location: "Austin, TX",
       duration: "June 2026 – Present",
       positions: [
         {

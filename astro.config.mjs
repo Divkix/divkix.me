@@ -108,7 +108,7 @@ Creator of LogWell, PickMyClass, Clickfolio, Alita Robot (300,000+ users), and o
 - Edge Computing: Cloudflare Workers, D1, Durable Objects, R2, zero-cost deployment
 - Full-Stack Development: Next.js, Astro, React, TypeScript, PostgreSQL
 - Developer Tools and Observability: logging systems, telemetry, queues, production debugging
-- Career Entity Signals: Systems Engineer @ Cloudflare, MS CS @ ASU, Tempe Arizona
+- Career Entity Signals: Systems Engineer @ Cloudflare, MS CS @ ASU, Austin Texas
 
 ## Contact
 - Email: divkix@divkix.me
