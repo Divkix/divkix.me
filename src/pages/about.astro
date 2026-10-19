@@ -71,8 +71,12 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
         </header>
 
         <figure
-          class="portrait-frame m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-start md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
+          class="ascii-window m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-start md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
         >
+          <div class="ascii-window-bar" aria-hidden="true">
+            <span>[ divkix@cloudflare:~/portrait.webp ]</span>
+            <span>[ 480x600 ]</span>
+          </div>
           <img
             src={siteConfig.authorImage}
             alt={`Portrait of ${siteConfig.name}, systems engineer in Austin, Texas`}
@@ -82,7 +86,7 @@ const aboutFaqSchema = generateFAQPageSchema([...siteConfig.faq], aboutUrl);
             width="480"
             height="600"
           />
-          <figcaption class="text-[10px] tracking-[0.18em] uppercase text-muted-foreground pt-(--space-xs) text-center">
+          <figcaption class="text-[10px] tracking-[0.18em] uppercase text-muted-foreground py-(--space-xs) text-center">
             {siteConfig.location}
           </figcaption>
         </figure>

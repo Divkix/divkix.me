@@ -127,7 +127,10 @@ function Contact() {
                 href="/resume"
                 className="text-sm text-foreground link-underline-grow"
               >
-                Download resume <span aria-hidden="true">→</span>
+                Download resume{" "}
+                <span aria-hidden="true" className="ascii-arrow">
+                  -&gt;
+                </span>
               </a>
             </p>
           </div>
