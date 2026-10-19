@@ -47,6 +47,16 @@ tokens (`var(--space-md)`), never raw values.
 - Reveal pattern: none in fold (Atelier); opacity-only below-fold if needed
 - Reduced-motion fallback: opacity-only, ≤ 150 ms
 
+## ASCII accent
+
+Terminal/ASCII chrome is a supporting accent, not a second genre:
+
+- Allowed: prompt lines, a decorative ASCII wordmark, boxed stats readouts,
+  window-title portrait frames, `->` / `=>` link arrows, `[EOF]` footer closer.
+- ASCII always uses `--font-mono`; display and body faces stay unchanged.
+- ASCII wordmarks are decorative (`aria-hidden`); the real name remains the H1.
+- The block cursor blinks via `cursor-blink` and stops under reduced motion.
+
 ## Microinteractions stance
 
 - Silent success toasts (no celebratory confetti)

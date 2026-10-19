@@ -19,7 +19,9 @@ function Highlights() {
               aria-label="Full background, experience, and skills"
             >
               Full background, experience, and skills{" "}
-              <span aria-hidden="true">→</span>
+              <span aria-hidden="true" className="ascii-arrow">
+                -&gt;
+              </span>
             </a>
           </p>
         </div>

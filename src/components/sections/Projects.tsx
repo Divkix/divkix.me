@@ -66,7 +66,10 @@ function ProjectEntry({ project }: { project: Project }) {
                 aria-label={`${linkLabel(link.label)} — ${project.name}`}
                 className="text-foreground link-underline-grow"
               >
-                {linkLabel(link.label)} <span aria-hidden="true">↗</span>
+                {linkLabel(link.label)}{" "}
+                <span aria-hidden="true" className="ascii-arrow">
+                  =&gt;
+                </span>
               </a>
             ))}
             {blogHref && (
@@ -75,7 +78,10 @@ function ProjectEntry({ project }: { project: Project }) {
                 aria-label={`Case study — ${project.name}`}
                 className="text-primary link-underline-grow"
               >
-                Case study <span aria-hidden="true">→</span>
+                Case study{" "}
+                <span aria-hidden="true" className="ascii-arrow">
+                  -&gt;
+                </span>
               </a>
             )}
           </p>
@@ -107,7 +113,9 @@ export function Projects() {
       <p className="mt-(--space-lg)">
         <a href="/about" className="text-sm text-primary link-underline-grow">
           More projects and full résumé on About{" "}
-          <span aria-hidden="true">→</span>
+          <span aria-hidden="true" className="ascii-arrow">
+            -&gt;
+          </span>
         </a>
       </p>
     </section>

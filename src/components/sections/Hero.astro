@@ -1,16 +1,34 @@
 ---
 import SocialIcons from "@/components/shared/SocialIcons.astro";
 import { siteConfig } from "@/data/site.config";
+
+const asciiWordmark = String.raw` ____ _____     ___  _______  __
+|  _ \_ _\ \   / / |/ /_ _\ \/ /
+| | | | | \ \ / /| ' / | | \  /
+| |_| | |  \ V / | . \ | | /  \
+|____/___|  \_/  |_|\_\___/_/\_\
+`.trimEnd();
+
+const stats = [
+  { label: "users", value: siteConfig.facts.impact },
+  { label: "projects", value: siteConfig.facts.projects },
+  { label: "open source", value: siteConfig.facts.oss },
+] as const;
 ---
 
 <section id="hero" class="text-band" aria-labelledby="hero-heading">
   <div class="grid gap-(--space-xl) md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start min-w-0">
     <div class="min-w-0 space-y-(--space-md)">
-      <p class="mast-line">Systems engineer · Cloudflare · Vinext contributor</p>
+      <p class="ascii-prompt">
+        <span class="ascii-prompt-user">divkix@cloudflare</span>:<span class="ascii-prompt-path">~</span>$ whoami
+        <span class="ascii-cursor" aria-hidden="true"></span>
+      </p>
+
+      <pre class="ascii-wordmark" aria-hidden="true">{asciiWordmark}</pre>
 
       <h1
         id="hero-heading"
-        class="font-display text-(length:--text-display) leading-[1.02] text-foreground min-w-0 overflow-wrap-anywhere m-0"
+        class="font-display text-(length:--text-display) leading-[1.02] text-foreground min-w-0 overflow-wrap-anywhere mt-(--space-xs)"
       >
         {siteConfig.name}
       </h1>
@@ -24,11 +42,15 @@ import { siteConfig } from "@/data/site.config";
       </p>
 
       <div class="flex flex-wrap items-center gap-x-3 gap-y-3 pt-(--space-xs)">
-        <a href="/#projects" class="btn-primary">
-          See selected work
+        <a href="/#projects" class="btn-primary gap-(--space-2xs)">
+          <span aria-hidden="true">[</span>
+          <span>See selected work</span>
+          <span aria-hidden="true">]</span>
         </a>
-        <a href="/resume" class="btn-secondary">
-          View resume
+        <a href="/resume" class="btn-secondary gap-(--space-2xs)">
+          <span aria-hidden="true">[</span>
+          <span>View resume</span>
+          <span aria-hidden="true">]</span>
         </a>
         <a
           href="/blog"
@@ -44,26 +66,22 @@ import { siteConfig } from "@/data/site.config";
         </a>
       </div>
 
-      <p
-        class="flex flex-wrap items-baseline gap-x-(--space-md) gap-y-1 pt-(--space-xs) text-xs text-muted-foreground"
-        role="group"
-        aria-label="At-a-glance stats"
-      >
-        <span>
-          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.impact}</span>
-          {" "}users
-        </span>
-        <span class="text-border" aria-hidden="true">·</span>
-        <span>
-          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.projects}</span>
-          {" "}projects
-        </span>
-        <span class="text-border" aria-hidden="true">·</span>
-        <span>
-          <span class="text-foreground tabular-nums font-medium">{siteConfig.facts.oss}</span>
-          {" "}open source
-        </span>
-      </p>
+      <div class="ascii-panel">
+        <p class="ascii-panel-title">$ divkix --stats</p>
+        <dl class="ascii-stats" aria-label="At-a-glance stats">
+          {
+            stats.map((stat) => (
+              <div class="ascii-stat">
+                <dt>
+                  {stat.label}
+                  <span class="ascii-leader" aria-hidden="true"></span>
+                </dt>
+                <dd>{stat.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
 
       <div class="pt-(--space-2xs)">
         <SocialIcons size="sm" />
@@ -71,21 +89,21 @@ import { siteConfig } from "@/data/site.config";
     </div>
 
     <figure
-      class="portrait-frame m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-start md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
+      class="ascii-window m-0 w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none justify-self-start md:justify-self-end md:sticky md:top-[calc(4.5rem+var(--space-md))]"
     >
+      <figcaption class="ascii-window-bar" aria-hidden="true">
+        <span>[ divkix@cloudflare:~/portrait.webp ]</span>
+        <span>[ 480x600 ]</span>
+      </figcaption>
       <img
         src={siteConfig.authorImage}
         alt={`Portrait of ${siteConfig.name}`}
-        aria-describedby="hero-image-caption"
         class="w-full aspect-4/5 object-cover object-[center_22%]"
         width="480"
         height="600"
         loading="eager"
         decoding="async"
       />
-      <figcaption id="hero-image-caption" class="sr-only">
-        Portrait of {siteConfig.name}, systems engineer in Austin, Texas
-      </figcaption>
     </figure>
   </div>
 </section>
