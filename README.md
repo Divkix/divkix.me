@@ -26,7 +26,7 @@ My personal site. Built with Astro, TypeScript, Tailwind v4, and an embarrassing
 | Forms           | React Hook Form + Zod                          |
 | Icons           | Lucide React                                   |
 | Linting         | Vite+ (Oxlint + Oxfmt)                         |
-| Package manager | pnpm 12.6.0                                    |
+| Package manager | pnpm 12.14.0                                   |
 | Hosting         | Cloudflare Workers static assets (no adapter)  |
 
 ## Getting started
