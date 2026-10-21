@@ -4,7 +4,7 @@ Personal portfolio + blog for divkix.me. Astro 7 static output (`output: "static
 
 ## Commands
 
-All verified locally 2026-10-09 (pnpm 12.6.0, Node 26; CI uses Node 22.22.1).
+All verified locally 2026-10-21 (pnpm 12.14.0, Node 26; CI uses Node 24.22.0).
 
 ```bash
 pnpm install --frozen-lockfile   # install (CI uses the same flag)
