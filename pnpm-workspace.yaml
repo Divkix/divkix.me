@@ -1,5 +1,17 @@
-# Release-age gate disabled on request: resolve the newest published version.
-minimumReleaseAge: 0
+# Temporary: the 2026-10-22 one-shot security upgrade pulled in releases that
+# are still inside pnpm's default 24h release-age window. Remove this list
+# after 2026-10-22T18:15Z UTC; the default gate then covers them again.
+minimumReleaseAgeExclude:
+  - "@astrojs/check"
+  - "@astrojs/language-server"
+  - "@astrojs/markdown-remark"
+  - "@astrojs/markdown-satteri"
+  - "@astrojs/mdx"
+  - "@astrojs/prism"
+  - "@astrojs/react"
+  - "@astrojs/telemetry"
+  - "astro"
+  - "lucide-react"
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@^1.3.0
   vite-plus: ^1.3.0
