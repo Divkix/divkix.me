@@ -8,8 +8,7 @@ updates:
       time: "09:00"
       timezone: "UTC"
     # Wait one day after a release before proposing it (security updates are
-    # exempt). pnpm's release-age gate is disabled (`minimumReleaseAge: 0`), so
-    # this cooldown is the only guard against day-zero releases.
+    # exempt); GitHub's default cooldown is otherwise 3 days.
     cooldown:
       default-days: 1
     open-pull-requests-limit: 10
