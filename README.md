@@ -47,7 +47,7 @@ pnpm run dev
 ### Dependency policy
 
 - `package.json` declares caret ranges only (no exact pins) and resolves them through `pnpm-lock.yaml`; `packageManager` stays an exact pin.
-- No `minimumReleaseAge*` setting anywhere: pnpm's default release-age window (1440 minutes, non-strict) applies to every dependency, with no exclusions. A version published within the last day resolves to the previous release.
+- `pnpm-workspace.yaml` sets `minimumReleaseAge: 0`: pnpm's release-age gate is disabled, so updates resolve to the newest published version even within the first day. Dependabot PRs still wait a day (`cooldown.default-days: 1`).
 - `typescript` stays on 6.x — `astro check` exits with an error on TypeScript 7.0.
 - Dependabot checks daily with a one-day cooldown (`default-days: 1`; security updates are exempt) and groups minor/patch updates. The Vite+ toolchain (`vite`, `vite-plus`, `@voidzero-dev/*`, `vitest`, `@vitest/*`) moves in its own group so it lands together; major updates always arrive as their own PR for manual review.
 - Minor/patch Dependabot PRs are squash-merged by `.github/workflows/dependabot-automerge.yml` once `Verify, build, audit`, `GitGuardian Security Checks` and `Workers Builds: divkix-me` are all successful and every other check has settled successfully; the merged branch is deleted by the repository's _automatically delete head branches_ setting. The gate fails closed (and times out after 45 minutes, with a 50-minute job timeout as the outer bound) on anything pending, failed, cancelled, skipped, draft, forked or non-dependabot, and never merges a major update.
