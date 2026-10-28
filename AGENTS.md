@@ -9,7 +9,7 @@ All verified locally 2026-10-22 (pnpm 12.14.0, Node 26; CI uses Node 26.12.1).
 ```bash
 pnpm install --frozen-lockfile   # install (CI uses the same flag)
 pnpm run dev                     # astro dev → http://localhost:4321
-pnpm run verify                  # THE gate: vp check (lint+fmt) → knip → astro check && tsc --noEmit
+pnpm run verify                  # THE gate: vite-plus core lockstep → vp check (lint+fmt) → knip → astro check && tsc --noEmit
 pnpm run build                   # automatic prebuild → validate-content → astro build → flat sitemap → IndexNow
 pnpm run preview                 # serve dist/ (run build first)
 pnpm run audit:seo               # asserts SEO invariants in source files; CI runs it
@@ -56,6 +56,7 @@ pnpm run lint:fix && pnpm run format   # autofix
 - TypeScript is declared as `^6.0.3` in `package.json`, with no pnpm override: `astro check` needs the TS 6 API and exits with an error on TS 7.0 (`astro check does not currently support TypeScript 7.0`, re-verified 2026-10-09; `@astrojs/check@0.9.10` also only peers `^5 || ^6`). TS 6.0.3 is the latest 6.x. `vite`/`vite-plus` versions come from the pnpm `catalog:` in `pnpm-workspace.yaml` and must move together.
 - Dependency policy: `package.json` uses caret ranges (never exact pins) resolved by `pnpm-lock.yaml`; `packageManager` stays an exact pin. `pnpm-workspace.yaml` keeps pnpm's default release-age window (1440 minutes, non-strict); exact-version `minimumReleaseAgeExclude` entries cover only the versions admitted by the 2026-10-22 one-shot security upgrade, so future releases of those packages stay gated (safe to delete the entries once those versions age in). Dependabot's `cooldown.default-days: 1` remains in place.
 - Dependabot runs daily with `cooldown.default-days: 1`; minor/patch PRs (Vite+ toolchain grouped separately) are squash-merged by `.github/workflows/dependabot-automerge.yml` only when `Verify, build, audit`, `GitGuardian Security Checks` and `Workers Builds: divkix-me` plus every other observed check are settled successful, otherwise it fails closed; majors get a review request from `Divkix` instead. The workflow runs the base-branch copy of the file, so it only activates once merged to `main`, and its `GITHUB_TOKEN` merge does not trigger the `push: main` CI run. Branch deletion comes from the repository's _automatically delete head branches_ setting.
+- **Vite+ core must match `vite-plus`**: the `vite` catalog entry in `pnpm-workspace.yaml` is an `npm:@voidzero-dev/vite-plus-core` alias that Dependabot never bumps, so a `vite-plus`-only bump leaves Astro and Vite plugins on the old core. `pnpm run check:vite-plus` (first step of `verify`) fails when the lockfile holds more than one core or one that differs from `vite-plus`; fix it on the branch with `pnpm exec vp migrate`, which re-pins both to the same exact version.
 - Tailwind must stay on `@tailwindcss/vite`. `@tailwindcss/postcss` breaks under Astro 7's rolldown Vite (see the comment in `astro.config.mjs`). `components.json` is a shadcn leftover; there is no `src/components/ui/`.
 - The pre-commit hook (`.vite-hooks/pre-commit`) runs `vp staged` and then the full `pnpm run verify`, so expect commits to take a few seconds.
 
