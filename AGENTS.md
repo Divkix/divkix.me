@@ -9,7 +9,7 @@ All verified locally 2026-10-22 (pnpm 12.14.0, Node 26; CI uses Node 26.12.1).
 ```bash
 pnpm install --frozen-lockfile   # install (CI uses the same flag)
 pnpm run dev                     # astro dev → http://localhost:4321
-pnpm run verify                  # THE gate: vp check (lint+fmt) → knip → astro check && tsc --noEmit
+pnpm run verify                  # THE gate: vite-plus core lockstep → vp check (lint+fmt) → knip → astro check && tsc --noEmit
 pnpm run build                   # automatic prebuild → validate-content → astro build → flat sitemap → IndexNow
 pnpm run preview                 # serve dist/ (run build first)
 pnpm run audit:seo               # asserts SEO invariants in source files; CI runs it
@@ -57,6 +57,7 @@ pnpm run lint:fix && pnpm run format   # autofix
 - Dependency policy: `package.json` uses caret ranges (never exact pins) resolved by `pnpm-lock.yaml`; `packageManager` stays an exact pin. `pnpm-workspace.yaml` keeps pnpm's default release-age window (1440 minutes, non-strict); exact-version `minimumReleaseAgeExclude` entries cover only the versions admitted by the 2026-10-22 one-shot security upgrade, so future releases of those packages stay gated (safe to delete the entries once those versions age in).
 - Dependabot opens PRs weekly (Monday 09:00 UTC) with `cooldown.default-days: 7`. Patches are grouped into one `all-patch` PR, the Vite+ toolchain gets its own minor/patch group, Actions updates are grouped, and other minors/majors arrive one PR per package. Nothing merges automatically: the owner reviews each PR's changelog and merges by hand.
 - `.github/workflows/audit.yml` runs `pnpm audit --audit-level high` every Monday 08:00 UTC and fails on high/critical advisories. It exists because GitHub's dependency graph can't read pnpm 12's two-document `pnpm-lock.yaml` yet, so Dependabot alerts and security updates are silently off.
+- **Vite+ core must match `vite-plus`**: the `vite` catalog entry in `pnpm-workspace.yaml` is an `npm:@voidzero-dev/vite-plus-core` alias that Dependabot never bumps, so a `vite-plus`-only bump leaves Astro and Vite plugins on the old core. `pnpm run check:vite-plus` (first step of `verify`) fails when the lockfile holds more than one core or one that differs from `vite-plus`; fix it on the branch with `pnpm exec vp migrate`, which re-pins both to the same exact version.
 - Tailwind must stay on `@tailwindcss/vite`. `@tailwindcss/postcss` breaks under Astro 7's rolldown Vite (see the comment in `astro.config.mjs`). `components.json` is a shadcn leftover; there is no `src/components/ui/`.
 - The pre-commit hook (`.vite-hooks/pre-commit`) runs `vp staged` and then the full `pnpm run verify`, so expect commits to take a few seconds.
 
