@@ -47,10 +47,10 @@ pnpm run dev
 ### Dependency policy
 
 - `package.json` declares caret ranges only (no exact pins) and resolves them through `pnpm-lock.yaml`; `packageManager` stays an exact pin.
-- pnpm's default release-age window (1440 minutes, non-strict) applies to every dependency. `pnpm-workspace.yaml` pins exact-version `minimumReleaseAgeExclude` entries for the 2026-10-22 one-shot security upgrade, so future releases of those packages remain gated; delete the entries once those versions age in. Dependabot PRs also wait a day (`cooldown.default-days: 1`).
+- pnpm's default release-age window (1440 minutes, non-strict) applies to every dependency. `pnpm-workspace.yaml` pins exact-version `minimumReleaseAgeExclude` entries for the 2026-10-22 one-shot security upgrade, so future releases of those packages remain gated; delete the entries once those versions age in.
 - `typescript` stays on 6.x — `astro check` exits with an error on TypeScript 7.0.
-- Dependabot checks daily with a one-day cooldown (`default-days: 1`; security updates are exempt) and groups minor/patch updates. The Vite+ toolchain (`vite`, `vite-plus`, `@voidzero-dev/*`, `vitest`, `@vitest/*`) moves in its own group so it lands together; major updates always arrive as their own PR for manual review.
-- Nothing auto-merges: the owner reviews each Dependabot PR's changelog and merges by hand.
+- Dependabot checks weekly (Monday 09:00 UTC) with a seven-day cooldown (`default-days: 7`; security updates are exempt). Patches are grouped into one PR; minor and major updates arrive one PR per package. The Vite+ toolchain (`vite`, `vite-plus`, `@voidzero-dev/*`, `vitest`, `@vitest/*`) moves in its own minor/patch group so it lands together.
+- Nothing merges automatically: the owner reviews each Dependabot PR's changelog and merges by hand.
 
 ## Scripts
 

@@ -4,19 +4,19 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
       time: "09:00"
       timezone: "UTC"
-    # Wait one day after a release before proposing it (security updates are
-    # exempt); GitHub's default cooldown is otherwise 3 days.
+    # Wait a week after a release before proposing it (security updates are
+    # exempt).
     cooldown:
-      default-days: 1
+      default-days: 7
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(deps)"
     groups:
-      # The Vite+ toolchain moves in lockstep, so it gets its own minor/patch
-      # group ahead of the catch-all (the first matching group wins).
+      # vite, vite-plus, vitest and @vitest/* must move together.
       vite-plus-toolchain:
         patterns:
           - "vite"
@@ -27,11 +27,12 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      all-minor-patch:
+      # Patches ship as one PR. Minors and majors stay ungrouped, one PR per
+      # package, so each carries its own release notes and CI result.
+      all-patch:
         patterns:
           - "*"
         update-types:
-          - "minor"
           - "patch"
     labels:
       - "dependencies"
@@ -40,14 +41,19 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
       time: "09:00"
       timezone: "UTC"
     cooldown:
-      default-days: 1
+      default-days: 7
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(ci)"
     labels:
       - "ci"
       - "dependencies"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
