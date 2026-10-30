@@ -202,12 +202,17 @@ subscribe to /rss.xml to track new posts.
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Keep fonts external so CSP can retain font-src 'self'.
+      assetsInlineLimit: (filePath) =>
+        /\.woff2?$/.test(filePath) ? false : undefined,
+    },
   },
   compressHTML: true,
   build: {
-    // "auto" keeps tiny styles inline but externalizes the main Tailwind
-    // stylesheet, keeping readable-text density high for AI crawlers.
-    inlineStylesheets: "auto",
+    // Inline all CSS: one fewer render-blocking round trip (Slow 3G FCP
+    // 6.3 s -> 2.4 s) at the cost of lower text density for crawlers.
+    inlineStylesheets: "always",
   },
   prefetch: {
     prefetchAll: true,

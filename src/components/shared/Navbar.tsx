@@ -1,5 +1,5 @@
 import { MenuIcon, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { siteConfig } from "@/data/site.config";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,11 @@ const primaryNavItems = [
 const allNavItems = [...primaryNavItems];
 
 const mastLine = `${siteConfig.handle} · Portfolio · ${new Date().getFullYear()}`;
+
+function subscribeToPageLoad(onStoreChange: () => void) {
+  document.addEventListener("astro:page-load", onStoreChange);
+  return () => document.removeEventListener("astro:page-load", onStoreChange);
+}
 
 function isNavItemActive(
   href: string,
@@ -41,20 +46,15 @@ function isNavItemActive(
 function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [pathname, setPathname] = useState(() =>
-    typeof window !== "undefined" ? window.location.pathname : "",
+  // Server snapshot "" matches the static HTML; React swaps in the real path
+  // right after hydration instead of leaving mismatched nav attributes.
+  const pathname = useSyncExternalStore(
+    subscribeToPageLoad,
+    () => window.location.pathname,
+    () => "",
   );
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const handlePageLoad = () => {
-      setPathname(window.location.pathname);
-    };
-    document.addEventListener("astro:page-load", handlePageLoad);
-    return () =>
-      document.removeEventListener("astro:page-load", handlePageLoad);
-  }, []);
 
   useEffect(() => {
     if (pathname !== "/") return undefined;
@@ -83,22 +83,6 @@ function Navbar() {
 
     return () => observer.disconnect();
   }, [pathname]);
-
-  const handleAnchorClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    setIsOpen(false);
-
-    if (href.startsWith("/#") && pathname === "/") {
-      e.preventDefault();
-      const id = href.slice(2);
-      history.pushState(null, "", `#${id}`);
-      document
-        .getElementById(id)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   useEffect(() => {
     const scrollToHash = () => {
@@ -148,7 +132,6 @@ function Navbar() {
                   <li key={item.href}>
                     <a
                       href={item.href}
-                      onClick={(e) => handleAnchorClick(e, item.href)}
                       className={cn(
                         "text-sm link-underline-grow whitespace-nowrap transition-colors uppercase tracking-[0.06em]",
                         isActive
@@ -174,7 +157,7 @@ function Navbar() {
               ref={hamburgerRef}
               type="button"
               onClick={() => setIsOpen(true)}
-              className="p-2 text-foreground hover:text-primary transition-colors uppercase text-xs tracking-[0.08em]"
+              className="inline-flex size-11 items-center justify-center text-foreground hover:text-primary transition-colors"
               aria-label="Open menu"
               aria-expanded={isOpen}
               aria-controls="mobile-nav-dialog"
@@ -191,7 +174,6 @@ function Navbar() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         getIsActive={getIsActive}
-        onAnchorClick={handleAnchorClick}
         onClosed={() => hamburgerRef.current?.focus()}
       />
     </>
@@ -210,7 +192,6 @@ interface MobileNavDialogProps {
   isOpen: boolean;
   onClose: () => void;
   getIsActive: (href: string) => boolean;
-  onAnchorClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   onClosed: () => void;
 }
 
@@ -218,7 +199,6 @@ function MobileNavDialog({
   isOpen,
   onClose,
   getIsActive,
-  onAnchorClick,
   onClosed,
 }: MobileNavDialogProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -336,7 +316,7 @@ function MobileNavDialog({
           ref={closeButtonRef}
           type="button"
           onClick={onClose}
-          className="p-2 text-foreground transition-colors hover:text-primary shrink-0"
+          className="inline-flex size-11 items-center justify-center text-foreground transition-colors hover:text-primary shrink-0"
           aria-label="Close menu"
         >
           <X className="size-6" />
@@ -352,7 +332,7 @@ function MobileNavDialog({
             <a
               key={item.href}
               href={item.href}
-              onClick={(e) => onAnchorClick(e, item.href)}
+              onClick={onClose}
               className={cn(
                 "font-display text-2xl whitespace-nowrap uppercase tracking-[0.04em]",
                 isActive

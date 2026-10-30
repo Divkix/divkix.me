@@ -31,25 +31,25 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 const services = [
   {
     name: "Web Development",
-    price: "Starting at $2,000 per project",
+    price: "Starting at $2,000 USD per project",
     description:
       "Full-stack web applications, APIs, and portfolio sites built with modern frameworks.",
   },
   {
     name: "Technical Consulting",
-    price: "$150/hour",
+    price: "$150 USD per hour",
     description:
       "Architecture reviews, technology selection, and engineering strategy sessions.",
   },
   {
     name: "Code Review & Audits",
-    price: "$500 per project",
+    price: "$500 USD per project",
     description:
       "Security audits, performance analysis, and code quality assessments.",
   },
   {
     name: "SEO Optimization",
-    price: "$1,000 per project",
+    price: "$1,000 USD per project",
     description:
       "Technical SEO, structured data, and content optimization for search engines.",
   },
@@ -127,6 +127,29 @@ const pricingFaqSchema = generateFAQPageSchema(pricingFaq, pricingUrl);
         </div>
       ))}
     </div>
+
+    <!-- Engagement terms -->
+    <section id="terms" class="space-y-(--space-md) scroll-mt-40 md:scroll-mt-32" aria-labelledby="pricing-terms-heading">
+      <h2 id="pricing-terms-heading" class="font-display text-(length:--text-xl)">
+        Engagement terms
+      </h2>
+      <ul class="list-disc pl-(--space-md) space-y-(--space-xs) text-foreground/70 leading-relaxed">
+        <li>All prices are in US dollars (USD). They are reference rates, not an offer.</li>
+        <li>
+          Every project starts with a discovery call and a written quote. The
+          quote sets the scope, timeline, price, and payment schedule.
+        </li>
+        <li>Work starts only after we both accept the quote in writing.</li>
+        <li>
+          Sending a message through the contact form or by email does not commit
+          either of us to anything.
+        </li>
+        <li>
+          What you send before a quote is accepted is used only to reply to you.
+          See the <a href="/privacy" class="text-primary link-underline-grow">privacy policy</a>.
+        </li>
+      </ul>
+    </section>
 
     <!-- FAQ -->
     <section class="space-y-(--space-md)" aria-labelledby="pricing-faq-heading">

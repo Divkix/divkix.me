@@ -26,7 +26,7 @@ const faqPageSchema = generateFAQPageSchema(
   `${baseUrl}/privacy`,
 );
 
-const lastUpdated = "May 20, 2026";
+const lastUpdated = "October 30, 2026";
 const privacyDescription =
   "Privacy policy for divkix.me: what the contact form, analytics, and cookies collect, how that data is used, and how to request its deletion.";
 
@@ -87,8 +87,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               to understand visitor patterns without tracking personal information.
             </li>
             <li>
-              <strong>Cookies:</strong> This site uses minimal cookies, primarily for
-              theme preferences (dark/light mode).
+              <strong>Cookies and browser storage:</strong> This site sets no cookies
+              of its own. Your theme choice (dark or light) is saved in your browser's
+              localStorage. An unsent contact form draft is saved in sessionStorage
+              and is removed when you close the tab. Cloudflare, which hosts the
+              site, may set a security cookie (<code>cf_clearance</code>) when it
+              checks that a visitor is not a bot.
             </li>
           </ul>
         </section>
@@ -108,6 +112,16 @@ const breadcrumbSchema = generateBreadcrumbSchema([
             shared with third parties except with service providers and processors
             required to operate this site (such as Formspree for the contact form;
             see Third-Party Services below).
+          </p>
+        </section>
+
+        <section class="surface-raised p-8 space-y-(--space-md)">
+          <h2 class="font-display text-(length:--text-xl)">Data Retention</h2>
+          <p class="text-foreground/80">
+            I keep contact form messages, in my email inbox and in Formspree, for
+            up to 12 months after our last exchange, then delete them. If we start
+            working together, I keep project emails for as long as the project
+            needs them. You can ask me to delete your messages sooner at any time.
           </p>
         </section>
 
