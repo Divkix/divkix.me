@@ -1,9 +1,9 @@
 ---
 title: "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio (And Saved $240/Year)"
-seoTitle: "LM Studio on Mac: Why I Ditched ChatGPT and Saved $240/Year"
+seoTitle: "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio (And Saved $240/Year)"
 seoDescription: "I switched from ChatGPT Plus to LM Studio on my M4 Pro. 6 months later: $240 saved, complete privacy, and I can run 30B vision models offline. Here's my setup."
 coverAlt: "LM Studio running local AI models on a MacBook Pro with Apple Silicon"
-dateModified: "2026-04-05"
+dateModified: "2026-11-03"
 date: "2025-10-31"
 excerpt: "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
 tags:
@@ -22,41 +22,93 @@ tags:
 published: true
 tldr: "LM Studio lets you run powerful AI models locally on Mac with Apple Silicon, offering complete privacy and no subscription costs, though it's slower than cloud alternatives."
 keyTakeaways:
-  - "LM Studio runs AI models locally with zero data leaving your machine"
-  - "M4 Pro with 48GB RAM can run 30B parameter vision models like Qwen3-VL"
-  - "Vision models understand screenshots, diagrams, and UI mockups"
+  - "LM Studio is an app and runtime for local models, not a model called ChatGPT"
+  - "Apple Silicon Macs are supported; Intel Macs are not currently supported"
+  - "MLX and GGUF are different runtime choices, not universal speed rankings"
+  - "The local app is free for personal and internal business use; model licenses and paid services are separate"
   - "Costs $0 vs $240/year for ChatGPT Plus"
-  - "Trade-offs: slower responses (5-10 sec), requires storage for models"
+  - "RAM-tier suggestions below are starting points, not measured fit or speed guarantees"
 howToSteps:
   - name: "Download and install LM Studio"
-    text: "Go to lmstudio.ai and download the app for macOS. No account or credit card required."
+    text: "Open the official download page, choose LM Studio rather than the separate Bionic app, and select the macOS installer. Check the linked system requirements."
   - name: "Browse and download a model"
-    text: "Open the Discover tab, search for Qwen-7B or Qwen3-VL-8B, and click Download. Models are hosted on Hugging Face."
+    text: "Search Discover for an exact model name from the recommendations below. Choose a supported MLX or GGUF download and read its model card and license."
   - name: "Load the model and start chatting"
-    text: "Click Load on the downloaded model, then switch to the Chat tab and start typing. Everything stays on your machine."
+    text: "Load the downloaded model with a modest context setting and start a chat. Download models and required runtimes before going offline."
   - name: "Use vision models for screenshots"
-    text: "With a vision model loaded, paste a screenshot into the chat and ask questions about it. The model understands visual context."
+    text: "Load a vision-capable model and attach a screenshot. Ask it to transcribe the relevant error before suggesting a fix, and check its answer against the original."
 sources:
-  - "https://lmstudio.ai"
-  - "https://huggingface.co"
+  - "https://lmstudio.ai/docs/app/system-requirements"
+  - "https://lmstudio.ai/changelog/lmstudio"
+  - "https://lmstudio.ai/docs/app"
+  - "https://lmstudio.ai/docs/app/offline"
+  - "https://lmstudio.ai/app-privacy"
+  - "https://lmstudio.ai/download"
+  - "https://lmstudio.ai/docs/app/basics/download-model"
+  - "https://lmstudio.ai/app-terms"
+  - "https://lmstudio.ai/blog/free-for-work"
+  - "https://lmstudio.ai/models"
+  - "https://lmstudio.ai/models/qwen3.5"
+  - "https://lmstudio.ai/models/qwen3.8"
+  - "https://huggingface.co/Qwen/Qwen3.5-2B"
+  - "https://huggingface.co/Qwen/Qwen3.5-4B"
+  - "https://huggingface.co/Qwen/Qwen3.5-9B"
+  - "https://huggingface.co/Qwen/Qwen3.8-27B"
+  - "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct"
+  - "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct"
+  - "https://lmstudio.ai/docs/cli/local-models/load"
+  - "https://lmstudio.ai/blog/0.4.0"
+  - "https://lmstudio.ai/blog/mlx-engine-agentic-workloads"
+  - "https://lmstudio.ai/blog/splash-engine"
+  - "https://lmstudio.ai/blog/introducing-lm-studio-bionic"
+  - "https://lmstudio.ai/docs/developer"
+  - "https://lmstudio.ai/docs/developer/openai-compat"
+  - "https://lmstudio.ai/docs/developer/core/server"
+  - "https://lmstudio.ai/docs/developer/core/authentication"
+  - "https://lmstudio.ai/docs/cli"
+  - "https://lmstudio.ai/docs/app/mcp"
+  - "https://www.apple.com/macbook-air/specs/"
+  - "https://www.apple.com/macbook-pro/liquid-retina-xdr-display/specs/"
+  - "https://www.apple.com/macbook-pro/proled-xdr-display/specs/"
+  - "https://www.apple.com/mac-mini/specs/"
+  - "https://www.apple.com/imac/specs/"
+  - "https://www.apple.com/mac-studio/specs/"
+  - "https://www.apple.com/macbook-neo/specs/"
+  - "https://support.apple.com/guide/activity-monitor/view-memory-usage-actmntr1004/mac"
+  - "https://developers.openai.com/codex/pricing"
+  - "https://ollama.com/blog/new-app"
+  - "https://docs.gpt4all.io/"
+  - "https://jan.ai/"
 faq:
+  - q: "What is LM Studio?"
+    a: "LM Studio is a desktop app for discovering, downloading, chatting with, and serving compatible local AI models. It is not an OpenAI model or a way to download ChatGPT."
   - q: "How much RAM do I need to run LM Studio?"
-    a: "Minimum 16GB for smaller 7B-8B models. 32GB+ recommended for 13B models. 48GB+ needed for 30B+ parameter models like Qwen3-VL-30B."
+    a: "As checked November 3, 2026, LM Studio recommends 16 GB or more, but says 8 GB Macs may work with smaller models and modest context sizes. Model weights, context, vision processing, macOS, and other apps all affect usable capacity."
   - q: "Is LM Studio really free?"
-    a: "Yes, completely free. No account, no credit card, no subscription. The models from Hugging Face are also free and open-source."
+    a: "Yes, completely free for running downloaded local models. No subscription is required for local use. The app is proprietary, downloaded models have separate licenses, and optional paid features are covered by the current terms."
   - q: "Can LM Studio analyze images and screenshots?"
-    a: "Yes, with vision-language models like Qwen3-VL. You can paste screenshots of code errors, UI designs, charts, or diagrams and the model will understand the visual context."
+    a: "Yes, with a compatible vision-language model and runtime. Qwen3.5, Qwen3.8-27B, and the older Qwen3-VL family are examples verified in the official catalog on November 3, 2026. Image answers can still be wrong."
   - q: "How does LM Studio compare to ChatGPT?"
-    a: "LM Studio is slower (5-10 seconds vs instant), works offline, has complete privacy, costs nothing, but lacks web browsing and real-time information. For daily coding and analysis work, it's highly capable."
-  - q: "What Mac models support LM Studio?"
-    a: "Any Mac with Apple Silicon (M1, M2, M3, M4). Performance scales with RAM and chip tier. M4 Pro/Max with 48GB+ RAM offers the best experience for large models."
+    a: "LM Studio lets you choose local models and run downloaded models offline; ChatGPT is a hosted assistant. Quality and speed depend on the specific model and workload, not just the app. Local processing offers a different privacy boundary from cloud processing."
+  - q: "Can a MacBook Air run LM Studio?"
+    a: "Yes, an Apple Silicon MacBook Air meets the chip requirement. As checked November 3, 2026, macOS 14 or newer is required and 16 GB or more is recommended. Start with a compact model and modest context rather than assuming every catalog model will fit."
+  - q: "Does LM Studio support M1, M2, M3, and M4 Macs?"
+    a: "Yes. The official system-requirements page explicitly lists those Apple Silicon generations, including M4. Memory and model/runtime compatibility still matter; a newer chip does not remove those limits."
+  - q: "What is the minimum macOS version for LM Studio?"
+    a: "The general minimum is macOS 14.0, checked November 3, 2026. Optional engines can require newer hardware and macOS versions; Splash has stricter requirements than the standard app."
+  - q: "Does LM Studio run on an Intel Mac?"
+    a: "Intel-based Macs are currently unsupported according to LM Studio's official requirements, checked November 3, 2026. The Apple Silicon download is not an Intel compatibility promise."
+  - q: "Which local AI app should I use on an Apple Silicon Mac?"
+    a: "My starting recommendation is LM Studio for model exploration and its local API. Ollama also has a desktop chat app and CLI; GPT4All focuses on local chat and documents; Jan offers an open-source interface with local and cloud model options. These are workflow recommendations, not benchmark rankings."
 ---
 
-LM Studio lets you run large language models locally on Apple Silicon Macs, completely free, offline, and private. On an M4 Pro with 48GB RAM, the best models are Qwen3-30B for coding/analysis and Qwen3-VL-30B for vision tasks. You trade cloud speed (responses take 5-10 seconds) for zero cost, full privacy, and no dependency on OpenAI's uptime.
+**What is LM Studio?** It's a desktop app for finding, downloading, and running compatible AI models on your own computer, with a chat interface and a programmable local server. It is not a model itself, and it does not download ChatGPT. On a supported Mac, downloaded models can answer questions and work with documents offline. See the [official app overview](https://lmstudio.ai/docs/app) and [offline guide](https://lmstudio.ai/docs/app/offline).
+
+**Updated November 3, 2026:** the latest stable LM Studio release listed in the [official changelog](https://lmstudio.ai/changelog/lmstudio) is **0.4.28**, dated October 31. The personal story below comes from the original October 2025 post; the requirements, product distinctions, and recommendations have been refreshed against primary sources. This is not a new round of hands-on testing.
 
 I was knee-deep in a coding problem when ChatGPT went dark. The little error message mocked me. "Try again later," it said. My deadline wasn't going to wait.
 
-That outage was annoying. But it got me thinking. Every time I use ChatGPT, my data flies to OpenAI's servers. They log it. They train on it. Maybe that's fine for "what's a good pizza recipe." But code snippets? Research notes? That felt wrong.
+That outage was annoying. But it got me thinking about where my code snippets and research notes were being processed. I wanted an option that didn't depend on a hosted service for every answer.
 
 I needed something different. Something local. Something mine.
 
@@ -64,7 +116,7 @@ I needed something different. Something local. Something mine.
 
 Here's the thing about cloud AI. It's convenient. Type a question, get an answer. But convenience has a cost.
 
-Your prompts live on someone else's computer. They say they don't use it for training anymore. Maybe they don't. But can you be sure? What about government requests? Data breaches? Server logs?
+The important distinction is **where processing happens**, not a blanket claim that every cloud service trains on every prompt. A hosted service's data-use terms and account settings are separate from whether inference runs locally. Review those terms before sending private material; a cloud-processing promise does not turn a hosted model into a local one.
 
 I'm not paranoid. I just value control. My Mac has plenty of power. Why send my data across the internet when I can process it right here?
 
@@ -74,149 +126,191 @@ A friend mentioned LM Studio in passing. "Run AI models on your Mac," he said. "
 
 I was skeptical. Local AI sounded slow. Complicated. Probably worse than the cloud versions.
 
-I downloaded it anyway. The install was simple. No account. No credit card. Just download and go.
+In my original setup, installation was simple: no account or credit card for local chat. The interface looked like a chat app with a model picker, and downloading a model was much less intimidating than I expected.
 
-The interface looked clean. Like a chat app, but with a model picker. I could browse thousands of open-source models. Download them. Run them locally.
+Today, the [catalog](https://lmstudio.ai/models) distinguishes **Local** downloads from **Cloud** models. A model appearing there does not mean it will fit your Mac, and an open-weight model is not automatically unrestricted or open-source under the same license as every other model.
 
-No API keys. No monthly bills. No data leaving my machine.
+### LM Studio, Bionic, and the current feature set
+
+The download page now leads with **LM Studio Bionic**, a [separate agent app introduced in July 2026](https://lmstudio.ai/blog/introducing-lm-studio-bionic). Bionic adds work/code projects, document creation, local voice transcription, and optional cloud models and web search. Cloud processing is not offline processing, even when the provider promises zero data retention. For the app discussed in this post, choose the **LM Studio** section on the [download page](https://lmstudio.ai/download).
+
+The classic app has also moved beyond basic chat. Its [January 2026 release](https://lmstudio.ai/blog/0.4.0) introduced the standalone `llmster` daemon, parallel requests, a stateful API, split-view chat, and chat export. The [June MLX engine update](https://lmstudio.ai/blog/mlx-engine-agentic-workloads) added disk-backed prompt-cache reuse and continuous batching for vision-model requests. Those are documented features, not performance measurements from my Mac.
+
+### MLX vs GGUF on Mac
+
+[LM Studio supports](https://lmstudio.ai/docs/app) **GGUF models through llama.cpp** and **MLX models through its Apple Silicon MLX engine**. Download a format the selected runtime supports; a Transformers checkpoint is not automatically an LM Studio-ready download.
+
+My recommendation is to try an available MLX quantization on Apple Silicon, while keeping GGUF as an equally legitimate choice when its model support or settings suit your workflow. Neither format is universally faster or better. Compare the same model, comparable quantization, context, and task before making that claim. The [download guide](https://lmstudio.ai/docs/app/basics/download-model) explains quantization: smaller representations reduce storage requirements while trading some fidelity.
+
+As checked November 3, 2026, that guide recommends a **4-bit or higher** option if your machine can run it. I'd start by evaluating a 4-bit download, then change the model or quantization if the estimate or answer quality doesn't suit the task. This is a suggested starting setting, not a measured capacity claim.
+
+An optional newer engine, **Splash**, has narrower compatibility. As checked November 3, 2026, LM Studio's [Splash guide](https://lmstudio.ai/blog/splash-engine) specifies an M3-or-newer Mac, macOS 26.4 or later, and at least 36 GB unified memory, with 48 GB or more recommended. The [classic-app changelog](https://lmstudio.ai/changelog/lmstudio) records Splash support in release 0.4.25. Those stricter requirements are **not** the minimum requirements for ordinary MLX or GGUF use.
 
 ## My M4 Pro Makes This Possible
 
-I upgraded to an M4 Pro MacBook Pro earlier this year. 48GB of unified memory. At the time, I thought I'd gone overboard.
+The original post described my M4 Pro MacBook Pro with 48 GB of unified memory. That is historical setup information, not a claim that I've tested the current Mac lineup. Having room for larger models made local AI useful to me, particularly the screenshot workflow below.
 
-Turns out, that RAM is perfect for AI. Most people run smaller models. Maybe 8B parameters. Those work fine on 16GB machines.
+### Mac requirements: M1, M2, M3, M4, and Intel
 
-But with 48GB? I can run Qwen3-VL-30B. That's a big model. A smart model. And it can do something most AI tools can't.
+As checked **November 3, 2026**, the [official requirements](https://lmstudio.ai/docs/app/system-requirements) say:
 
-It can see.
+- **Apple Silicon:** the page explicitly lists M1, M2, M3, and M4. That includes M4 support; a Pro or Max chip is not required just to use the app.
+- **macOS:** version **14.0 or newer** for the standard app.
+- **Memory:** **16 GB or more recommended**, not a hard minimum. The docs say **8 GB** Macs may still work with smaller models and modest context sizes.
+- **Intel Macs:** currently **unsupported**. Do not mistake the macOS download for an Intel build.
+
+The requirements page's chip examples lag behind Apple's current lineup. LM Studio's [release notes](https://lmstudio.ai/changelog/lmstudio) mention M5 runtime-compatibility fixes, but I found no explicit M6 or MacBook Neo compatibility statement in the official requirements. Check the available runtime for those machines rather than treating a newer chip as verified support.
+
+### Can a MacBook Air run LM Studio?
+
+**Yes, an Apple Silicon MacBook Air meets the chip requirement.** You don't need my MacBook Pro to get started. Follow the macOS and memory guidance above, choose a compact model, and keep the initial context modest. My starting-point recommendations below are not guarantees about speed, temperature, battery life, or maximum model size.
+
+For buying context, here is Apple's lineup **as checked November 3, 2026**, not an LM Studio benchmark or compatibility certification:
+
+| Mac family                                                                                           | Chips on Apple's current specification pages               |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [MacBook Air](https://www.apple.com/macbook-air/specs/)                                              | M5                                                         |
+| [MacBook Pro, Liquid Retina XDR](https://www.apple.com/macbook-pro/liquid-retina-xdr-display/specs/) | M6, M5 Pro, M5 Max                                         |
+| [MacBook Pro, PROLED XDR](https://www.apple.com/macbook-pro/proled-xdr-display/specs/)               | M5 Pro, M5 Max                                             |
+| [Mac mini](https://www.apple.com/mac-mini/specs/)                                                    | M6, M5 Pro                                                 |
+| [iMac](https://www.apple.com/imac/specs/)                                                            | M6                                                         |
+| [Mac Studio](https://www.apple.com/mac-studio/specs/)                                                | M5 Max, M5 Ultra                                           |
+| [MacBook Neo](https://www.apple.com/macbook-neo/specs/)                                              | A18 Pro; not explicitly listed in LM Studio's requirements |
+
+For example, [Apple's current Air specifications](https://www.apple.com/macbook-air/specs/) list **16 GB unified memory**, configurable to **24 GB or 32 GB**. That's a hardware specification, not proof that a particular model/context combination will fit. My advice is to choose memory around the workload you actually need, rather than buying a chip name and assuming model capacity follows.
 
 ## Model Recommendations by RAM
 
-Not sure [which model to run](/blog/ai-models-compared-2026)? Here's what works at different RAM levels:
+Not sure [which model to run](/blog/ai-models-compared-2026)? Start small, then move up only if your task benefits. **These are my conservative trial suggestions as of November 3, 2026, not measured fit limits, speed results, or a best-model leaderboard.**
 
-| RAM   | Best Models                                        | Use Case                                          |
-| ----- | -------------------------------------------------- | ------------------------------------------------- |
-| 16GB  | Qwen-7B, Llama-8B, Mistral-7B                      | Basic chat, simple coding questions               |
-| 32GB  | Qwen-14B, Llama-13B, Deepseek-Coder-6.7B           | Complex reasoning, longer context windows         |
-| 48GB+ | Qwen3-VL-30B, Llama-70B (quantized), CodeLlama-34B | Vision models, advanced analysis, code generation |
+The named models are verified in [LM Studio's Qwen3.5 catalog entry](https://lmstudio.ai/models/qwen3.5) and [Qwen3.8 entry](https://lmstudio.ai/models/qwen3.8). Their primary cards identify them as vision-language models: [Qwen3.5-2B](https://huggingface.co/Qwen/Qwen3.5-2B), [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B), [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B), and [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B).
 
-More RAM means bigger models. Bigger models mean better reasoning. It's that simple.
+| Your Mac's unified memory | Model I'd try first                                               | Recommendation, not a fit guarantee                                                                          |
+| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 8 GB                      | [Qwen3.5-2B](https://huggingface.co/Qwen/Qwen3.5-2B), quantized   | A small-model experiment with modest context; its card positions it for prototyping and research/development |
+| 16 GB                     | [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B), quantized   | Start here for chat, code explanation, and occasional image questions                                        |
+| 24 GB or 32 GB            | [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B), quantized   | Compare against the smaller model on your own documents and coding questions                                 |
+| 48 GB or more             | [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B), quantized | A larger candidate to evaluate, not a reason to maximize context or a promise of cloud-level quality         |
+
+On a unified-memory Mac, the model shares capacity with macOS and other apps. The download size is not the full working-memory requirement. Context/KV cache, image processing, runtime settings, and concurrent requests matter too. LM Studio's [`lms load --estimate-only`](https://lmstudio.ai/docs/cli/local-models/load) accounts for context and vision settings; use it as an estimate, then watch [Memory Pressure and Swap Used in Activity Monitor](https://support.apple.com/guide/activity-monitor/view-memory-usage-actmntr1004/mac).
+
+More memory gives you more options. It does **not** establish that every larger model reasons better than every smaller one, or that a model's advertised maximum context is practical on your machine.
 
 ### Best Models for Apple Silicon Macs (2026)
 
-| Mac Config    | Best Model         | Quant  | VRAM Usage | Best For             | Rating     |
-| ------------- | ------------------ | ------ | ---------- | -------------------- | ---------- |
-| M4 Pro 24GB   | Qwen 2.5 Coder 14B | Q5_K_M | ~12GB      | Coding, general chat | ⭐⭐⭐⭐⭐ |
-| M4 Pro 24GB   | Llama 3.3 8B       | Q8_0   | ~10GB      | Fast general purpose | ⭐⭐⭐⭐   |
-| M4 Max 36GB   | Qwen 2.5 32B       | Q5_K_M | ~24GB      | Best all-rounder     | ⭐⭐⭐⭐⭐ |
-| M4 Max 48GB   | Llama 3.3 70B      | Q4_K_M | ~42GB      | Maximum capability   | ⭐⭐⭐⭐⭐ |
-| M4 Max 48GB   | Qwen 2.5 VL 32B    | Q5_K_M | ~24GB      | Vision + text        | ⭐⭐⭐⭐   |
-| Any Mac 16GB+ | Phi-4 Mini 3.8B    | Q8_0   | ~5GB       | Light tasks, testing | ⭐⭐⭐     |
+For M1, M2, M3, and M4 Macs, I'd use the memory-based starting points above instead of assigning a supposedly “best” model to each chip. The same advice applies when evaluating a newer supported runtime. Match the model to the task, not the generation printed on the box.
 
-My daily driver: Qwen 2.5 Coder 14B at Q5_K_M on an M4 Pro 24GB. It handles coding tasks, document analysis, and general questions without breaking a sweat, and everything stays on my machine.
+For code explanation and document questions, compare the suggested compact model with the larger candidate using the same inputs. For screenshots, compare transcription and visual details as well as the final answer. A model that sounds more confident is not necessarily more accurate.
 
 ## Vision Models Are the Unexpected Part
 
-Qwen3-VL is a vision-language model. Feed it text, it responds. Feed it an image, it understands that too.
+The original post focused on Qwen3-VL. It remains in [LM Studio's catalog](https://lmstudio.ai/models/qwen3-vl); the exact upstream names include [Qwen3-VL-8B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct) and [Qwen3-VL-30B-A3B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct), checked November 3, 2026. It isn't the newest Qwen vision family now.
 
-Last week I got a weird error in my terminal. Red text everywhere. I took a screenshot. Pasted it into LM Studio. Asked "what's wrong here?"
+In the original October 2025 account, I got a weird terminal error, took a screenshot, pasted it into LM Studio, and asked what was wrong.
 
 The model looked at my screenshot. Pointed out the exact line causing trouble. Explained why. Suggested a fix.
 
-Here's the kind of prompt that works:
+Here's the kind of prompt I'd use now:
 
-> Look at this terminal screenshot. The red error text starts with "TypeError". What's causing this and how do I fix it?
+> Transcribe the relevant error in this terminal screenshot. Explain what it suggests, separate what you can read from what you are inferring, and tell me what source code you need before proposing a fix.
 
-And the model responds with context-aware analysis:
+Vision-language models can work with text and visual context, including diagrams and UI screenshots. That is not a guarantee of correct transcription or diagnosis. Paste the original error text when you have it, and verify suggested changes.
 
-> The error "TypeError: Cannot read properties of undefined" on line 47 indicates you're trying to access a property on a variable that wasn't initialized. Check that `userData` is defined before calling `userData.profile.name`. Add a null check or optional chaining: `userData?.profile?.name`.
-
-This isn't OCR. The model actually understands visual context. Diagrams. Charts. UI mockups. Code screenshots with syntax highlighting intact.
-
-I also run the smaller Qwen3-VL-8B for quick questions, it's faster and good enough for most things. The 30B model is noticeably better for anything that requires multi-step reasoning or a longer context.
-
-Most people with 16GB machines are running 7B or 8B models. With 48GB you can run 30B, and the quality difference is real.
+The original post also described using the smaller Qwen3-VL model for quick questions. That's a historical personal observation, not a controlled comparison with the newer models recommended above. Choose a vision-capable download and supported runtime; a text-only model does not gain image understanding just because the app accepts an attachment.
 
 ## Speed Comparison: Cloud vs Local
 
-Let's be honest about performance. Here's what I measured:
+The original post described local responses as slower than ChatGPT. I am keeping that as a historical impression, **not** republishing the old seconds-per-task table as a benchmark: it lacked exact model/runtime versions, quantization, prompt and output lengths, and a repeatable method.
 
-| Task                         | ChatGPT | LM Studio (Qwen-30B) |
-| ---------------------------- | ------- | -------------------- |
-| Simple question              | ~1 sec  | ~5 sec               |
-| Code explanation (100 lines) | ~2 sec  | ~10 sec              |
-| Image analysis               | ~3 sec  | ~15 sec              |
-| Long document summary        | ~4 sec  | ~20 sec              |
+There is no honest fixed answer to “how fast is LM Studio?” Time to first token and total completion time are different measurements. Model choice, prompt length, generated output, cache reuse, context, and the selected runtime all affect the result; LM Studio's [API documentation](https://lmstudio.ai/docs/developer) and [MLX engine write-up](https://lmstudio.ai/blog/mlx-engine-agentic-workloads) describe these controls and workload-dependent behavior.
 
-The slower speed is the main trade-off. But here's the thing, I've found it rarely matters for actual work. While waiting 10 seconds for a response, I'm reading the question I just asked. By the time I look up, the answer is there.
+### LM Studio vs ChatGPT
+
+| Question                        | LM Studio with a downloaded local model                                                           | ChatGPT                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Where is the model running?     | Your configured local machine                                                                     | A hosted service                                                        |
+| Can it work offline?            | Yes, after downloading the model and required runtime                                             | Not as a downloaded local model                                         |
+| What determines answer quality? | The chosen model, quantization, context, and tools                                                | The selected hosted model and enabled features                          |
+| What about current information? | Model weights alone are not live web access; connected tools can add it                           | Hosted tools can provide web access                                     |
+| What happens to prompts?        | Local chat stays on-device; external tools/cloud features change the boundary                     | Cloud processing; review the current account and plan terms             |
+| What do I pay for?              | No local-app subscription required; hardware, electricity, and optional paid services still exist | Hosted-service plans and usage limits are separate from local inference |
+
+For the local/offline and processing claims, see [LM Studio's offline guide](https://lmstudio.ai/docs/app/offline) and [privacy policy](https://lmstudio.ai/app-privacy). I would choose local AI when control over processing is the priority, and a hosted assistant when its tools or model quality better suit the task. That is a workflow recommendation, not a claim that one wins every speed or quality comparison.
 
 ## What I Actually Use It For
 
-Every day looks different. Sometimes I'm researching a new library. I paste documentation. Ask questions. The model helps me understand faster than reading alone.
+My original uses were practical: paste library documentation, ask questions, and get help understanding it. That remains a useful local workflow without pretending the model knows the latest library release on its own.
 
 Other times I'm experimenting. Testing prompts. Trying different models. Seeing what works. LM Studio makes this easy. Switch models with one click.
 
-I've used it for code reviews. Explaining legacy code. Brainstorming architecture. Even writing. If you're curious how local models compare to cloud-based options for coding, I broke that down in my [AI coding tools comparison](/blog/ai-coding-tools-compared-2026/). The AI isn't perfect. But it's always there. Always private.
+I've used it for code reviews, explaining legacy code, brainstorming architecture, and writing. If you're curious how local models compare to cloud-based options for coding, I broke that down in my [AI coding tools comparison](/blog/ai-coding-tools-compared-2026/). The AI isn't perfect; local processing does not make its code correct.
 
-Yesterday I analyzed a competitor's UI design. Screenshot to LM Studio to detailed breakdown of their layout choices. All offline. No one tracking what I'm researching.
+The original post also described analyzing a competitor's UI screenshot offline. Keeping that material local was the point, not a claim that I ran a fresh evaluation for this update.
+
+### Local server, API, and CLI
+
+As checked November 3, 2026, you can start the [local server](https://lmstudio.ai/docs/developer/core/server) in the Developer tab or with `lms server start`. LM Studio offers its own stateful REST API at `/api/v1/chat`, plus [OpenAI-compatible endpoints](https://lmstudio.ai/docs/developer/openai-compat) such as `/v1/chat/completions`, `/v1/responses`, and `/v1/embeddings`. API compatibility does not turn your local model into an OpenAI model or imply identical capabilities.
+
+The [current developer docs](https://lmstudio.ai/docs/developer) also list Anthropic-compatible Messages and decision-model APIs. Use the endpoint your client expects, and check that the selected local model supports the required tools, image inputs, or structured output.
+
+The [`lms` CLI](https://lmstudio.ai/docs/cli) ships with LM Studio. Open the app first, then use commands such as `lms get` to find/download a model, `lms ls` to list downloads, `lms load` to load one, and `lms chat` for terminal chat. For a GUI-free deployment, [`llmster`](https://lmstudio.ai/blog/0.4.0) is the separate headless daemon.
+
+Keep the server on localhost unless you deliberately need network access. The [authentication docs](https://lmstudio.ai/docs/developer/core/authentication) say authentication is not required by default; enable API tokens before exposing it to other clients. Don't publish an unauthenticated local-model endpoint to the internet.
 
 That's the real win. Privacy isn't about hiding. It's about control.
 
 ## Alternatives I Considered
 
-LM Studio isn't the only option. Here's how it compares:
+For anyone searching for the best local AI apps for M1, M2, M3, or M4, I'd shortlist by workflow rather than invent a performance ranking. These feature descriptions were checked against the projects' own pages on November 3, 2026:
 
-- Ollama – Command-line focused, no built-in GUI. Great for devs who prefer terminal. Excellent for automation and scripting.
-- GPT4All – Simpler UI, fewer models, easier for beginners. Good starting point if LM Studio feels overwhelming.
-- Jan.ai – Similar to LM Studio, newer project, currently has fewer model options. Worth watching.
+- **LM Studio:** my recommendation for exploring compatible MLX/GGUF models and exposing a local API through a desktop interface.
+- **[Ollama](https://ollama.com/blog/new-app):** offers both a CLI and a desktop chat app, with file attachments and supported vision models. The old claim here that it had no built-in GUI was wrong.
+- **[GPT4All](https://docs.gpt4all.io/):** a local desktop app with document-based chat and a Python SDK.
+- **[Jan](https://jan.ai/):** an open-source chat interface with local model and cloud-provider options. Selecting a cloud provider is not the same as staying offline.
 
-I picked LM Studio for the model variety and vision model support. The interface is clean. The model selection is massive. And it just works.
+I originally picked LM Studio for the model picker and vision support. That's a personal preference, not proof that the alternatives are slower, have fewer usable models, or are less private in every configuration.
 
 ## The Honest Downsides
 
 LM Studio isn't perfect. Let me be real about the problems.
 
-First, it's slower than ChatGPT. Cloud models have massive GPU clusters. My Mac has... one M4 Pro. Responses take longer. Maybe 5-10 seconds instead of instant.
+First, choosing and managing models is your job. You'll need disk space for downloads, and enough available memory for the configuration you load. “Fits on disk” and “usable at the context I need” are not interchangeable.
 
-Second, you manage everything yourself. Want a new model? Download it. That's a few gigabytes. Models pile up fast. You'll need storage space.
+Second, local models can hallucinate, miss details in screenshots, and propose incorrect code. Bigger model names and more RAM don't remove the need to check the answer.
 
-Third, there's a learning curve. Which model for which task? What's the difference between 7B and 70B? You have to learn this stuff.
+Third, the privacy claim has boundaries. [LM Studio's privacy policy](https://lmstudio.ai/app-privacy), checked November 3, 2026, says downloaded local-model chats and documents stay on-device, but model search/downloads and update checks make network requests. Optional cloud models and web search send requests for cloud processing under its stated retention terms.
 
-The interface is simpler than the web version of ChatGPT. No plugins. No browsing. Just you and the model.
+The old “no plugins, no browsing” description is outdated. LM Studio supports [local and remote MCP tools](https://lmstudio.ai/docs/app/mcp), and Bionic offers web search. Those tools can access files, run code, or use the network. Only enable tools you trust; a local model calling a remote service is no longer a wholly offline workflow.
 
-For some tasks, cloud AI still wins. Web search? Up-to-date info? Yeah, ChatGPT is better there. And when AI-generated code fails in production, running models locally gives you more control over the fallout, something I explored in [my take on vibe coding](/blog/vibe-coding-truth-ai-programming-2026/).
+For some tasks, I still prefer a hosted assistant with web access. When AI-generated code fails in production, controlling where the model ran doesn't excuse the failure, something I explored in [my take on vibe coding](/blog/vibe-coding-truth-ai-programming-2026/).
 
 ## Why I Keep Using It Anyway
 
-The practical answer: my data stays on my machine, it works offline, and I'm not paying per token. ChatGPT Plus is $20/month, $240/year. LM Studio is free, and the models are free. I bought the Mac for other reasons anyway.
+The practical answer: my data stays on my machine, it works offline, and I'm not paying per token. [ChatGPT Plus is $20/month](https://developers.openai.com/codex/pricing), or $240/year at that monthly rate, checked November 3, 2026. LM Studio's local app is free, and I use models available at no charge. I bought the Mac for other reasons anyway.
+
+**Is LM Studio free?** The company [made the app free for home and work use](https://lmstudio.ai/blog/free-for-work) in July 2025. The [current desktop terms](https://lmstudio.ai/app-terms), version August 23, 2026 and checked November 3, permit personal and internal business use, retain proprietary restrictions, and separately cover paid features. “Free to use” does not mean the desktop app is open-source or that redistribution and hosted-service use are unrestricted. Downloaded models have their own licenses; check each card.
 
 There's also the ecosystem thing. I'm not locked into one model or one provider. If Qwen releases something better next week, I download it. If I don't trust a particular model for a particular task, I swap. That flexibility matters more than I expected when I started.
 
-Open source model releases have been genuinely relentless. What counts as "good" keeps moving upward.
+Open-weight releases keep changing the options. The cards and catalog linked here are a dated snapshot, not a promise that today's recommendation stays best.
 
 ## Getting Started
 
-Go to lmstudio.ai. Download the app. Open it.
+1. Open the [official download page](https://lmstudio.ai/download). Choose **LM Studio** and the macOS installer, not Bionic by accident. Confirm your chip, macOS, and memory against the [requirements](https://lmstudio.ai/docs/app/system-requirements).
+2. Open Discover/model search and enter an exact model name from the RAM table. My suggested first experiment on a recommended-memory Mac is **Qwen3.5-4B**; choose a supported MLX or GGUF quantization, not an arbitrary upstream checkpoint.
+3. Read the model card/license and download the required files and runtime while online. Start with modest context; don't select the advertised maximum just because it's available.
+4. Load the model and send a short chat. For screenshots, choose a vision-capable download and attach an image. For documents, use the app's local document-chat workflow.
+5. If offline operation matters, disconnect after the downloads and use only local inference and local tools. Search, new downloads, cloud models, and remote tools are different workflows.
 
-Click "Discover" to browse models. Search for "Qwen3-VL-8B" if you want to try vision. Or "Qwen-7B" for text-only.
-
-Download a model. Wait. It's big. Go make coffee.
-
-Once downloaded, click "Load." Pick your model. Start chatting.
-
-That's it. Seriously.
-
-If you have a Mac with Apple Silicon, you're golden. 16GB RAM minimum. More is better. Windows and Linux work too.
-
-The models live at Hugging Face. Thousands of them. Some good. Some bad. LM Studio shows you ratings and downloads to help pick.
+The [model download guide](https://lmstudio.ai/docs/app/basics/download-model) explains the app's search and quantization choices, and the [offline documentation](https://lmstudio.ai/docs/app/offline) explains what needs a connection. There is no need to start with the largest model in the catalog.
 
 ## My Final Take
 
-I still use ChatGPT. It's better for anything that needs web access or current information. But for daily coding work, document analysis, and anything involving code I'd rather not send to an external server, LM Studio is what I reach for.
+I still use ChatGPT. Local and hosted AI solve different problems, and I don't need to pretend I've stopped using one to explain why the other is useful.
 
-The M4 Pro with 48GB was expensive. Running local models is what made it feel worth it. The vision capability was the surprise, I didn't expect that to be genuinely useful, and it is.
+The original M4 Pro setup made local models feel worthwhile to me. Screenshot analysis was the surprise. Those are historical personal observations; this update adds sourced requirements and choices rather than new benchmark claims.
 
-If you have Apple Silicon and care about where your data goes, try LM Studio. The barrier is lower than it sounds.
+If you have a supported Apple Silicon Mac and care about where your data is processed, try LM Studio with a compact downloaded model. Keep the model card, runtime, memory settings, and tool permissions in view. The useful comparison isn't “local AI beats everything.” It's whether this particular local workflow does the job you need.
 
 ## Related Posts
 
