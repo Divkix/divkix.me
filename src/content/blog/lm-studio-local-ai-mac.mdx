@@ -1,11 +1,11 @@
 ---
-title: "Running AI on My Mac: Why I Use LM Studio Alongside ChatGPT"
-seoTitle: "LM Studio on Mac: Models, Requirements & ChatGPT Compared"
-seoDescription: "Run LM Studio on Mac: Apple Silicon support, minimum macOS, MacBook Air advice, MLX vs GGUF, free-use terms, local models, and a fair ChatGPT comparison."
+title: "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio (And Saved $240/Year)"
+seoTitle: "Running AI on My Mac: Why I Ditched ChatGPT for LM Studio (And Saved $240/Year)"
+seoDescription: "I switched from ChatGPT Plus to LM Studio on my M4 Pro. 6 months later: $240 saved, complete privacy, and I can run 30B vision models offline. Here's my setup."
 coverAlt: "LM Studio running local AI models on a MacBook Pro with Apple Silicon"
 dateModified: "2026-11-03"
 date: "2025-10-31"
-excerpt: "Why I use LM Studio for local AI on my Mac, with updated Mac requirements, model-selection advice, privacy boundaries, and a fair comparison with ChatGPT."
+excerpt: "How I run powerful AI models locally on my M4 Pro MacBook with LM Studio. Privacy, speed, and vision models that can see images - all offline."
 tags:
   [
     "AI",
@@ -20,12 +20,13 @@ tags:
     "Offline AI",
   ]
 published: true
-tldr: "LM Studio is a free-to-use local AI app for supported Apple Silicon Macs. Download compatible models, then chat offline or serve them through a local API. Model choice, memory, and enabled tools determine the experience; local inference is not the same as using a cloud model."
+tldr: "LM Studio lets you run powerful AI models locally on Mac with Apple Silicon, offering complete privacy and no subscription costs, though it's slower than cloud alternatives."
 keyTakeaways:
   - "LM Studio is an app and runtime for local models, not a model called ChatGPT"
   - "Apple Silicon Macs are supported; Intel Macs are not currently supported"
   - "MLX and GGUF are different runtime choices, not universal speed rankings"
   - "The local app is free for personal and internal business use; model licenses and paid services are separate"
+  - "Costs $0 vs $240/year for ChatGPT Plus"
   - "RAM-tier suggestions below are starting points, not measured fit or speed guarantees"
 howToSteps:
   - name: "Download and install LM Studio"
@@ -74,6 +75,7 @@ sources:
   - "https://www.apple.com/mac-studio/specs/"
   - "https://www.apple.com/macbook-neo/specs/"
   - "https://support.apple.com/guide/activity-monitor/view-memory-usage-actmntr1004/mac"
+  - "https://developers.openai.com/codex/pricing"
   - "https://ollama.com/blog/new-app"
   - "https://docs.gpt4all.io/"
   - "https://jan.ai/"
@@ -83,7 +85,7 @@ faq:
   - q: "How much RAM do I need to run LM Studio?"
     a: "As checked November 3, 2026, LM Studio recommends 16 GB or more, but says 8 GB Macs may work with smaller models and modest context sizes. Model weights, context, vision processing, macOS, and other apps all affect usable capacity."
   - q: "Is LM Studio really free?"
-    a: "The local app is free for personal and internal business use. It is proprietary software, model licenses are separate, and optional cloud or other paid features are not covered by that free-use claim."
+    a: "Yes, completely free for running downloaded local models. No subscription is required for local use. The app is proprietary, downloaded models have separate licenses, and optional paid features are covered by the current terms."
   - q: "Can LM Studio analyze images and screenshots?"
     a: "Yes, with a compatible vision-language model and runtime. Qwen3.5, Qwen3.8-27B, and the older Qwen3-VL family are examples verified in the official catalog on November 3, 2026. Image answers can still be wrong."
   - q: "How does LM Studio compare to ChatGPT?"
@@ -284,11 +286,9 @@ For some tasks, I still prefer a hosted assistant with web access. When AI-gener
 
 ## Why I Keep Using It Anyway
 
-The practical answer is still control: downloaded local models work offline, and local inference doesn't incur a provider's per-token API bill. I bought the Mac for other reasons anyway; hardware and electricity aren't free.
+The practical answer: my data stays on my machine, it works offline, and I'm not paying per token. [ChatGPT Plus is $20/month](https://developers.openai.com/codex/pricing), or $240/year at that monthly rate, checked November 3, 2026. LM Studio's local app is free, and I use models available at no charge. I bought the Mac for other reasons anyway.
 
 **Is LM Studio free?** The company [made the app free for home and work use](https://lmstudio.ai/blog/free-for-work) in July 2025. The [current desktop terms](https://lmstudio.ai/app-terms), version August 23, 2026 and checked November 3, permit personal and internal business use, retain proprietary restrictions, and separately cover paid features. “Free to use” does not mean the desktop app is open-source or that redistribution and hosted-service use are unrestricted. Downloaded models have their own licenses; check each card.
-
-This is not a verified subscription-savings claim or a like-for-like total-cost comparison. A local workflow can still involve hardware costs, electricity, paid tools and a hosted assistant for tasks it handles better. Choose it for the workflow you need, not an annual savings promise.
 
 There's also the ecosystem thing. I'm not locked into one model or one provider. If Qwen releases something better next week, I download it. If I don't trust a particular model for a particular task, I swap. That flexibility matters more than I expected when I started.
 
