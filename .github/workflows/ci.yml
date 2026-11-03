@@ -11,40 +11,41 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  verify:
-    name: Verify, build, audit
+  quality:
+    name: Verify
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-
-      # No `version` input: pnpm/action-setup reads packageManager from
-      # package.json, so the pin lives in exactly one place.
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v7
-        id: node
-        with:
-          node-version: 26.12.1
-          package-manager-cache: false
-
-      - name: Cache node_modules
-        uses: actions/cache@v6
-        id: dependencies
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ runner.arch }}-${{ steps.node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml', 'pnpm-workspace.yaml', 'patches/**', '.npmrc') }}
-
-      - name: Install dependencies
-        if: steps.dependencies.outputs.cache-hit != 'true'
-        run: pnpm install --frozen-lockfile
-
+      - uses: ./.github/actions/setup
       - name: Verify (Vite+ check, Knip, Astro type-check)
         run: pnpm run verify
+
+  build:
+    name: Build, audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
       - name: Build
         run: pnpm run build
         env:
           CF_PAGES_BRANCH: ""
-
       - name: SEO audit
         run: pnpm run audit:seo
+
+  verify:
+    name: Verify, build, audit
+    needs: [quality, build]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every check to pass
+        env:
+          VERIFY_RESULT: ${{ needs.quality.result }}
+          BUILD_RESULT: ${{ needs.build.result }}
+        run: |
+          test "$VERIFY_RESULT" = success
+          test "$BUILD_RESULT" = success

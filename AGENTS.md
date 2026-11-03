@@ -21,7 +21,7 @@ pnpm run lint:fix && pnpm run format   # autofix
 - **There is no test suite** (no vitest, no test files). "Single test" does not exist; `verify` + `build` + `audit:seo` is the whole safety net.
 - Run a single script: `pnpm exec tsx scripts/<name>.ts` or `node scripts/<name>.js`.
 - `pnpm run build` locally prints `IndexNow: Skipping (branch: local)`. It only submits when `CF_PAGES_BRANCH=main`. CI forces `CF_PAGES_BRANCH=""`.
-- CI restores `node_modules` only on an exact OS/architecture/Node/dependency-input hash match; cache hits skip install and its `vp config` prepare hook (Git hooks are not needed on runners). Keep the required `Verify, build, audit` status name.
+- CI restores `node_modules` only on an exact OS/architecture/Node/dependency-input hash match; cache hits skip install and its `vp config` prepare hook (Git hooks are not needed on runners). Verify and build/SEO audit run independently; the required `Verify, build, audit` aggregate fails unless both succeed.
 
 ## Repo map (non-obvious parts only)
 
