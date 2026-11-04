@@ -12,7 +12,7 @@ const faqPageSchema = generateFAQPageSchema(
   [
     {
       q: "What data do you collect?",
-      a: "I collect minimal data: contact form submissions, basic analytics, and theme preferences.",
+      a: "I collect minimal data: contact form submissions, Google Analytics usage data, and theme preferences.",
     },
     {
       q: "How do you protect my information?",
@@ -26,7 +26,7 @@ const faqPageSchema = generateFAQPageSchema(
   `${baseUrl}/privacy`,
 );
 
-const lastUpdated = "October 30, 2026";
+const lastUpdated = "November 4, 2026";
 const privacyDescription =
   "Privacy policy for divkix.me: what the contact form, analytics, and cookies collect, how that data is used, and how to request its deletion.";
 
@@ -83,12 +83,19 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               your name, email address, and message content to respond to your inquiry.
             </li>
             <li>
-              <strong>Analytics:</strong> This site may use privacy-respecting analytics
-              to understand visitor patterns without tracking personal information.
+              <strong>Analytics:</strong> This site uses Google Analytics 4 to count
+              visits and understand which pages are read. It records the pages you
+              view, the site that referred you, your browser, device type and screen
+              size, your approximate location (country and city, derived from your IP
+              address), and interactions such as scrolling and clicks on outbound
+              links. Google Analytics 4 does not log or store IP addresses. I do not
+              send your name, email, or other personal details to Google.
             </li>
             <li>
-              <strong>Cookies and browser storage:</strong> This site sets no cookies
-              of its own. Your theme choice (dark or light) is saved in your browser's
+              <strong>Cookies and browser storage:</strong> Google Analytics sets two
+              cookies on this site, <code>_ga</code> and <code>_ga_8XVEGN787W</code>,
+              which distinguish visitors and sessions and expire after up to two years.
+              Your theme choice (dark or light) is saved in your browser's
               localStorage. An unsent contact form draft is saved in sessionStorage
               and is removed when you close the tab. Cloudflare, which hosts the
               site, may set a security cookie (<code>cf_clearance</code>) when it
@@ -110,8 +117,8 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           <p class="text-foreground/80">
             I do not sell or trade your personal information. Personal data is not
             shared with third parties except with service providers and processors
-            required to operate this site (such as Formspree for the contact form;
-            see Third-Party Services below).
+            required to operate this site (Formspree for the contact form and Google
+            for analytics; see Third-Party Services below).
           </p>
         </section>
 
@@ -157,6 +164,26 @@ const breadcrumbSchema = generateBreadcrumbSchema([
             >
               Formspree Privacy Policy
             </a>.
+          </p>
+          <p class="text-foreground/80">
+            Google Analytics is provided by Google, which processes the usage data
+            described above. See
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary link-underline-grow"
+            >
+              how Google uses data from sites that use its services
+            </a>. You can block Google Analytics on every site with the
+            <a
+              href="https://tools.google.com/dlpage/gaoptout"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary link-underline-grow"
+            >
+              Google Analytics opt-out browser add-on
+            </a>, or by blocking cookies in your browser.
           </p>
         </section>
 
