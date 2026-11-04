@@ -115,9 +115,6 @@ const websiteSchema = generateWebSiteSchema();
 
     {noindex && <meta name="robots" content="noindex" />}
 
-    <link rel="dns-prefetch" href="https://analytics.divkix.me" />
-    <link rel="preconnect" href="https://analytics.divkix.me" crossorigin />
-
     <ClientRouter />
 
     <script is:inline>
@@ -168,13 +165,16 @@ const websiteSchema = generateWebSiteSchema();
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
-    <script
-      is:inline
-      async
-      src="https://analytics.divkix.me/s.js"
-      data-website-id="c27cdff0-16e4-49c7-b4c8-6b229ef3fd83"
-      data-performance="true"
-    ></script>
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8XVEGN787W"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-8XVEGN787W");
+    </script>
   </head>
   <body>
     <slot />

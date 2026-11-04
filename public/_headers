@@ -5,7 +5,7 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.divkix.me; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://analytics.divkix.me https://formspree.io; font-src 'self'; form-action 'self' https://formspree.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://formspree.io; font-src 'self'; form-action 'self' https://formspree.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 
 # Cache headers for Cloudflare Workers static assets
 # Immutable caching only for Astro content-hashed output
